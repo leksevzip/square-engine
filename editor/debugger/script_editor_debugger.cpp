@@ -53,7 +53,7 @@
 #include "editor/settings/editor_settings.h"
 #include "editor/themes/editor_scale.h"
 #include "main/performance.h"
-#include "scene/3d/camera_3d.h"
+#include "scene/3d/se_camera.h"
 #include "scene/debugger/scene_debugger.h"
 #include "scene/gui/button.h"
 #include "scene/gui/dialogs.h"
@@ -1114,10 +1114,10 @@ void ScriptEditorDebugger::_notification(int p_what) {
 					// Node3D Editor
 					{
 						Node3DEditorViewport *viewport = Node3DEditor::get_singleton()->get_last_used_viewport();
-						const Camera3D *cam = viewport->get_camera_3d();
+						const SECamera *cam = viewport->get_camera_3d();
 
 						Array msg = { cam->get_camera_transform() };
-						if (cam->get_projection() == Camera3D::PROJECTION_ORTHOGONAL) {
+						if (cam->get_projection() == SECamera::PROJECTION_ORTHOGONAL) {
 							msg.push_back(false);
 							msg.push_back(cam->get_size());
 						} else {

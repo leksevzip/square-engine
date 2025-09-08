@@ -32,14 +32,14 @@
 
 #include "editor/editor_undo_redo_manager.h"
 #include "editor/scene/3d/node_3d_editor_plugin.h"
-#include "scene/3d/camera_3d.h"
+#include "scene/3d/se_camera.h"
 
 void Gizmo3DHelper::initialize_handle_action(const Variant &p_initial_value, const Transform3D &p_initial_transform) {
 	initial_value = p_initial_value;
 	initial_transform = p_initial_transform;
 }
 
-void Gizmo3DHelper::get_segment(Camera3D *p_camera, const Point2 &p_point, Vector3 *r_segment) {
+void Gizmo3DHelper::get_segment(SECamera *p_camera, const Point2 &p_point, Vector3 *r_segment) {
 	Transform3D gt = initial_transform;
 	Transform3D gi = gt.affine_inverse();
 

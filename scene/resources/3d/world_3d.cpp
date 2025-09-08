@@ -31,18 +31,18 @@
 #include "world_3d.h"
 
 #include "core/config/project_settings.h"
-#include "scene/3d/camera_3d.h"
+#include "scene/3d/se_camera.h"
 #include "scene/resources/camera_attributes.h"
 #include "scene/resources/environment.h"
 #ifndef NAVIGATION_3D_DISABLED
 #include "servers/navigation_server_3d.h"
 #endif // NAVIGATION_3D_DISABLED
 
-void World3D::_register_camera(Camera3D *p_camera) {
+void World3D::_register_camera(SECamera *p_camera) {
 	cameras.insert(p_camera);
 }
 
-void World3D::_remove_camera(Camera3D *p_camera) {
+void World3D::_remove_camera(SECamera *p_camera) {
 	cameras.erase(p_camera);
 }
 

@@ -248,7 +248,7 @@ class GridMapEditor : public VBoxContainer {
 	void _delete_selection();
 	void _fill_selection();
 
-	bool do_input_action(Camera3D *p_camera, const Point2 &p_point, bool p_click);
+	bool do_input_action(SECamera *p_camera, const Point2 &p_point, bool p_click);
 
 	friend class GridMapEditorPlugin;
 
@@ -257,7 +257,7 @@ protected:
 	static void _bind_methods();
 
 public:
-	EditorPlugin::AfterGUIInput forward_spatial_input_event(Camera3D *p_camera, const Ref<InputEvent> &p_event);
+	EditorPlugin::AfterGUIInput forward_spatial_input_event(SECamera *p_camera, const Ref<InputEvent> &p_event);
 
 	void edit(GridMap *p_gridmap);
 	GridMapEditor();
@@ -275,7 +275,7 @@ protected:
 	static void _bind_methods();
 
 public:
-	virtual EditorPlugin::AfterGUIInput forward_3d_gui_input(Camera3D *p_camera, const Ref<InputEvent> &p_event) override { return grid_map_editor->forward_spatial_input_event(p_camera, p_event); }
+	virtual EditorPlugin::AfterGUIInput forward_3d_gui_input(SECamera *p_camera, const Ref<InputEvent> &p_event) override { return grid_map_editor->forward_spatial_input_event(p_camera, p_event); }
 	virtual String get_plugin_name() const override { return "GridMap"; }
 	bool has_main_screen() const override { return false; }
 	virtual void edit(Object *p_object) override;

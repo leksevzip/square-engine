@@ -30,15 +30,15 @@
 
 #pragma once
 
-#include "scene/3d/camera_3d.h"
+#include "scene/3d/se_camera.h"
 #include "servers/xr/xr_positional_tracker.h"
 
 /*
 	XRCamera is a subclass of camera which will register itself with its parent XROrigin and as a result is automatically positioned
 */
 
-class XRCamera3D : public Camera3D {
-	GDCLASS(XRCamera3D, Camera3D);
+class XRCamera3D : public SECamera {
+	GDCLASS(XRCamera3D, SECamera);
 
 protected:
 	// The name and pose for our HMD tracker is currently the only hardcoded bit.

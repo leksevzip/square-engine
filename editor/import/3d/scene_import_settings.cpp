@@ -1848,7 +1848,7 @@ SceneImportSettingsDialog::SceneImportSettingsDialog() {
 	light_2_switch->connect(SceneStringName(pressed), callable_mp(this, &SceneImportSettingsDialog::_on_light_2_switch_pressed));
 	vb_light->add_child(light_2_switch);
 
-	camera = memnew(Camera3D);
+	camera = memnew(SECamera);
 	base_viewport->add_child(camera);
 	camera->make_current();
 

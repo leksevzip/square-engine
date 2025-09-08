@@ -41,7 +41,7 @@
 #include "editor/settings/editor_command_palette.h"
 #include "editor/settings/editor_settings.h"
 #include "editor/themes/editor_scale.h"
-#include "scene/3d/camera_3d.h"
+#include "scene/3d/se_camera.h"
 #include "scene/gui/dialogs.h"
 #include "scene/gui/label.h"
 #include "scene/gui/menu_button.h"
@@ -328,7 +328,7 @@ Array GridMapEditor::_get_selected_cells() const {
 	return ret;
 }
 
-bool GridMapEditor::do_input_action(Camera3D *p_camera, const Point2 &p_point, bool p_click) {
+bool GridMapEditor::do_input_action(SECamera *p_camera, const Point2 &p_point, bool p_click) {
 	if (!spatial_editor) {
 		return false;
 	}
@@ -345,7 +345,7 @@ bool GridMapEditor::do_input_action(Camera3D *p_camera, const Point2 &p_point, b
 		return false;
 	}
 
-	Camera3D *camera = p_camera;
+	SECamera *camera = p_camera;
 	Vector3 from = camera->project_ray_origin(p_point);
 	Vector3 normal = camera->project_ray_normal(p_point);
 	Transform3D local_xform = node->get_global_transform().affine_inverse();
@@ -635,7 +635,7 @@ void GridMapEditor::_show_viewports_transform_gizmo(bool p_value) {
 	}
 }
 
-EditorPlugin::AfterGUIInput GridMapEditor::forward_spatial_input_event(Camera3D *p_camera, const Ref<InputEvent> &p_event) {
+EditorPlugin::AfterGUIInput GridMapEditor::forward_spatial_input_event(SECamera *p_camera, const Ref<InputEvent> &p_event) {
 	// If the mouse is currently captured, we are most likely in freelook mode.
 	// In this case, disable shortcuts to avoid conflicts with freelook navigation.
 	if (!node || Input::get_singleton()->get_mouse_mode() == Input::MOUSE_MODE_CAPTURED) {

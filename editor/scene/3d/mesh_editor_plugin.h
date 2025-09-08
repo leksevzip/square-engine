@@ -32,7 +32,7 @@
 
 #include "editor/inspector/editor_inspector.h"
 #include "editor/plugins/editor_plugin.h"
-#include "scene/3d/camera_3d.h"
+#include "scene/3d/se_camera.h"
 #include "scene/3d/light_3d.h"
 #include "scene/3d/mesh_instance_3d.h"
 #include "scene/gui/subviewport_container.h"
@@ -52,7 +52,7 @@ class MeshEditor : public SubViewportContainer {
 	Node3D *rotation = nullptr;
 	DirectionalLight3D *light1 = nullptr;
 	DirectionalLight3D *light2 = nullptr;
-	Camera3D *camera = nullptr;
+	SECamera *camera = nullptr;
 	Ref<CameraAttributesPractical> camera_attributes;
 
 	Ref<Mesh> mesh;

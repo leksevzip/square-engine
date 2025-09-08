@@ -32,7 +32,7 @@
 
 #include "core/object/worker_thread_pool.h"
 #include "mesh_instance_3d.h"
-#include "scene/3d/camera_3d.h"
+#include "scene/3d/se_camera.h"
 #include "scene/main/viewport.h"
 
 void GPUParticlesCollision3D::set_cull_mask(uint32_t p_cull_mask) {
@@ -672,7 +672,7 @@ void GPUParticlesCollisionHeightField3D::_notification(int p_what) {
 			}
 
 			if (follow_camera_mode && get_viewport()) {
-				Camera3D *cam = get_viewport()->get_camera_3d();
+				SECamera *cam = get_viewport()->get_camera_3d();
 				if (cam) {
 					Transform3D xform = get_global_transform();
 					Vector3 x_axis = xform.basis.get_column(Vector3::AXIS_X).normalized();

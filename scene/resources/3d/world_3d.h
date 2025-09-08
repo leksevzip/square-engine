@@ -38,7 +38,7 @@
 #endif // PHYSICS_3D_DISABLED
 
 class CameraAttributes;
-class Camera3D;
+class SECamera;
 class VisibleOnScreenNotifier3D;
 struct SpatialIndexer;
 
@@ -57,15 +57,15 @@ private:
 	Ref<CameraAttributes> camera_attributes;
 	Ref<Compositor> compositor;
 
-	HashSet<Camera3D *> cameras;
+	HashSet<SECamera *> cameras;
 
 protected:
 	static void _bind_methods();
 
-	friend class Camera3D;
+	friend class SECamera;
 
-	void _register_camera(Camera3D *p_camera);
-	void _remove_camera(Camera3D *p_camera);
+	void _register_camera(SECamera *p_camera);
+	void _remove_camera(SECamera *p_camera);
 
 public:
 	RID get_space() const;
@@ -86,7 +86,7 @@ public:
 	void set_compositor(const Ref<Compositor> &p_compositor);
 	Ref<Compositor> get_compositor() const;
 
-	_FORCE_INLINE_ const HashSet<Camera3D *> &get_cameras() const { return cameras; }
+	_FORCE_INLINE_ const HashSet<SECamera *> &get_cameras() const { return cameras; }
 
 #ifndef PHYSICS_3D_DISABLED
 	PhysicsDirectSpaceState3D *get_direct_space_state();

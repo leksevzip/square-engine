@@ -53,7 +53,7 @@
 #include "editor/script/script_editor_plugin.h"
 #include "editor/settings/project_settings_editor.h"
 #include "editor/translations/editor_translation_parser.h"
-#include "scene/3d/camera_3d.h"
+#include "scene/3d/se_camera.h"
 #include "scene/gui/popup_menu.h"
 
 void EditorPlugin::add_custom_type(const String &p_type, const String &p_base, const Ref<Script> &p_script, const Ref<Texture2D> &p_icon) {
@@ -291,7 +291,7 @@ int EditorPlugin::update_overlays() const {
 	}
 }
 
-EditorPlugin::AfterGUIInput EditorPlugin::forward_3d_gui_input(Camera3D *p_camera, const Ref<InputEvent> &p_event) {
+EditorPlugin::AfterGUIInput EditorPlugin::forward_3d_gui_input(SECamera *p_camera, const Ref<InputEvent> &p_event) {
 	int success = EditorPlugin::AFTER_GUI_INPUT_PASS;
 	GDVIRTUAL_CALL(_forward_3d_gui_input, p_camera, p_event, success);
 	return static_cast<EditorPlugin::AfterGUIInput>(success);

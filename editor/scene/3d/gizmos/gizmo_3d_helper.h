@@ -32,7 +32,7 @@
 
 #include "core/object/ref_counted.h"
 
-class Camera3D;
+class SECamera;
 
 class Gizmo3DHelper : public RefCounted {
 	GDCLASS(Gizmo3DHelper, RefCounted);
@@ -53,7 +53,7 @@ public:
 	 * Cylinder or Capsule: A `Vector2` of the form `Vector2(radius, height)`
 	 */
 	void initialize_handle_action(const Variant &p_initial_value, const Transform3D &p_initial_transform);
-	void get_segment(Camera3D *p_camera, const Point2 &p_point, Vector3 *r_segment);
+	void get_segment(SECamera *p_camera, const Point2 &p_point, Vector3 *r_segment);
 
 	// Box
 

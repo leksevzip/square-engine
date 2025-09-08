@@ -31,7 +31,7 @@
 #include "gltf_camera.h"
 
 #include "gltf_object_model_property.h"
-#include "scene/3d/camera_3d.h"
+#include "scene/3d/se_camera.h"
 
 void GLTFCamera::_bind_methods() {
 	ClassDB::bind_static_method("GLTFCamera", D_METHOD("from_node", "camera_node"), &GLTFCamera::from_node);
@@ -73,11 +73,11 @@ void GLTFCamera::set_fov_conversion_expressions(Ref<GLTFObjectModelProperty> &r_
 	r_obj_model_prop->set_godot_to_gltf_expression(godot_to_gltf_expr);
 }
 
-Ref<GLTFCamera> GLTFCamera::from_node(const Camera3D *p_camera) {
+Ref<GLTFCamera> GLTFCamera::from_node(const SECamera *p_camera) {
 	Ref<GLTFCamera> c;
 	c.instantiate();
-	ERR_FAIL_NULL_V_MSG(p_camera, c, "Tried to create a GLTFCamera from a Camera3D node, but the given node was null.");
-	c->set_perspective(p_camera->get_projection() == Camera3D::ProjectionType::PROJECTION_PERSPECTIVE);
+	ERR_FAIL_NULL_V_MSG(p_camera, c, "Tried to create a GLTFCamera from a SECamera node, but the given node was null.");
+	c->set_perspective(p_camera->get_projection() == SECamera::ProjectionType::PROJECTION_PERSPECTIVE);
 	// glTF spec (yfov) is in radians, Godot's camera (fov) is in degrees.
 	c->set_fov(Math::deg_to_rad(p_camera->get_fov()));
 	// glTF spec (xmag and ymag) is a radius in meters, Godot's camera (size) is a diameter in meters.
@@ -87,9 +87,9 @@ Ref<GLTFCamera> GLTFCamera::from_node(const Camera3D *p_camera) {
 	return c;
 }
 
-Camera3D *GLTFCamera::to_node() const {
-	Camera3D *camera = memnew(Camera3D);
-	camera->set_projection(perspective ? Camera3D::PROJECTION_PERSPECTIVE : Camera3D::PROJECTION_ORTHOGONAL);
+SECamera *GLTFCamera::to_node() const {
+	SECamera *camera = memnew(SECamera);
+	camera->set_projection(perspective ? SECamera::PROJECTION_PERSPECTIVE : SECamera::PROJECTION_ORTHOGONAL);
 	// glTF spec (yfov) is in radians, Godot's camera (fov) is in degrees.
 	camera->set_fov(Math::rad_to_deg(fov));
 	// glTF spec (xmag and ymag) is a radius in meters, Godot's camera (size) is a diameter in meters.

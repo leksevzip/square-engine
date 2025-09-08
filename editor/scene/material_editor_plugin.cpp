@@ -36,7 +36,7 @@
 #include "editor/editor_undo_redo_manager.h"
 #include "editor/settings/editor_settings.h"
 #include "editor/themes/editor_scale.h"
-#include "scene/3d/camera_3d.h"
+#include "scene/3d/se_camera.h"
 #include "scene/3d/light_3d.h"
 #include "scene/3d/mesh_instance_3d.h"
 #include "scene/gui/box_container.h"
@@ -255,7 +255,7 @@ MaterialEditor::MaterialEditor() {
 	viewport->set_transparent_background(true);
 	viewport->set_msaa_3d(Viewport::MSAA_4X);
 
-	camera = memnew(Camera3D);
+	camera = memnew(SECamera);
 	camera->set_transform(Transform3D(Basis(), Vector3(0, 0, 1.1)));
 	// Use low field of view so the sphere/box/quad is fully encompassed within the preview,
 	// without much distortion.

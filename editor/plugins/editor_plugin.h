@@ -32,7 +32,7 @@
 
 #include "core/io/config_file.h"
 #include "editor/inspector/editor_context_menu_plugin.h"
-#include "scene/3d/camera_3d.h"
+#include "scene/3d/se_camera.h"
 #include "scene/gui/control.h"
 
 class Node3D;
@@ -114,7 +114,7 @@ protected:
 	GDVIRTUAL1R(bool, _forward_canvas_gui_input, Ref<InputEvent>)
 	GDVIRTUAL1(_forward_canvas_draw_over_viewport, Control *)
 	GDVIRTUAL1(_forward_canvas_force_draw_over_viewport, Control *)
-	GDVIRTUAL2R(int, _forward_3d_gui_input, Camera3D *, Ref<InputEvent>)
+	GDVIRTUAL2R(int, _forward_3d_gui_input, SECamera *, Ref<InputEvent>)
 	GDVIRTUAL1(_forward_3d_draw_over_viewport, Control *)
 	GDVIRTUAL1(_forward_3d_force_draw_over_viewport, Control *)
 	GDVIRTUAL0RC(String, _get_plugin_name)
@@ -176,7 +176,7 @@ public:
 	virtual void forward_canvas_draw_over_viewport(Control *p_overlay);
 	virtual void forward_canvas_force_draw_over_viewport(Control *p_overlay);
 
-	virtual EditorPlugin::AfterGUIInput forward_3d_gui_input(Camera3D *p_camera, const Ref<InputEvent> &p_event);
+	virtual EditorPlugin::AfterGUIInput forward_3d_gui_input(SECamera *p_camera, const Ref<InputEvent> &p_event);
 	virtual void forward_3d_draw_over_viewport(Control *p_overlay);
 	virtual void forward_3d_force_draw_over_viewport(Control *p_overlay);
 

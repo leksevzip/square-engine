@@ -52,7 +52,7 @@
 
 #ifndef _3D_DISABLED
 #include "scene/3d/audio_listener_3d.h"
-#include "scene/3d/camera_3d.h"
+#include "scene/3d/se_camera.h"
 #include "scene/3d/world_environment.h"
 #endif // _3D_DISABLED
 
@@ -596,8 +596,8 @@ void Viewport::_notification(int p_what) {
 
 			if (camera_3d_set.size() && !camera_3d) {
 				// There are cameras but no current camera, pick first in tree and make it current.
-				Camera3D *first = nullptr;
-				for (Camera3D *E : camera_3d_set) {
+				SECamera *first = nullptr;
+				for (SECamera *E : camera_3d_set) {
 					if (first == nullptr || first->is_greater_than(E)) {
 						first = E;
 					}
@@ -4427,7 +4427,7 @@ void Viewport::_audio_listener_3d_make_next_current(AudioListener3D *p_exclude) 
 }
 
 #ifndef PHYSICS_3D_DISABLED
-void Viewport::_collision_object_3d_input_event(CollisionObject3D *p_object, Camera3D *p_camera, const Ref<InputEvent> &p_input_event, const Vector3 &p_pos, const Vector3 &p_normal, int p_shape) {
+void Viewport::_collision_object_3d_input_event(CollisionObject3D *p_object, SECamera *p_camera, const Ref<InputEvent> &p_input_event, const Vector3 &p_pos, const Vector3 &p_normal, int p_shape) {
 	Transform3D object_transform = p_object->get_global_transform();
 	Transform3D camera_transform = p_camera->get_global_transform();
 	ObjectID id = p_object->get_instance_id();
@@ -4446,7 +4446,7 @@ void Viewport::_collision_object_3d_input_event(CollisionObject3D *p_object, Cam
 }
 #endif // PHYSICS_3D_DISABLED
 
-Camera3D *Viewport::get_camera_3d() const {
+SECamera *Viewport::get_camera_3d() const {
 	ERR_READ_THREAD_GUARD_V(nullptr);
 	return camera_3d;
 }
@@ -4454,13 +4454,13 @@ Camera3D *Viewport::get_camera_3d() const {
 void Viewport::_camera_3d_transform_changed_notify() {
 }
 
-void Viewport::_camera_3d_set(Camera3D *p_camera) {
+void Viewport::_camera_3d_set(SECamera *p_camera) {
 	if (camera_3d == p_camera) {
 		return;
 	}
 
 	if (camera_3d) {
-		camera_3d->notification(Camera3D::NOTIFICATION_LOST_CURRENT);
+		camera_3d->notification(SECamera::NOTIFICATION_LOST_CURRENT);
 	}
 
 	camera_3d = p_camera;
@@ -4474,27 +4474,27 @@ void Viewport::_camera_3d_set(Camera3D *p_camera) {
 	}
 
 	if (camera_3d) {
-		camera_3d->notification(Camera3D::NOTIFICATION_BECAME_CURRENT);
+		camera_3d->notification(SECamera::NOTIFICATION_BECAME_CURRENT);
 	}
 
 	_update_audio_listener_3d();
 	_camera_3d_transform_changed_notify();
 }
 
-bool Viewport::_camera_3d_add(Camera3D *p_camera) {
+bool Viewport::_camera_3d_add(SECamera *p_camera) {
 	camera_3d_set.insert(p_camera);
 	return camera_3d_set.size() == 1;
 }
 
-void Viewport::_camera_3d_remove(Camera3D *p_camera) {
+void Viewport::_camera_3d_remove(SECamera *p_camera) {
 	camera_3d_set.erase(p_camera);
 	if (camera_3d == p_camera) {
 		_camera_3d_set(nullptr);
 	}
 }
 
-void Viewport::_camera_3d_make_next_current(Camera3D *p_exclude) {
-	for (Camera3D *E : camera_3d_set) {
+void Viewport::_camera_3d_make_next_current(SECamera *p_exclude) {
+	for (SECamera *E : camera_3d_set) {
 		if (p_exclude == E) {
 			continue;
 		}

@@ -226,7 +226,7 @@ private:
 	BoneAttachment3D *_generate_bone_attachment(Skeleton3D *p_godot_skeleton, const Ref<GLTFNode> &p_bone_node);
 	BoneAttachment3D *_generate_bone_attachment_compat_4pt4(Ref<GLTFState> p_state, Skeleton3D *p_skeleton, const GLTFNodeIndex p_node_index, const GLTFNodeIndex p_bone_index);
 	ImporterMeshInstance3D *_generate_mesh_instance(Ref<GLTFState> p_state, const GLTFNodeIndex p_node_index);
-	Camera3D *_generate_camera(Ref<GLTFState> p_state, const GLTFNodeIndex p_node_index);
+	SECamera *_generate_camera(Ref<GLTFState> p_state, const GLTFNodeIndex p_node_index);
 	Light3D *_generate_light(Ref<GLTFState> p_state, const GLTFNodeIndex p_node_index);
 	Node3D *_generate_spatial(Ref<GLTFState> p_state, const GLTFNodeIndex p_node_index);
 	void _assign_node_names(Ref<GLTFState> p_state);
@@ -343,7 +343,7 @@ public:
 	void _import_animation(Ref<GLTFState> p_state, AnimationPlayer *p_animation_player,
 			const GLTFAnimationIndex p_index, const bool p_trimming, const bool p_remove_immutable_tracks);
 	void _convert_mesh_instances(Ref<GLTFState> p_state);
-	GLTFCameraIndex _convert_camera(Ref<GLTFState> p_state, Camera3D *p_camera);
+	GLTFCameraIndex _convert_camera(Ref<GLTFState> p_state, SECamera *p_camera);
 	void _convert_light_to_gltf(Light3D *p_light, Ref<GLTFState> p_state, Ref<GLTFNode> p_gltf_node);
 	GLTFLightIndex _convert_light(Ref<GLTFState> p_state, Light3D *p_light);
 	void _convert_spatial(Ref<GLTFState> p_state, Node3D *p_spatial, Ref<GLTFNode> p_node);
@@ -354,7 +354,7 @@ public:
 	void _convert_csg_shape_to_gltf(CSGShape3D *p_current, GLTFNodeIndex p_gltf_parent, Ref<GLTFNode> p_gltf_node, Ref<GLTFState> p_state);
 
 	void _check_visibility(Node *p_node, bool &r_retflag);
-	void _convert_camera_to_gltf(Camera3D *p_camera, Ref<GLTFState> p_state,
+	void _convert_camera_to_gltf(SECamera *p_camera, Ref<GLTFState> p_state,
 			Ref<GLTFNode> p_gltf_node);
 	void _convert_grid_map_to_gltf(
 			GridMap *p_grid_map,

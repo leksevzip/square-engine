@@ -33,7 +33,7 @@
 
 #include "core/config/project_settings.h"
 #include "scene/3d/audio_listener_3d.h"
-#include "scene/3d/camera_3d.h"
+#include "scene/3d/se_camera.h"
 #include "scene/3d/velocity_tracker_3d.h"
 #include "scene/audio/audio_stream_player_internal.h"
 #include "scene/main/viewport.h"
@@ -378,14 +378,14 @@ Vector<AudioFrame> AudioStreamPlayer3D::_update_panning() {
 	Ref<World3D> world_3d = get_world_3d();
 	ERR_FAIL_COND_V(world_3d.is_null(), output_volume_vector);
 
-	HashSet<Camera3D *> cameras = world_3d->get_cameras();
+	HashSet<SECamera *> cameras = world_3d->get_cameras();
 	cameras.insert(get_viewport()->get_camera_3d());
 
 #ifndef PHYSICS_3D_DISABLED
 	PhysicsDirectSpaceState3D *space_state = PhysicsServer3D::get_singleton()->space_get_direct_state(world_3d->get_space());
 #endif // PHYSICS_3D_DISABLED
 
-	for (Camera3D *camera : cameras) {
+	for (SECamera *camera : cameras) {
 		if (!camera) {
 			continue;
 		}

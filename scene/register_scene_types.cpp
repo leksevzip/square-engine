@@ -219,7 +219,7 @@
 #include "scene/3d/audio_stream_player_3d.h"
 #include "scene/3d/bone_attachment_3d.h"
 #include "scene/3d/bone_constraint_3d.h"
-#include "scene/3d/camera_3d.h"
+#include "scene/3d/se_camera.h"
 #include "scene/3d/convert_transform_modifier_3d.h"
 #include "scene/3d/copy_transform_modifier_3d.h"
 #include "scene/3d/cpu_particles_3d.h"
@@ -599,7 +599,7 @@ void register_scene_types() {
 	GDREGISTER_CLASS(ImporterMeshInstance3D);
 	GDREGISTER_VIRTUAL_CLASS(VisualInstance3D);
 	GDREGISTER_VIRTUAL_CLASS(GeometryInstance3D);
-	GDREGISTER_CLASS(Camera3D);
+	GDREGISTER_CLASS(SECamera);
 	GDREGISTER_CLASS(AudioListener3D);
 #ifndef XR_DISABLED
 	GDREGISTER_CLASS(XRCamera3D);
@@ -1194,7 +1194,7 @@ void register_scene_types() {
 	ClassDB::add_compatibility_class("ARVRServer", "XRServer");
 	ClassDB::add_compatibility_class("AStar", "AStar3D");
 	ClassDB::add_compatibility_class("BoneAttachment", "BoneAttachment3D");
-	ClassDB::add_compatibility_class("Camera", "Camera3D");
+	ClassDB::add_compatibility_class("Camera", "SECamera");
 	ClassDB::add_compatibility_class("ClippedCamera", "ClippedCamera3D");
 	ClassDB::add_compatibility_class("CSGBox", "CSGBox3D");
 	ClassDB::add_compatibility_class("CSGCombiner", "CSGCombiner3D");

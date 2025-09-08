@@ -30,7 +30,7 @@
 
 #include "spring_arm_3d.h"
 
-#include "scene/3d/camera_3d.h"
+#include "scene/3d/se_camera.h"
 #include "scene/resources/3d/shape_3d.h"
 
 void SpringArm3D::_notification(int p_what) {
@@ -141,9 +141,9 @@ void SpringArm3D::process_spring() {
 	motion = Vector3(cast_direction * (spring_length));
 
 	if (shape.is_null()) {
-		Camera3D *camera = nullptr;
+		SECamera *camera = nullptr;
 		for (int i = get_child_count() - 1; 0 <= i; --i) {
-			camera = Object::cast_to<Camera3D>(get_child(i));
+			camera = Object::cast_to<SECamera>(get_child(i));
 			if (camera) {
 				break;
 			}

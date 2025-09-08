@@ -32,7 +32,7 @@
 
 #include "editor/plugins/editor_plugin.h"
 #include "editor/scene/3d/node_3d_editor_gizmos.h"
-#include "scene/3d/camera_3d.h"
+#include "scene/3d/se_camera.h"
 #include "scene/3d/path_3d.h"
 
 class HBoxContainer;
@@ -73,7 +73,7 @@ class Path3DGizmo : public EditorNode3DGizmo {
 public:
 	virtual String get_handle_name(int p_id, bool p_secondary) const override;
 	virtual Variant get_handle_value(int p_id, bool p_secondary) const override;
-	virtual void set_handle(int p_id, bool p_secondary, Camera3D *p_camera, const Point2 &p_point) override;
+	virtual void set_handle(int p_id, bool p_secondary, SECamera *p_camera, const Point2 &p_point) override;
 	virtual void commit_handle(int p_id, bool p_secondary, const Variant &p_restore, bool p_cancel = false) override;
 
 	virtual void redraw() override;
@@ -98,8 +98,8 @@ public:
 
 	virtual void redraw(EditorNode3DGizmo *p_gizmo) override;
 
-	virtual int subgizmos_intersect_ray(const EditorNode3DGizmo *p_gizmo, Camera3D *p_camera, const Vector2 &p_point) const override;
-	virtual Vector<int> subgizmos_intersect_frustum(const EditorNode3DGizmo *p_gizmo, const Camera3D *p_camera, const Vector<Plane> &p_frustum) const override;
+	virtual int subgizmos_intersect_ray(const EditorNode3DGizmo *p_gizmo, SECamera *p_camera, const Vector2 &p_point) const override;
+	virtual Vector<int> subgizmos_intersect_frustum(const EditorNode3DGizmo *p_gizmo, const SECamera *p_camera, const Vector<Plane> &p_frustum) const override;
 	virtual Transform3D get_subgizmo_transform(const EditorNode3DGizmo *p_gizmo, int p_id) const override;
 	virtual void set_subgizmo_transform(const EditorNode3DGizmo *p_gizmo, int p_id, Transform3D p_transform) override;
 	virtual void commit_subgizmos(const EditorNode3DGizmo *p_gizmo, const Vector<int> &p_ids, const Vector<Transform3D> &p_restore, bool p_cancel = false) override;
@@ -172,7 +172,7 @@ public:
 	Path3D *get_edited_path() { return path; }
 
 	inline static Path3DEditorPlugin *singleton = nullptr;
-	virtual EditorPlugin::AfterGUIInput forward_3d_gui_input(Camera3D *p_camera, const Ref<InputEvent> &p_event) override;
+	virtual EditorPlugin::AfterGUIInput forward_3d_gui_input(SECamera *p_camera, const Ref<InputEvent> &p_event) override;
 
 	virtual String get_plugin_name() const override { return "Path3D"; }
 	bool has_main_screen() const override { return false; }

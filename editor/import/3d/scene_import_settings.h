@@ -31,7 +31,7 @@
 #pragma once
 
 #include "editor/import/3d/resource_importer_scene.h"
-#include "scene/3d/camera_3d.h"
+#include "scene/3d/se_camera.h"
 #include "scene/3d/light_3d.h"
 #include "scene/3d/mesh_instance_3d.h"
 #include "scene/3d/skeleton_3d.h"
@@ -74,7 +74,7 @@ class SceneImportSettingsDialog : public ConfirmationDialog {
 
 	SubViewport *base_viewport = nullptr;
 
-	Camera3D *camera = nullptr;
+	SECamera *camera = nullptr;
 	Ref<CameraAttributesPractical> camera_attributes;
 	Ref<Environment> environment;
 	Ref<Sky> sky;
