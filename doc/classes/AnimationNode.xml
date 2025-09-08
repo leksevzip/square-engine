@@ -92,7 +92,7 @@
 			<param index="5" name="blend" type="float" />
 			<param index="6" name="looped_flag" type="int" enum="Animation.LoopedFlag" default="0" />
 			<description>
-				Blends an animation by [param blend] amount (name must be valid in the linked [AnimationPlayer]). A [param time] and [param delta] may be passed, as well as whether [param seeked] happened.
+				Blends an animation by [param blend] amount (name must be valid in the linked [SEAnimation]). A [param time] and [param delta] may be passed, as well as whether [param seeked] happened.
 				A [param looped_flag] is used by internal processing immediately after the loop.
 			</description>
 		</method>

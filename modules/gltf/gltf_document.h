@@ -340,7 +340,7 @@ public:
 	void _attach_node_to_skeleton(Ref<GLTFState> p_state, const GLTFNodeIndex p_node_index, Node3D *p_current_node, Skeleton3D *p_godot_skeleton, Node *p_scene_root, GLTFNodeIndex p_bone_node_index = -1);
 	void _generate_scene_node_compat_4pt4(Ref<GLTFState> p_state, const GLTFNodeIndex p_node_index, Node *p_scene_parent, Node *p_scene_root);
 	void _generate_skeleton_bone_node_compat_4pt4(Ref<GLTFState> p_state, const GLTFNodeIndex p_node_index, Node *p_scene_parent, Node *p_scene_root);
-	void _import_animation(Ref<GLTFState> p_state, AnimationPlayer *p_animation_player,
+	void _import_animation(Ref<GLTFState> p_state, SEAnimation *p_se_animation,
 			const GLTFAnimationIndex p_index, const bool p_trimming, const bool p_remove_immutable_tracks);
 	void _convert_mesh_instances(Ref<GLTFState> p_state);
 	GLTFCameraIndex _convert_camera(Ref<GLTFState> p_state, SECamera *p_camera);
@@ -388,7 +388,7 @@ public:
 			const Ref<Animation> &p_godot_animation,
 			int32_t p_godot_anim_track_index,
 			Vector<double> &p_times);
-	void _convert_animation(Ref<GLTFState> p_state, AnimationPlayer *p_animation_player, const String &p_animation_track_name);
+	void _convert_animation(Ref<GLTFState> p_state, SEAnimation *p_se_animation, const String &p_animation_track_name);
 
 	Error _serialize(Ref<GLTFState> p_state);
 	Error _parse(Ref<GLTFState> p_state, String p_path, Ref<FileAccess> p_file);

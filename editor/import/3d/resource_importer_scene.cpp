@@ -44,9 +44,9 @@
 #include "scene/3d/occluder_instance_3d.h"
 #include "scene/3d/physics/area_3d.h"
 #include "scene/3d/physics/collision_shape_3d.h"
-#include "scene/3d/physics/static_body_3d.h"
+#include "scene/3d/physics/se_body.h"
 #include "scene/3d/physics/vehicle_body_3d.h"
-#include "scene/animation/animation_player.h"
+#include "scene/animation/se_animation.h"
 #include "scene/resources/3d/box_shape_3d.h"
 #include "scene/resources/3d/importer_mesh.h"
 #include "scene/resources/3d/separation_ray_shape_3d.h"
@@ -344,24 +344,24 @@ String ResourceImporterScene::get_preset_name(int p_idx) const {
 
 void ResourceImporterScene::_pre_fix_global(Node *p_scene, const HashMap<StringName, Variant> &p_options) const {
 	if (p_options.has("animation/import_rest_as_RESET") && (bool)p_options["animation/import_rest_as_RESET"]) {
-		TypedArray<Node> anim_players = p_scene->find_children("*", "AnimationPlayer");
+		TypedArray<Node> anim_players = p_scene->find_children("*", "SEAnimation");
 		if (anim_players.is_empty()) {
-			AnimationPlayer *anim_player = memnew(AnimationPlayer);
-			anim_player->set_name("AnimationPlayer");
+			SEAnimation *anim_player = memnew(SEAnimation);
+			anim_player->set_name("SEAnimation");
 			p_scene->add_child(anim_player);
 			anim_player->set_owner(p_scene);
 			anim_players.append(anim_player);
 		}
 		Ref<Animation> reset_anim;
 		for (int i = 0; i < anim_players.size(); i++) {
-			AnimationPlayer *player = cast_to<AnimationPlayer>(anim_players[i]);
+			SEAnimation *player = cast_to<SEAnimation>(anim_players[i]);
 			if (player->has_animation(SceneStringName(RESET))) {
 				reset_anim = player->get_animation(SceneStringName(RESET));
 				break;
 			}
 		}
 		if (reset_anim.is_null()) {
-			AnimationPlayer *anim_player = cast_to<AnimationPlayer>(anim_players[0]);
+			SEAnimation *anim_player = cast_to<SEAnimation>(anim_players[0]);
 			reset_anim.instantiate();
 			Ref<AnimationLibrary> anim_library;
 			if (anim_player->has_animation_library(StringName())) {
@@ -620,13 +620,13 @@ void _populate_scalable_nodes_collection(Node *p_node, ScalableNodeCollection &p
 			}
 		}
 	}
-	AnimationPlayer *animation_player = Object::cast_to<AnimationPlayer>(p_node);
-	if (animation_player) {
+	SEAnimation *se_animation = Object::cast_to<SEAnimation>(p_node);
+	if (se_animation) {
 		List<StringName> animation_list;
-		animation_player->get_animation_list(&animation_list);
+		se_animation->get_animation_list(&animation_list);
 
 		for (const StringName &E : animation_list) {
-			Ref<Animation> animation = animation_player->get_animation(E);
+			Ref<Animation> animation = se_animation->get_animation(E);
 			p_collection.animations.insert(animation);
 		}
 	}
@@ -699,8 +699,8 @@ Node *ResourceImporterScene::_pre_fix_node(Node *p_node, Node *p_root, HashMap<R
 		}
 	}
 
-	if (Object::cast_to<AnimationPlayer>(p_node)) {
-		AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(p_node);
+	if (Object::cast_to<SEAnimation>(p_node)) {
+		SEAnimation *ap = Object::cast_to<SEAnimation>(p_node);
 
 		// Node paths in animation tracks are relative to the following path (this is used to fix node paths below).
 		Node *ap_root = ap->get_node(ap->get_root_node());
@@ -807,7 +807,7 @@ Node *ResourceImporterScene::_pre_fix_node(Node *p_node, Node *p_root, HashMap<R
 				}
 
 				if (shapes.size()) {
-					StaticBody3D *col = memnew(StaticBody3D);
+					SEBody *col = memnew(SEBody);
 					col->set_transform(mi->get_transform());
 					col->set_name(fixed_name);
 					_copy_meta(p_node, col);
@@ -822,7 +822,7 @@ Node *ResourceImporterScene::_pre_fix_node(Node *p_node, Node *p_root, HashMap<R
 
 		} else if (p_node->has_meta("empty_draw_type")) {
 			String empty_draw_type = String(p_node->get_meta("empty_draw_type"));
-			StaticBody3D *sb = memnew(StaticBody3D);
+			SEBody *sb = memnew(SEBody);
 			sb->set_name(fixed_name);
 			Object::cast_to<Node3D>(sb)->set_transform(Object::cast_to<Node3D>(p_node)->get_transform());
 			_copy_meta(p_node, sb);
@@ -868,7 +868,7 @@ Node *ResourceImporterScene::_pre_fix_node(Node *p_node, Node *p_root, HashMap<R
 				_pre_gen_shape_list(mesh, shapes, true);
 			}
 
-			RigidBody3D *rigid_body = memnew(RigidBody3D);
+			SEPhysicsBody *rigid_body = memnew(SEPhysicsBody);
 			rigid_body->set_name(_fixstr(name, "rigid_body"));
 			_copy_meta(p_node, rigid_body);
 			p_node->replace_by(rigid_body);
@@ -912,7 +912,7 @@ Node *ResourceImporterScene::_pre_fix_node(Node *p_node, Node *p_root, HashMap<R
 			}
 
 			if (shapes.size()) {
-				StaticBody3D *col = memnew(StaticBody3D);
+				SEBody *col = memnew(SEBody);
 				mi->add_child(col, true);
 				col->set_owner(mi->get_owner());
 
@@ -1032,7 +1032,7 @@ Node *ResourceImporterScene::_pre_fix_node(Node *p_node, Node *p_root, HashMap<R
 			}
 
 			if (shapes.size()) {
-				StaticBody3D *col = memnew(StaticBody3D);
+				SEBody *col = memnew(SEBody);
 				p_node->add_child(col, true);
 				col->set_owner(p_node->get_owner());
 
@@ -1083,8 +1083,8 @@ Node *ResourceImporterScene::_pre_fix_animations(Node *p_node, Node *p_root, con
 		}
 	}
 
-	if (Object::cast_to<AnimationPlayer>(p_node)) {
-		AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(p_node);
+	if (Object::cast_to<SEAnimation>(p_node)) {
+		SEAnimation *ap = Object::cast_to<SEAnimation>(p_node);
 		List<StringName> anims;
 		ap->get_animation_list(&anims);
 
@@ -1131,8 +1131,8 @@ Node *ResourceImporterScene::_post_fix_animations(Node *p_node, Node *p_root, co
 		}
 	}
 
-	if (Object::cast_to<AnimationPlayer>(p_node)) {
-		AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(p_node);
+	if (Object::cast_to<SEAnimation>(p_node)) {
+		SEAnimation *ap = Object::cast_to<SEAnimation>(p_node);
 		List<StringName> anims;
 		ap->get_animation_list(&anims);
 
@@ -1465,7 +1465,7 @@ Node *ResourceImporterScene::_post_fix_node(Node *p_node, Node *p_root, HashMap<
 		List<ImportOption> iopts;
 		if (Object::cast_to<ImporterSEMesh>(p_node)) {
 			get_internal_import_options(INTERNAL_IMPORT_CATEGORY_MESH_3D_NODE, &iopts);
-		} else if (Object::cast_to<AnimationPlayer>(p_node)) {
+		} else if (Object::cast_to<SEAnimation>(p_node)) {
 			get_internal_import_options(INTERNAL_IMPORT_CATEGORY_ANIMATION_NODE, &iopts);
 		} else if (Object::cast_to<Skeleton3D>(p_node)) {
 			get_internal_import_options(INTERNAL_IMPORT_CATEGORY_SKELETON_3D_NODE, &iopts);
@@ -1506,9 +1506,9 @@ Node *ResourceImporterScene::_post_fix_node(Node *p_node, Node *p_root, HashMap<
 		if (skeleton != nullptr && int(node_settings.get("rest_pose/load_pose", 0)) != 0) {
 			String selected_animation_name = node_settings.get("rest_pose/selected_animation", String());
 			if (int(node_settings["rest_pose/load_pose"]) == 1) {
-				TypedArray<Node> children = p_root->find_children("*", "AnimationPlayer", true, false);
+				TypedArray<Node> children = p_root->find_children("*", "SEAnimation", true, false);
 				for (int node_i = 0; node_i < children.size(); node_i++) {
-					AnimationPlayer *anim_player = cast_to<AnimationPlayer>(children[node_i]);
+					SEAnimation *anim_player = cast_to<SEAnimation>(children[node_i]);
 					ERR_CONTINUE(anim_player == nullptr);
 					List<StringName> anim_list;
 					anim_player->get_animation_list(&anim_list);
@@ -1694,7 +1694,7 @@ Node *ResourceImporterScene::_post_fix_node(Node *p_node, Node *p_root, HashMap<
 						CollisionObject3D *base = nullptr;
 						switch (mesh_physics_mode) {
 							case MESH_PHYSICS_MESH_AND_STATIC_COLLIDER: {
-								StaticBody3D *col = memnew(StaticBody3D);
+								SEBody *col = memnew(SEBody);
 								p_node->add_child(col, true);
 								col->set_owner(p_node->get_owner());
 								col->set_transform(get_collision_shapes_transform(node_settings));
@@ -1706,7 +1706,7 @@ Node *ResourceImporterScene::_post_fix_node(Node *p_node, Node *p_root, HashMap<
 								base = col;
 							} break;
 							case MESH_PHYSICS_RIGID_BODY_AND_MESH: {
-								RigidBody3D *rigid_body = memnew(RigidBody3D);
+								SEPhysicsBody *rigid_body = memnew(SEPhysicsBody);
 								rigid_body->set_name(p_node->get_name());
 								_copy_meta(p_node, rigid_body);
 								p_node->replace_by(rigid_body);
@@ -1723,7 +1723,7 @@ Node *ResourceImporterScene::_post_fix_node(Node *p_node, Node *p_root, HashMap<
 								base = rigid_body;
 							} break;
 							case MESH_PHYSICS_STATIC_COLLIDER_ONLY: {
-								StaticBody3D *col = memnew(StaticBody3D);
+								SEBody *col = memnew(SEBody);
 								col->set_transform(mi->get_transform() * get_collision_shapes_transform(node_settings));
 								col->set_position(p_applied_root_scale * col->get_position());
 								col->set_name(p_node->get_name());
@@ -1862,8 +1862,8 @@ Node *ResourceImporterScene::_post_fix_node(Node *p_node, Node *p_root, HashMap<
 		}
 	}
 
-	if (Object::cast_to<AnimationPlayer>(p_node)) {
-		AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(p_node);
+	if (Object::cast_to<SEAnimation>(p_node)) {
+		SEAnimation *ap = Object::cast_to<SEAnimation>(p_node);
 
 		for (int i = 0; i < post_importer_plugins.size(); i++) {
 			post_importer_plugins.write[i]->internal_process(EditorScenePostImportPlugin::INTERNAL_IMPORT_CATEGORY_ANIMATION_NODE, p_root, p_node, Ref<Resource>(), node_settings);
@@ -1939,7 +1939,7 @@ Ref<Animation> ResourceImporterScene::_save_animation_to_file(Ref<Animation> ani
 	return anim;
 }
 
-void ResourceImporterScene::_create_slices(AnimationPlayer *ap, Ref<Animation> anim, const Array &p_slices, bool p_bake_all) {
+void ResourceImporterScene::_create_slices(SEAnimation *ap, Ref<Animation> anim, const Array &p_slices, bool p_bake_all) {
 	Ref<AnimationLibrary> al = ap->get_animation_library(ap->find_animation_library(anim));
 
 	for (int i = 0; i < p_slices.size(); i += 7) {
@@ -2094,7 +2094,7 @@ void ResourceImporterScene::_create_slices(AnimationPlayer *ap, Ref<Animation> a
 	al->remove_animation(ap->find_animation(anim)); // Remove original animation (no longer needed).
 }
 
-void ResourceImporterScene::_optimize_animations(AnimationPlayer *anim, float p_max_vel_error, float p_max_ang_error, int p_prc_error) {
+void ResourceImporterScene::_optimize_animations(SEAnimation *anim, float p_max_vel_error, float p_max_ang_error, int p_prc_error) {
 	List<StringName> anim_names;
 	anim->get_animation_list(&anim_names);
 	for (const StringName &E : anim_names) {
@@ -2103,7 +2103,7 @@ void ResourceImporterScene::_optimize_animations(AnimationPlayer *anim, float p_
 	}
 }
 
-void ResourceImporterScene::_compress_animations(AnimationPlayer *anim, int p_page_size_kb) {
+void ResourceImporterScene::_compress_animations(SEAnimation *anim, int p_page_size_kb) {
 	List<StringName> anim_names;
 	anim->get_animation_list(&anim_names);
 	for (const StringName &E : anim_names) {
@@ -2216,7 +2216,7 @@ void ResourceImporterScene::get_internal_import_options(InternalImportCategory p
 		case INTERNAL_IMPORT_CATEGORY_SKELETON_3D_NODE: {
 			r_options->push_back(ImportOption(PropertyInfo(Variant::OBJECT, "node/script", PROPERTY_HINT_RESOURCE_TYPE, "Script"), Variant()));
 			r_options->push_back(ImportOption(PropertyInfo(Variant::BOOL, "import/skip_import", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED), false));
-			r_options->push_back(ImportOption(PropertyInfo(Variant::INT, "rest_pose/load_pose", PROPERTY_HINT_ENUM, "Default Pose,Use AnimationPlayer,Load External Animation", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED), 0));
+			r_options->push_back(ImportOption(PropertyInfo(Variant::INT, "rest_pose/load_pose", PROPERTY_HINT_ENUM, "Default Pose,Use SEAnimation,Load External Animation", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED), 0));
 			r_options->push_back(ImportOption(PropertyInfo(Variant::OBJECT, "rest_pose/external_animation_library", PROPERTY_HINT_RESOURCE_TYPE, "Animation,AnimationLibrary", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED), Variant()));
 			r_options->push_back(ImportOption(PropertyInfo(Variant::STRING, "rest_pose/selected_animation", PROPERTY_HINT_ENUM, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED), ""));
 			r_options->push_back(ImportOption(PropertyInfo(Variant::FLOAT, "rest_pose/selected_timestamp", PROPERTY_HINT_RANGE, "0,1,0.001,or_greater,suffix:s", PROPERTY_USAGE_DEFAULT), 0.0f));
@@ -2814,7 +2814,7 @@ void ResourceImporterScene::_copy_meta(Object *p_src_object, Object *p_dst_objec
 	}
 }
 
-void ResourceImporterScene::_optimize_track_usage(AnimationPlayer *p_player, AnimationImportTracks *p_track_actions) {
+void ResourceImporterScene::_optimize_track_usage(SEAnimation *p_player, AnimationImportTracks *p_track_actions) {
 	List<StringName> anims;
 	p_player->get_animation_list(&anims);
 	Node *parent = p_player->get_parent();
@@ -3294,7 +3294,7 @@ Error ResourceImporterScene::import(ResourceUID::ID p_source_id, const String &p
 	if (_scene_import_type == "PackedScene") {
 		int scene_child_count = scene->get_child_count();
 		for (int i = 0; i < scene_child_count; i++) {
-			AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(scene->get_child(i));
+			SEAnimation *ap = Object::cast_to<SEAnimation>(scene->get_child(i));
 			if (ap) {
 				if (ap->can_apply_reset()) {
 					ap->apply_reset();
@@ -3328,7 +3328,7 @@ Error ResourceImporterScene::import(ResourceUID::ID p_source_id, const String &p
 	if (_scene_import_type == "AnimationLibrary") {
 		Ref<AnimationLibrary> library;
 		for (int i = 0; i < scene->get_child_count(); i++) {
-			AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(scene->get_child(i));
+			SEAnimation *ap = Object::cast_to<SEAnimation>(scene->get_child(i));
 			if (ap) {
 				List<StringName> libs;
 				ap->get_animation_library_list(&libs);

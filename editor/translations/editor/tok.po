@@ -3466,11 +3466,11 @@ msgstr "mi ken ala e lukin lili."
 
 msgid ""
 "Scene contains\n"
-"WorldEnvironment.\n"
+"SEWorld.\n"
 "Preview disabled."
 msgstr ""
 "ma pali li jo e\n"
-"ijo pali WorldEnvironment.\n"
+"ijo pali SEWorld.\n"
 "mi ken ala e lukin lili."
 
 msgid "Move Mode"

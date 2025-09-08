@@ -38,7 +38,7 @@
 #include "scene/3d/node_3d.h"
 #include "scene/3d/path_3d.h"
 #include "scene/3d/skeleton_3d.h"
-#include "scene/animation/animation_player.h"
+#include "scene/animation/se_animation.h"
 #include "scene/resources/3d/importer_mesh.h"
 #include "scene/resources/animation.h"
 #include "scene/resources/surface_tool.h"
@@ -1831,7 +1831,7 @@ Node *EditorSceneFormatImporterCollada::import_scene(const String &p_path, uint3
 
 	if (p_flags & IMPORT_ANIMATION) {
 		state.create_animations(true);
-		AnimationPlayer *ap = memnew(AnimationPlayer);
+		SEAnimation *ap = memnew(SEAnimation);
 		for (int i = 0; i < state.animations.size(); i++) {
 			String name;
 			if (state.animations[i]->get_name().is_empty()) {

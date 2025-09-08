@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  static_body_3d.cpp                                                    */
+/*  se_body.cpp                                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,7 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#include "static_body_3d.h"
+#include "se_body.h"
 
 #ifndef NAVIGATION_3D_DISABLED
 #include "core/math/convex_hull.h"
@@ -46,48 +46,48 @@
 #include "scene/resources/navigation_mesh.h"
 #include "servers/navigation_server_3d.h"
 
-Callable StaticBody3D::_navmesh_source_geometry_parsing_callback;
-RID StaticBody3D::_navmesh_source_geometry_parser;
+Callable SEBody::_navmesh_source_geometry_parsing_callback;
+RID SEBody::_navmesh_source_geometry_parser;
 #endif // NAVIGATION_3D_DISABLED
 
-void StaticBody3D::set_physics_material_override(const Ref<PhysicsMaterial> &p_physics_material_override) {
+void SEBody::set_physics_material_override(const Ref<PhysicsMaterial> &p_physics_material_override) {
 	if (physics_material_override.is_valid()) {
-		physics_material_override->disconnect_changed(callable_mp(this, &StaticBody3D::_reload_physics_characteristics));
+		physics_material_override->disconnect_changed(callable_mp(this, &SEBody::_reload_physics_characteristics));
 	}
 
 	physics_material_override = p_physics_material_override;
 
 	if (physics_material_override.is_valid()) {
-		physics_material_override->connect_changed(callable_mp(this, &StaticBody3D::_reload_physics_characteristics));
+		physics_material_override->connect_changed(callable_mp(this, &SEBody::_reload_physics_characteristics));
 	}
 	_reload_physics_characteristics();
 }
 
-Ref<PhysicsMaterial> StaticBody3D::get_physics_material_override() const {
+Ref<PhysicsMaterial> SEBody::get_physics_material_override() const {
 	return physics_material_override;
 }
 
-void StaticBody3D::set_constant_linear_velocity(const Vector3 &p_vel) {
+void SEBody::set_constant_linear_velocity(const Vector3 &p_vel) {
 	constant_linear_velocity = p_vel;
 
 	PhysicsServer3D::get_singleton()->body_set_state(get_rid(), PhysicsServer3D::BODY_STATE_LINEAR_VELOCITY, constant_linear_velocity);
 }
 
-void StaticBody3D::set_constant_angular_velocity(const Vector3 &p_vel) {
+void SEBody::set_constant_angular_velocity(const Vector3 &p_vel) {
 	constant_angular_velocity = p_vel;
 
 	PhysicsServer3D::get_singleton()->body_set_state(get_rid(), PhysicsServer3D::BODY_STATE_ANGULAR_VELOCITY, constant_angular_velocity);
 }
 
-Vector3 StaticBody3D::get_constant_linear_velocity() const {
+Vector3 SEBody::get_constant_linear_velocity() const {
 	return constant_linear_velocity;
 }
 
-Vector3 StaticBody3D::get_constant_angular_velocity() const {
+Vector3 SEBody::get_constant_angular_velocity() const {
 	return constant_angular_velocity;
 }
 
-void StaticBody3D::_reload_physics_characteristics() {
+void SEBody::_reload_physics_characteristics() {
 	if (physics_material_override.is_null()) {
 		PhysicsServer3D::get_singleton()->body_set_param(get_rid(), PhysicsServer3D::BODY_PARAM_BOUNCE, 0);
 		PhysicsServer3D::get_singleton()->body_set_param(get_rid(), PhysicsServer3D::BODY_PARAM_FRICTION, 1);
@@ -98,17 +98,17 @@ void StaticBody3D::_reload_physics_characteristics() {
 }
 
 #ifndef NAVIGATION_3D_DISABLED
-void StaticBody3D::navmesh_parse_init() {
+void SEBody::navmesh_parse_init() {
 	ERR_FAIL_NULL(NavigationServer3D::get_singleton());
 	if (!_navmesh_source_geometry_parser.is_valid()) {
-		_navmesh_source_geometry_parsing_callback = callable_mp_static(&StaticBody3D::navmesh_parse_source_geometry);
+		_navmesh_source_geometry_parsing_callback = callable_mp_static(&SEBody::navmesh_parse_source_geometry);
 		_navmesh_source_geometry_parser = NavigationServer3D::get_singleton()->source_geometry_parser_create();
 		NavigationServer3D::get_singleton()->source_geometry_parser_set_callback(_navmesh_source_geometry_parser, _navmesh_source_geometry_parsing_callback);
 	}
 }
 
-void StaticBody3D::navmesh_parse_source_geometry(const Ref<NavigationMesh> &p_navigation_mesh, Ref<NavigationMeshSourceGeometryData3D> p_source_geometry_data, Node *p_node) {
-	StaticBody3D *static_body = Object::cast_to<StaticBody3D>(p_node);
+void SEBody::navmesh_parse_source_geometry(const Ref<NavigationMesh> &p_navigation_mesh, Ref<NavigationMeshSourceGeometryData3D> p_source_geometry_data, Node *p_node) {
+	SEBody *static_body = Object::cast_to<SEBody>(p_node);
 
 	if (static_body == nullptr) {
 		return;
@@ -231,20 +231,20 @@ void StaticBody3D::navmesh_parse_source_geometry(const Ref<NavigationMesh> &p_na
 }
 #endif // NAVIGATION_3D_DISABLED
 
-void StaticBody3D::_bind_methods() {
-	ClassDB::bind_method(D_METHOD("set_constant_linear_velocity", "vel"), &StaticBody3D::set_constant_linear_velocity);
-	ClassDB::bind_method(D_METHOD("set_constant_angular_velocity", "vel"), &StaticBody3D::set_constant_angular_velocity);
-	ClassDB::bind_method(D_METHOD("get_constant_linear_velocity"), &StaticBody3D::get_constant_linear_velocity);
-	ClassDB::bind_method(D_METHOD("get_constant_angular_velocity"), &StaticBody3D::get_constant_angular_velocity);
+void SEBody::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("set_constant_linear_velocity", "vel"), &SEBody::set_constant_linear_velocity);
+	ClassDB::bind_method(D_METHOD("set_constant_angular_velocity", "vel"), &SEBody::set_constant_angular_velocity);
+	ClassDB::bind_method(D_METHOD("get_constant_linear_velocity"), &SEBody::get_constant_linear_velocity);
+	ClassDB::bind_method(D_METHOD("get_constant_angular_velocity"), &SEBody::get_constant_angular_velocity);
 
-	ClassDB::bind_method(D_METHOD("set_physics_material_override", "physics_material_override"), &StaticBody3D::set_physics_material_override);
-	ClassDB::bind_method(D_METHOD("get_physics_material_override"), &StaticBody3D::get_physics_material_override);
+	ClassDB::bind_method(D_METHOD("set_physics_material_override", "physics_material_override"), &SEBody::set_physics_material_override);
+	ClassDB::bind_method(D_METHOD("get_physics_material_override"), &SEBody::get_physics_material_override);
 
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "physics_material_override", PROPERTY_HINT_RESOURCE_TYPE, "PhysicsMaterial"), "set_physics_material_override", "get_physics_material_override");
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR3, "constant_linear_velocity", PROPERTY_HINT_NONE, "suffix:m/s"), "set_constant_linear_velocity", "get_constant_linear_velocity");
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR3, "constant_angular_velocity", PROPERTY_HINT_NONE, U"radians_as_degrees,suffix:\u00B0/s"), "set_constant_angular_velocity", "get_constant_angular_velocity");
 }
 
-StaticBody3D::StaticBody3D(PhysicsServer3D::BodyMode p_mode) :
+SEBody::SEBody(PhysicsServer3D::BodyMode p_mode) :
 		PhysicsBody3D(p_mode) {
 }

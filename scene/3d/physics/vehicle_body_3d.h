@@ -31,7 +31,7 @@
 #pragma once
 
 #include "scene/3d/physics/physics_body_3d.h"
-#include "scene/3d/physics/rigid_body_3d.h"
+#include "scene/3d/physics/se_physics_body.h"
 
 class VehicleBody3D;
 
@@ -194,8 +194,8 @@ public:
 	VehicleWheel3D();
 };
 
-class VehicleBody3D : public RigidBody3D {
-	GDCLASS(VehicleBody3D, RigidBody3D);
+class VehicleBody3D : public SEPhysicsBody {
+	GDCLASS(VehicleBody3D, SEPhysicsBody);
 
 	real_t engine_force = 0.0;
 	real_t brake = 0.0;

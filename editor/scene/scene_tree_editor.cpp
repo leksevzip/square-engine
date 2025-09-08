@@ -32,7 +32,7 @@
 
 #include "core/config/project_settings.h"
 #include "core/object/script_language.h"
-#include "editor/animation/animation_player_editor_plugin.h"
+#include "editor/animation/se_animation_editor_plugin.h"
 #include "editor/docks/editor_dock_manager.h"
 #include "editor/docks/node_dock.h"
 #include "editor/editor_node.h"
@@ -140,7 +140,7 @@ void SceneTreeEditor::_cell_button_pressed(Object *p_item, int p_column, int p_i
 		undo_redo->commit_action();
 	} else if (p_id == BUTTON_PIN) {
 		if (n->is_class("AnimationMixer")) {
-			AnimationPlayerEditor::get_singleton()->unpin();
+			SEAnimationEditor::get_singleton()->unpin();
 			_update_tree();
 		}
 
@@ -619,10 +619,10 @@ void SceneTreeEditor::_update_node(Node *p_node, TreeItem *p_item, bool p_part_o
 		}
 
 		if (p_node->is_class("AnimationMixer")) {
-			bool is_pinned = AnimationPlayerEditor::get_singleton()->get_editing_node() == p_node && AnimationPlayerEditor::get_singleton()->is_pinned();
+			bool is_pinned = SEAnimationEditor::get_singleton()->get_editing_node() == p_node && SEAnimationEditor::get_singleton()->is_pinned();
 
 			if (is_pinned) {
-				p_item->add_button(0, get_editor_theme_icon(SNAME("Pin")), BUTTON_PIN, false, TTR("AnimationPlayer is pinned.\nClick to unpin."));
+				p_item->add_button(0, get_editor_theme_icon(SNAME("Pin")), BUTTON_PIN, false, TTR("SEAnimation is pinned.\nClick to unpin."));
 			}
 		}
 	}
@@ -931,10 +931,10 @@ void SceneTreeEditor::_update_tree(bool p_scroll_to_selected) {
 
 	if (node_cache.current_scene_node) {
 		// Handle pinning/unpinning the animation player only do this once per iteration.
-		Node *pinned_node = AnimationPlayerEditor::get_singleton()->get_editing_node();
+		Node *pinned_node = SEAnimationEditor::get_singleton()->get_editing_node();
 		// If pinned state changed, update the currently pinned node.
-		if (AnimationPlayerEditor::get_singleton()->is_pinned() != node_cache.current_has_pin) {
-			node_cache.current_has_pin = AnimationPlayerEditor::get_singleton()->is_pinned();
+		if (SEAnimationEditor::get_singleton()->is_pinned() != node_cache.current_has_pin) {
+			node_cache.current_has_pin = SEAnimationEditor::get_singleton()->is_pinned();
 			if (node_cache.has(pinned_node)) {
 				node_cache.mark_dirty(pinned_node);
 			}

@@ -30,10 +30,10 @@
 
 #pragma once
 
-#include "scene/3d/physics/static_body_3d.h"
+#include "scene/3d/physics/se_body.h"
 
-class AnimatableBody3D : public StaticBody3D {
-	GDCLASS(AnimatableBody3D, StaticBody3D);
+class AnimatableBody3D : public SEBody {
+	GDCLASS(AnimatableBody3D, SEBody);
 
 private:
 	Vector3 linear_velocity;

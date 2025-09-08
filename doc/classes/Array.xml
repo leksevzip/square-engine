@@ -69,7 +69,7 @@
 				In GDScript, this constructor is usually not necessary, as it is possible to create a typed array through static typing:
 				[codeblock]
 				var numbers: Array[float] = []
-				var children: Array[Node] = [$Node, $Sprite2D, $RigidBody3D]
+				var children: Array[Node] = [$Node, $Sprite2D, $SEPhysicsBody]
 
 				var integers: Array[int] = [0.2, 4.5, -2.0]
 				print(integers) # Prints [0, 4, -2]

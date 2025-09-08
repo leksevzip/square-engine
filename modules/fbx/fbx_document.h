@@ -99,7 +99,7 @@ public:
 	void _process_mesh_instances(Ref<FBXState> p_state, Node *p_scene_root);
 	void _generate_scene_node(Ref<FBXState> p_state, const GLTFNodeIndex p_node_index, Node *p_scene_parent, Node *p_scene_root);
 	void _generate_skeleton_bone_node(Ref<FBXState> p_state, const GLTFNodeIndex p_node_index, Node *p_scene_parent, Node *p_scene_root);
-	void _import_animation(Ref<FBXState> p_state, AnimationPlayer *p_animation_player,
+	void _import_animation(Ref<FBXState> p_state, SEAnimation *p_se_animation,
 			const GLTFAnimationIndex p_index, const bool p_trimming, const bool p_remove_immutable_tracks);
 	Error _parse(Ref<FBXState> p_state, String p_path, Ref<FileAccess> p_file);
 };

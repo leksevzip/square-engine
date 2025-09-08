@@ -65,9 +65,9 @@ The previous type was simply wrong and didn't match the actual C++ definition. C
 GH-74600
 --------
 Validate extension JSON: Error: Hash changed for 'classes/AnimatedSprite2D/methods/play', from 57037631 to 8D62DD1B. This means that the function has changed and no compatibility function was provided.
-Validate extension JSON: Error: Hash changed for 'classes/AnimatedSprite3D/methods/play', from 57037631 to 8D62DD1B. This means that the function has changed and no compatibility function was provided.
+Validate extension JSON: Error: Hash changed for 'classes/AnimatedSEImage/methods/play', from 57037631 to 8D62DD1B. This means that the function has changed and no compatibility function was provided.
 Validate extension JSON: Error: Hash changed for 'classes/Animation/methods/compress', from 6B87C27F to D713F035. This means that the function has changed and no compatibility function was provided.
-Validate extension JSON: Error: Hash changed for 'classes/AnimationPlayer/methods/play', from 846788DD to B9DCE17F. This means that the function has changed and no compatibility function was provided.
+Validate extension JSON: Error: Hash changed for 'classes/SEAnimation/methods/play', from 846788DD to B9DCE17F. This means that the function has changed and no compatibility function was provided.
 Validate extension JSON: Error: Hash changed for 'classes/AudioStreamPlayer/methods/play', from B54BA998 to 74B7272C. This means that the function has changed and no compatibility function was provided.
 Validate extension JSON: Error: Hash changed for 'classes/AudioStreamPlayer2D/methods/play', from B54BA998 to 74B7272C. This means that the function has changed and no compatibility function was provided.
 Validate extension JSON: Error: Hash changed for 'classes/AudioStreamPlayer3D/methods/play', from B54BA998 to 74B7272C. This means that the function has changed and no compatibility function was provided.

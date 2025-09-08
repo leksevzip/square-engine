@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  static_body_3d.h                                                      */
+/*  se_world.h                                                   */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -30,46 +30,37 @@
 
 #pragma once
 
-#include "scene/3d/physics/physics_body_3d.h"
+#include "scene/main/node.h"
+#include "scene/resources/camera_attributes.h"
+#include "scene/resources/compositor.h"
+#include "scene/resources/environment.h"
 
-#ifndef NAVIGATION_3D_DISABLED
-class NavigationMesh;
-class NavigationMeshSourceGeometryData3D;
-#endif // NAVIGATION_3D_DISABLED
+class SEWorld : public Node {
+	GDCLASS(SEWorld, Node);
 
-class StaticBody3D : public PhysicsBody3D {
-	GDCLASS(StaticBody3D, PhysicsBody3D);
+	Ref<Environment> environment;
+	Ref<CameraAttributes> camera_attributes;
+	Ref<Compositor> compositor;
 
-private:
-	Vector3 constant_linear_velocity;
-	Vector3 constant_angular_velocity;
-
-	Ref<PhysicsMaterial> physics_material_override;
+	void _update_current_environment();
+	void _update_current_camera_attributes();
+	void _update_current_compositor();
 
 protected:
+	void _notification(int p_what);
 	static void _bind_methods();
 
 public:
-	void set_physics_material_override(const Ref<PhysicsMaterial> &p_physics_material_override);
-	Ref<PhysicsMaterial> get_physics_material_override() const;
+	void set_environment(const Ref<Environment> &p_environment);
+	Ref<Environment> get_environment() const;
 
-	void set_constant_linear_velocity(const Vector3 &p_vel);
-	void set_constant_angular_velocity(const Vector3 &p_vel);
+	void set_camera_attributes(const Ref<CameraAttributes> &p_camera_attributes);
+	Ref<CameraAttributes> get_camera_attributes() const;
 
-	Vector3 get_constant_linear_velocity() const;
-	Vector3 get_constant_angular_velocity() const;
+	void set_compositor(const Ref<Compositor> &p_compositor);
+	Ref<Compositor> get_compositor() const;
 
-	StaticBody3D(PhysicsServer3D::BodyMode p_mode = PhysicsServer3D::BODY_MODE_STATIC);
+	PackedStringArray get_configuration_warnings() const override;
 
-private:
-	void _reload_physics_characteristics();
-
-#ifndef NAVIGATION_3D_DISABLED
-	static Callable _navmesh_source_geometry_parsing_callback;
-	static RID _navmesh_source_geometry_parser;
-
-public:
-	static void navmesh_parse_init();
-	static void navmesh_parse_source_geometry(const Ref<NavigationMesh> &p_navigation_mesh, Ref<NavigationMeshSourceGeometryData3D> p_source_geometry_data, Node *p_node);
-#endif // NAVIGATION_3D_DISABLED
+	SEWorld();
 };

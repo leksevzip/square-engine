@@ -4,11 +4,11 @@
 
 [node name="GetNode" type="Node"]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="SEAnimation" type="SEAnimation" parent="."]
 
 [node name="UniqueNames" type="Node" parent="."]
 
-[node name="UniqueAnimationPlayer" type="AnimationPlayer" parent="UniqueNames"]
+[node name="UniqueSEAnimation" type="SEAnimation" parent="UniqueNames"]
 unique_name_in_owner = true
 
 [node name="UniqueA" type="Node" parent="UniqueNames"]

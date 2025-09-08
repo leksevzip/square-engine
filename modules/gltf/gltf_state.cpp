@@ -59,8 +59,8 @@ void GLTFState::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_accessors", "accessors"), &GLTFState::set_accessors);
 	ClassDB::bind_method(D_METHOD("get_meshes"), &GLTFState::get_meshes);
 	ClassDB::bind_method(D_METHOD("set_meshes", "meshes"), &GLTFState::set_meshes);
-	ClassDB::bind_method(D_METHOD("get_animation_players_count", "idx"), &GLTFState::get_animation_players_count);
-	ClassDB::bind_method(D_METHOD("get_animation_player", "idx"), &GLTFState::get_animation_player);
+	ClassDB::bind_method(D_METHOD("get_se_animations_count", "idx"), &GLTFState::get_se_animations_count);
+	ClassDB::bind_method(D_METHOD("get_se_animation", "idx"), &GLTFState::get_se_animation);
 	ClassDB::bind_method(D_METHOD("get_materials"), &GLTFState::get_materials);
 	ClassDB::bind_method(D_METHOD("set_materials", "materials"), &GLTFState::set_materials);
 	ClassDB::bind_method(D_METHOD("get_scene_name"), &GLTFState::get_scene_name);
@@ -376,13 +376,13 @@ GLTFNodeIndex GLTFState::get_node_index(Node *p_node) {
 	return -1;
 }
 
-int GLTFState::get_animation_players_count(int idx) {
-	return animation_players.size();
+int GLTFState::get_se_animations_count(int idx) {
+	return se_animations.size();
 }
 
-AnimationPlayer *GLTFState::get_animation_player(int idx) {
-	ERR_FAIL_INDEX_V(idx, animation_players.size(), nullptr);
-	return animation_players[idx];
+SEAnimation *GLTFState::get_se_animation(int idx) {
+	ERR_FAIL_INDEX_V(idx, se_animations.size(), nullptr);
+	return se_animations[idx];
 }
 
 void GLTFState::set_discard_meshes_and_materials(bool p_discard_meshes_and_materials) {

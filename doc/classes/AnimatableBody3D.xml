@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<class name="AnimatableBody3D" inherits="StaticBody3D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../class.xsd">
+<class name="AnimatableBody3D" inherits="SEBody" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../class.xsd">
 	<brief_description>
 		A 3D physics body that can't be moved by external forces. When moved manually, it affects other bodies in its path.
 	</brief_description>
@@ -16,7 +16,7 @@
 	</tutorials>
 	<members>
 		<member name="sync_to_physics" type="bool" setter="set_sync_to_physics" getter="is_sync_to_physics_enabled" default="true">
-			If [code]true[/code], the body's movement will be synchronized to the physics frame. This is useful when animating movement via [AnimationPlayer], for example on moving platforms. Do [b]not[/b] use together with [method PhysicsBody3D.move_and_collide].
+			If [code]true[/code], the body's movement will be synchronized to the physics frame. This is useful when animating movement via [SEAnimation], for example on moving platforms. Do [b]not[/b] use together with [method PhysicsBody3D.move_and_collide].
 		</member>
 	</members>
 </class>

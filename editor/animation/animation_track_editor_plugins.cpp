@@ -37,8 +37,8 @@
 #include "editor/themes/editor_scale.h"
 #include "scene/2d/animated_sprite_2d.h"
 #include "scene/2d/sprite_2d.h"
-#include "scene/3d/sprite_3d.h"
-#include "scene/animation/animation_player.h"
+#include "scene/3d/se_image.h"
+#include "scene/animation/se_animation.h"
 #include "servers/audio/audio_stream.h"
 
 /// BOOL ///
@@ -377,7 +377,7 @@ Rect2 AnimationTrackEditSpriteFrame::get_key_rect(int p_index, float p_pixels_se
 
 	Size2 size;
 
-	if (Object::cast_to<Sprite2D>(object) || Object::cast_to<Sprite3D>(object)) {
+	if (Object::cast_to<Sprite2D>(object) || Object::cast_to<SEImage>(object)) {
 		Ref<Texture2D> texture = object->call("get_texture");
 		if (texture.is_null()) {
 			return AnimationTrackEdit::get_key_rect(p_index, p_pixels_sec);
@@ -398,7 +398,7 @@ Rect2 AnimationTrackEditSpriteFrame::get_key_rect(int p_index, float p_pixels_se
 		if (vframes > 1) {
 			size.y /= vframes;
 		}
-	} else if (Object::cast_to<AnimatedSprite2D>(object) || Object::cast_to<AnimatedSprite3D>(object)) {
+	} else if (Object::cast_to<AnimatedSprite2D>(object) || Object::cast_to<AnimatedSEImage>(object)) {
 		Ref<SpriteFrames> sf = object->call("get_sprite_frames");
 		if (sf.is_null()) {
 			return AnimationTrackEdit::get_key_rect(p_index, p_pixels_sec);
@@ -454,7 +454,7 @@ void AnimationTrackEditSpriteFrame::draw_key(int p_index, float p_pixels_sec, in
 	Ref<Texture2D> texture;
 	Rect2 region;
 
-	if (Object::cast_to<Sprite2D>(object) || Object::cast_to<Sprite3D>(object)) {
+	if (Object::cast_to<Sprite2D>(object) || Object::cast_to<SEImage>(object)) {
 		texture = object->call("get_texture");
 		if (texture.is_null()) {
 			AnimationTrackEdit::draw_key(p_index, p_pixels_sec, p_x, p_selected, p_clip_left, p_clip_right);
@@ -489,7 +489,7 @@ void AnimationTrackEditSpriteFrame::draw_key(int p_index, float p_pixels_sec, in
 		region.position.x += region.size.x * coords.x;
 		region.position.y += region.size.y * coords.y;
 
-	} else if (Object::cast_to<AnimatedSprite2D>(object) || Object::cast_to<AnimatedSprite3D>(object)) {
+	} else if (Object::cast_to<AnimatedSprite2D>(object) || Object::cast_to<AnimatedSEImage>(object)) {
 		Ref<SpriteFrames> sf = object->call("get_sprite_frames");
 		if (sf.is_null()) {
 			AnimationTrackEdit::draw_key(p_index, p_pixels_sec, p_x, p_selected, p_clip_left, p_clip_right);
@@ -578,7 +578,7 @@ Rect2 AnimationTrackEditSubAnim::get_key_rect(int p_index, float p_pixels_sec) {
 		return AnimationTrackEdit::get_key_rect(p_index, p_pixels_sec);
 	}
 
-	AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(object);
+	SEAnimation *ap = Object::cast_to<SEAnimation>(object);
 
 	if (!ap) {
 		return AnimationTrackEdit::get_key_rect(p_index, p_pixels_sec);
@@ -614,7 +614,7 @@ void AnimationTrackEditSubAnim::draw_key(int p_index, float p_pixels_sec, int p_
 		return;
 	}
 
-	AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(object);
+	SEAnimation *ap = Object::cast_to<SEAnimation>(object);
 
 	if (!ap) {
 		AnimationTrackEdit::draw_key(p_index, p_pixels_sec, p_x, p_selected, p_clip_left, p_clip_right);
@@ -1180,7 +1180,7 @@ Rect2 AnimationTrackEditTypeAnimation::get_key_rect(int p_index, float p_pixels_
 		return AnimationTrackEdit::get_key_rect(p_index, p_pixels_sec);
 	}
 
-	AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(object);
+	SEAnimation *ap = Object::cast_to<SEAnimation>(object);
 
 	if (!ap) {
 		return AnimationTrackEdit::get_key_rect(p_index, p_pixels_sec);
@@ -1216,7 +1216,7 @@ void AnimationTrackEditTypeAnimation::draw_key(int p_index, float p_pixels_sec, 
 		return;
 	}
 
-	AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(object);
+	SEAnimation *ap = Object::cast_to<SEAnimation>(object);
 
 	if (!ap) {
 		AnimationTrackEdit::draw_key(p_index, p_pixels_sec, p_x, p_selected, p_clip_left, p_clip_right);
@@ -1330,20 +1330,20 @@ AnimationTrackEdit *AnimationTrackEditDefaultPlugin::create_value_track_edit(Obj
 		return audio;
 	}
 
-	if (p_property == "frame" && (p_object->is_class("Sprite2D") || p_object->is_class("Sprite3D") || p_object->is_class("AnimatedSprite2D") || p_object->is_class("AnimatedSprite3D"))) {
+	if (p_property == "frame" && (p_object->is_class("Sprite2D") || p_object->is_class("SEImage") || p_object->is_class("AnimatedSprite2D") || p_object->is_class("AnimatedSEImage"))) {
 		AnimationTrackEditSpriteFrame *sprite = memnew(AnimationTrackEditSpriteFrame);
 		sprite->set_node(p_object);
 		return sprite;
 	}
 
-	if (p_property == "frame_coords" && (p_object->is_class("Sprite2D") || p_object->is_class("Sprite3D"))) {
+	if (p_property == "frame_coords" && (p_object->is_class("Sprite2D") || p_object->is_class("SEImage"))) {
 		AnimationTrackEditSpriteFrame *sprite = memnew(AnimationTrackEditSpriteFrame);
 		sprite->set_as_coords();
 		sprite->set_node(p_object);
 		return sprite;
 	}
 
-	if (p_property == "current_animation" && (p_object->is_class("AnimationPlayer"))) {
+	if (p_property == "current_animation" && (p_object->is_class("SEAnimation"))) {
 		AnimationTrackEditSubAnim *player = memnew(AnimationTrackEditSubAnim);
 		player->set_node(p_object);
 		return player;

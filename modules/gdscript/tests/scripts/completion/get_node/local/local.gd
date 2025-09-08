@@ -1,7 +1,7 @@
 extends Node
 
 func a():
-    var test = $AnimationPlayer
+    var test = $SEAnimation
 	var foo = 10
     test.➡
     pass

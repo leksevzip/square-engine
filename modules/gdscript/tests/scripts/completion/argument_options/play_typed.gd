@@ -1,6 +1,6 @@
 extends Node
 
-@onready var anim: AnimationPlayer = $AnimationPlayer
+@onready var anim: SEAnimation = $SEAnimation
 
 func test():
 	anim.play(➡)

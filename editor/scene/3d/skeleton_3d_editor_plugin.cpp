@@ -31,7 +31,7 @@
 #include "skeleton_3d_editor_plugin.h"
 
 #include "core/io/resource_saver.h"
-#include "editor/animation/animation_player_editor_plugin.h"
+#include "editor/animation/se_animation_editor_plugin.h"
 #include "editor/editor_node.h"
 #include "editor/editor_string_names.h"
 #include "editor/editor_undo_redo_manager.h"
@@ -246,7 +246,7 @@ void BonePropertiesEditor::set_target(const String &p_prop) {
 }
 
 void BonePropertiesEditor::_property_keyed(const String &p_path, bool p_advance) {
-	AnimationTrackEditor *te = AnimationPlayerEditor::get_singleton()->get_track_editor();
+	AnimationTrackEditor *te = SEAnimationEditor::get_singleton()->get_track_editor();
 	if (!te || !te->has_keying()) {
 		return;
 	}
@@ -442,7 +442,7 @@ void Skeleton3DEditor::insert_keys(const bool p_all_bones) {
 	Node *root = EditorNode::get_singleton()->get_tree()->get_root();
 	String path = String(root->get_path_to(skeleton));
 
-	AnimationTrackEditor *te = AnimationPlayerEditor::get_singleton()->get_track_editor();
+	AnimationTrackEditor *te = SEAnimationEditor::get_singleton()->get_track_editor();
 	te->make_insert_queue();
 	for (int i = 0; i < bone_len; i++) {
 		const String name = skeleton->get_bone_name(i);
@@ -985,7 +985,7 @@ void Skeleton3DEditor::create_editors() {
 	set_focus_mode(FOCUS_ALL);
 
 	Node3DEditor *ne = Node3DEditor::get_singleton();
-	AnimationTrackEditor *te = AnimationPlayerEditor::get_singleton()->get_track_editor();
+	AnimationTrackEditor *te = SEAnimationEditor::get_singleton()->get_track_editor();
 
 	// Create File dialog.
 	file_dialog = memnew(EditorFileDialog);

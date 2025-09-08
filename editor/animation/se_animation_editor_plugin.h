@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  animation_player_editor_plugin.h                                      */
+/*  se_animation_editor_plugin.h                                      */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -33,24 +33,24 @@
 #include "editor/animation/animation_library_editor.h"
 #include "editor/animation/animation_track_editor.h"
 #include "editor/plugins/editor_plugin.h"
-#include "scene/animation/animation_player.h"
+#include "scene/animation/se_animation.h"
 #include "scene/gui/dialogs.h"
 #include "scene/gui/slider.h"
 #include "scene/gui/spin_box.h"
 #include "scene/gui/texture_button.h"
 #include "scene/gui/tree.h"
 
-class AnimationPlayerEditorPlugin;
+class SEAnimationEditorPlugin;
 class ImageTexture;
 
-class AnimationPlayerEditor : public VBoxContainer {
-	GDCLASS(AnimationPlayerEditor, VBoxContainer);
+class SEAnimationEditor : public VBoxContainer {
+	GDCLASS(SEAnimationEditor, VBoxContainer);
 
-	friend AnimationPlayerEditorPlugin;
+	friend SEAnimationEditorPlugin;
 
-	AnimationPlayerEditorPlugin *plugin = nullptr;
+	SEAnimationEditorPlugin *plugin = nullptr;
 	AnimationMixer *original_node = nullptr; // For pinned mark in SceneTree.
-	AnimationPlayer *player = nullptr; // For AnimationPlayerEditor, could be dummy.
+	SEAnimation *player = nullptr; // For SEAnimationEditor, could be dummy.
 	ObjectID cached_root_node_id;
 	bool is_dummy = false;
 
@@ -136,7 +136,7 @@ class AnimationPlayerEditor : public VBoxContainer {
 	bool updating_blends = false;
 
 	AnimationTrackEditor *track_editor = nullptr;
-	static AnimationPlayerEditor *singleton;
+	static SEAnimationEditor *singleton;
 
 	// Onion skinning.
 	struct {
@@ -214,7 +214,7 @@ class AnimationPlayerEditor : public VBoxContainer {
 	void _update_name_dialog_library_dropdown();
 	void _blend_edited();
 
-	void _animation_player_changed(Object *p_pl);
+	void _se_animation_changed(Object *p_pl);
 	void _animation_libraries_updated();
 
 	void _animation_key_editor_seek(float p_pos, bool p_timeline_only = false, bool p_update_position_only = false);
@@ -244,7 +244,7 @@ class AnimationPlayerEditor : public VBoxContainer {
 
 	void _ensure_dummy_player();
 
-	~AnimationPlayerEditor();
+	~SEAnimationEditor();
 
 protected:
 	void _notification(int p_what);
@@ -253,11 +253,11 @@ protected:
 
 public:
 	AnimationMixer *get_editing_node() const;
-	AnimationPlayer *get_player() const;
+	SEAnimation *get_player() const;
 	AnimationMixer *fetch_mixer_for_library() const;
 	Node *get_cached_root_node() const;
 
-	static AnimationPlayerEditor *get_singleton() { return singleton; }
+	static SEAnimationEditor *get_singleton() { return singleton; }
 
 	bool is_pinned() const { return pin->is_pressed(); }
 	void unpin() {
@@ -271,20 +271,20 @@ public:
 
 	void ensure_visibility();
 
-	void edit(AnimationMixer *p_node, AnimationPlayer *p_player, bool p_is_dummy);
+	void edit(AnimationMixer *p_node, SEAnimation *p_player, bool p_is_dummy);
 	void forward_force_draw_over_viewport(Control *p_overlay);
 
-	AnimationPlayerEditor(AnimationPlayerEditorPlugin *p_plugin);
+	SEAnimationEditor(SEAnimationEditorPlugin *p_plugin);
 };
 
-class AnimationPlayerEditorPlugin : public EditorPlugin {
-	GDCLASS(AnimationPlayerEditorPlugin, EditorPlugin);
+class SEAnimationEditorPlugin : public EditorPlugin {
+	GDCLASS(SEAnimationEditorPlugin, EditorPlugin);
 
-	friend AnimationPlayerEditor;
+	friend SEAnimationEditor;
 
-	AnimationPlayerEditor *anim_editor = nullptr;
-	AnimationPlayer *player = nullptr;
-	AnimationPlayer *dummy_player = nullptr;
+	SEAnimationEditor *anim_editor = nullptr;
+	SEAnimation *player = nullptr;
+	SEAnimation *dummy_player = nullptr;
 	ObjectID last_mixer;
 
 	void _update_dummy_player(AnimationMixer *p_mixer);
@@ -311,8 +311,8 @@ public:
 	virtual void forward_canvas_force_draw_over_viewport(Control *p_overlay) override { anim_editor->forward_force_draw_over_viewport(p_overlay); }
 	virtual void forward_3d_force_draw_over_viewport(Control *p_overlay) override { anim_editor->forward_force_draw_over_viewport(p_overlay); }
 
-	AnimationPlayerEditorPlugin();
-	~AnimationPlayerEditorPlugin();
+	SEAnimationEditorPlugin();
+	~SEAnimationEditorPlugin();
 };
 
 // AnimationTrackKeyEditEditorPlugin

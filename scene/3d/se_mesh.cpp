@@ -34,7 +34,7 @@
 
 #ifndef PHYSICS_3D_DISABLED
 #include "scene/3d/physics/collision_shape_3d.h"
-#include "scene/3d/physics/static_body_3d.h"
+#include "scene/3d/physics/se_body.h"
 #include "scene/resources/3d/concave_polygon_shape_3d.h"
 #include "scene/resources/3d/convex_polygon_shape_3d.h"
 #endif // PHYSICS_3D_DISABLED
@@ -246,7 +246,7 @@ Node *SEMesh::create_trimesh_collision_node() {
 		return nullptr;
 	}
 
-	StaticBody3D *static_body = memnew(StaticBody3D);
+	SEBody *static_body = memnew(SEBody);
 	CollisionShape3D *cshape = memnew(CollisionShape3D);
 	cshape->set_shape(shape);
 	static_body->add_child(cshape, true);
@@ -254,7 +254,7 @@ Node *SEMesh::create_trimesh_collision_node() {
 }
 
 void SEMesh::create_trimesh_collision() {
-	StaticBody3D *static_body = Object::cast_to<StaticBody3D>(create_trimesh_collision_node());
+	SEBody *static_body = Object::cast_to<SEBody>(create_trimesh_collision_node());
 	ERR_FAIL_NULL(static_body);
 	static_body->set_name(String(get_name()) + "_col");
 
@@ -276,7 +276,7 @@ Node *SEMesh::create_convex_collision_node(bool p_clean, bool p_simplify) {
 		return nullptr;
 	}
 
-	StaticBody3D *static_body = memnew(StaticBody3D);
+	SEBody *static_body = memnew(SEBody);
 	CollisionShape3D *cshape = memnew(CollisionShape3D);
 	cshape->set_shape(shape);
 	static_body->add_child(cshape, true);
@@ -284,7 +284,7 @@ Node *SEMesh::create_convex_collision_node(bool p_clean, bool p_simplify) {
 }
 
 void SEMesh::create_convex_collision(bool p_clean, bool p_simplify) {
-	StaticBody3D *static_body = Object::cast_to<StaticBody3D>(create_convex_collision_node(p_clean, p_simplify));
+	SEBody *static_body = Object::cast_to<SEBody>(create_convex_collision_node(p_clean, p_simplify));
 	ERR_FAIL_NULL(static_body);
 	static_body->set_name(String(get_name()) + "_col");
 
@@ -313,7 +313,7 @@ Node *SEMesh::create_multiple_convex_collisions_node(const Ref<MeshConvexDecompo
 		return nullptr;
 	}
 
-	StaticBody3D *static_body = memnew(StaticBody3D);
+	SEBody *static_body = memnew(SEBody);
 	for (int i = 0; i < shapes.size(); i++) {
 		CollisionShape3D *cshape = memnew(CollisionShape3D);
 		cshape->set_shape(shapes[i]);
@@ -323,7 +323,7 @@ Node *SEMesh::create_multiple_convex_collisions_node(const Ref<MeshConvexDecompo
 }
 
 void SEMesh::create_multiple_convex_collisions(const Ref<MeshConvexDecompositionSettings> &p_settings) {
-	StaticBody3D *static_body = Object::cast_to<StaticBody3D>(create_multiple_convex_collisions_node(p_settings));
+	SEBody *static_body = Object::cast_to<SEBody>(create_multiple_convex_collisions_node(p_settings));
 	ERR_FAIL_NULL(static_body);
 	static_body->set_name(String(get_name()) + "_col");
 

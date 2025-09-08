@@ -52,7 +52,7 @@
 #include "scene/3d/se_light.h"
 #include "scene/3d/se_mesh.h"
 #include "scene/3d/multise_mesh.h"
-#include "scene/animation/animation_player.h"
+#include "scene/animation/se_animation.h"
 #include "scene/resources/3d/skin.h"
 #include "scene/resources/image_texture.h"
 #include "scene/resources/portable_compressed_texture.h"
@@ -5338,15 +5338,15 @@ String GLTFDocument::interpolation_to_string(const GLTFAnimation::Interpolation 
 }
 
 Error GLTFDocument::_serialize_animations(Ref<GLTFState> p_state) {
-	if (!p_state->animation_players.size()) {
+	if (!p_state->se_animations.size()) {
 		return OK;
 	}
-	for (int32_t player_i = 0; player_i < p_state->animation_players.size(); player_i++) {
-		AnimationPlayer *animation_player = p_state->animation_players[player_i];
+	for (int32_t player_i = 0; player_i < p_state->se_animations.size(); player_i++) {
+		SEAnimation *se_animation = p_state->se_animations[player_i];
 		List<StringName> animations;
-		animation_player->get_animation_list(&animations);
+		se_animation->get_animation_list(&animations);
 		for (const StringName &animation_name : animations) {
-			_convert_animation(p_state, animation_player, animation_name);
+			_convert_animation(p_state, se_animation, animation_name);
 		}
 	}
 	Array animations;
@@ -5998,11 +5998,11 @@ void GLTFDocument::_convert_scene_node(Ref<GLTFState> p_state, Node *p_current, 
 	} else if (Object::cast_to<SELight>(p_current)) {
 		SELight *light = Object::cast_to<SELight>(p_current);
 		_convert_light_to_gltf(light, p_state, gltf_node);
-	} else if (Object::cast_to<AnimationPlayer>(p_current)) {
-		AnimationPlayer *animation_player = Object::cast_to<AnimationPlayer>(p_current);
-		p_state->animation_players.push_back(animation_player);
-		if (animation_player->get_child_count() == 0) {
-			gltf_node->set_parent(-2); // Don't export AnimationPlayer nodes as glTF nodes (unless they have children).
+	} else if (Object::cast_to<SEAnimation>(p_current)) {
+		SEAnimation *se_animation = Object::cast_to<SEAnimation>(p_current);
+		p_state->se_animations.push_back(se_animation);
+		if (se_animation->get_child_count() == 0) {
+			gltf_node->set_parent(-2); // Don't export SEAnimation nodes as glTF nodes (unless they have children).
 		}
 	}
 	for (Ref<GLTFDocumentExtension> ext : document_extensions) {
@@ -7244,9 +7244,9 @@ Ref<GLTFObjectModelProperty> GLTFDocument::export_object_model_property(Ref<GLTF
 	return ret;
 }
 
-void GLTFDocument::_import_animation(Ref<GLTFState> p_state, AnimationPlayer *p_animation_player, const GLTFAnimationIndex p_index, const bool p_trimming, const bool p_remove_immutable_tracks) {
+void GLTFDocument::_import_animation(Ref<GLTFState> p_state, SEAnimation *p_se_animation, const GLTFAnimationIndex p_index, const bool p_trimming, const bool p_remove_immutable_tracks) {
 	ERR_FAIL_COND(p_state.is_null());
-	Node *scene_root = p_animation_player->get_parent();
+	Node *scene_root = p_se_animation->get_parent();
 	ERR_FAIL_NULL(scene_root);
 	Ref<GLTFAnimation> anim = p_state->animations[p_index];
 
@@ -7295,7 +7295,7 @@ void GLTFDocument::_import_animation(Ref<GLTFState> p_state, AnimationPlayer *p_
 			const Skeleton3D *sk = p_state->skeletons[gltf_node->skeleton]->godot_skeleton;
 			ERR_FAIL_NULL(sk);
 
-			const String path = String(p_animation_player->get_parent()->get_path_to(sk));
+			const String path = String(p_se_animation->get_parent()->get_path_to(sk));
 			const String bone = gltf_node->get_name();
 			transform_node_path = path + ":" + bone;
 		} else {
@@ -7573,11 +7573,11 @@ void GLTFDocument::_import_animation(Ref<GLTFState> p_state, AnimationPlayer *p_
 	animation->set_length(anim_end - anim_start);
 
 	Ref<AnimationLibrary> library;
-	if (!p_animation_player->has_animation_library("")) {
+	if (!p_se_animation->has_animation_library("")) {
 		library.instantiate();
-		p_animation_player->add_animation_library("", library);
+		p_se_animation->add_animation_library("", library);
 	} else {
-		library = p_animation_player->get_animation_library("");
+		library = p_se_animation->get_animation_library("");
 	}
 	library->add_animation(anim_name, animation);
 }
@@ -7757,7 +7757,7 @@ GLTFNodeIndex GLTFDocument::_node_and_or_bone_to_gltf_node_index(Ref<GLTFState> 
 					return node_i;
 				}
 			}
-			ERR_FAIL_V_MSG(-1, vformat("glTF: Found a bone %s in a Skeleton3D that wasn't in the GLTFState. Ensure that all nodes referenced by the AnimationPlayer are in the scene you are exporting.", bone_name));
+			ERR_FAIL_V_MSG(-1, vformat("glTF: Found a bone %s in a Skeleton3D that wasn't in the GLTFState. Ensure that all nodes referenced by the SEAnimation are in the scene you are exporting.", bone_name));
 		}
 	}
 	// General case: Not a skeleton bone, usually this means a normal node, or it could be the Skeleton3D itself.
@@ -7766,7 +7766,7 @@ GLTFNodeIndex GLTFDocument::_node_and_or_bone_to_gltf_node_index(Ref<GLTFState> 
 			return scene_node_i.key;
 		}
 	}
-	ERR_FAIL_V_MSG(-1, vformat("glTF: A node was animated, but it wasn't found in the GLTFState. Ensure that all nodes referenced by the AnimationPlayer are in the scene you are exporting."));
+	ERR_FAIL_V_MSG(-1, vformat("glTF: A node was animated, but it wasn't found in the GLTFState. Ensure that all nodes referenced by the SEAnimation are in the scene you are exporting."));
 }
 
 bool GLTFDocument::_convert_animation_node_track(Ref<GLTFState> p_state, GLTFAnimation::NodeTrack &p_gltf_node_track, const Ref<Animation> &p_godot_animation, int32_t p_godot_anim_track_index, Vector<double> &p_times) {
@@ -8179,8 +8179,8 @@ bool GLTFDocument::_convert_animation_node_track(Ref<GLTFState> p_state, GLTFAni
 	return true;
 }
 
-void GLTFDocument::_convert_animation(Ref<GLTFState> p_state, AnimationPlayer *p_animation_player, const String &p_animation_track_name) {
-	Ref<Animation> animation = p_animation_player->get_animation(p_animation_track_name);
+void GLTFDocument::_convert_animation(Ref<GLTFState> p_state, SEAnimation *p_se_animation, const String &p_animation_track_name) {
+	Ref<Animation> animation = p_se_animation->get_animation(p_animation_track_name);
 	Ref<GLTFAnimation> gltf_animation;
 	gltf_animation.instantiate();
 	gltf_animation->set_original_name(p_animation_track_name);
@@ -8192,7 +8192,7 @@ void GLTFDocument::_convert_animation(Ref<GLTFState> p_state, AnimationPlayer *p
 		}
 		// Get the Godot node and the glTF node index for the animation track.
 		const NodePath track_path = animation->track_get_path(track_index);
-		const Node *anim_player_parent = p_animation_player->get_parent();
+		const Node *anim_player_parent = p_se_animation->get_parent();
 		const Node *animated_node = anim_player_parent->get_node_or_null(track_path);
 		ERR_CONTINUE_MSG(!animated_node, "glTF: Cannot get node for animated track using path: " + String(track_path));
 		const GLTFAnimation::Interpolation gltf_interpolation = GLTFAnimation::godot_to_gltf_interpolation(animation, track_index);
@@ -8852,7 +8852,7 @@ Node *GLTFDocument::generate_scene(Ref<GLTFState> p_state, float p_bake_fps, boo
 	ERR_FAIL_NULL_V(root, nullptr);
 	_process_mesh_instances(state, root);
 	if (state->get_create_animations() && state->animations.size()) {
-		AnimationPlayer *ap = memnew(AnimationPlayer);
+		SEAnimation *ap = memnew(SEAnimation);
 		root->add_child(ap, true);
 		ap->set_owner(root);
 		for (int i = 0; i < state->animations.size(); i++) {

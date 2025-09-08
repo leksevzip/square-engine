@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  sprite_3d.cpp                                                         */
+/*  se_image.cpp                                                         */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,7 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#include "sprite_3d.h"
+#include "se_image.h"
 
 #include "scene/resources/atlas_texture.h"
 
@@ -778,7 +778,7 @@ SpriteBase3D::~SpriteBase3D() {
 
 ///////////////////////////////////////////
 
-void Sprite3D::_draw() {
+void SEImage::_draw() {
 	if (get_base() != get_mesh()) {
 		set_base(get_mesh());
 	}
@@ -812,27 +812,27 @@ void Sprite3D::_draw() {
 	draw_texture_rect(texture, dst_rect, src_rect);
 }
 
-void Sprite3D::set_texture(const Ref<Texture2D> &p_texture) {
+void SEImage::set_texture(const Ref<Texture2D> &p_texture) {
 	if (p_texture == texture) {
 		return;
 	}
 	if (texture.is_valid()) {
-		texture->disconnect(CoreStringName(changed), callable_mp((SpriteBase3D *)this, &Sprite3D::_queue_redraw));
+		texture->disconnect(CoreStringName(changed), callable_mp((SpriteBase3D *)this, &SEImage::_queue_redraw));
 	}
 	texture = p_texture;
 	if (texture.is_valid()) {
-		texture->connect(CoreStringName(changed), callable_mp((SpriteBase3D *)this, &Sprite3D::_queue_redraw));
+		texture->connect(CoreStringName(changed), callable_mp((SpriteBase3D *)this, &SEImage::_queue_redraw));
 	}
 
 	_queue_redraw();
 	emit_signal(SceneStringName(texture_changed));
 }
 
-Ref<Texture2D> Sprite3D::get_texture() const {
+Ref<Texture2D> SEImage::get_texture() const {
 	return texture;
 }
 
-void Sprite3D::set_region_enabled(bool p_region) {
+void SEImage::set_region_enabled(bool p_region) {
 	if (p_region == region) {
 		return;
 	}
@@ -842,11 +842,11 @@ void Sprite3D::set_region_enabled(bool p_region) {
 	notify_property_list_changed();
 }
 
-bool Sprite3D::is_region_enabled() const {
+bool SEImage::is_region_enabled() const {
 	return region;
 }
 
-void Sprite3D::set_region_rect(const Rect2 &p_region_rect) {
+void SEImage::set_region_rect(const Rect2 &p_region_rect) {
 	if (region_rect == p_region_rect) {
 		return;
 	}
@@ -857,11 +857,11 @@ void Sprite3D::set_region_rect(const Rect2 &p_region_rect) {
 	}
 }
 
-Rect2 Sprite3D::get_region_rect() const {
+Rect2 SEImage::get_region_rect() const {
 	return region_rect;
 }
 
-void Sprite3D::set_frame(int p_frame) {
+void SEImage::set_frame(int p_frame) {
 	ERR_FAIL_INDEX(p_frame, int64_t(vframes) * hframes);
 
 	if (frame == p_frame) {
@@ -873,22 +873,22 @@ void Sprite3D::set_frame(int p_frame) {
 	emit_signal(SceneStringName(frame_changed));
 }
 
-int Sprite3D::get_frame() const {
+int SEImage::get_frame() const {
 	return frame;
 }
 
-void Sprite3D::set_frame_coords(const Vector2i &p_coord) {
+void SEImage::set_frame_coords(const Vector2i &p_coord) {
 	ERR_FAIL_INDEX(p_coord.x, hframes);
 	ERR_FAIL_INDEX(p_coord.y, vframes);
 
 	set_frame(p_coord.y * hframes + p_coord.x);
 }
 
-Vector2i Sprite3D::get_frame_coords() const {
+Vector2i SEImage::get_frame_coords() const {
 	return Vector2i(frame % hframes, frame / hframes);
 }
 
-void Sprite3D::set_vframes(int p_amount) {
+void SEImage::set_vframes(int p_amount) {
 	ERR_FAIL_COND_MSG(p_amount < 1, "Amount of vframes cannot be smaller than 1.");
 
 	if (vframes == p_amount) {
@@ -903,11 +903,11 @@ void Sprite3D::set_vframes(int p_amount) {
 	notify_property_list_changed();
 }
 
-int Sprite3D::get_vframes() const {
+int SEImage::get_vframes() const {
 	return vframes;
 }
 
-void Sprite3D::set_hframes(int p_amount) {
+void SEImage::set_hframes(int p_amount) {
 	ERR_FAIL_COND_MSG(p_amount < 1, "Amount of hframes cannot be smaller than 1.");
 
 	if (hframes == p_amount) {
@@ -933,11 +933,11 @@ void Sprite3D::set_hframes(int p_amount) {
 	notify_property_list_changed();
 }
 
-int Sprite3D::get_hframes() const {
+int SEImage::get_hframes() const {
 	return hframes;
 }
 
-Rect2 Sprite3D::get_item_rect() const {
+Rect2 SEImage::get_item_rect() const {
 	if (texture.is_null()) {
 		return Rect2(0, 0, 1, 1);
 	}
@@ -963,7 +963,7 @@ Rect2 Sprite3D::get_item_rect() const {
 	return Rect2(ofs, s);
 }
 
-void Sprite3D::_validate_property(PropertyInfo &p_property) const {
+void SEImage::_validate_property(PropertyInfo &p_property) const {
 	if (!Engine::get_singleton()->is_editor_hint()) {
 		return;
 	}
@@ -982,27 +982,27 @@ void Sprite3D::_validate_property(PropertyInfo &p_property) const {
 	}
 }
 
-void Sprite3D::_bind_methods() {
-	ClassDB::bind_method(D_METHOD("set_texture", "texture"), &Sprite3D::set_texture);
-	ClassDB::bind_method(D_METHOD("get_texture"), &Sprite3D::get_texture);
+void SEImage::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("set_texture", "texture"), &SEImage::set_texture);
+	ClassDB::bind_method(D_METHOD("get_texture"), &SEImage::get_texture);
 
-	ClassDB::bind_method(D_METHOD("set_region_enabled", "enabled"), &Sprite3D::set_region_enabled);
-	ClassDB::bind_method(D_METHOD("is_region_enabled"), &Sprite3D::is_region_enabled);
+	ClassDB::bind_method(D_METHOD("set_region_enabled", "enabled"), &SEImage::set_region_enabled);
+	ClassDB::bind_method(D_METHOD("is_region_enabled"), &SEImage::is_region_enabled);
 
-	ClassDB::bind_method(D_METHOD("set_region_rect", "rect"), &Sprite3D::set_region_rect);
-	ClassDB::bind_method(D_METHOD("get_region_rect"), &Sprite3D::get_region_rect);
+	ClassDB::bind_method(D_METHOD("set_region_rect", "rect"), &SEImage::set_region_rect);
+	ClassDB::bind_method(D_METHOD("get_region_rect"), &SEImage::get_region_rect);
 
-	ClassDB::bind_method(D_METHOD("set_frame", "frame"), &Sprite3D::set_frame);
-	ClassDB::bind_method(D_METHOD("get_frame"), &Sprite3D::get_frame);
+	ClassDB::bind_method(D_METHOD("set_frame", "frame"), &SEImage::set_frame);
+	ClassDB::bind_method(D_METHOD("get_frame"), &SEImage::get_frame);
 
-	ClassDB::bind_method(D_METHOD("set_frame_coords", "coords"), &Sprite3D::set_frame_coords);
-	ClassDB::bind_method(D_METHOD("get_frame_coords"), &Sprite3D::get_frame_coords);
+	ClassDB::bind_method(D_METHOD("set_frame_coords", "coords"), &SEImage::set_frame_coords);
+	ClassDB::bind_method(D_METHOD("get_frame_coords"), &SEImage::get_frame_coords);
 
-	ClassDB::bind_method(D_METHOD("set_vframes", "vframes"), &Sprite3D::set_vframes);
-	ClassDB::bind_method(D_METHOD("get_vframes"), &Sprite3D::get_vframes);
+	ClassDB::bind_method(D_METHOD("set_vframes", "vframes"), &SEImage::set_vframes);
+	ClassDB::bind_method(D_METHOD("get_vframes"), &SEImage::get_vframes);
 
-	ClassDB::bind_method(D_METHOD("set_hframes", "hframes"), &Sprite3D::set_hframes);
-	ClassDB::bind_method(D_METHOD("get_hframes"), &Sprite3D::get_hframes);
+	ClassDB::bind_method(D_METHOD("set_hframes", "hframes"), &SEImage::set_hframes);
+	ClassDB::bind_method(D_METHOD("get_hframes"), &SEImage::get_hframes);
 
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "texture", PROPERTY_HINT_RESOURCE_TYPE, "Texture2D"), "set_texture", "get_texture");
 	ADD_GROUP("Animation", "");
@@ -1018,12 +1018,12 @@ void Sprite3D::_bind_methods() {
 	ADD_SIGNAL(MethodInfo("texture_changed"));
 }
 
-Sprite3D::Sprite3D() {
+SEImage::SEImage() {
 }
 
 ////////////////////////////////////////
 
-void AnimatedSprite3D::_draw() {
+void AnimatedSEImage::_draw() {
 	if (get_base() != get_mesh()) {
 		set_base(get_mesh());
 	}
@@ -1055,7 +1055,7 @@ void AnimatedSprite3D::_draw() {
 	draw_texture_rect(texture, dst_rect, src_rect);
 }
 
-void AnimatedSprite3D::_validate_property(PropertyInfo &p_property) const {
+void AnimatedSEImage::_validate_property(PropertyInfo &p_property) const {
 	if (frames.is_null()) {
 		return;
 	}
@@ -1113,7 +1113,7 @@ void AnimatedSprite3D::_validate_property(PropertyInfo &p_property) const {
 	}
 }
 
-void AnimatedSprite3D::_notification(int p_what) {
+void AnimatedSEImage::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_READY: {
 			if (!Engine::get_singleton()->is_editor_hint() && frames.is_valid() && frames->has_animation(autoplay)) {
@@ -1200,18 +1200,18 @@ void AnimatedSprite3D::_notification(int p_what) {
 	}
 }
 
-void AnimatedSprite3D::set_sprite_frames(const Ref<SpriteFrames> &p_frames) {
+void AnimatedSEImage::set_sprite_frames(const Ref<SpriteFrames> &p_frames) {
 	if (frames == p_frames) {
 		return;
 	}
 
 	if (frames.is_valid()) {
-		frames->disconnect(CoreStringName(changed), callable_mp(this, &AnimatedSprite3D::_res_changed));
+		frames->disconnect(CoreStringName(changed), callable_mp(this, &AnimatedSEImage::_res_changed));
 	}
 	stop();
 	frames = p_frames;
 	if (frames.is_valid()) {
-		frames->connect(CoreStringName(changed), callable_mp(this, &AnimatedSprite3D::_res_changed));
+		frames->connect(CoreStringName(changed), callable_mp(this, &AnimatedSEImage::_res_changed));
 
 		List<StringName> al;
 		frames->get_animation_list(&al);
@@ -1234,27 +1234,27 @@ void AnimatedSprite3D::set_sprite_frames(const Ref<SpriteFrames> &p_frames) {
 	emit_signal("sprite_frames_changed");
 }
 
-Ref<SpriteFrames> AnimatedSprite3D::get_sprite_frames() const {
+Ref<SpriteFrames> AnimatedSEImage::get_sprite_frames() const {
 	return frames;
 }
 
-void AnimatedSprite3D::set_frame(int p_frame) {
+void AnimatedSEImage::set_frame(int p_frame) {
 	set_frame_and_progress(p_frame, std::signbit(get_playing_speed()) ? 1.0 : 0.0);
 }
 
-int AnimatedSprite3D::get_frame() const {
+int AnimatedSEImage::get_frame() const {
 	return frame;
 }
 
-void AnimatedSprite3D::set_frame_progress(real_t p_progress) {
+void AnimatedSEImage::set_frame_progress(real_t p_progress) {
 	frame_progress = p_progress;
 }
 
-real_t AnimatedSprite3D::get_frame_progress() const {
+real_t AnimatedSEImage::get_frame_progress() const {
 	return frame_progress;
 }
 
-void AnimatedSprite3D::set_frame_and_progress(int p_frame, real_t p_progress) {
+void AnimatedSEImage::set_frame_and_progress(int p_frame, real_t p_progress) {
 	if (frames.is_null()) {
 		return;
 	}
@@ -1281,22 +1281,22 @@ void AnimatedSprite3D::set_frame_and_progress(int p_frame, real_t p_progress) {
 	emit_signal(SceneStringName(frame_changed));
 }
 
-void AnimatedSprite3D::set_speed_scale(float p_speed_scale) {
+void AnimatedSEImage::set_speed_scale(float p_speed_scale) {
 	speed_scale = p_speed_scale;
 }
 
-float AnimatedSprite3D::get_speed_scale() const {
+float AnimatedSEImage::get_speed_scale() const {
 	return speed_scale;
 }
 
-float AnimatedSprite3D::get_playing_speed() const {
+float AnimatedSEImage::get_playing_speed() const {
 	if (!playing) {
 		return 0;
 	}
 	return speed_scale * custom_speed_scale;
 }
 
-Rect2 AnimatedSprite3D::get_item_rect() const {
+Rect2 AnimatedSEImage::get_item_rect() const {
 	if (frames.is_null() || !frames->has_animation(animation)) {
 		return Rect2(0, 0, 1, 1);
 	}
@@ -1325,17 +1325,17 @@ Rect2 AnimatedSprite3D::get_item_rect() const {
 	return Rect2(ofs, s);
 }
 
-void AnimatedSprite3D::_res_changed() {
+void AnimatedSEImage::_res_changed() {
 	set_frame_and_progress(frame, frame_progress);
 	_queue_redraw();
 	notify_property_list_changed();
 }
 
-bool AnimatedSprite3D::is_playing() const {
+bool AnimatedSEImage::is_playing() const {
 	return playing;
 }
 
-void AnimatedSprite3D::set_autoplay(const String &p_name) {
+void AnimatedSEImage::set_autoplay(const String &p_name) {
 	if (is_inside_tree() && !Engine::get_singleton()->is_editor_hint()) {
 		WARN_PRINT("Setting autoplay after the node has been added to the scene has no effect.");
 	}
@@ -1343,11 +1343,11 @@ void AnimatedSprite3D::set_autoplay(const String &p_name) {
 	autoplay = p_name;
 }
 
-String AnimatedSprite3D::get_autoplay() const {
+String AnimatedSEImage::get_autoplay() const {
 	return autoplay;
 }
 
-void AnimatedSprite3D::play(const StringName &p_name, float p_custom_scale, bool p_from_end) {
+void AnimatedSEImage::play(const StringName &p_name, float p_custom_scale, bool p_from_end) {
 	StringName name = p_name;
 
 	if (name == StringName()) {
@@ -1390,11 +1390,11 @@ void AnimatedSprite3D::play(const StringName &p_name, float p_custom_scale, bool
 	_queue_redraw();
 }
 
-void AnimatedSprite3D::play_backwards(const StringName &p_name) {
+void AnimatedSEImage::play_backwards(const StringName &p_name) {
 	play(p_name, -1, true);
 }
 
-void AnimatedSprite3D::_stop_internal(bool p_reset) {
+void AnimatedSEImage::_stop_internal(bool p_reset) {
 	playing = false;
 	if (p_reset) {
 		custom_speed_scale = 1.0;
@@ -1404,26 +1404,26 @@ void AnimatedSprite3D::_stop_internal(bool p_reset) {
 	set_process_internal(false);
 }
 
-void AnimatedSprite3D::pause() {
+void AnimatedSEImage::pause() {
 	_stop_internal(false);
 }
 
-void AnimatedSprite3D::stop() {
+void AnimatedSEImage::stop() {
 	_stop_internal(true);
 }
 
-double AnimatedSprite3D::_get_frame_duration() {
+double AnimatedSEImage::_get_frame_duration() {
 	if (frames.is_valid() && frames->has_animation(animation)) {
 		return frames->get_frame_duration(animation, frame);
 	}
 	return 1.0;
 }
 
-void AnimatedSprite3D::_calc_frame_speed_scale() {
+void AnimatedSEImage::_calc_frame_speed_scale() {
 	frame_speed_scale = 1.0 / _get_frame_duration();
 }
 
-void AnimatedSprite3D::set_animation(const StringName &p_name) {
+void AnimatedSEImage::set_animation(const StringName &p_name) {
 	if (animation == p_name) {
 		return;
 	}
@@ -1458,20 +1458,20 @@ void AnimatedSprite3D::set_animation(const StringName &p_name) {
 	_queue_redraw();
 }
 
-StringName AnimatedSprite3D::get_animation() const {
+StringName AnimatedSEImage::get_animation() const {
 	return animation;
 }
 
-PackedStringArray AnimatedSprite3D::get_configuration_warnings() const {
+PackedStringArray AnimatedSEImage::get_configuration_warnings() const {
 	PackedStringArray warnings = SpriteBase3D::get_configuration_warnings();
 	if (frames.is_null()) {
-		warnings.push_back(RTR("A SpriteFrames resource must be created or set in the \"Sprite Frames\" property in order for AnimatedSprite3D to display frames."));
+		warnings.push_back(RTR("A SpriteFrames resource must be created or set in the \"Sprite Frames\" property in order for AnimatedSEImage to display frames."));
 	}
 	return warnings;
 }
 
 #ifdef TOOLS_ENABLED
-void AnimatedSprite3D::get_argument_options(const StringName &p_function, int p_idx, List<String> *r_options) const {
+void AnimatedSEImage::get_argument_options(const StringName &p_function, int p_idx, List<String> *r_options) const {
 	const String pf = p_function;
 	if (p_idx == 0 && frames.is_valid()) {
 		if (pf == "play" || pf == "play_backwards" || pf == "set_animation" || pf == "set_autoplay") {
@@ -1487,7 +1487,7 @@ void AnimatedSprite3D::get_argument_options(const StringName &p_function, int p_
 #endif
 
 #ifndef DISABLE_DEPRECATED
-bool AnimatedSprite3D::_set(const StringName &p_name, const Variant &p_value) {
+bool AnimatedSEImage::_set(const StringName &p_name, const Variant &p_value) {
 	if ((p_name == SNAME("frames"))) {
 		set_sprite_frames(p_value);
 		return true;
@@ -1495,36 +1495,36 @@ bool AnimatedSprite3D::_set(const StringName &p_name, const Variant &p_value) {
 	return false;
 }
 #endif
-void AnimatedSprite3D::_bind_methods() {
-	ClassDB::bind_method(D_METHOD("set_sprite_frames", "sprite_frames"), &AnimatedSprite3D::set_sprite_frames);
-	ClassDB::bind_method(D_METHOD("get_sprite_frames"), &AnimatedSprite3D::get_sprite_frames);
+void AnimatedSEImage::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("set_sprite_frames", "sprite_frames"), &AnimatedSEImage::set_sprite_frames);
+	ClassDB::bind_method(D_METHOD("get_sprite_frames"), &AnimatedSEImage::get_sprite_frames);
 
-	ClassDB::bind_method(D_METHOD("set_animation", "name"), &AnimatedSprite3D::set_animation);
-	ClassDB::bind_method(D_METHOD("get_animation"), &AnimatedSprite3D::get_animation);
+	ClassDB::bind_method(D_METHOD("set_animation", "name"), &AnimatedSEImage::set_animation);
+	ClassDB::bind_method(D_METHOD("get_animation"), &AnimatedSEImage::get_animation);
 
-	ClassDB::bind_method(D_METHOD("set_autoplay", "name"), &AnimatedSprite3D::set_autoplay);
-	ClassDB::bind_method(D_METHOD("get_autoplay"), &AnimatedSprite3D::get_autoplay);
+	ClassDB::bind_method(D_METHOD("set_autoplay", "name"), &AnimatedSEImage::set_autoplay);
+	ClassDB::bind_method(D_METHOD("get_autoplay"), &AnimatedSEImage::get_autoplay);
 
-	ClassDB::bind_method(D_METHOD("is_playing"), &AnimatedSprite3D::is_playing);
+	ClassDB::bind_method(D_METHOD("is_playing"), &AnimatedSEImage::is_playing);
 
-	ClassDB::bind_method(D_METHOD("play", "name", "custom_speed", "from_end"), &AnimatedSprite3D::play, DEFVAL(StringName()), DEFVAL(1.0), DEFVAL(false));
-	ClassDB::bind_method(D_METHOD("play_backwards", "name"), &AnimatedSprite3D::play_backwards, DEFVAL(StringName()));
-	ClassDB::bind_method(D_METHOD("pause"), &AnimatedSprite3D::pause);
-	ClassDB::bind_method(D_METHOD("stop"), &AnimatedSprite3D::stop);
+	ClassDB::bind_method(D_METHOD("play", "name", "custom_speed", "from_end"), &AnimatedSEImage::play, DEFVAL(StringName()), DEFVAL(1.0), DEFVAL(false));
+	ClassDB::bind_method(D_METHOD("play_backwards", "name"), &AnimatedSEImage::play_backwards, DEFVAL(StringName()));
+	ClassDB::bind_method(D_METHOD("pause"), &AnimatedSEImage::pause);
+	ClassDB::bind_method(D_METHOD("stop"), &AnimatedSEImage::stop);
 
-	ClassDB::bind_method(D_METHOD("set_frame", "frame"), &AnimatedSprite3D::set_frame);
-	ClassDB::bind_method(D_METHOD("get_frame"), &AnimatedSprite3D::get_frame);
+	ClassDB::bind_method(D_METHOD("set_frame", "frame"), &AnimatedSEImage::set_frame);
+	ClassDB::bind_method(D_METHOD("get_frame"), &AnimatedSEImage::get_frame);
 
-	ClassDB::bind_method(D_METHOD("set_frame_progress", "progress"), &AnimatedSprite3D::set_frame_progress);
-	ClassDB::bind_method(D_METHOD("get_frame_progress"), &AnimatedSprite3D::get_frame_progress);
+	ClassDB::bind_method(D_METHOD("set_frame_progress", "progress"), &AnimatedSEImage::set_frame_progress);
+	ClassDB::bind_method(D_METHOD("get_frame_progress"), &AnimatedSEImage::get_frame_progress);
 
-	ClassDB::bind_method(D_METHOD("set_frame_and_progress", "frame", "progress"), &AnimatedSprite3D::set_frame_and_progress);
+	ClassDB::bind_method(D_METHOD("set_frame_and_progress", "frame", "progress"), &AnimatedSEImage::set_frame_and_progress);
 
-	ClassDB::bind_method(D_METHOD("set_speed_scale", "speed_scale"), &AnimatedSprite3D::set_speed_scale);
-	ClassDB::bind_method(D_METHOD("get_speed_scale"), &AnimatedSprite3D::get_speed_scale);
-	ClassDB::bind_method(D_METHOD("get_playing_speed"), &AnimatedSprite3D::get_playing_speed);
+	ClassDB::bind_method(D_METHOD("set_speed_scale", "speed_scale"), &AnimatedSEImage::set_speed_scale);
+	ClassDB::bind_method(D_METHOD("get_speed_scale"), &AnimatedSEImage::get_speed_scale);
+	ClassDB::bind_method(D_METHOD("get_playing_speed"), &AnimatedSEImage::get_playing_speed);
 
-	ClassDB::bind_method(D_METHOD("_res_changed"), &AnimatedSprite3D::_res_changed);
+	ClassDB::bind_method(D_METHOD("_res_changed"), &AnimatedSEImage::_res_changed);
 
 	ADD_SIGNAL(MethodInfo("sprite_frames_changed"));
 	ADD_SIGNAL(MethodInfo("animation_changed"));
@@ -1540,5 +1540,5 @@ void AnimatedSprite3D::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "speed_scale"), "set_speed_scale", "get_speed_scale");
 }
 
-AnimatedSprite3D::AnimatedSprite3D() {
+AnimatedSEImage::AnimatedSEImage() {
 }

@@ -27,7 +27,7 @@
 		animation.Length = 2.0f;
 		[/csharp]
 		[/codeblocks]
-		Animations are just data containers, and must be added to nodes such as an [AnimationPlayer] to be played back. Animation tracks have different types, each with its own set of dedicated methods. Check [enum TrackType] to see available types.
+		Animations are just data containers, and must be added to nodes such as an [SEAnimation] to be played back. Animation tracks have different types, each with its own set of dedicated methods. Check [enum TrackType] to see available types.
 		[b]Note:[/b] For 3D position/rotation/scale, using the dedicated [constant TYPE_POSITION_3D], [constant TYPE_ROTATION_3D] and [constant TYPE_SCALE_3D] track types instead of [constant TYPE_VALUE] is recommended for performance reasons.
 	</description>
 	<tutorials>
@@ -719,7 +719,7 @@
 			Audio tracks are used to play an audio stream with either type of [AudioStreamPlayer]. The stream can be trimmed and previewed in the animation.
 		</constant>
 		<constant name="TYPE_ANIMATION" value="8" enum="TrackType">
-			Animation tracks play animations in other [AnimationPlayer] nodes.
+			Animation tracks play animations in other [SEAnimation] nodes.
 		</constant>
 		<constant name="INTERPOLATION_NEAREST" value="0" enum="InterpolationType">
 			No interpolation (nearest value).
@@ -745,7 +745,7 @@
 			Update at the keyframes.
 		</constant>
 		<constant name="UPDATE_CAPTURE" value="2" enum="UpdateMode">
-			Same as [constant UPDATE_CONTINUOUS] but works as a flag to capture the value of the current object and perform interpolation in some methods. See also [method AnimationMixer.capture], [member AnimationPlayer.playback_auto_capture], and [method AnimationPlayer.play_with_capture].
+			Same as [constant UPDATE_CONTINUOUS] but works as a flag to capture the value of the current object and perform interpolation in some methods. See also [method AnimationMixer.capture], [member SEAnimation.playback_auto_capture], and [method SEAnimation.play_with_capture].
 		</constant>
 		<constant name="LOOP_NONE" value="0" enum="LoopMode">
 			At both ends of the animation, the animation will stop playing.

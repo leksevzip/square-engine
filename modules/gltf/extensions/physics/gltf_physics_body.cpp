@@ -33,7 +33,7 @@
 #include "scene/3d/physics/animatable_body_3d.h"
 #include "scene/3d/physics/area_3d.h"
 #include "scene/3d/physics/character_body_3d.h"
-#include "scene/3d/physics/static_body_3d.h"
+#include "scene/3d/physics/se_body.h"
 #include "scene/3d/physics/vehicle_body_3d.h"
 
 void GLTFPhysicsBody::_bind_methods() {
@@ -186,8 +186,8 @@ Ref<GLTFPhysicsBody> GLTFPhysicsBody::from_node(const CollisionObject3D *p_body_
 		physics_body->body_type = PhysicsBodyType::CHARACTER;
 	} else if (cast_to<AnimatableBody3D>(p_body_node)) {
 		physics_body->body_type = PhysicsBodyType::ANIMATABLE;
-	} else if (cast_to<RigidBody3D>(p_body_node)) {
-		const RigidBody3D *body = cast_to<const RigidBody3D>(p_body_node);
+	} else if (cast_to<SEPhysicsBody>(p_body_node)) {
+		const SEPhysicsBody *body = cast_to<const SEPhysicsBody>(p_body_node);
 		physics_body->mass = body->get_mass();
 		physics_body->linear_velocity = body->get_linear_velocity();
 		physics_body->angular_velocity = body->get_angular_velocity();
@@ -198,7 +198,7 @@ Ref<GLTFPhysicsBody> GLTFPhysicsBody::from_node(const CollisionObject3D *p_body_
 		} else {
 			physics_body->body_type = PhysicsBodyType::RIGID;
 		}
-	} else if (cast_to<StaticBody3D>(p_body_node)) {
+	} else if (cast_to<SEBody>(p_body_node)) {
 		physics_body->body_type = PhysicsBodyType::STATIC;
 	} else if (cast_to<Area3D>(p_body_node)) {
 		physics_body->body_type = PhysicsBodyType::TRIGGER;
@@ -222,22 +222,22 @@ CollisionObject3D *GLTFPhysicsBody::to_node() const {
 			body->set_linear_velocity(linear_velocity);
 			body->set_angular_velocity(angular_velocity);
 			body->set_inertia(inertia_diagonal);
-			body->set_center_of_mass_mode(RigidBody3D::CENTER_OF_MASS_MODE_CUSTOM);
+			body->set_center_of_mass_mode(SEPhysicsBody::CENTER_OF_MASS_MODE_CUSTOM);
 			body->set_center_of_mass(center_of_mass);
 			return body;
 		}
 		case PhysicsBodyType::RIGID: {
-			RigidBody3D *body = memnew(RigidBody3D);
+			SEPhysicsBody *body = memnew(SEPhysicsBody);
 			body->set_mass(mass);
 			body->set_linear_velocity(linear_velocity);
 			body->set_angular_velocity(angular_velocity);
 			body->set_inertia(inertia_diagonal);
-			body->set_center_of_mass_mode(RigidBody3D::CENTER_OF_MASS_MODE_CUSTOM);
+			body->set_center_of_mass_mode(SEPhysicsBody::CENTER_OF_MASS_MODE_CUSTOM);
 			body->set_center_of_mass(center_of_mass);
 			return body;
 		}
 		case PhysicsBodyType::STATIC: {
-			StaticBody3D *body = memnew(StaticBody3D);
+			SEBody *body = memnew(SEBody);
 			return body;
 		}
 		case PhysicsBodyType::TRIGGER: {

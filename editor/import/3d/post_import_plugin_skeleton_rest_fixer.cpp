@@ -34,7 +34,7 @@
 #include "scene/3d/importer_se_mesh.h"
 #include "scene/3d/retarget_modifier_3d.h"
 #include "scene/3d/skeleton_3d.h"
-#include "scene/animation/animation_player.h"
+#include "scene/animation/se_animation.h"
 #include "scene/resources/bone_map.h"
 
 void PostImportPluginSkeletonRestFixer::get_internal_import_options(InternalImportCategory p_category, List<ResourceImporter::ImportOption> *r_options) {
@@ -164,9 +164,9 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 			// Fix animation by changing node transform.
 			bones_to_process = src_skeleton->get_parentless_bones();
 			{
-				TypedArray<Node> nodes = p_base_scene->find_children("*", "AnimationPlayer");
+				TypedArray<Node> nodes = p_base_scene->find_children("*", "SEAnimation");
 				while (nodes.size()) {
-					AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(nodes.pop_back());
+					SEAnimation *ap = Object::cast_to<SEAnimation>(nodes.pop_back());
 					List<StringName> anims;
 					ap->get_animation_list(&anims);
 					for (const StringName &name : anims) {
@@ -232,9 +232,9 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 
 		// Complement Rotation track for compatibility between different rests.
 		{
-			TypedArray<Node> nodes = p_base_scene->find_children("*", "AnimationPlayer");
+			TypedArray<Node> nodes = p_base_scene->find_children("*", "SEAnimation");
 			while (nodes.size()) {
-				AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(nodes.pop_back());
+				SEAnimation *ap = Object::cast_to<SEAnimation>(nodes.pop_back());
 				List<StringName> anims;
 				ap->get_animation_list(&anims);
 				for (const StringName &name : anims) {
@@ -395,9 +395,9 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 				Transform3D src_rest = src_skeleton->get_bone_rest(src_bone_idx);
 				src_skeleton->set_bone_rest(src_bone_idx, Transform3D(src_rest.basis, Vector3(src_rest.origin.x, src_rest.origin.y + base_adjustment, src_rest.origin.z)));
 
-				TypedArray<Node> nodes = p_base_scene->find_children("*", "AnimationPlayer");
+				TypedArray<Node> nodes = p_base_scene->find_children("*", "SEAnimation");
 				while (nodes.size()) {
-					AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(nodes.pop_back());
+					SEAnimation *ap = Object::cast_to<SEAnimation>(nodes.pop_back());
 					List<StringName> anims;
 					ap->get_animation_list(&anims);
 					for (const StringName &name : anims) {
@@ -565,10 +565,10 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 				// Mapped skeleton is animated by %GenerarSkeleton:RenamedBoneName.
 				// Unmapped skeleton is animated by %OriginalSkeleton:OriginalBoneName.
 				if (is_using_modifier) {
-					TypedArray<Node> nodes = p_base_scene->find_children("*", "AnimationPlayer");
+					TypedArray<Node> nodes = p_base_scene->find_children("*", "SEAnimation");
 					String general_skeleton_pathname = UNIQUE_NODE_PREFIX + profile_skeleton->get_name();
 					while (nodes.size()) {
-						AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(nodes.pop_back());
+						SEAnimation *ap = Object::cast_to<SEAnimation>(nodes.pop_back());
 						List<StringName> anims;
 						ap->get_animation_list(&anims);
 						for (const StringName &name : anims) {
@@ -700,9 +700,9 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 			// Fix animation by changing rest.
 			bool warning_detected = false;
 			{
-				TypedArray<Node> nodes = p_base_scene->find_children("*", "AnimationPlayer");
+				TypedArray<Node> nodes = p_base_scene->find_children("*", "SEAnimation");
 				while (nodes.size()) {
-					AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(nodes.pop_back());
+					SEAnimation *ap = Object::cast_to<SEAnimation>(nodes.pop_back());
 					ERR_CONTINUE(!ap);
 					List<StringName> anims;
 					ap->get_animation_list(&anims);
@@ -833,9 +833,9 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 
 		// Scale position tracks by motion scale if normalize position tracks.
 		if (bool(p_options["retarget/rest_fixer/normalize_position_tracks"])) {
-			TypedArray<Node> nodes = p_base_scene->find_children("*", "AnimationPlayer");
+			TypedArray<Node> nodes = p_base_scene->find_children("*", "SEAnimation");
 			while (nodes.size()) {
-				AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(nodes.pop_back());
+				SEAnimation *ap = Object::cast_to<SEAnimation>(nodes.pop_back());
 				List<StringName> anims;
 				ap->get_animation_list(&anims);
 				for (const StringName &name : anims) {

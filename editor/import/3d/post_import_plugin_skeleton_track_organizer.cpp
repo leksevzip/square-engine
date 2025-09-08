@@ -31,7 +31,7 @@
 #include "post_import_plugin_skeleton_track_organizer.h"
 
 #include "scene/3d/skeleton_3d.h"
-#include "scene/animation/animation_player.h"
+#include "scene/animation/se_animation.h"
 #include "scene/resources/bone_map.h"
 
 void PostImportPluginSkeletonTrackOrganizer::get_internal_import_options(InternalImportCategory p_category, List<ResourceImporter::ImportOption> *r_options) {
@@ -66,9 +66,9 @@ void PostImportPluginSkeletonTrackOrganizer::internal_process(InternalImportCate
 			return;
 		}
 
-		TypedArray<Node> nodes = p_base_scene->find_children("*", "AnimationPlayer");
+		TypedArray<Node> nodes = p_base_scene->find_children("*", "SEAnimation");
 		while (nodes.size()) {
-			AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(nodes.pop_back());
+			SEAnimation *ap = Object::cast_to<SEAnimation>(nodes.pop_back());
 			List<StringName> anims;
 			ap->get_animation_list(&anims);
 

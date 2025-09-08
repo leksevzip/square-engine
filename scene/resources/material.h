@@ -633,7 +633,7 @@ private:
 	void _prepare_stencil_effect();
 	Ref<BaseMaterial3D> _get_stencil_next_pass() const;
 
-	static HashMap<uint64_t, Ref<StandardMaterial3D>> materials_for_2d; //used by Sprite3D, Label3D and other stuff
+	static HashMap<uint64_t, Ref<StandardMaterial3D>> materials_for_2d; //used by SEImage, Label3D and other stuff
 
 protected:
 	static void _bind_methods();

@@ -615,7 +615,7 @@
 			<param index="1" name="enable" type="bool" />
 			<description>
 				Sets whether the body omits the standard force integration. If [param enable] is [code]true[/code], the body will not automatically use applied forces, torques, and damping to update the body's linear and angular velocity. In this case, [method body_set_force_integration_callback] can be used to manually update the linear and angular velocity instead.
-				This method is called when the property [member RigidBody3D.custom_integrator] is set.
+				This method is called when the property [member SEPhysicsBody.custom_integrator] is set.
 			</description>
 		</method>
 		<method name="body_set_param">

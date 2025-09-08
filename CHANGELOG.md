@@ -194,7 +194,7 @@ Table of contents:
 
 - Add persistent folding to Animation Library Editor ([GH-86481](https://github.com/godotengine/godot/pull/86481)).
 - Add per-bone meta to Skeleton3D ([GH-87150](https://github.com/godotengine/godot/pull/87150)).
-- Update AnimationPlayer in real-time when keyframe properties change ([GH-91599](https://github.com/godotengine/godot/pull/91599)).
+- Update SEAnimation in real-time when keyframe properties change ([GH-91599](https://github.com/godotengine/godot/pull/91599)).
 - Fix Bone2D gizmo scaling ([GH-91731](https://github.com/godotengine/godot/pull/91731)).
 - Add markers to Animation ([GH-91765](https://github.com/godotengine/godot/pull/91765)).
 - Don't lose in/out handles when bezier keyframe inserted on top of existing keyframe ([GH-91854](https://github.com/godotengine/godot/pull/91854)).
@@ -206,7 +206,7 @@ Table of contents:
 - Add `advance_on_start` option to `NodeAnimation` to handle `advance(0)` for each `NodeAnimation` ([GH-94372](https://github.com/godotengine/godot/pull/94372)).
 - Fix animation library copy-paste not preserving resource reference ([GH-94429](https://github.com/godotengine/godot/pull/94429)).
 - Add validation to glTF importer for Blendshape and Animation ([GH-94783](https://github.com/godotengine/godot/pull/94783)).
-- Fix `AnimationPlayer` crash when it's made the scene root ([GH-94945](https://github.com/godotengine/godot/pull/94945)).
+- Fix `SEAnimation` crash when it's made the scene root ([GH-94945](https://github.com/godotengine/godot/pull/94945)).
 - Fix `Skeleton2D.{_set|_get}` always returning true ([GH-95124](https://github.com/godotengine/godot/pull/95124)).
 - Fix drawing leaf `Bone2D` in `Polygon2D` UV editor ([GH-95258](https://github.com/godotengine/godot/pull/95258)).
 - Avoid `[]` for `external_animation_library` import option ([GH-95505](https://github.com/godotengine/godot/pull/95505)).
@@ -216,7 +216,7 @@ Table of contents:
 - Add `BoneAttachment3D::get_skeleton()` method ([GH-95643](https://github.com/godotengine/godot/pull/95643)).
 - Add hint for oneshot property & warning when it will be updated continuously by Force Continuous in `AnimationMixer` ([GH-95711](https://github.com/godotengine/godot/pull/95711)).
 - Add documentation to clarify un-interpolatable type on animation blending ([GH-95722](https://github.com/godotengine/godot/pull/95722)).
-- Fix crash when re-importing model with AnimationPlayer panel open and node selected ([GH-95795](https://github.com/godotengine/godot/pull/95795)).
+- Fix crash when re-importing model with SEAnimation panel open and node selected ([GH-95795](https://github.com/godotengine/godot/pull/95795)).
 - Fix animation timeline resize widget allowing invalid internal values ([GH-95947](https://github.com/godotengine/godot/pull/95947)).
 - Allow jumping to previous/next keyframe in animation player ([GH-96013](https://github.com/godotengine/godot/pull/96013)).
 - Add 3D skeleton preview to Advanced Importer ([GH-96094](https://github.com/godotengine/godot/pull/96094)).
@@ -226,12 +226,12 @@ Table of contents:
 - Fix physical bone update without simulating ([GH-96270](https://github.com/godotengine/godot/pull/96270)).
 - Attempt applying RESET pose during import ([GH-96308](https://github.com/godotengine/godot/pull/96308)).
 - Add `modf` function and fix animation editor snap behavior ([GH-96328](https://github.com/godotengine/godot/pull/96328)).
-- Improve behavior of AnimationPlayer warnings ([GH-96414](https://github.com/godotengine/godot/pull/96414)).
+- Improve behavior of SEAnimation warnings ([GH-96414](https://github.com/godotengine/godot/pull/96414)).
 - Fix overlapping in animation timeline display ([GH-96428](https://github.com/godotengine/godot/pull/96428)).
 - Use antialiased line drawing in animation Bezier editor ([GH-96559](https://github.com/godotengine/godot/pull/96559)).
 - Fix AnimationLibrary loading ([GH-96577](https://github.com/godotengine/godot/pull/96577)).
 - Avoid bubbling up changed notification when on new item/key of dictionaries to avoid inspector wipeout ([GH-96623](https://github.com/godotengine/godot/pull/96623)).
-- Update AnimationPlayer in real-time when bezier curve properties or bezier editor changes ([GH-96753](https://github.com/godotengine/godot/pull/96753)).
+- Update SEAnimation in real-time when bezier curve properties or bezier editor changes ([GH-96753](https://github.com/godotengine/godot/pull/96753)).
 - Fix errors when creating bezier component tracks ([GH-96789](https://github.com/godotengine/godot/pull/96789)).
 - Expose the optimize method of the Animation class to gdscript ([GH-96835](https://github.com/godotengine/godot/pull/96835)).
 - Fix selection box + scrolling in animation editor ([GH-96902](https://github.com/godotengine/godot/pull/96902)).
@@ -261,7 +261,7 @@ Table of contents:
 - Improve Scale Selection in Animation tab ([GH-98419](https://github.com/godotengine/godot/pull/98419)).
 - Implement LookAtModifier3D ([GH-98446](https://github.com/godotengine/godot/pull/98446)).
 - Fix Skeleton doesn't update skin after deactivating modifiers when it has only one modifier ([GH-98536](https://github.com/godotengine/godot/pull/98536)).
-- Add type filters to AnimationPlayer's "Add Track" ([GH-98558](https://github.com/godotengine/godot/pull/98558)).
+- Add type filters to SEAnimation's "Add Track" ([GH-98558](https://github.com/godotengine/godot/pull/98558)).
 - Add `Tween.tween_subtween` method for nesting tweens within each other ([GH-98660](https://github.com/godotengine/godot/pull/98660)).
 - Fix `capture_cache.animation` was not cached ([GH-98706](https://github.com/godotengine/godot/pull/98706)).
 - Fix animation editor snapping value not lowering as intended when holding shift ([GH-98826](https://github.com/godotengine/godot/pull/98826)).
@@ -269,13 +269,13 @@ Table of contents:
 - Fix crash when inserting keyframes with empty properties array ([GH-99148](https://github.com/godotengine/godot/pull/99148)).
 - Add animation node extension ([GH-99181](https://github.com/godotengine/godot/pull/99181)).
 - Sort blend shapes in the inspector by ID instead of alphabetically ([GH-99231](https://github.com/godotengine/godot/pull/99231)).
-- Add back `AnimationPlayer.get_argument_options` ([GH-99277](https://github.com/godotengine/godot/pull/99277)).
+- Add back `SEAnimation.get_argument_options` ([GH-99277](https://github.com/godotengine/godot/pull/99277)).
 - Fix key is deselected by changing key time in KeyEdit in FPS mode ([GH-99319](https://github.com/godotengine/godot/pull/99319)).
 - Fix spinner in AnimationTrackEdit in FPS mode ([GH-99324](https://github.com/godotengine/godot/pull/99324)).
 - Add `explicit_elapse` option to AnimationNodeTimeSeek to handle some processes ([GH-99348](https://github.com/godotengine/godot/pull/99348)).
 - Fix issues with animation markers drawing ([GH-99363](https://github.com/godotengine/godot/pull/99363)).
 - Add `root_motion_local` option to AnimationMixer to pre-multiply root motion rotation accumulator before blending ([GH-99394](https://github.com/godotengine/godot/pull/99394)).
-- Make start/end can be retrieved from each PlaybackData on AnimationPlayer ([GH-99585](https://github.com/godotengine/godot/pull/99585)).
+- Make start/end can be retrieved from each PlaybackData on SEAnimation ([GH-99585](https://github.com/godotengine/godot/pull/99585)).
 - Make LookAtModifier3D adopt the bone name method ([GH-99612](https://github.com/godotengine/godot/pull/99612)).
 - Fix `forward_vector` scale to handle `safe_margin` correctly in LookAtModifier ([GH-99613](https://github.com/godotengine/godot/pull/99613)).
 - Make flipping flag consider influence in LookAtModifier3D ([GH-99619](https://github.com/godotengine/godot/pull/99619)).
@@ -2747,7 +2747,7 @@ Table of contents:
 - Mark pipeline compilation of ubershaders as high priority ([GH-102125](https://github.com/godotengine/godot/pull/102125)).
 - 2D: Fix clip children and rendering artifacts ([GH-102161](https://github.com/godotengine/godot/pull/102161)).
 - Fully enable HDR2D when the setting is changed ([GH-102177](https://github.com/godotengine/godot/pull/102177)).
-- Ensure albedo texture size is available for Label3D and Sprite3D ([GH-102208](https://github.com/godotengine/godot/pull/102208)).
+- Ensure albedo texture size is available for Label3D and SEImage ([GH-102208](https://github.com/godotengine/godot/pull/102208)).
 - Reduce mobile pipeline compilations ([GH-102217](https://github.com/godotengine/godot/pull/102217)).
 - Spread direct lighting calculation for LightmapGI over several submissions ([GH-102257](https://github.com/godotengine/godot/pull/102257)).
 - Track mesh dependencies in Dummy RenderingServer ([GH-102261](https://github.com/godotengine/godot/pull/102261)).

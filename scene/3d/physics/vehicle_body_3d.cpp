@@ -876,7 +876,7 @@ void VehicleBody3D::_update_friction(PhysicsDirectBodyState3D *s) {
 
 void VehicleBody3D::_physics_interpolated_changed() {
 	_update_process_mode();
-	RigidBody3D::_physics_interpolated_changed();
+	SEPhysicsBody::_physics_interpolated_changed();
 }
 
 void VehicleBody3D::fti_pump_xform() {
@@ -885,7 +885,7 @@ void VehicleBody3D::fti_pump_xform() {
 		w.fti_data.pump();
 	}
 
-	RigidBody3D::fti_pump_xform();
+	SEPhysicsBody::fti_pump_xform();
 }
 
 void VehicleBody3D::_update_process_mode() {
@@ -927,7 +927,7 @@ void VehicleBody3D::_notification(int p_what) {
 }
 
 void VehicleBody3D::_body_state_changed(PhysicsDirectBodyState3D *p_state) {
-	RigidBody3D::_body_state_changed(p_state);
+	SEPhysicsBody::_body_state_changed(p_state);
 
 	real_t step = p_state->get_step();
 

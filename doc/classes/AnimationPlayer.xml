@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<class name="AnimationPlayer" inherits="AnimationMixer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../class.xsd">
+<class name="SEAnimation" inherits="AnimationMixer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../class.xsd">
 	<brief_description>
 		A node used for animation playback.
 	</brief_description>
 	<description>
 		An animation player is used for general-purpose playback of animations. It contains a dictionary of [AnimationLibrary] resources and custom blend times between animation transitions.
 		Some methods and properties use a single key to reference an animation directly. These keys are formatted as the key for the library, followed by a forward slash, then the key for the animation within the library, for example [code]"movement/run"[/code]. If the library's key is an empty string (known as the default library), the forward slash is omitted, being the same key used by the library.
-		[AnimationPlayer] is better-suited than [Tween] for more complex animations, for example ones with non-trivial timings. It can also be used over [Tween] if the animation track editor is more convenient than doing it in code.
+		[SEAnimation] is better-suited than [Tween] for more complex animations, for example ones with non-trivial timings. It can also be used over [Tween] if the animation track editor is more convenient than doing it in code.
 		Updating the target properties of animations occurs at the process frame.
 	</description>
 	<tutorials>
@@ -45,7 +45,7 @@
 			</description>
 		</method>
 		<method name="get_method_call_mode" qualifiers="const" deprecated="Use [member AnimationMixer.callback_mode_method] instead.">
-			<return type="int" enum="AnimationPlayer.AnimationMethodCallMode" />
+			<return type="int" enum="SEAnimation.AnimationMethodCallMode" />
 			<description>
 				Returns the call mode used for "Call Method" tracks.
 			</description>
@@ -58,7 +58,7 @@
 			</description>
 		</method>
 		<method name="get_process_callback" qualifiers="const" deprecated="Use [member AnimationMixer.callback_mode_process] instead.">
-			<return type="int" enum="AnimationPlayer.AnimationProcessCallback" />
+			<return type="int" enum="SEAnimation.AnimationProcessCallback" />
 			<description>
 				Returns the process notification in which to update animations.
 			</description>
@@ -115,8 +115,8 @@
 			<description>
 				Plays the animation with key [param name]. Custom blend times and speed can be set.
 				The [param from_end] option only affects when switching to a new animation track, or if the same track but at the start or end. It does not affect resuming playback that was paused in the middle of an animation. If [param custom_speed] is negative and [param from_end] is [code]true[/code], the animation will play backwards (which is equivalent to calling [method play_backwards]).
-				The [AnimationPlayer] keeps track of its current or last played animation with [member assigned_animation]. If this method is called with that same animation [param name], or with no [param name] parameter, the assigned animation will resume playing if it was paused.
-				[b]Note:[/b] The animation will be updated the next time the [AnimationPlayer] is processed. If other variables are updated at the same time this is called, they may be updated too early. To perform the update immediately, call [code]advance(0)[/code].
+				The [SEAnimation] keeps track of its current or last played animation with [member assigned_animation]. If this method is called with that same animation [param name], or with no [param name] parameter, the assigned animation will resume playing if it was paused.
+				[b]Note:[/b] The animation will be updated the next time the [SEAnimation] is processed. If other variables are updated at the same time this is called, they may be updated too early. To perform the update immediately, call [code]advance(0)[/code].
 			</description>
 		</method>
 		<method name="play_backwards">
@@ -233,14 +233,14 @@
 		</method>
 		<method name="set_method_call_mode" deprecated="Use [member AnimationMixer.callback_mode_method] instead.">
 			<return type="void" />
-			<param index="0" name="mode" type="int" enum="AnimationPlayer.AnimationMethodCallMode" />
+			<param index="0" name="mode" type="int" enum="SEAnimation.AnimationMethodCallMode" />
 			<description>
 				Sets the call mode used for "Call Method" tracks.
 			</description>
 		</method>
 		<method name="set_process_callback" deprecated="Use [member AnimationMixer.callback_mode_process] instead.">
 			<return type="void" />
-			<param index="0" name="mode" type="int" enum="AnimationPlayer.AnimationProcessCallback" />
+			<param index="0" name="mode" type="int" enum="SEAnimation.AnimationProcessCallback" />
 			<description>
 				Sets the process notification in which to update animations.
 			</description>
@@ -297,7 +297,7 @@
 			The position (in seconds) of the currently playing animation.
 		</member>
 		<member name="movie_quit_on_finish" type="bool" setter="set_movie_quit_on_finish_enabled" getter="is_movie_quit_on_finish_enabled" default="false">
-			If [code]true[/code] and the engine is running in Movie Maker mode (see [MovieWriter]), exits the engine with [method SceneTree.quit] as soon as an animation is done playing in this [AnimationPlayer]. A message is printed when the engine quits for this reason.
+			If [code]true[/code] and the engine is running in Movie Maker mode (see [MovieWriter]), exits the engine with [method SceneTree.quit] as soon as an animation is done playing in this [SEAnimation]. A message is printed when the engine quits for this reason.
 			[b]Note:[/b] This obeys the same logic as the [signal AnimationMixer.animation_finished] signal, so it will not quit the engine if the animation is set to be looping.
 		</member>
 		<member name="playback_auto_capture" type="bool" setter="set_auto_capture" getter="is_auto_capture" default="true">
@@ -327,8 +327,8 @@
 			<param index="0" name="old_name" type="StringName" />
 			<param index="1" name="new_name" type="StringName" />
 			<description>
-				Emitted when a queued animation plays after the previous animation finished. See also [method AnimationPlayer.queue].
-				[b]Note:[/b] The signal is not emitted when the animation is changed via [method AnimationPlayer.play] or by an [AnimationTree].
+				Emitted when a queued animation plays after the previous animation finished. See also [method SEAnimation.queue].
+				[b]Note:[/b] The signal is not emitted when the animation is changed via [method SEAnimation.play] or by an [AnimationTree].
 			</description>
 		</signal>
 		<signal name="current_animation_changed">

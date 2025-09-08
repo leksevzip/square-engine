@@ -44,7 +44,7 @@
 #include "structures/gltf_texture_sampler.h"
 
 #include "scene/3d/importer_se_mesh.h"
-#include "scene/animation/animation_player.h"
+#include "scene/animation/se_animation.h"
 
 class GLTFState : public Resource {
 	GDCLASS(GLTFState, Resource);
@@ -80,7 +80,7 @@ protected:
 
 	Vector<Ref<GLTFMesh>> meshes; // Meshes are loaded directly, no reason not to.
 
-	Vector<AnimationPlayer *> animation_players;
+	Vector<SEAnimation *> se_animations;
 	HashMap<Ref<Material>, GLTFMaterialIndex> material_cache;
 	Vector<Ref<Material>> materials;
 
@@ -244,9 +244,9 @@ public:
 	Node *get_scene_node(GLTFNodeIndex idx);
 	GLTFNodeIndex get_node_index(Node *p_node);
 
-	int get_animation_players_count(int idx);
+	int get_se_animations_count(int idx);
 
-	AnimationPlayer *get_animation_player(int idx);
+	SEAnimation *get_se_animation(int idx);
 
 	Variant get_additional_data(const StringName &p_extension_name);
 	void set_additional_data(const StringName &p_extension_name, Variant p_additional_data);

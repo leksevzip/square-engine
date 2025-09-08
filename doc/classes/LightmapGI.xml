@@ -165,7 +165,7 @@
 		</constant>
 		<constant name="ENVIRONMENT_MODE_SCENE" value="1" enum="EnvironmentMode">
 			Use the scene's environment lighting when baking lightmaps.
-			[b]Note:[/b] If baking lightmaps in a scene with no [WorldEnvironment] node, this will act like [constant ENVIRONMENT_MODE_DISABLED]. The editor's preview sky and sun is [i]not[/i] taken into account by [LightmapGI] when baking lightmaps.
+			[b]Note:[/b] If baking lightmaps in a scene with no [SEWorld] node, this will act like [constant ENVIRONMENT_MODE_DISABLED]. The editor's preview sky and sun is [i]not[/i] taken into account by [LightmapGI] when baking lightmaps.
 		</constant>
 		<constant name="ENVIRONMENT_MODE_CUSTOM_SKY" value="2" enum="EnvironmentMode">
 			Use [member environment_custom_sky] as a source of environment lighting when baking lightmaps.

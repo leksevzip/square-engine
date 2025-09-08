@@ -105,7 +105,7 @@ void GDExtensionSpecialCompatHashes::initialize() {
 		{ "play", 2372066587, 3269405555 },
 		{ "play_backwards", 1421762485, 3323268493 },
 	});
-	mappings.insert("AnimatedSprite3D", {
+	mappings.insert("AnimatedSEImage", {
 		{ "play", 2372066587, 3269405555 },
 		{ "play_backwards", 1421762485, 3323268493 },
 	});
@@ -152,7 +152,7 @@ void GDExtensionSpecialCompatHashes::initialize() {
 		{ "travel", 3683006648, 3823612587 },
 		{ "start", 3683006648, 3823612587 },
 	});
-	mappings.insert("AnimationPlayer", {
+	mappings.insert("SEAnimation", {
 		{ "play", 3697947785, 3118260607 },
 		{ "play", 2221377757, 3118260607 },
 		{ "play_backwards", 3890664824, 2787282401 },
@@ -794,7 +794,7 @@ void GDExtensionSpecialCompatHashes::initialize() {
 		{ "add_constant_force", 496058220, 4288681949 },
 #endif
 	});
-	mappings.insert("RigidBody3D", {
+	mappings.insert("SEPhysicsBody", {
 #ifdef REAL_T_IS_DOUBLE
 		{ "apply_impulse", 1002852006, 2485728502 },
 		{ "apply_force", 1002852006, 2485728502 },

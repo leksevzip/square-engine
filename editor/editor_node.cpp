@@ -72,7 +72,7 @@
 #include "servers/navigation_server_3d.h"
 #include "servers/rendering_server.h"
 
-#include "editor/animation/animation_player_editor_plugin.h"
+#include "editor/animation/se_animation_editor_plugin.h"
 #include "editor/asset_library/asset_library_editor_plugin.h"
 #include "editor/audio/audio_stream_preview.h"
 #include "editor/audio/editor_audio_buses.h"
@@ -1328,7 +1328,7 @@ void EditorNode::_resources_reimported(const Vector<String> &p_resources) {
 	}
 
 	// Editor may crash when related animation is playing while re-importing GLTF scene, stop it in advance.
-	AnimationPlayer *ap = AnimationPlayerEditor::get_singleton()->get_player();
+	SEAnimation *ap = SEAnimationEditor::get_singleton()->get_player();
 	if (ap && scenes_reimported.size() > 0) {
 		ap->stop(true);
 	}
@@ -2110,7 +2110,7 @@ static void _reset_animation_mixers(Node *p_node, List<Pair<AnimationMixer *, Re
 		if (mixer && mixer->is_active() && mixer->is_reset_on_save_enabled() && mixer->can_apply_reset()) {
 			AnimationTree *tree = Object::cast_to<AnimationTree>(p_node->get_child(i));
 			if (tree) {
-				AnimationPlayer *player = Object::cast_to<AnimationPlayer>(tree->get_node_or_null(tree->get_animation_player()));
+				SEAnimation *player = Object::cast_to<SEAnimation>(tree->get_node_or_null(tree->get_se_animation()));
 				if (player && player->is_active() && player->is_reset_on_save_enabled() && player->can_apply_reset()) {
 					continue; // Avoid to process reset/restore many times.
 				}
@@ -8588,7 +8588,7 @@ EditorNode::EditorNode() {
 
 	gui_base->add_child(project_data_missing);
 
-	add_editor_plugin(memnew(AnimationPlayerEditorPlugin));
+	add_editor_plugin(memnew(SEAnimationEditorPlugin));
 	add_editor_plugin(memnew(AnimationTrackKeyEditEditorPlugin));
 	add_editor_plugin(memnew(AnimationMarkerKeyEditEditorPlugin));
 	add_editor_plugin(memnew(CanvasItemEditorPlugin));
@@ -8611,7 +8611,7 @@ EditorNode::EditorNode() {
 	}
 
 	// More visually meaningful to have this later.
-	bottom_panel->move_item_to_end(AnimationPlayerEditor::get_singleton());
+	bottom_panel->move_item_to_end(SEAnimationEditor::get_singleton());
 
 	add_editor_plugin(VersionControlEditorPlugin::get_singleton());
 

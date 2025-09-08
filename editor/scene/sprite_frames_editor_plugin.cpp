@@ -44,7 +44,7 @@
 #include "editor/settings/editor_settings.h"
 #include "editor/themes/editor_scale.h"
 #include "scene/2d/animated_sprite_2d.h"
-#include "scene/3d/sprite_3d.h"
+#include "scene/3d/se_image.h"
 #include "scene/gui/center_container.h"
 #include "scene/gui/flow_container.h"
 #include "scene/gui/margin_container.h"
@@ -1073,7 +1073,7 @@ static void _find_anim_sprites(Node *p_node, List<Node *> *r_nodes, Ref<SpriteFr
 	}
 
 	{
-		AnimatedSprite3D *as = Object::cast_to<AnimatedSprite3D>(p_node);
+		AnimatedSEImage *as = Object::cast_to<AnimatedSEImage>(p_node);
 		if (as && as->get_sprite_frames() == p_sfames) {
 			r_nodes->push_back(p_node);
 		}
@@ -1844,7 +1844,7 @@ void SpriteFramesEditor::_fetch_sprite_node() {
 
 	bool show_node_edit = false;
 	AnimatedSprite2D *as2d = Object::cast_to<AnimatedSprite2D>(selected);
-	AnimatedSprite3D *as3d = Object::cast_to<AnimatedSprite3D>(selected);
+	AnimatedSEImage *as3d = Object::cast_to<AnimatedSEImage>(selected);
 	if (as2d || as3d) {
 		if (frames != selected->call("get_sprite_frames")) {
 			_remove_sprite_node();
@@ -2545,9 +2545,9 @@ void SpriteFramesEditorPlugin::edit(Object *p_object) {
 	if (animated_sprite) {
 		s = animated_sprite->get_sprite_frames();
 	} else {
-		AnimatedSprite3D *animated_sprite_3d = Object::cast_to<AnimatedSprite3D>(p_object);
-		if (animated_sprite_3d) {
-			s = animated_sprite_3d->get_sprite_frames();
+		AnimatedSEImage *animated_se_image = Object::cast_to<AnimatedSEImage>(p_object);
+		if (animated_se_image) {
+			s = animated_se_image->get_sprite_frames();
 		} else {
 			s = p_object;
 		}
@@ -2561,8 +2561,8 @@ bool SpriteFramesEditorPlugin::handles(Object *p_object) const {
 	if (animated_sprite_2d && *animated_sprite_2d->get_sprite_frames()) {
 		return true;
 	}
-	AnimatedSprite3D *animated_sprite_3d = Object::cast_to<AnimatedSprite3D>(p_object);
-	if (animated_sprite_3d && *animated_sprite_3d->get_sprite_frames()) {
+	AnimatedSEImage *animated_se_image = Object::cast_to<AnimatedSEImage>(p_object);
+	if (animated_se_image && *animated_se_image->get_sprite_frames()) {
 		return true;
 	}
 	SpriteFrames *frames = Object::cast_to<SpriteFrames>(p_object);

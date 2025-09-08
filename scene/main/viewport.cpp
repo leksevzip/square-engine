@@ -53,7 +53,7 @@
 #ifndef _3D_DISABLED
 #include "scene/3d/audio_listener_3d.h"
 #include "scene/3d/se_camera.h"
-#include "scene/3d/world_environment.h"
+#include "scene/3d/se_world.h"
 #endif // _3D_DISABLED
 
 #ifndef PHYSICS_2D_DISABLED
@@ -4783,7 +4783,7 @@ void Viewport::_propagate_enter_world_3d(Node *p_node) {
 			return;
 		}
 
-		if (Object::cast_to<Node3D>(p_node) || Object::cast_to<WorldEnvironment>(p_node)) {
+		if (Object::cast_to<Node3D>(p_node) || Object::cast_to<SEWorld>(p_node)) {
 			p_node->notification(Node3D::NOTIFICATION_ENTER_WORLD);
 		} else {
 			Viewport *v = Object::cast_to<Viewport>(p_node);
@@ -4806,7 +4806,7 @@ void Viewport::_propagate_exit_world_3d(Node *p_node) {
 			return;
 		}
 
-		if (Object::cast_to<Node3D>(p_node) || Object::cast_to<WorldEnvironment>(p_node)) {
+		if (Object::cast_to<Node3D>(p_node) || Object::cast_to<SEWorld>(p_node)) {
 			p_node->notification(Node3D::NOTIFICATION_EXIT_WORLD);
 		} else {
 			Viewport *v = Object::cast_to<Viewport>(p_node);

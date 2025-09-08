@@ -1062,7 +1062,7 @@ msgstr "নোড '%s'"
 msgid "animation"
 msgstr "অ্যানিমেশন"
 
-msgid "AnimationPlayer can't animate itself, only other players."
+msgid "SEAnimation can't animate itself, only other players."
 msgstr "অ্যানিমেশনপ্লেয়ার নিজেই অ্যানিমেট করতে পারে না, কেবল অন্য প্লেয়ার।"
 
 msgid "property '%s'"
@@ -1089,7 +1089,7 @@ msgstr ""
 "-অডিও স্ট্রিমপ্লেয়ার 2 ডি\n"
 "-অডিওস্ট্রিপপ্লেয়ার 3 ডি"
 
-msgid "Animation tracks can only point to AnimationPlayer nodes."
+msgid "Animation tracks can only point to SEAnimation nodes."
 msgstr "অ্যানিমেশন ট্র্যাকগুলি কেবল অ্যানিমেশনপ্লেয়ার নোডগুলিতে নির্দেশ করতে পারে।"
 
 msgid "Not possible to add a new track without a root"
@@ -1149,13 +1149,13 @@ msgstr "অ্যানিমেশনের রিসেট keys যুক্�
 msgid "Bake Animation as Linear Keys"
 msgstr "সরলরৈখিকভাবে অ্যানিমেশনের চাবি বেক"
 
-msgid "Select an AnimationPlayer node to create and edit animations."
+msgid "Select an SEAnimation node to create and edit animations."
 msgstr "অ্যানিমেশন তৈরি এবং সম্পাদনা করতে একটি অ্যানিমেশনপ্লেয়ার নোড নির্বাচন করুন।"
 
 msgid "Warning: Editing imported animation"
 msgstr "সতর্কতা: Imported অ্যানিমেশন সম্পাদনা করা হচ্ছে"
 
-msgid "Warning: AnimationPlayer is inactive"
+msgid "Warning: SEAnimation is inactive"
 msgstr "সতর্কতা: এনিমেশনপ্লেয়ার অকার্যকর"
 
 msgid "Only show tracks from nodes selected in tree."
@@ -5871,7 +5871,7 @@ msgstr "লাইটম্যাপার প্রস্তুত হচ্ছ�
 msgid ""
 "CollisionPolygon3D only serves to provide a collision shape to a "
 "CollisionObject3D derived node.\n"
-"Please only use it as a child of Area3D, StaticBody3D, RigidBody3D, "
+"Please only use it as a child of Area3D, SEBody, SEPhysicsBody, "
 "CharacterBody3D, etc. to give them a shape."
 msgstr ""
 "CollisionPolygon2D শুধুমাত্র CollisionObject2D হতে সৃষ্ট নোডের সংঘর্ষের আকৃতি প্রদান "
@@ -5882,7 +5882,7 @@ msgstr ""
 msgid ""
 "CollisionShape3D only serves to provide a collision shape to a "
 "CollisionObject3D derived node.\n"
-"Please only use it as a child of Area3D, StaticBody3D, RigidBody3D, "
+"Please only use it as a child of Area3D, SEBody, SEPhysicsBody, "
 "CharacterBody3D, etc. to give them a shape."
 msgstr ""
 "CollisionShape2D শুধুমাত্র CollisionObject2D হতে সৃষ্ট নোডের সংঘর্ষের আকৃতি প্রদান "

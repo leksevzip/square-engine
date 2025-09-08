@@ -40,7 +40,7 @@
 #include "main/main.h"
 #include "scene/3d/se_mesh.h"
 #include "scene/3d/navigation/navigation_region_3d.h"
-#include "scene/3d/physics/static_body_3d.h"
+#include "scene/3d/physics/se_body.h"
 #include "scene/gui/menu_button.h"
 #include "scene/resources/packed_scene.h"
 
@@ -181,7 +181,7 @@ void MeshLibraryEditor::_import_scene_parse_node(Ref<MeshLibrary> p_library, Has
 
 	Vector<MeshLibrary::ShapeData> collisions;
 	for (int i = 0; i < mesh_instance_node->get_child_count(); i++) {
-		StaticBody3D *static_body_node = Object::cast_to<StaticBody3D>(mesh_instance_node->get_child(i));
+		SEBody *static_body_node = Object::cast_to<SEBody>(mesh_instance_node->get_child(i));
 		if (!static_body_node) {
 			continue;
 		}

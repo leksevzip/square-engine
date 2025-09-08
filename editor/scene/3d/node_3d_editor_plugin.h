@@ -60,7 +60,7 @@ class SubViewportContainer;
 class VSeparator;
 class VSplitContainer;
 class ViewportNavigationControl;
-class WorldEnvironment;
+class SEWorld;
 class SEMesh;
 
 class ViewportRotationControl : public Control {
@@ -899,7 +899,7 @@ private:
 
 	SEDirectional *preview_sun = nullptr;
 	bool preview_sun_dangling = false;
-	WorldEnvironment *preview_environment = nullptr;
+	SEWorld *preview_environment = nullptr;
 	bool preview_env_dangling = false;
 	Ref<Environment> environment;
 	Ref<CameraAttributesPractical> camera_attributes;

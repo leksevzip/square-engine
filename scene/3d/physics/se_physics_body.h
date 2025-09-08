@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  rigid_body_3d.h                                                       */
+/*  se_physics_body.h                                                       */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -33,8 +33,8 @@
 #include "core/templates/vset.h"
 #include "scene/3d/physics/physics_body_3d.h"
 
-class RigidBody3D : public PhysicsBody3D {
-	GDCLASS(RigidBody3D, PhysicsBody3D);
+class SEPhysicsBody : public PhysicsBody3D {
+	GDCLASS(SEPhysicsBody, PhysicsBody3D);
 
 public:
 	enum FreezeMode {
@@ -103,7 +103,7 @@ private:
 			tagged = false;
 		}
 	};
-	struct RigidBody3D_RemoveAction {
+	struct SEPhysicsBody_RemoveAction {
 		RID rid;
 		ObjectID body_id;
 		ShapePair pair;
@@ -234,13 +234,13 @@ public:
 
 	virtual PackedStringArray get_configuration_warnings() const override;
 
-	RigidBody3D();
-	~RigidBody3D();
+	SEPhysicsBody();
+	~SEPhysicsBody();
 
 private:
 	void _reload_physics_characteristics();
 };
 
-VARIANT_ENUM_CAST(RigidBody3D::FreezeMode);
-VARIANT_ENUM_CAST(RigidBody3D::CenterOfMassMode);
-VARIANT_ENUM_CAST(RigidBody3D::DampMode);
+VARIANT_ENUM_CAST(SEPhysicsBody::FreezeMode);
+VARIANT_ENUM_CAST(SEPhysicsBody::CenterOfMassMode);
+VARIANT_ENUM_CAST(SEPhysicsBody::DampMode);

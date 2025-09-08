@@ -2,6 +2,6 @@
 extends Node
 
 func a():
-    var test: Node = $AnimationPlayer
+    var test: Node = $SEAnimation
     test.➡
     pass

@@ -615,7 +615,7 @@ msgstr "Opprett"
 msgid "animation"
 msgstr "animasjon"
 
-msgid "AnimationPlayer can't animate itself, only other players."
+msgid "SEAnimation can't animate itself, only other players."
 msgstr "AnimasjonAvspiller kan ikke animere seg selv, kun andre avspillere."
 
 msgid "property '%s'"
@@ -638,8 +638,8 @@ msgstr ""
 "-AudioStreamPlayer2D\n"
 "-AudioStreamPlayer3D"
 
-msgid "Animation tracks can only point to AnimationPlayer nodes."
-msgstr "Animasjonsspor kan kun peke på AnimationPlayer-noder."
+msgid "Animation tracks can only point to SEAnimation nodes."
+msgstr "Animasjonsspor kan kun peke på SEAnimation-noder."
 
 msgid "Not possible to add a new track without a root"
 msgstr "Ikke mulig å legge til et nytt spor uten en rot"
@@ -680,8 +680,8 @@ msgstr "Utklippsbordet er tomt!"
 msgid "Paste Tracks"
 msgstr "Sett in spor"
 
-msgid "Select an AnimationPlayer node to create and edit animations."
-msgstr "Velg en AnimationPlayer-node for å lage og redigere animasjoner."
+msgid "Select an SEAnimation node to create and edit animations."
+msgstr "Velg en SEAnimation-node for å lage og redigere animasjoner."
 
 msgid "Warning: Editing imported animation"
 msgstr "Advarsel: Redigerer importert animasjon"

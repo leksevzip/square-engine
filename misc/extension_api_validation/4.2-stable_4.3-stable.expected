@@ -143,8 +143,8 @@ MSAA flag was added, compatibility functions exist for these.
 
 GH-84906
 --------
-Validate extension JSON: Error: Field 'classes/AnimationPlayer/methods/play/arguments/0': default_value changed value in new API, from "\"\"" to "&\"\"".
-Validate extension JSON: Error: Field 'classes/AnimationPlayer/methods/play_backwards/arguments/0': default_value changed value in new API, from "\"\"" to "&\"\"".
+Validate extension JSON: Error: Field 'classes/SEAnimation/methods/play/arguments/0': default_value changed value in new API, from "\"\"" to "&\"\"".
+Validate extension JSON: Error: Field 'classes/SEAnimation/methods/play_backwards/arguments/0': default_value changed value in new API, from "\"\"" to "&\"\"".
 Validate extension JSON: Error: Field 'classes/CodeEdit/methods/add_code_completion_option/arguments/5': default_value changed value in new API, from "0" to "null".
 Validate extension JSON: Error: Field 'classes/Control/methods/get_theme_color/arguments/1': default_value changed value in new API, from "\"\"" to "&\"\"".
 Validate extension JSON: Error: Field 'classes/Control/methods/get_theme_constant/arguments/1': default_value changed value in new API, from "\"\"" to "&\"\"".
@@ -364,7 +364,7 @@ Optional arguments added. Compatibility methods registered.
 
 GH-93982
 --------
-Validate extension JSON: Error: Field 'classes/Sprite3D/properties/frame_coords': type changed value in new API, from "Vector2" to "Vector2i".
+Validate extension JSON: Error: Field 'classes/SEImage/properties/frame_coords': type changed value in new API, from "Vector2" to "Vector2i".
 
 The type was wrong to begin with and has been corrected. Vector2 and Vector2i are convertible, so it should be compatible.
 

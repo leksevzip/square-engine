@@ -935,8 +935,8 @@ msgstr "mezgls '%s'"
 msgid "animation"
 msgstr "animācija"
 
-msgid "AnimationPlayer can't animate itself, only other players."
-msgstr "AnimationPlayer nevar animēt pats sevi, tikai citus spēlētājus."
+msgid "SEAnimation can't animate itself, only other players."
+msgstr "SEAnimation nevar animēt pats sevi, tikai citus spēlētājus."
 
 msgid "property '%s'"
 msgstr "vērtība '%s'"
@@ -967,8 +967,8 @@ msgstr ""
 "-AudioStreamPlayer2D\n"
 "-AudioStreamPlayer3D"
 
-msgid "Animation tracks can only point to AnimationPlayer nodes."
-msgstr "Animācijas celiņi var norādīt tikai uz AnimationPlayer mezgliem."
+msgid "Animation tracks can only point to SEAnimation nodes."
+msgstr "Animācijas celiņi var norādīt tikai uz SEAnimation mezgliem."
 
 msgid "Not possible to add a new track without a root"
 msgstr "Nevar izveidot jaunu celiņu bez saknes"
@@ -1015,9 +1015,9 @@ msgstr "Starpliktuve ir tukša!"
 msgid "Paste Tracks"
 msgstr "Ielīmēt celiņus"
 
-msgid "Select an AnimationPlayer node to create and edit animations."
+msgid "Select an SEAnimation node to create and edit animations."
 msgstr ""
-"Izvēlieties 'AnimationPlayer' mezglu, lai izveidotu un rediģētu animācijas."
+"Izvēlieties 'SEAnimation' mezglu, lai izveidotu un rediģētu animācijas."
 
 msgid "Warning: Editing imported animation"
 msgstr "Brīdinājums: Rediģējat importēto animāciju"

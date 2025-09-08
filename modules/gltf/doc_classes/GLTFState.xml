@@ -52,24 +52,24 @@
 				The argument should be the [GLTFDocumentExtension] name (does not have to match the extension name in the glTF file), and the return value can be anything you set. If nothing was set, the return value is [code]null[/code].
 			</description>
 		</method>
-		<method name="get_animation_player">
-			<return type="AnimationPlayer" />
+		<method name="get_se_animation">
+			<return type="SEAnimation" />
 			<param index="0" name="idx" type="int" />
 			<description>
-				Returns the [AnimationPlayer] node with the given index. These nodes are only used during the export process when converting Godot [AnimationPlayer] nodes to glTF animations.
+				Returns the [SEAnimation] node with the given index. These nodes are only used during the export process when converting Godot [SEAnimation] nodes to glTF animations.
 			</description>
 		</method>
-		<method name="get_animation_players_count">
+		<method name="get_se_animations_count">
 			<return type="int" />
 			<param index="0" name="idx" type="int" />
 			<description>
-				Returns the number of [AnimationPlayer] nodes in this [GLTFState]. These nodes are only used during the export process when converting Godot [AnimationPlayer] nodes to glTF animations.
+				Returns the number of [SEAnimation] nodes in this [GLTFState]. These nodes are only used during the export process when converting Godot [SEAnimation] nodes to glTF animations.
 			</description>
 		</method>
 		<method name="get_animations">
 			<return type="GLTFAnimation[]" />
 			<description>
-				Returns an array of all [GLTFAnimation]s in the glTF file. When importing, these will be generated as animations in an [AnimationPlayer] node. When exporting, these will be generated from Godot [AnimationPlayer] nodes.
+				Returns an array of all [GLTFAnimation]s in the glTF file. When importing, these will be generated as animations in an [SEAnimation] node. When exporting, these will be generated from Godot [SEAnimation] nodes.
 			</description>
 		</method>
 		<method name="get_buffer_views">
@@ -187,7 +187,7 @@
 			<return type="void" />
 			<param index="0" name="animations" type="GLTFAnimation[]" />
 			<description>
-				Sets the [GLTFAnimation]s in the state. When importing, these will be generated as animations in an [AnimationPlayer] node. When exporting, these will be generated from Godot [AnimationPlayer] nodes.
+				Sets the [GLTFAnimation]s in the state. When importing, these will be generated as animations in an [SEAnimation] node. When exporting, these will be generated from Godot [SEAnimation] nodes.
 			</description>
 		</method>
 		<method name="set_buffer_views">

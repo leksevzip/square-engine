@@ -626,7 +626,7 @@ msgstr "ანიმაცია გასაღების ჩასმა"
 msgid "animation"
 msgstr "ანიმაცია"
 
-msgid "AnimationPlayer can't animate itself, only other players."
+msgid "SEAnimation can't animate itself, only other players."
 msgstr ""
 "ანიმაციის გამშვები ვერ ჩაატარებს ცდებს საკუთარ თავზე, მხოლოდ სხვა "
 "მოთამაშეებზე."
@@ -696,7 +696,7 @@ msgstr "ანიმაცია მასშტაბის გასაღე�
 msgid "Animation Add RESET Keys"
 msgstr "ანიმაცია RESET გასაღებების დამატება"
 
-msgid "Select an AnimationPlayer node to create and edit animations."
+msgid "Select an SEAnimation node to create and edit animations."
 msgstr "ანიმაციების შექმნისა და ჩასწორებისთვის AnimatonPlayer კვანძი აირჩიეთ."
 
 msgid "Imported Scene"

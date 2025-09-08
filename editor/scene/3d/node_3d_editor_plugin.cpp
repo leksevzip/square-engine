@@ -36,7 +36,7 @@
 #include "core/math/math_funcs.h"
 #include "core/math/projection.h"
 #include "core/os/keyboard.h"
-#include "editor/animation/animation_player_editor_plugin.h"
+#include "editor/animation/se_animation_editor_plugin.h"
 #include "editor/debugger/editor_debugger_node.h"
 #include "editor/docks/scene_tree_dock.h"
 #include "editor/editor_main_screen.h"
@@ -88,9 +88,9 @@
 #include "scene/3d/se_mesh.h"
 #include "scene/3d/physics/collision_shape_3d.h"
 #include "scene/3d/physics/physics_body_3d.h"
-#include "scene/3d/sprite_3d.h"
+#include "scene/3d/se_image.h"
 #include "scene/3d/visual_instance_3d.h"
-#include "scene/3d/world_environment.h"
+#include "scene/3d/se_world.h"
 #include "scene/gui/center_container.h"
 #include "scene/gui/color_picker.h"
 #include "scene/gui/flow_container.h"
@@ -2544,7 +2544,7 @@ void Node3DEditorViewport::_sinput(const Ref<InputEvent> &p_event) {
 				return;
 			}
 
-			if (!AnimationPlayerEditor::get_singleton()->get_track_editor()->has_keying()) {
+			if (!SEAnimationEditor::get_singleton()->get_track_editor()->has_keying()) {
 				set_message(TTR("Keying is disabled (no key inserted)."));
 				return;
 			}
@@ -4781,7 +4781,7 @@ void Node3DEditorViewport::_create_preview_node(const Vector<String> &files) con
 
 		Ref<AudioStream> audio = res;
 		if (audio.is_valid()) {
-			Sprite3D *sprite = memnew(Sprite3D);
+			SEImage *sprite = memnew(SEImage);
 			sprite->set_texture(get_editor_theme_icon(SNAME("Gizmo3DSamplePlayer")));
 			sprite->set_billboard_mode(StandardMaterial3D::BILLBOARD_ENABLED);
 			sprite->set_pixel_size(0.005);
@@ -8443,7 +8443,7 @@ void Node3DEditor::_add_environment_to_scene(bool p_already_added_sun) {
 	}
 	ERR_FAIL_NULL(base);
 
-	WorldEnvironment *new_env = memnew(WorldEnvironment);
+	SEWorld *new_env = memnew(SEWorld);
 	new_env->set_environment(preview_environment->get_environment()->duplicate(true));
 	if (GLOBAL_GET("rendering/lights_and_shadows/use_physical_light_units")) {
 		new_env->set_camera_attributes(preview_environment->get_camera_attributes()->duplicate(true));
@@ -8861,7 +8861,7 @@ void Node3DEditor::_viewport_clicked(int p_viewport_idx) {
 
 void Node3DEditor::_node_added(Node *p_node) {
 	if (EditorNode::get_singleton()->get_scene_root()->is_ancestor_of(p_node)) {
-		if (Object::cast_to<WorldEnvironment>(p_node)) {
+		if (Object::cast_to<SEWorld>(p_node)) {
 			world_env_count++;
 			if (world_env_count == 1) {
 				_update_preview_environment();
@@ -8877,7 +8877,7 @@ void Node3DEditor::_node_added(Node *p_node) {
 
 void Node3DEditor::_node_removed(Node *p_node) {
 	if (EditorNode::get_singleton()->get_scene_root()->is_ancestor_of(p_node)) {
-		if (Object::cast_to<WorldEnvironment>(p_node)) {
+		if (Object::cast_to<SEWorld>(p_node)) {
 			world_env_count--;
 			if (world_env_count == 0) {
 				_update_preview_environment();
@@ -9106,7 +9106,7 @@ void Node3DEditor::_update_preview_environment() {
 			preview_env_dangling = true;
 		}
 		if (world_env_count > 0) {
-			environ_state->set_text(TTRC("Scene contains\nWorldEnvironment.\nPreview disabled."));
+			environ_state->set_text(TTRC("Scene contains\nSEWorld.\nPreview disabled."));
 		} else {
 			environ_state->set_text(TTRC("Preview disabled."));
 		}
@@ -9447,7 +9447,7 @@ Node3DEditor::Node3DEditor() {
 	main_menu_hbox->add_child(sun_button);
 
 	environ_button = memnew(Button);
-	environ_button->set_tooltip_text(TTRC("Toggle preview environment.\nIf a WorldEnvironment node is added to the scene, preview environment is disabled."));
+	environ_button->set_tooltip_text(TTRC("Toggle preview environment.\nIf a SEWorld node is added to the scene, preview environment is disabled."));
 	environ_button->set_toggle_mode(true);
 	environ_button->set_accessibility_name(TTRC("Toggle preview environment."));
 	environ_button->set_theme_type_variation(SceneStringName(FlatButton));
@@ -9913,7 +9913,7 @@ void fragment() {
 
 		environ_add_to_scene = memnew(Button);
 		environ_add_to_scene->set_text(TTRC("Add Environment to Scene"));
-		environ_add_to_scene->set_tooltip_text(TTRC("Adds a WorldEnvironment node matching the preview environment settings to the current scene.\nHold Shift while clicking to also add the preview sun to the current scene."));
+		environ_add_to_scene->set_tooltip_text(TTRC("Adds a SEWorld node matching the preview environment settings to the current scene.\nHold Shift while clicking to also add the preview sun to the current scene."));
 		environ_add_to_scene->connect(SceneStringName(pressed), callable_mp(this, &Node3DEditor::_add_environment_to_scene).bind(false));
 		environ_vb->add_spacer();
 		environ_vb->add_child(environ_add_to_scene);
@@ -9927,7 +9927,7 @@ void fragment() {
 		preview_sun = memnew(SEDirectional);
 		preview_sun->set_shadow(true);
 		preview_sun->set_shadow_mode(SEDirectional::SHADOW_PARALLEL_4_SPLITS);
-		preview_environment = memnew(WorldEnvironment);
+		preview_environment = memnew(SEWorld);
 		environment.instantiate();
 		preview_environment->set_environment(environment);
 		if (GLOBAL_GET("rendering/lights_and_shadows/use_physical_light_units")) {

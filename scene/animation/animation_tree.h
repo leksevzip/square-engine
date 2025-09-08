@@ -305,10 +305,10 @@ private:
 	mutable AHashMap<StringName, LocalVector<Activity>> input_activity_map;
 	mutable AHashMap<StringName, int> input_activity_map_get;
 
-	NodePath animation_player;
+	NodePath se_animation;
 
-	void _setup_animation_player();
-	void _animation_player_changed();
+	void _setup_se_animation();
+	void _se_animation_changed();
 
 	bool _set(const StringName &p_name, const Variant &p_value);
 	bool _get(const StringName &p_name, Variant &r_ret) const;
@@ -333,8 +333,8 @@ private:
 #endif // DISABLE_DEPRECATED
 
 public:
-	void set_animation_player(const NodePath &p_path);
-	NodePath get_animation_player() const;
+	void set_se_animation(const NodePath &p_path);
+	NodePath get_se_animation() const;
 
 	void set_root_animation_node(const Ref<AnimationRootNode> &p_animation_node);
 	Ref<AnimationRootNode> get_root_animation_node() const;

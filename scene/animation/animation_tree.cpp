@@ -32,7 +32,7 @@
 #include "animation_tree.compat.inc"
 
 #include "animation_blend_tree.h"
-#include "scene/animation/animation_player.h"
+#include "scene/animation/se_animation.h"
 
 void AnimationNode::get_parameter_list(List<PropertyInfo> *r_list) const {
 	Array parameters;
@@ -833,7 +833,7 @@ void AnimationTree::_update_properties() const {
 void AnimationTree::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_ENTER_TREE: {
-			_setup_animation_player();
+			_setup_se_animation();
 			if (active) {
 				_set_process(true);
 			}
@@ -841,43 +841,43 @@ void AnimationTree::_notification(int p_what) {
 	}
 }
 
-void AnimationTree::set_animation_player(const NodePath &p_path) {
-	animation_player = p_path;
+void AnimationTree::set_se_animation(const NodePath &p_path) {
+	se_animation = p_path;
 	if (p_path.is_empty()) {
 		set_root_node(SceneStringName(path_pp));
 		while (animation_libraries.size()) {
 			remove_animation_library(animation_libraries[0].name);
 		}
 	}
-	emit_signal(SNAME("animation_player_changed")); // Needs to unpin AnimationPlayerEditor.
-	_setup_animation_player();
+	emit_signal(SNAME("se_animation_changed")); // Needs to unpin SEAnimationEditor.
+	_setup_se_animation();
 	notify_property_list_changed();
 }
 
-NodePath AnimationTree::get_animation_player() const {
-	return animation_player;
+NodePath AnimationTree::get_se_animation() const {
+	return se_animation;
 }
 
-void AnimationTree::_setup_animation_player() {
+void AnimationTree::_setup_se_animation() {
 	if (!is_inside_tree()) {
 		return;
 	}
 
 	cache_valid = false;
 
-	if (animation_player.is_empty()) {
+	if (se_animation.is_empty()) {
 		clear_caches();
 		return;
 	}
 
-	// Using AnimationPlayer here is for compatibility. Changing to AnimationMixer needs extra work like error handling.
-	AnimationPlayer *player = Object::cast_to<AnimationPlayer>(get_node_or_null(animation_player));
+	// Using SEAnimation here is for compatibility. Changing to AnimationMixer needs extra work like error handling.
+	SEAnimation *player = Object::cast_to<SEAnimation>(get_node_or_null(se_animation));
 	if (player) {
-		if (!player->is_connected(SNAME("caches_cleared"), callable_mp(this, &AnimationTree::_setup_animation_player))) {
-			player->connect(SNAME("caches_cleared"), callable_mp(this, &AnimationTree::_setup_animation_player), CONNECT_DEFERRED);
+		if (!player->is_connected(SNAME("caches_cleared"), callable_mp(this, &AnimationTree::_setup_se_animation))) {
+			player->connect(SNAME("caches_cleared"), callable_mp(this, &AnimationTree::_setup_se_animation), CONNECT_DEFERRED);
 		}
-		if (!player->is_connected(SNAME("animation_list_changed"), callable_mp(this, &AnimationTree::_setup_animation_player))) {
-			player->connect(SNAME("animation_list_changed"), callable_mp(this, &AnimationTree::_setup_animation_player), CONNECT_DEFERRED);
+		if (!player->is_connected(SNAME("animation_list_changed"), callable_mp(this, &AnimationTree::_setup_se_animation))) {
+			player->connect(SNAME("animation_list_changed"), callable_mp(this, &AnimationTree::_setup_se_animation), CONNECT_DEFERRED);
 		}
 		Node *root = player->get_node_or_null(player->get_root_node());
 		if (root) {
@@ -900,7 +900,7 @@ void AnimationTree::_setup_animation_player() {
 }
 
 void AnimationTree::_validate_property(PropertyInfo &p_property) const {
-	if (!animation_player.is_empty()) {
+	if (!se_animation.is_empty()) {
 		if (Engine::get_singleton()->is_editor_hint() && (p_property.name == "root_node" || p_property.name.begins_with("libraries"))) {
 			p_property.usage |= PROPERTY_USAGE_READ_ONLY;
 		}
@@ -989,14 +989,14 @@ void AnimationTree::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_advance_expression_base_node", "path"), &AnimationTree::set_advance_expression_base_node);
 	ClassDB::bind_method(D_METHOD("get_advance_expression_base_node"), &AnimationTree::get_advance_expression_base_node);
 
-	ClassDB::bind_method(D_METHOD("set_animation_player", "path"), &AnimationTree::set_animation_player);
-	ClassDB::bind_method(D_METHOD("get_animation_player"), &AnimationTree::get_animation_player);
+	ClassDB::bind_method(D_METHOD("set_se_animation", "path"), &AnimationTree::set_se_animation);
+	ClassDB::bind_method(D_METHOD("get_se_animation"), &AnimationTree::get_se_animation);
 
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "tree_root", PROPERTY_HINT_RESOURCE_TYPE, "AnimationRootNode"), "set_tree_root", "get_tree_root");
 	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "advance_expression_base_node", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Node"), "set_advance_expression_base_node", "get_advance_expression_base_node");
-	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "anim_player", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "AnimationPlayer"), "set_animation_player", "get_animation_player");
+	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "anim_player", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "SEAnimation"), "set_se_animation", "get_se_animation");
 
-	ADD_SIGNAL(MethodInfo(SNAME("animation_player_changed")));
+	ADD_SIGNAL(MethodInfo(SNAME("se_animation_changed")));
 }
 
 AnimationTree::AnimationTree() {

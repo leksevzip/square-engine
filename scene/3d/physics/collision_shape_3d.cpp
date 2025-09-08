@@ -124,29 +124,29 @@ PackedStringArray CollisionShape3D::get_configuration_warnings() const {
 
 	CollisionObject3D *col_object = Object::cast_to<CollisionObject3D>(get_parent());
 	if (col_object == nullptr) {
-		warnings.push_back(RTR("CollisionShape3D only serves to provide a collision shape to a CollisionObject3D derived node.\nPlease only use it as a child of Area3D, StaticBody3D, RigidBody3D, CharacterBody3D, etc. to give them a shape."));
+		warnings.push_back(RTR("CollisionShape3D only serves to provide a collision shape to a CollisionObject3D derived node.\nPlease only use it as a child of Area3D, SEBody, SEPhysicsBody, CharacterBody3D, etc. to give them a shape."));
 	}
 
 	if (shape.is_null()) {
 		warnings.push_back(RTR("A shape must be provided for CollisionShape3D to function. Please create a shape resource for it."));
 	}
 
-	if (shape.is_valid() && Object::cast_to<RigidBody3D>(col_object)) {
-		String body_type = "RigidBody3D";
+	if (shape.is_valid() && Object::cast_to<SEPhysicsBody>(col_object)) {
+		String body_type = "SEPhysicsBody";
 		if (Object::cast_to<VehicleBody3D>(col_object)) {
 			body_type = "VehicleBody3D";
 		}
 
 		if (Object::cast_to<ConcavePolygonShape3D>(*shape)) {
-			warnings.push_back(vformat(RTR("When used for collision, ConcavePolygonShape3D is intended to work with static CollisionObject3D nodes like StaticBody3D.\nIt will likely not behave well for %ss (except when frozen and freeze_mode set to FREEZE_MODE_STATIC)."), body_type));
+			warnings.push_back(vformat(RTR("When used for collision, ConcavePolygonShape3D is intended to work with static CollisionObject3D nodes like SEBody.\nIt will likely not behave well for %ss (except when frozen and freeze_mode set to FREEZE_MODE_STATIC)."), body_type));
 		} else if (Object::cast_to<WorldBoundaryShape3D>(*shape)) {
-			warnings.push_back(RTR("WorldBoundaryShape3D doesn't support RigidBody3D in another mode than static."));
+			warnings.push_back(RTR("WorldBoundaryShape3D doesn't support SEPhysicsBody in another mode than static."));
 		}
 	}
 
 	if (shape.is_valid() && Object::cast_to<CharacterBody3D>(col_object)) {
 		if (Object::cast_to<ConcavePolygonShape3D>(*shape)) {
-			warnings.push_back(RTR("When used for collision, ConcavePolygonShape3D is intended to work with static CollisionObject3D nodes like StaticBody3D.\nIt will likely not behave well for CharacterBody3Ds."));
+			warnings.push_back(RTR("When used for collision, ConcavePolygonShape3D is intended to work with static CollisionObject3D nodes like SEBody.\nIt will likely not behave well for CharacterBody3Ds."));
 		}
 	}
 

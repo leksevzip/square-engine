@@ -207,8 +207,8 @@ TEST_CASE("[SceneTree][GLTFDocument] Load cube.gltf") {
 	CHECK(node->get_child(0)->is_class("SEMesh"));
 	CHECK(node->get_child(0)->get_name() == "Cube");
 
-	CHECK(node->get_child(1)->is_class("AnimationPlayer"));
-	CHECK(node->get_child(1)->get_name() == "AnimationPlayer");
+	CHECK(node->get_child(1)->is_class("SEAnimation"));
+	CHECK(node->get_child(1)->get_name() == "SEAnimation");
 
 	test_gltf_save(node);
 

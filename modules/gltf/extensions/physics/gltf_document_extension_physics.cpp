@@ -31,8 +31,8 @@
 #include "gltf_document_extension_physics.h"
 
 #include "scene/3d/physics/area_3d.h"
-#include "scene/3d/physics/rigid_body_3d.h"
-#include "scene/3d/physics/static_body_3d.h"
+#include "scene/3d/physics/se_physics_body.h"
+#include "scene/3d/physics/se_body.h"
 
 using GLTFShapeIndex = int64_t;
 
@@ -325,7 +325,7 @@ CollisionObject3D *_generate_shape_with_body(Ref<GLTFState> p_state, Ref<GLTFNod
 	} else if (is_trigger) {
 		body = memnew(Area3D);
 	} else {
-		body = memnew(StaticBody3D);
+		body = memnew(SEBody);
 	}
 	CollisionShape3D *shape = p_physics_shape->to_node();
 	shape->set_name(p_gltf_node->get_name() + "Shape");
@@ -357,7 +357,7 @@ Node3D *_generate_shape_node_and_body_if_needed(Ref<GLTFState> p_state, Ref<GLTF
 		}
 	} else {
 		if (!Object::cast_to<PhysicsBody3D>(p_col_object)) {
-			body_node = memnew(StaticBody3D);
+			body_node = memnew(SEBody);
 		}
 	}
 	// Generate the shape node.
@@ -454,7 +454,7 @@ Node3D *GLTFDocumentExtensionPhysics::generate_scene_node(Ref<GLTFState> p_state
 			if (p_gltf_node->get_additional_data(StringName("GLTFPhysicsCompoundCollider"))) {
 				// If the glTF file wants this node to group solid shapes together,
 				// and there is no parent body, we need to create a static body.
-				ancestor_col_obj = memnew(StaticBody3D);
+				ancestor_col_obj = memnew(SEBody);
 				ret = ancestor_col_obj;
 			}
 		}
@@ -462,7 +462,7 @@ Node3D *GLTFDocumentExtensionPhysics::generate_scene_node(Ref<GLTFState> p_state
 	// Add the shapes to the tree. When an ancestor body is present, use it.
 	// If an explicit body was specified, it has already been generated and
 	// set above. If there is no ancestor body, we will either generate an
-	// Area3D or StaticBody3D implicitly, so prefer an Area3D as the base
+	// Area3D or SEBody implicitly, so prefer an Area3D as the base
 	// node for best compatibility with signal connections to this node.
 	bool is_ancestor_col_obj_solid = Object::cast_to<PhysicsBody3D>(ancestor_col_obj);
 	if (is_ancestor_col_obj_solid && gltf_physics_collider_shape.is_valid()) {
@@ -621,7 +621,7 @@ Ref<GLTFObjectModelProperty> GLTFDocumentExtensionPhysics::export_object_model_p
 	}
 	ret.instantiate();
 	const StringName &node_prop = path_subnames[0];
-	if (Object::cast_to<RigidBody3D>(p_target_object)) {
+	if (Object::cast_to<SEPhysicsBody>(p_target_object)) {
 		if (path_subnames.size() != 1) {
 			return ret;
 		}

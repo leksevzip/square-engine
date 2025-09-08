@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  animation_player.h                                                    */
+/*  se_animation.h                                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -33,8 +33,8 @@
 #include "animation_mixer.h"
 #include "scene/resources/animation.h"
 
-class AnimationPlayer : public AnimationMixer {
-	GDCLASS(AnimationPlayer, AnimationMixer);
+class SEAnimation : public AnimationMixer {
+	GDCLASS(SEAnimation, AnimationMixer);
 
 #ifndef DISABLE_DEPRECATED
 public:
@@ -237,11 +237,11 @@ public:
 
 	virtual void advance(double p_time) override;
 
-	AnimationPlayer();
-	~AnimationPlayer();
+	SEAnimation();
+	~SEAnimation();
 };
 
 #ifndef DISABLE_DEPRECATED
-VARIANT_ENUM_CAST(AnimationPlayer::AnimationProcessCallback);
-VARIANT_ENUM_CAST(AnimationPlayer::AnimationMethodCallMode);
+VARIANT_ENUM_CAST(SEAnimation::AnimationProcessCallback);
+VARIANT_ENUM_CAST(SEAnimation::AnimationMethodCallMode);
 #endif // DISABLE_DEPRECATED

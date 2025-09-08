@@ -35,7 +35,7 @@
 #include "core/io/resource_saver.h"
 #include "core/object/class_db.h"
 #include "core/os/keyboard.h"
-#include "editor/animation/animation_player_editor_plugin.h"
+#include "editor/animation/se_animation_editor_plugin.h"
 #include "editor/debugger/editor_debugger_node.h"
 #include "editor/docks/filesystem_dock.h"
 #include "editor/docks/inspector_dock.h"
@@ -1920,8 +1920,8 @@ bool SceneTreeDock::_has_tracks_to_delete(Node *p_node, List<Node *> &p_to_delet
 		}
 	}
 
-	// This is an AnimationPlayer that survives the deletion.
-	AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(p_node);
+	// This is an SEAnimation that survives the deletion.
+	SEAnimation *ap = Object::cast_to<SEAnimation>(p_node);
 	if (ap) {
 		Node *root = ap->get_node(ap->get_root_node());
 		if (root && !p_to_delete.find(root)) {
@@ -2169,17 +2169,17 @@ void SceneTreeDock::perform_node_renames(Node *p_base, HashMap<Node *, NodePath>
 
 	AnimationMixer *mixer = Object::cast_to<AnimationMixer>(p_base);
 	if (autorename_animation_tracks && mixer) {
-		// Don't rename if we're an AnimationTree pointing to an AnimationPlayer
-		bool points_to_other_animation_player = false;
+		// Don't rename if we're an AnimationTree pointing to an SEAnimation
+		bool points_to_other_se_animation = false;
 		AnimationTree *at = Object::cast_to<AnimationTree>(mixer);
 		if (at) {
-			AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(at->get_node_or_null(at->get_animation_player()));
+			SEAnimation *ap = Object::cast_to<SEAnimation>(at->get_node_or_null(at->get_se_animation()));
 			if (ap) {
-				points_to_other_animation_player = true;
+				points_to_other_se_animation = true;
 			}
 		}
 
-		if (!points_to_other_animation_player) {
+		if (!points_to_other_se_animation) {
 			List<StringName> anims;
 			mixer->get_animation_list(&anims);
 			Node *root = mixer->get_node(mixer->get_root_node());
@@ -2496,8 +2496,8 @@ void SceneTreeDock::_do_reparent(Node *p_new_parent, int p_position_in_parent, V
 
 		undo_redo->add_do_method(this, "_set_owners", edited_scene, owners);
 
-		if (AnimationPlayerEditor::get_singleton()->get_track_editor()->get_root() == node) {
-			undo_redo->add_do_method(AnimationPlayerEditor::get_singleton()->get_track_editor(), "set_root", node);
+		if (SEAnimationEditor::get_singleton()->get_track_editor()->get_root() == node) {
+			undo_redo->add_do_method(SEAnimationEditor::get_singleton()->get_track_editor(), "set_root", node);
 		}
 
 		undo_redo->add_undo_method(p_new_parent, "remove_child", node);
@@ -2523,8 +2523,8 @@ void SceneTreeDock::_do_reparent(Node *p_new_parent, int p_position_in_parent, V
 		undo_redo->add_undo_method(node->get_parent(), "add_child", node, true);
 		undo_redo->add_undo_method(node->get_parent(), "move_child", node, child_pos);
 		undo_redo->add_undo_method(this, "_set_owners", edited_scene, owners);
-		if (AnimationPlayerEditor::get_singleton()->get_track_editor()->get_root() == node) {
-			undo_redo->add_undo_method(AnimationPlayerEditor::get_singleton()->get_track_editor(), "set_root", node);
+		if (SEAnimationEditor::get_singleton()->get_track_editor()->get_root() == node) {
+			undo_redo->add_undo_method(SEAnimationEditor::get_singleton()->get_track_editor(), "set_root", node);
 		}
 
 		if (p_keep_global_xform) {
@@ -2834,8 +2834,8 @@ void SceneTreeDock::_delete_confirm(bool p_cut) {
 			undo_redo->add_do_method(n->get_parent(), "remove_child", n);
 			undo_redo->add_undo_method(n->get_parent(), "add_child", n, true);
 			undo_redo->add_undo_method(n->get_parent(), "move_child", n, n->get_index(false));
-			if (AnimationPlayerEditor::get_singleton()->get_track_editor()->get_root() == n) {
-				undo_redo->add_undo_method(AnimationPlayerEditor::get_singleton()->get_track_editor(), "set_root", n);
+			if (SEAnimationEditor::get_singleton()->get_track_editor()->get_root() == n) {
+				undo_redo->add_undo_method(SEAnimationEditor::get_singleton()->get_track_editor(), "set_root", n);
 			}
 			undo_redo->add_undo_method(this, "_set_owners", edited_scene, owners);
 			undo_redo->add_undo_reference(n);

@@ -5,7 +5,7 @@
 	</brief_description>
 	<description>
 		Controls camera-specific attributes such as auto-exposure, depth of field, and exposure override.
-		When used in a [WorldEnvironment] it provides default settings for exposure, auto-exposure, and depth of field that will be used by all cameras without their own [CameraAttributes], including the editor camera. When used in a [SECamera] it will override any [CameraAttributes] set in the [WorldEnvironment]. When used in [VoxelGI] or [LightmapGI], only the exposure settings will be used.
+		When used in a [SEWorld] it provides default settings for exposure, auto-exposure, and depth of field that will be used by all cameras without their own [CameraAttributes], including the editor camera. When used in a [SECamera] it will override any [CameraAttributes] set in the [SEWorld]. When used in [VoxelGI] or [LightmapGI], only the exposure settings will be used.
 	</description>
 	<tutorials>
 	</tutorials>

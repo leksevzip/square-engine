@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="AnimationMixer" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../class.xsd">
 	<brief_description>
-		Base class for [AnimationPlayer] and [AnimationTree].
+		Base class for [SEAnimation] and [AnimationTree].
 	</brief_description>
 	<description>
-		Base class for [AnimationPlayer] and [AnimationTree] to manage animation lists. It also has general properties and methods for playback and blending.
+		Base class for [SEAnimation] and [AnimationTree] to manage animation lists. It also has general properties and methods for playback and blending.
 		After instantiating the playback information data within the extended class, the blending is processed by the [AnimationMixer].
 	</description>
 	<tutorials>
@@ -380,7 +380,7 @@
 			Do not process animation. Use [method advance] to process the animation manually.
 		</constant>
 		<constant name="ANIMATION_CALLBACK_MODE_METHOD_DEFERRED" value="0" enum="AnimationCallbackModeMethod">
-			Batch method calls during the animation process, then do the calls after events are processed. This avoids bugs involving deleting nodes or modifying the AnimationPlayer while playing.
+			Batch method calls during the animation process, then do the calls after events are processed. This avoids bugs involving deleting nodes or modifying the SEAnimation while playing.
 		</constant>
 		<constant name="ANIMATION_CALLBACK_MODE_METHOD_IMMEDIATE" value="1" enum="AnimationCallbackModeMethod">
 			Make method calls immediately when reached in the animation.
@@ -389,7 +389,7 @@
 			An [constant Animation.UPDATE_DISCRETE] track value takes precedence when blending [constant Animation.UPDATE_CONTINUOUS] or [constant Animation.UPDATE_CAPTURE] track values and [constant Animation.UPDATE_DISCRETE] track values.
 		</constant>
 		<constant name="ANIMATION_CALLBACK_MODE_DISCRETE_RECESSIVE" value="1" enum="AnimationCallbackModeDiscrete">
-			An [constant Animation.UPDATE_CONTINUOUS] or [constant Animation.UPDATE_CAPTURE] track value takes precedence when blending the [constant Animation.UPDATE_CONTINUOUS] or [constant Animation.UPDATE_CAPTURE] track values and the [constant Animation.UPDATE_DISCRETE] track values. This is the default behavior for [AnimationPlayer].
+			An [constant Animation.UPDATE_CONTINUOUS] or [constant Animation.UPDATE_CAPTURE] track value takes precedence when blending the [constant Animation.UPDATE_CONTINUOUS] or [constant Animation.UPDATE_CAPTURE] track values and the [constant Animation.UPDATE_DISCRETE] track values. This is the default behavior for [SEAnimation].
 		</constant>
 		<constant name="ANIMATION_CALLBACK_MODE_DISCRETE_FORCE_CONTINUOUS" value="2" enum="AnimationCallbackModeDiscrete">
 			Always treat the [constant Animation.UPDATE_DISCRETE] track value as [constant Animation.UPDATE_CONTINUOUS] with [constant Animation.INTERPOLATION_NEAREST]. This is the default behavior for [AnimationTree].

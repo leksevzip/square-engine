@@ -201,32 +201,32 @@ Added/moved face_index field (introduced in GH-71233) to end of struct. Should s
 
 GH-80813
 --------
-Validate extension JSON: API was removed: classes/AnimationPlayer/methods/_post_process_key_value
-Validate extension JSON: API was removed: classes/AnimationPlayer/methods/add_animation_library
-Validate extension JSON: API was removed: classes/AnimationPlayer/methods/advance
-Validate extension JSON: API was removed: classes/AnimationPlayer/methods/clear_caches
-Validate extension JSON: API was removed: classes/AnimationPlayer/methods/find_animation
-Validate extension JSON: API was removed: classes/AnimationPlayer/methods/find_animation_library
-Validate extension JSON: API was removed: classes/AnimationPlayer/methods/get_animation
-Validate extension JSON: API was removed: classes/AnimationPlayer/methods/get_animation_library
-Validate extension JSON: API was removed: classes/AnimationPlayer/methods/get_animation_library_list
-Validate extension JSON: API was removed: classes/AnimationPlayer/methods/get_animation_list
-Validate extension JSON: API was removed: classes/AnimationPlayer/methods/get_audio_max_polyphony
-Validate extension JSON: API was removed: classes/AnimationPlayer/methods/has_animation
-Validate extension JSON: API was removed: classes/AnimationPlayer/methods/has_animation_library
-Validate extension JSON: API was removed: classes/AnimationPlayer/methods/is_active
-Validate extension JSON: API was removed: classes/AnimationPlayer/methods/is_reset_on_save_enabled
-Validate extension JSON: API was removed: classes/AnimationPlayer/methods/remove_animation_library
-Validate extension JSON: API was removed: classes/AnimationPlayer/methods/rename_animation_library
-Validate extension JSON: API was removed: classes/AnimationPlayer/methods/set_active
-Validate extension JSON: API was removed: classes/AnimationPlayer/methods/set_audio_max_polyphony
-Validate extension JSON: API was removed: classes/AnimationPlayer/methods/set_reset_on_save_enabled
-Validate extension JSON: API was removed: classes/AnimationPlayer/properties/audio_max_polyphony
-Validate extension JSON: API was removed: classes/AnimationPlayer/properties/method_call_mode
-Validate extension JSON: API was removed: classes/AnimationPlayer/properties/playback_active
-Validate extension JSON: API was removed: classes/AnimationPlayer/properties/playback_process_mode
-Validate extension JSON: API was removed: classes/AnimationPlayer/properties/reset_on_save
-Validate extension JSON: API was removed: classes/AnimationPlayer/properties/root_node
+Validate extension JSON: API was removed: classes/SEAnimation/methods/_post_process_key_value
+Validate extension JSON: API was removed: classes/SEAnimation/methods/add_animation_library
+Validate extension JSON: API was removed: classes/SEAnimation/methods/advance
+Validate extension JSON: API was removed: classes/SEAnimation/methods/clear_caches
+Validate extension JSON: API was removed: classes/SEAnimation/methods/find_animation
+Validate extension JSON: API was removed: classes/SEAnimation/methods/find_animation_library
+Validate extension JSON: API was removed: classes/SEAnimation/methods/get_animation
+Validate extension JSON: API was removed: classes/SEAnimation/methods/get_animation_library
+Validate extension JSON: API was removed: classes/SEAnimation/methods/get_animation_library_list
+Validate extension JSON: API was removed: classes/SEAnimation/methods/get_animation_list
+Validate extension JSON: API was removed: classes/SEAnimation/methods/get_audio_max_polyphony
+Validate extension JSON: API was removed: classes/SEAnimation/methods/has_animation
+Validate extension JSON: API was removed: classes/SEAnimation/methods/has_animation_library
+Validate extension JSON: API was removed: classes/SEAnimation/methods/is_active
+Validate extension JSON: API was removed: classes/SEAnimation/methods/is_reset_on_save_enabled
+Validate extension JSON: API was removed: classes/SEAnimation/methods/remove_animation_library
+Validate extension JSON: API was removed: classes/SEAnimation/methods/rename_animation_library
+Validate extension JSON: API was removed: classes/SEAnimation/methods/set_active
+Validate extension JSON: API was removed: classes/SEAnimation/methods/set_audio_max_polyphony
+Validate extension JSON: API was removed: classes/SEAnimation/methods/set_reset_on_save_enabled
+Validate extension JSON: API was removed: classes/SEAnimation/properties/audio_max_polyphony
+Validate extension JSON: API was removed: classes/SEAnimation/properties/method_call_mode
+Validate extension JSON: API was removed: classes/SEAnimation/properties/playback_active
+Validate extension JSON: API was removed: classes/SEAnimation/properties/playback_process_mode
+Validate extension JSON: API was removed: classes/SEAnimation/properties/reset_on_save
+Validate extension JSON: API was removed: classes/SEAnimation/properties/root_node
 Validate extension JSON: API was removed: classes/AnimationTree/methods/_post_process_key_value
 Validate extension JSON: API was removed: classes/AnimationTree/methods/advance
 Validate extension JSON: API was removed: classes/AnimationTree/methods/get_audio_max_polyphony
@@ -245,14 +245,14 @@ Validate extension JSON: API was removed: classes/AnimationTree/properties/activ
 Validate extension JSON: API was removed: classes/AnimationTree/properties/audio_max_polyphony
 Validate extension JSON: API was removed: classes/AnimationTree/properties/process_callback
 Validate extension JSON: API was removed: classes/AnimationTree/properties/root_motion_track
-Validate extension JSON: API was removed: classes/AnimationPlayer/signals/animation_finished
-Validate extension JSON: API was removed: classes/AnimationPlayer/signals/animation_libraries_updated
-Validate extension JSON: API was removed: classes/AnimationPlayer/signals/animation_list_changed
-Validate extension JSON: API was removed: classes/AnimationPlayer/signals/animation_started
-Validate extension JSON: API was removed: classes/AnimationPlayer/signals/caches_cleared
+Validate extension JSON: API was removed: classes/SEAnimation/signals/animation_finished
+Validate extension JSON: API was removed: classes/SEAnimation/signals/animation_libraries_updated
+Validate extension JSON: API was removed: classes/SEAnimation/signals/animation_list_changed
+Validate extension JSON: API was removed: classes/SEAnimation/signals/animation_started
+Validate extension JSON: API was removed: classes/SEAnimation/signals/caches_cleared
 Validate extension JSON: API was removed: classes/AnimationTree/signals/animation_finished
 Validate extension JSON: API was removed: classes/AnimationTree/signals/animation_started
-Validate extension JSON: Error: Field 'classes/AnimationPlayer/methods/seek/arguments': size changed value in new API, from 2 to 3.
+Validate extension JSON: Error: Field 'classes/SEAnimation/methods/seek/arguments': size changed value in new API, from 2 to 3.
 Validate extension JSON: Error: Field 'classes/AnimationTree/methods/get_tree_root/return_value': type changed value in new API, from "AnimationNode" to "AnimationRootNode".
 Validate extension JSON: Error: Field 'classes/AnimationTree/methods/set_tree_root/arguments/0': type changed value in new API, from "AnimationNode" to "AnimationRootNode".
 
@@ -297,7 +297,7 @@ Validate extension JSON: Error: Field 'classes/Decal/properties/texture_emission
 Validate extension JSON: Error: Field 'classes/Decal/properties/texture_normal': type changed value in new API, from "Texture" to "Texture2D".
 Validate extension JSON: Error: Field 'classes/Decal/properties/texture_orm': type changed value in new API, from "Texture" to "Texture2D".
 Validate extension JSON: Error: Field 'classes/LineEdit/properties/right_icon': type changed value in new API, from "Texture" to "Texture2D".
-Validate extension JSON: Error: Field 'classes/Sprite3D/properties/texture': type changed value in new API, from "Texture" to "Texture2D".
+Validate extension JSON: Error: Field 'classes/SEImage/properties/texture': type changed value in new API, from "Texture" to "Texture2D".
 
 Changed the hint types of some nodes' properties from Texture to Texture2D. No adjustments should be necessary.
 

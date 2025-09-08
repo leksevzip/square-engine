@@ -39,7 +39,7 @@
 #include "scene/animation/animation_mixer.h"
 #include "scene/animation/animation_node_extension.h"
 #include "scene/animation/animation_node_state_machine.h"
-#include "scene/animation/animation_player.h"
+#include "scene/animation/se_animation.h"
 #include "scene/animation/animation_tree.h"
 #include "scene/animation/tween.h"
 #include "scene/audio/audio_stream_player.h"
@@ -250,10 +250,10 @@
 #include "scene/3d/spring_bone_collision_plane_3d.h"
 #include "scene/3d/spring_bone_collision_sphere_3d.h"
 #include "scene/3d/spring_bone_simulator_3d.h"
-#include "scene/3d/sprite_3d.h"
+#include "scene/3d/se_image.h"
 #include "scene/3d/visible_on_screen_notifier_3d.h"
 #include "scene/3d/voxel_gi.h"
-#include "scene/3d/world_environment.h"
+#include "scene/3d/se_world.h"
 #include "scene/animation/root_motion_view.h"
 #include "scene/resources/3d/fog_material.h"
 #include "scene/resources/3d/importer_mesh.h"
@@ -332,11 +332,11 @@
 #include "scene/3d/physics/physical_bone_simulator_3d.h"
 #include "scene/3d/physics/physics_body_3d.h"
 #include "scene/3d/physics/ray_cast_3d.h"
-#include "scene/3d/physics/rigid_body_3d.h"
+#include "scene/3d/physics/se_physics_body.h"
 #include "scene/3d/physics/shape_cast_3d.h"
 #include "scene/3d/physics/soft_body_3d.h"
 #include "scene/3d/physics/spring_arm_3d.h"
-#include "scene/3d/physics/static_body_3d.h"
+#include "scene/3d/physics/se_body.h"
 #include "scene/3d/physics/vehicle_body_3d.h"
 #include "scene/resources/3d/box_shape_3d.h"
 #include "scene/resources/3d/capsule_shape_3d.h"
@@ -558,7 +558,7 @@ void register_scene_types() {
 	GDREGISTER_CLASS(SubtweenTweener);
 
 	GDREGISTER_ABSTRACT_CLASS(AnimationMixer);
-	GDREGISTER_CLASS(AnimationPlayer);
+	GDREGISTER_CLASS(SEAnimation);
 	GDREGISTER_CLASS(AnimationTree);
 	GDREGISTER_CLASS(AnimationNode);
 	GDREGISTER_CLASS(AnimationRootNode);
@@ -620,8 +620,8 @@ void register_scene_types() {
 	GDREGISTER_CLASS(SphereOccluder3D);
 	GDREGISTER_CLASS(PolygonOccluder3D);
 	GDREGISTER_ABSTRACT_CLASS(SpriteBase3D);
-	GDREGISTER_CLASS(Sprite3D);
-	GDREGISTER_CLASS(AnimatedSprite3D);
+	GDREGISTER_CLASS(SEImage);
+	GDREGISTER_CLASS(AnimatedSEImage);
 	GDREGISTER_CLASS(Label3D);
 	GDREGISTER_ABSTRACT_CLASS(SELight);
 	GDREGISTER_CLASS(SEDirectional);
@@ -666,9 +666,9 @@ void register_scene_types() {
 #ifndef PHYSICS_3D_DISABLED
 	GDREGISTER_ABSTRACT_CLASS(CollisionObject3D);
 	GDREGISTER_ABSTRACT_CLASS(PhysicsBody3D);
-	GDREGISTER_CLASS(StaticBody3D);
+	GDREGISTER_CLASS(SEBody);
 	GDREGISTER_CLASS(AnimatableBody3D);
-	GDREGISTER_CLASS(RigidBody3D);
+	GDREGISTER_CLASS(SEPhysicsBody);
 	GDREGISTER_CLASS(KinematicCollision3D);
 	GDREGISTER_CLASS(CharacterBody3D);
 	GDREGISTER_CLASS(SpringArm3D);
@@ -700,7 +700,7 @@ void register_scene_types() {
 	GDREGISTER_CLASS(PathFollow3D);
 	GDREGISTER_CLASS(VisibleOnScreenNotifier3D);
 	GDREGISTER_CLASS(VisibleOnScreenEnabler3D);
-	GDREGISTER_CLASS(WorldEnvironment);
+	GDREGISTER_CLASS(SEWorld);
 	GDREGISTER_CLASS(FogVolume);
 	GDREGISTER_CLASS(FogMaterial);
 	GDREGISTER_CLASS(RemoteTransform3D);
@@ -1143,7 +1143,7 @@ void register_scene_types() {
 	MultiSEMesh::navmesh_parse_init();
 	NavigationObstacle3D::navmesh_parse_init();
 #ifndef PHYSICS_3D_DISABLED
-	StaticBody3D::navmesh_parse_init();
+	SEBody::navmesh_parse_init();
 #endif // PHYSICS_3D_DISABLED
 #endif // NAVIGATION_3D_DISABLED
 
@@ -1245,7 +1245,7 @@ void register_scene_types() {
 	ClassDB::add_compatibility_class("SpatialMaterial", "StandardMaterial3D");
 	ClassDB::add_compatibility_class("SpotLight", "SESpot");
 	ClassDB::add_compatibility_class("Sprite", "Sprite2D");
-	ClassDB::add_compatibility_class("StaticBody", "StaticBody3D");
+	ClassDB::add_compatibility_class("StaticBody", "SEBody");
 	ClassDB::add_compatibility_class("StreamTexture", "CompressedTexture2D");
 	ClassDB::add_compatibility_class("TextureProgress", "TextureProgressBar");
 	ClassDB::add_compatibility_class("VideoPlayer", "VideoStreamPlayer");
@@ -1297,9 +1297,9 @@ void register_scene_types() {
 	ClassDB::add_compatibility_class("PlaneShape", "WorldBoundaryShape3D");
 	ClassDB::add_compatibility_class("RayCast", "RayCast3D");
 	ClassDB::add_compatibility_class("RayShape", "SeparationRayShape3D");
-	ClassDB::add_compatibility_class("RigidBody", "RigidBody3D");
+	ClassDB::add_compatibility_class("RigidBody", "SEPhysicsBody");
 	ClassDB::add_compatibility_class("RigidDynamicBody2D", "RigidBody2D");
-	ClassDB::add_compatibility_class("RigidDynamicBody3D", "RigidBody3D");
+	ClassDB::add_compatibility_class("RigidDynamicBody3D", "SEPhysicsBody");
 	ClassDB::add_compatibility_class("Shape", "Shape3D");
 	ClassDB::add_compatibility_class("SliderJoint", "SliderJoint3D");
 	ClassDB::add_compatibility_class("SoftBody", "SoftBody3D");

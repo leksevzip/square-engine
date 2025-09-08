@@ -4,7 +4,7 @@
 		A physics joint that restricts the movement of a 3D physics body along an axis relative to another physics body.
 	</brief_description>
 	<description>
-		A physics joint that restricts the movement of a 3D physics body along an axis relative to another physics body. For example, Body A could be a [StaticBody3D] representing a piston base, while Body B could be a [RigidBody3D] representing the piston head, moving up and down.
+		A physics joint that restricts the movement of a 3D physics body along an axis relative to another physics body. For example, Body A could be a [SEBody] representing a piston base, while Body B could be a [SEPhysicsBody] representing the piston head, moving up and down.
 	</description>
 	<tutorials>
 	</tutorials>

@@ -100,7 +100,7 @@ class SceneImportSettingsDialog : public ConfirmationDialog {
 	SEMesh *mesh_preview = nullptr;
 	Ref<SphereMesh> material_preview;
 
-	AnimationPlayer *animation_player = nullptr;
+	SEAnimation *se_animation = nullptr;
 	List<Skeleton3D *> skeletons;
 	PanelContainer *animation_preview = nullptr;
 	HSlider *animation_slider = nullptr;

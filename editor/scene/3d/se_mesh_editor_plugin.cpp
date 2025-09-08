@@ -38,7 +38,7 @@
 #include "editor/themes/editor_scale.h"
 #include "scene/3d/navigation/navigation_region_3d.h"
 #include "scene/3d/physics/collision_shape_3d.h"
-#include "scene/3d/physics/static_body_3d.h"
+#include "scene/3d/physics/se_body.h"
 #include "scene/gui/aspect_ratio_container.h"
 #include "scene/gui/box_container.h"
 #include "scene/gui/dialogs.h"
@@ -167,7 +167,7 @@ void SEMeshEditor::_create_collision_shape() {
 
 		Node *owner = get_tree()->get_edited_scene_root();
 		if (placement_option == SHAPE_PLACEMENT_STATIC_BODY_CHILD) {
-			StaticBody3D *body = memnew(StaticBody3D);
+			SEBody *body = memnew(SEBody);
 
 			ur->add_do_method(instance, "add_child", body, true);
 			ur->add_do_method(body, "set_owner", owner);
@@ -629,7 +629,7 @@ SEMeshEditor::SEMeshEditor() {
 	shape_placement->add_item(TTR("Sibling"), SHAPE_PLACEMENT_SIBLING);
 	shape_placement->set_item_tooltip(-1, TTR("Creates collision shapes as Sibling."));
 	shape_placement->add_item(TTR("Static Body Child"), SHAPE_PLACEMENT_STATIC_BODY_CHILD);
-	shape_placement->set_item_tooltip(-1, TTR("Creates a StaticBody3D as child and assigns collision shapes to it."));
+	shape_placement->set_item_tooltip(-1, TTR("Creates a SEBody as child and assigns collision shapes to it."));
 	shape_dialog_vbc->add_child(shape_placement);
 
 	l = memnew(Label);

@@ -4,7 +4,7 @@
 		Container for [Animation] resources.
 	</brief_description>
 	<description>
-		An animation library stores a set of animations accessible through [StringName] keys, for use with [AnimationPlayer] nodes.
+		An animation library stores a set of animations accessible through [StringName] keys, for use with [SEAnimation] nodes.
 	</description>
 	<tutorials>
 		<link title="Animation tutorial index">$DOCS_URL/tutorials/animation/index.html</link>

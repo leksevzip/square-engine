@@ -1757,7 +1757,7 @@ void FBXDocument::_generate_skeleton_bone_node(Ref<FBXState> p_state, const GLTF
 	}
 }
 
-void FBXDocument::_import_animation(Ref<FBXState> p_state, AnimationPlayer *p_animation_player, const GLTFAnimationIndex p_index, const bool p_trimming, const bool p_remove_immutable_tracks) {
+void FBXDocument::_import_animation(Ref<FBXState> p_state, SEAnimation *p_se_animation, const GLTFAnimationIndex p_index, const bool p_trimming, const bool p_remove_immutable_tracks) {
 	Ref<GLTFAnimation> anim = p_state->animations[p_index];
 
 	String anim_name = anim->get_name();
@@ -1786,7 +1786,7 @@ void FBXDocument::_import_animation(Ref<FBXState> p_state, AnimationPlayer *p_an
 		//for skeletons, transform tracks always affect bones
 		NodePath transform_node_path;
 		GLTFNodeIndex node_index = track_i.key;
-		Node *root = p_animation_player->get_parent();
+		Node *root = p_se_animation->get_parent();
 		ERR_FAIL_NULL(root);
 		HashMap<GLTFNodeIndex, Node *>::Iterator node_element = p_state->scene_nodes.find(node_index);
 		ERR_CONTINUE_MSG(!node_element, vformat("Unable to find node %d for animation.", node_index));
@@ -1798,7 +1798,7 @@ void FBXDocument::_import_animation(Ref<FBXState> p_state, AnimationPlayer *p_an
 			const Skeleton3D *sk = p_state->skeletons[fbx_node->skeleton]->godot_skeleton;
 			ERR_FAIL_NULL(sk);
 
-			const String path = String(p_animation_player->get_parent()->get_path_to(sk));
+			const String path = String(p_se_animation->get_parent()->get_path_to(sk));
 			const String bone = fbx_node->get_name();
 			transform_node_path = path + ":" + bone;
 		} else {
@@ -1915,7 +1915,7 @@ void FBXDocument::_import_animation(Ref<FBXState> p_state, AnimationPlayer *p_an
 		// For meshes, especially skinned meshes, there are cases where it will be added as a child.
 		NodePath mesh_instance_node_path;
 
-		Node *root = p_animation_player->get_parent();
+		Node *root = p_se_animation->get_parent();
 		ERR_FAIL_NULL(root);
 		HashMap<GLTFNodeIndex, Node *>::Iterator node_element = p_state->scene_nodes.find(node_index);
 		ERR_CONTINUE_MSG(!node_element, vformat("Unable to find node %d for animation.", node_index));
@@ -1967,11 +1967,11 @@ void FBXDocument::_import_animation(Ref<FBXState> p_state, AnimationPlayer *p_an
 	animation->set_length(length);
 
 	Ref<AnimationLibrary> library;
-	if (!p_animation_player->has_animation_library("")) {
+	if (!p_se_animation->has_animation_library("")) {
 		library.instantiate();
-		p_animation_player->add_animation_library("", library);
+		p_se_animation->add_animation_library("", library);
 	} else {
-		library = p_animation_player->get_animation_library("");
+		library = p_se_animation->get_animation_library("");
 	}
 	library->add_animation(anim_name, animation);
 }
@@ -2132,7 +2132,7 @@ Node *FBXDocument::generate_scene(Ref<GLTFState> p_state, float p_bake_fps, bool
 	ERR_FAIL_NULL_V(root, nullptr);
 	_process_mesh_instances(state, root);
 	if (state->get_create_animations() && state->animations.size()) {
-		AnimationPlayer *ap = memnew(AnimationPlayer);
+		SEAnimation *ap = memnew(SEAnimation);
 		root->add_child(ap, true);
 		ap->set_owner(root);
 		for (int i = 0; i < state->animations.size(); i++) {

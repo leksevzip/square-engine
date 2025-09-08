@@ -792,8 +792,8 @@ msgstr "Paksa Modulasi Putih"
 msgid "Include Gizmos (3D)"
 msgstr "Sertakan Gizmos (3D)"
 
-msgid "Pin AnimationPlayer"
-msgstr "Pin AnimationPlayer"
+msgid "Pin SEAnimation"
+msgstr "Pin SEAnimation"
 
 msgid "Close"
 msgstr "Tutup"
@@ -1037,8 +1037,8 @@ msgstr "nod '%s'"
 msgid "animation"
 msgstr "animasi"
 
-msgid "AnimationPlayer can't animate itself, only other players."
-msgstr "AnimationPlayer tidak animasikan dirinya sendiri, hanya pemain lain."
+msgid "SEAnimation can't animate itself, only other players."
+msgstr "SEAnimation tidak animasikan dirinya sendiri, hanya pemain lain."
 
 msgid "property '%s'"
 msgstr "sifat '%s'"
@@ -1063,8 +1063,8 @@ msgstr ""
 "-AudioStreamPlayer2D\n"
 "-AudioStreamPlayer3D"
 
-msgid "Animation tracks can only point to AnimationPlayer nodes."
-msgstr "Trek animasi hanya dapat ditujukan kepada nod AnimationPlayer."
+msgid "Animation tracks can only point to SEAnimation nodes."
+msgstr "Trek animasi hanya dapat ditujukan kepada nod SEAnimation."
 
 msgid "Not possible to add a new track without a root"
 msgstr "Tidak boleh menambah trek baru tanpa satu akar"
@@ -1111,8 +1111,8 @@ msgstr "Papan klip kosong!"
 msgid "Paste Tracks"
 msgstr "Tampal Trek"
 
-msgid "Select an AnimationPlayer node to create and edit animations."
-msgstr "Pilih nod AnimationPlayer untuk mencipta dan mengedit animasi."
+msgid "Select an SEAnimation node to create and edit animations."
+msgstr "Pilih nod SEAnimation untuk mencipta dan mengedit animasi."
 
 msgid "Warning: Editing imported animation"
 msgstr "Amaran: Mengedit animasi yang diimport"

@@ -34,7 +34,7 @@
 #include "core/error/error_macros.h"
 #include "core/input/input.h"
 #include "editor/animation/animation_bezier_editor.h"
-#include "editor/animation/animation_player_editor_plugin.h"
+#include "editor/animation/se_animation_editor_plugin.h"
 #include "editor/docks/inspector_dock.h"
 #include "editor/editor_node.h"
 #include "editor/editor_string_names.h"
@@ -47,7 +47,7 @@
 #include "editor/settings/editor_settings.h"
 #include "editor/themes/editor_scale.h"
 #include "scene/3d/se_mesh.h"
-#include "scene/animation/animation_player.h"
+#include "scene/animation/se_animation.h"
 #include "scene/animation/tween.h"
 #include "scene/gui/check_box.h"
 #include "scene/gui/color_picker.h"
@@ -132,7 +132,7 @@ bool AnimationTrackKeyEdit::_set(const StringName &p_name, const Variant &p_valu
 		undo_redo->add_undo_method(animation.ptr(), "track_set_key_transition", track, key, prev_val);
 		undo_redo->add_do_method(this, "_update_obj", animation);
 		undo_redo->add_undo_method(this, "_update_obj", animation);
-		AnimationPlayerEditor *ape = AnimationPlayerEditor::get_singleton();
+		SEAnimationEditor *ape = SEAnimationEditor::get_singleton();
 		if (ape) {
 			undo_redo->add_do_method(ape, "_animation_update_key_frame");
 			undo_redo->add_undo_method(ape, "_animation_update_key_frame");
@@ -195,7 +195,7 @@ bool AnimationTrackKeyEdit::_set(const StringName &p_name, const Variant &p_valu
 				undo_redo->add_undo_method(animation.ptr(), "track_set_key_value", track, key, prev);
 				undo_redo->add_do_method(this, "_update_obj", animation);
 				undo_redo->add_undo_method(this, "_update_obj", animation);
-				AnimationPlayerEditor *ape = AnimationPlayerEditor::get_singleton();
+				SEAnimationEditor *ape = SEAnimationEditor::get_singleton();
 				if (ape) {
 					undo_redo->add_do_method(ape, "_animation_update_key_frame");
 					undo_redo->add_undo_method(ape, "_animation_update_key_frame");
@@ -283,7 +283,7 @@ bool AnimationTrackKeyEdit::_set(const StringName &p_name, const Variant &p_valu
 				undo_redo->add_undo_method(animation.ptr(), "bezier_track_set_key_value", track, key, prev);
 				undo_redo->add_do_method(this, "_update_obj", animation);
 				undo_redo->add_undo_method(this, "_update_obj", animation);
-				AnimationPlayerEditor *ape = AnimationPlayerEditor::get_singleton();
+				SEAnimationEditor *ape = SEAnimationEditor::get_singleton();
 				if (ape) {
 					undo_redo->add_do_method(ape, "_animation_update_key_frame");
 					undo_redo->add_undo_method(ape, "_animation_update_key_frame");
@@ -304,7 +304,7 @@ bool AnimationTrackKeyEdit::_set(const StringName &p_name, const Variant &p_valu
 				undo_redo->add_undo_method(animation.ptr(), "bezier_track_set_key_in_handle", track, key, prev);
 				undo_redo->add_do_method(this, "_update_obj", animation);
 				undo_redo->add_undo_method(this, "_update_obj", animation);
-				AnimationPlayerEditor *ape = AnimationPlayerEditor::get_singleton();
+				SEAnimationEditor *ape = SEAnimationEditor::get_singleton();
 				if (ape) {
 					undo_redo->add_do_method(ape, "_animation_update_key_frame");
 					undo_redo->add_undo_method(ape, "_animation_update_key_frame");
@@ -325,7 +325,7 @@ bool AnimationTrackKeyEdit::_set(const StringName &p_name, const Variant &p_valu
 				undo_redo->add_undo_method(animation.ptr(), "bezier_track_set_key_out_handle", track, key, prev);
 				undo_redo->add_do_method(this, "_update_obj", animation);
 				undo_redo->add_undo_method(this, "_update_obj", animation);
-				AnimationPlayerEditor *ape = AnimationPlayerEditor::get_singleton();
+				SEAnimationEditor *ape = SEAnimationEditor::get_singleton();
 				if (ape) {
 					undo_redo->add_do_method(ape, "_animation_update_key_frame");
 					undo_redo->add_undo_method(ape, "_animation_update_key_frame");
@@ -350,7 +350,7 @@ bool AnimationTrackKeyEdit::_set(const StringName &p_name, const Variant &p_valu
 				undo_redo->add_undo_method(animation.ptr(), "bezier_track_set_key_in_handle", track, key, prev_in_handle);
 				undo_redo->add_undo_method(animation.ptr(), "bezier_track_set_key_out_handle", track, key, prev_out_handle);
 				undo_redo->add_undo_method(this, "_update_obj", animation);
-				AnimationPlayerEditor *ape = AnimationPlayerEditor::get_singleton();
+				SEAnimationEditor *ape = SEAnimationEditor::get_singleton();
 				if (ape) {
 					undo_redo->add_do_method(ape, "_animation_update_key_frame");
 					undo_redo->add_undo_method(ape, "_animation_update_key_frame");
@@ -642,7 +642,7 @@ void AnimationTrackKeyEdit::_get_property_list(List<PropertyInfo> *p_list) const
 			String animations;
 
 			if (root_path) {
-				AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(root_path->get_node_or_null(animation->track_get_path(track)));
+				SEAnimation *ap = Object::cast_to<SEAnimation>(root_path->get_node_or_null(animation->track_get_path(track)));
 				if (ap) {
 					List<StringName> anims;
 					ap->get_animation_list(&anims);
@@ -1248,7 +1248,7 @@ void AnimationMultiTrackKeyEdit::_get_property_list(List<PropertyInfo> *p_list) 
 				String animations;
 
 				if (root_path) {
-					AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(root_path->get_node_or_null(animation->track_get_path(first_track)));
+					SEAnimation *ap = Object::cast_to<SEAnimation>(root_path->get_node_or_null(animation->track_get_path(first_track)));
 					if (ap) {
 						List<StringName> anims;
 						ap->get_animation_list(&anims);
@@ -2217,8 +2217,8 @@ void AnimationTrackEdit::_notification(int p_what) {
 					double start_time = animation->get_marker_time(start_marker);
 					double end_time = animation->get_marker_time(end_marker);
 
-					// When AnimationPlayer is playing, don't move the preview rect, so it still indicates the playback section.
-					AnimationPlayer *player = AnimationPlayerEditor::get_singleton()->get_player();
+					// When SEAnimation is playing, don't move the preview rect, so it still indicates the playback section.
+					SEAnimation *player = SEAnimationEditor::get_singleton()->get_player();
 					if (editor->is_marker_moving_selection() && !(player && player->is_playing())) {
 						start_time += editor->get_marker_moving_selection_offset();
 						end_time += editor->get_marker_moving_selection_offset();
@@ -3088,9 +3088,9 @@ void AnimationTrackEdit::gui_input(const Ref<InputEvent> &p_event) {
 				menu->add_icon_item(get_editor_theme_icon(SNAME("InterpLinear")), TTR("Linear"), MENU_INTERPOLATION_LINEAR);
 				menu->add_icon_item(get_editor_theme_icon(SNAME("InterpCubic")), TTR("Cubic"), MENU_INTERPOLATION_CUBIC);
 				// Check whether it is angle property.
-				AnimationPlayerEditor *ape = AnimationPlayerEditor::get_singleton();
+				SEAnimationEditor *ape = SEAnimationEditor::get_singleton();
 				if (ape) {
-					AnimationPlayer *ap = ape->get_player();
+					SEAnimation *ap = ape->get_player();
 					if (ap) {
 						NodePath npath = animation->track_get_path(track);
 						Node *a_ap_root_node = ap->get_node_or_null(ap->get_root_node());
@@ -3196,7 +3196,7 @@ void AnimationTrackEdit::gui_input(const Ref<InputEvent> &p_event) {
 					menu->add_icon_item(get_editor_theme_icon(SNAME("ActionPaste")), TTR("Paste Key(s)"), MENU_KEY_PASTE);
 				}
 				if (selected || editor->is_selection_active()) {
-					AnimationPlayer *player = AnimationPlayerEditor::get_singleton()->get_player();
+					SEAnimation *player = SEAnimationEditor::get_singleton()->get_player();
 					if ((!player->has_animation(SceneStringName(RESET)) || animation != player->get_animation(SceneStringName(RESET))) && editor->can_add_reset_key()) {
 						menu->add_icon_item(get_editor_theme_icon(SNAME("Reload")), TTR("Add RESET Value(s)"), MENU_KEY_ADD_RESET);
 					}
@@ -3549,7 +3549,7 @@ void AnimationTrackEdit::_menu_selected(int p_index) {
 			undo_redo->create_action(TTR("Change Animation Update Mode"));
 			undo_redo->add_do_method(animation.ptr(), "value_track_set_update_mode", track, update_mode);
 			undo_redo->add_undo_method(animation.ptr(), "value_track_set_update_mode", track, animation->value_track_get_update_mode(track));
-			AnimationPlayerEditor *ape = AnimationPlayerEditor::get_singleton();
+			SEAnimationEditor *ape = SEAnimationEditor::get_singleton();
 			if (ape) {
 				undo_redo->add_do_method(ape, "_animation_update_key_frame");
 				undo_redo->add_undo_method(ape, "_animation_update_key_frame");
@@ -3568,7 +3568,7 @@ void AnimationTrackEdit::_menu_selected(int p_index) {
 			undo_redo->create_action(TTR("Change Animation Interpolation Mode"));
 			undo_redo->add_do_method(animation.ptr(), "track_set_interpolation_type", track, interp_mode);
 			undo_redo->add_undo_method(animation.ptr(), "track_set_interpolation_type", track, animation->track_get_interpolation_type(track));
-			AnimationPlayerEditor *ape = AnimationPlayerEditor::get_singleton();
+			SEAnimationEditor *ape = SEAnimationEditor::get_singleton();
 			if (ape) {
 				undo_redo->add_do_method(ape, "_animation_update_key_frame");
 				undo_redo->add_undo_method(ape, "_animation_update_key_frame");
@@ -3583,7 +3583,7 @@ void AnimationTrackEdit::_menu_selected(int p_index) {
 			undo_redo->create_action(TTR("Change Animation Loop Mode"));
 			undo_redo->add_do_method(animation.ptr(), "track_set_interpolation_loop_wrap", track, loop_wrap);
 			undo_redo->add_undo_method(animation.ptr(), "track_set_interpolation_loop_wrap", track, animation->track_get_interpolation_loop_wrap(track));
-			AnimationPlayerEditor *ape = AnimationPlayerEditor::get_singleton();
+			SEAnimationEditor *ape = SEAnimationEditor::get_singleton();
 			if (ape) {
 				undo_redo->add_do_method(ape, "_animation_update_key_frame");
 				undo_redo->add_undo_method(ape, "_animation_update_key_frame");
@@ -3778,8 +3778,8 @@ void AnimationTrackEditGroup::_notification(int p_what) {
 					double start_time = editor->get_current_animation()->get_marker_time(start_marker);
 					double end_time = editor->get_current_animation()->get_marker_time(end_marker);
 
-					// When AnimationPlayer is playing, don't move the preview rect, so it still indicates the playback section.
-					AnimationPlayer *player = AnimationPlayerEditor::get_singleton()->get_player();
+					// When SEAnimation is playing, don't move the preview rect, so it still indicates the playback section.
+					SEAnimation *player = SEAnimationEditor::get_singleton()->get_player();
 					if (editor->is_marker_moving_selection() && !(player && player->is_playing())) {
 						start_time += editor->get_marker_moving_selection_offset();
 						end_time += editor->get_marker_moving_selection_offset();
@@ -4119,7 +4119,7 @@ void AnimationTrackEditor::_animation_track_remove_request(int p_track, Ref<Anim
 		undo_redo->create_action(TTR("Remove Anim Track"), UndoRedo::MERGE_DISABLE, p_from_animation.ptr());
 
 		// Remove corresponding reset tracks if they are no longer needed.
-		AnimationPlayer *player = AnimationPlayerEditor::get_singleton()->get_player();
+		SEAnimation *player = SEAnimationEditor::get_singleton()->get_player();
 		if (player->has_animation(SceneStringName(RESET))) {
 			Ref<Animation> reset = player->get_animation(SceneStringName(RESET));
 			if (reset != p_from_animation) {
@@ -4228,7 +4228,7 @@ void AnimationTrackEditor::make_insert_queue() {
 
 void AnimationTrackEditor::commit_insert_queue() {
 	bool reset_allowed = true;
-	AnimationPlayer *player = AnimationPlayerEditor::get_singleton()->get_player();
+	SEAnimation *player = SEAnimationEditor::get_singleton()->get_player();
 	if (player->has_animation(SceneStringName(RESET)) && player->get_animation(SceneStringName(RESET)) == animation) {
 		// Avoid messing with the reset animation itself.
 		reset_allowed = false;
@@ -4465,9 +4465,9 @@ void AnimationTrackEditor::insert_node_value_key(Node *p_node, const String &p_p
 	Vector<StringName> subpath = NodePath(p_property).get_as_property_path().get_subnames();
 	Variant value = p_node->get_indexed(subpath);
 
-	if (Object::cast_to<AnimationPlayer>(p_node) && p_property == "current_animation") {
-		if (p_node == AnimationPlayerEditor::get_singleton()->get_player()) {
-			EditorNode::get_singleton()->show_warning(TTR("AnimationPlayer can't animate itself, only other players."));
+	if (Object::cast_to<SEAnimation>(p_node) && p_property == "current_animation") {
+		if (p_node == SEAnimationEditor::get_singleton()->get_player()) {
+			EditorNode::get_singleton()->show_warning(TTR("SEAnimation can't animate itself, only other players."));
 			return;
 		}
 		_insert_animation_key(path, value);
@@ -4600,12 +4600,12 @@ void AnimationTrackEditor::insert_value_key(const String &p_property, bool p_adv
 }
 
 Ref<Animation> AnimationTrackEditor::_create_and_get_reset_animation() {
-	AnimationPlayer *player = AnimationPlayerEditor::get_singleton()->get_player();
+	SEAnimation *player = SEAnimationEditor::get_singleton()->get_player();
 	if (player->has_animation(SceneStringName(RESET))) {
 		return player->get_animation(SceneStringName(RESET));
 	} else {
 		Ref<AnimationLibrary> al;
-		AnimationMixer *mixer = AnimationPlayerEditor::get_singleton()->fetch_mixer_for_library();
+		AnimationMixer *mixer = SEAnimationEditor::get_singleton()->fetch_mixer_for_library();
 		if (mixer) {
 			if (!mixer->has_animation_library("")) {
 				al.instantiate();
@@ -4619,9 +4619,9 @@ Ref<Animation> AnimationTrackEditor::_create_and_get_reset_animation() {
 		reset_anim->set_length(ANIM_MIN_LENGTH);
 		EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
 		undo_redo->add_do_method(al.ptr(), "add_animation", SceneStringName(RESET), reset_anim);
-		undo_redo->add_do_method(AnimationPlayerEditor::get_singleton(), "_animation_player_changed", player);
+		undo_redo->add_do_method(SEAnimationEditor::get_singleton(), "_se_animation_changed", player);
 		undo_redo->add_undo_method(al.ptr(), "remove_animation", SceneStringName(RESET));
-		undo_redo->add_undo_method(AnimationPlayerEditor::get_singleton(), "_animation_player_changed", player);
+		undo_redo->add_undo_method(SEAnimationEditor::get_singleton(), "_se_animation_changed", player);
 		return reset_anim;
 	}
 }
@@ -5068,7 +5068,7 @@ void AnimationTrackEditor::_update_tracks() {
 				node = root->get_node_or_null(path);
 			}
 
-			if (node && Object::cast_to<AnimationPlayer>(node)) {
+			if (node && Object::cast_to<SEAnimation>(node)) {
 				for (int j = 0; j < track_edit_plugins.size(); j++) {
 					track_edit = track_edit_plugins.write[j]->create_animation_track_edit(node);
 					if (track_edit) {
@@ -5496,13 +5496,13 @@ void AnimationTrackEditor::_new_track_node_selected(NodePath p_path) {
 
 		} break;
 		case Animation::TYPE_ANIMATION: {
-			if (!node->is_class("AnimationPlayer")) {
-				EditorNode::get_singleton()->show_warning(TTR("Animation tracks can only point to AnimationPlayer nodes."));
+			if (!node->is_class("SEAnimation")) {
+				EditorNode::get_singleton()->show_warning(TTR("Animation tracks can only point to SEAnimation nodes."));
 				return;
 			}
 
-			if (node == AnimationPlayerEditor::get_singleton()->get_player()) {
-				EditorNode::get_singleton()->show_warning(TTR("AnimationPlayer can't animate itself, only other players."));
+			if (node == SEAnimationEditor::get_singleton()->get_player()) {
+				EditorNode::get_singleton()->show_warning(TTR("SEAnimation can't animate itself, only other players."));
 				return;
 			}
 
@@ -5518,9 +5518,9 @@ void AnimationTrackEditor::_new_track_node_selected(NodePath p_path) {
 }
 
 void AnimationTrackEditor::_add_track(int p_type) {
-	AnimationPlayer *ap = AnimationPlayerEditor::get_singleton()->get_player();
+	SEAnimation *ap = SEAnimationEditor::get_singleton()->get_player();
 	if (!ap) {
-		ERR_FAIL_EDMSG("No AnimationPlayer is currently being edited.");
+		ERR_FAIL_EDMSG("No SEAnimation is currently being edited.");
 	}
 	Node *root_node = ap->get_node_or_null(ap->get_root_node());
 	if (!root_node) {
@@ -5546,7 +5546,7 @@ void AnimationTrackEditor::_add_track(int p_type) {
 			valid_types.push_back(SNAME("AudioStreamPlayer3D"));
 		} break;
 		case Animation::TYPE_ANIMATION: {
-			valid_types.push_back(SNAME("AnimationPlayer"));
+			valid_types.push_back(SNAME("SEAnimation"));
 		} break;
 	}
 	pick_track->set_valid_types(valid_types);
@@ -5556,7 +5556,7 @@ void AnimationTrackEditor::_add_track(int p_type) {
 }
 
 void AnimationTrackEditor::_fetch_value_track_options(const NodePath &p_path, Animation::UpdateMode *r_update_mode, Animation::InterpolationType *r_interpolation_type, bool *r_loop_wrap) {
-	AnimationPlayer *player = AnimationPlayerEditor::get_singleton()->get_player();
+	SEAnimation *player = SEAnimationEditor::get_singleton()->get_player();
 	if (player->has_animation(SceneStringName(RESET))) {
 		Ref<Animation> reset_anim = player->get_animation(SceneStringName(RESET));
 		int rt = reset_anim->find_track(p_path, Animation::TrackType::TYPE_VALUE);
@@ -6105,7 +6105,7 @@ void AnimationTrackEditor::_move_selection_commit() {
 	undo_redo->add_undo_method(this, "_redraw_tracks");
 
 	// Update key frame.
-	AnimationPlayerEditor *ape = AnimationPlayerEditor::get_singleton();
+	SEAnimationEditor *ape = SEAnimationEditor::get_singleton();
 	if (ape) {
 		undo_redo->add_do_method(ape, "_animation_update_key_frame");
 		undo_redo->add_undo_method(ape, "_animation_update_key_frame");
@@ -6573,9 +6573,9 @@ bool AnimationTrackEditor::_is_track_compatible(int p_target_track_idx, Variant:
 					bool path_valid = false;
 					Variant::Type property_type = Variant::NIL;
 
-					AnimationPlayerEditor *ape = AnimationPlayerEditor::get_singleton();
+					SEAnimationEditor *ape = SEAnimationEditor::get_singleton();
 					if (ape) {
-						AnimationPlayer *ap = ape->get_player();
+						SEAnimation *ap = ape->get_player();
 						if (ap) {
 							NodePath npath = animation->track_get_path(p_target_track_idx);
 							Node *a_ap_root_node = ap->get_node(ap->get_root_node());
@@ -6615,7 +6615,7 @@ bool AnimationTrackEditor::_is_track_compatible(int p_target_track_idx, Variant:
 }
 
 void AnimationTrackEditor::_edit_menu_about_to_popup() {
-	AnimationPlayer *player = AnimationPlayerEditor::get_singleton()->get_player();
+	SEAnimation *player = SEAnimationEditor::get_singleton()->get_player();
 	edit->get_popup()->set_item_disabled(edit->get_popup()->get_item_index(EDIT_APPLY_RESET), !player->can_apply_reset());
 
 	bool has_length = false;
@@ -7261,7 +7261,7 @@ void AnimationTrackEditor::_edit_menu_pressed(int p_option) {
 		} break;
 
 		case EDIT_APPLY_RESET: {
-			AnimationPlayerEditor::get_singleton()->get_player()->apply_reset(true);
+			SEAnimationEditor::get_singleton()->get_player()->apply_reset(true);
 		} break;
 
 		case EDIT_BAKE_ANIMATION: {
@@ -7401,9 +7401,9 @@ void AnimationTrackEditor::_edit_menu_pressed(int p_option) {
 		case EDIT_CLEAN_UP_ANIMATION_CONFIRM: {
 			if (cleanup_all->is_pressed()) {
 				List<StringName> names;
-				AnimationPlayerEditor::get_singleton()->get_player()->get_animation_list(&names);
+				SEAnimationEditor::get_singleton()->get_player()->get_animation_list(&names);
 				for (const StringName &E : names) {
-					_cleanup_animation(AnimationPlayerEditor::get_singleton()->get_player()->get_animation(E));
+					_cleanup_animation(SEAnimationEditor::get_singleton()->get_player()->get_animation(E));
 				}
 			} else {
 				_cleanup_animation(animation);
@@ -7642,12 +7642,12 @@ void AnimationTrackEditor::_show_imported_anim_warning() {
 
 void AnimationTrackEditor::_show_dummy_player_warning() {
 	EditorNode::get_singleton()->show_warning(
-			TTR("Some AnimationPlayerEditor's options are disabled since this is the dummy AnimationPlayer for preview.\n\nThe dummy player is forced active, non-deterministic and doesn't have the root motion track. Furthermore, the original node is inactive temporary."));
+			TTR("Some SEAnimationEditor's options are disabled since this is the dummy SEAnimation for preview.\n\nThe dummy player is forced active, non-deterministic and doesn't have the root motion track. Furthermore, the original node is inactive temporary."));
 }
 
 void AnimationTrackEditor::_show_inactive_player_warning() {
 	EditorNode::get_singleton()->show_warning(
-			TTR("AnimationPlayer is inactive. The playback will not be processed."));
+			TTR("SEAnimation is inactive. The playback will not be processed."));
 }
 
 void AnimationTrackEditor::_select_all_tracks_for_copy() {
@@ -7752,7 +7752,7 @@ AnimationTrackEditor::AnimationTrackEditor() {
 
 	info_message = memnew(Label);
 	info_message->set_focus_mode(FOCUS_ACCESSIBILITY);
-	info_message->set_text(TTR("Select an AnimationPlayer node to create and edit animations."));
+	info_message->set_text(TTR("Select an SEAnimation node to create and edit animations."));
 	info_message->set_vertical_alignment(VERTICAL_ALIGNMENT_CENTER);
 	info_message->set_horizontal_alignment(HORIZONTAL_ALIGNMENT_CENTER);
 	info_message->set_autowrap_mode(TextServer::AUTOWRAP_WORD_SMART);
@@ -7836,14 +7836,14 @@ AnimationTrackEditor::AnimationTrackEditor() {
 	dummy_player_warning = memnew(Button);
 	dummy_player_warning->hide();
 	dummy_player_warning->set_text(TTR("Dummy Player"));
-	dummy_player_warning->set_tooltip_text(TTR("Warning: Editing dummy AnimationPlayer"));
+	dummy_player_warning->set_tooltip_text(TTR("Warning: Editing dummy SEAnimation"));
 	dummy_player_warning->connect(SceneStringName(pressed), callable_mp(this, &AnimationTrackEditor::_show_dummy_player_warning));
 	bottom_hf->add_child(dummy_player_warning);
 
 	inactive_player_warning = memnew(Button);
 	inactive_player_warning->hide();
 	inactive_player_warning->set_text(TTR("Inactive Player"));
-	inactive_player_warning->set_tooltip_text(TTR("Warning: AnimationPlayer is inactive"));
+	inactive_player_warning->set_tooltip_text(TTR("Warning: SEAnimation is inactive"));
 	inactive_player_warning->connect(SceneStringName(pressed), callable_mp(this, &AnimationTrackEditor::_show_inactive_player_warning));
 	bottom_hf->add_child(inactive_player_warning);
 
@@ -8327,7 +8327,7 @@ void AnimationTrackKeyEditEditor::_time_edit_exited() {
 	}
 
 	// Reselect key.
-	AnimationPlayerEditor *ape = AnimationPlayerEditor::get_singleton();
+	SEAnimationEditor *ape = SEAnimationEditor::get_singleton();
 	if (ape) {
 		AnimationTrackEditor *ate = ape->get_track_editor();
 		if (ate) {
@@ -8630,8 +8630,8 @@ void AnimationMarkerEdit::_notification(int p_what) {
 					double start_time = animation->get_marker_time(start_marker);
 					double end_time = animation->get_marker_time(end_marker);
 
-					// When AnimationPlayer is playing, don't move the preview rect, so it still indicates the playback section.
-					AnimationPlayer *player = AnimationPlayerEditor::get_singleton()->get_player();
+					// When SEAnimation is playing, don't move the preview rect, so it still indicates the playback section.
+					SEAnimation *player = SEAnimationEditor::get_singleton()->get_player();
 					if (moving_selection && !(player && player->is_playing())) {
 						start_time += moving_selection_offset;
 						end_time += moving_selection_offset;
@@ -9110,7 +9110,7 @@ void AnimationMarkerEdit::_move_selection_commit() {
 	}
 
 	moving_selection = false;
-	AnimationPlayer *player = AnimationPlayerEditor::get_singleton()->get_player();
+	SEAnimation *player = SEAnimationEditor::get_singleton()->get_player();
 	if (player) {
 		PackedStringArray selected_section = get_selected_section();
 		if (selected_section.size() >= 2) {
@@ -9151,7 +9151,7 @@ void AnimationMarkerEdit::_move_selection_cancel() {
 }
 
 void AnimationMarkerEdit::_clear_selection(bool p_update) {
-	AnimationPlayer *player = AnimationPlayerEditor::get_singleton()->get_player();
+	SEAnimation *player = SEAnimationEditor::get_singleton()->get_player();
 	if (player) {
 		player->reset_section();
 	}
@@ -9180,7 +9180,7 @@ void AnimationMarkerEdit::_select_key(const StringName &p_name, bool is_single) 
 
 	selection.insert(p_name);
 
-	AnimationPlayer *player = AnimationPlayerEditor::get_singleton()->get_player();
+	SEAnimation *player = SEAnimationEditor::get_singleton()->get_player();
 	if (player) {
 		if (selection.size() >= 2) {
 			PackedStringArray selected_section = get_selected_section();
@@ -9201,7 +9201,7 @@ void AnimationMarkerEdit::_select_key(const StringName &p_name, bool is_single) 
 void AnimationMarkerEdit::_deselect_key(const StringName &p_name) {
 	selection.erase(p_name);
 
-	AnimationPlayer *player = AnimationPlayerEditor::get_singleton()->get_player();
+	SEAnimation *player = SEAnimationEditor::get_singleton()->get_player();
 	if (player) {
 		if (selection.size() >= 2) {
 			PackedStringArray selected_section = get_selected_section();
@@ -9518,7 +9518,7 @@ void AnimationMarkerKeyEditEditor::_time_edit_exited() {
 		undo_redo->add_undo_method(animation.ptr(), "add_marker", existing_marker, animation->get_marker_time(existing_marker));
 		undo_redo->add_undo_method(animation.ptr(), "set_marker_color", existing_marker, animation->get_marker_color(existing_marker));
 	}
-	AnimationPlayerEditor *ape = AnimationPlayerEditor::get_singleton();
+	SEAnimationEditor *ape = SEAnimationEditor::get_singleton();
 	if (ape) {
 		AnimationTrackEditor *ate = ape->get_track_editor();
 		if (ate) {

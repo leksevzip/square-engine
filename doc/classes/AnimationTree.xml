@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="AnimationTree" inherits="AnimationMixer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../class.xsd">
 	<brief_description>
-		A node used for advanced animation transitions in an [AnimationPlayer].
+		A node used for advanced animation transitions in an [SEAnimation].
 	</brief_description>
 	<description>
-		A node used for advanced animation transitions in an [AnimationPlayer].
-		[b]Note:[/b] When linked with an [AnimationPlayer], several properties and methods of the corresponding [AnimationPlayer] will not function as expected. Playback and transitions should be handled using only the [AnimationTree] and its constituent [AnimationNode](s). The [AnimationPlayer] node should be used solely for adding, deleting, and editing animations.
+		A node used for advanced animation transitions in an [SEAnimation].
+		[b]Note:[/b] When linked with an [SEAnimation], several properties and methods of the corresponding [SEAnimation] will not function as expected. Playback and transitions should be handled using only the [AnimationTree] and its constituent [AnimationNode](s). The [SEAnimation] node should be used solely for adding, deleting, and editing animations.
 	</description>
 	<tutorials>
 		<link title="Using AnimationTree">$DOCS_URL/tutorials/animation/animation_tree.html</link>
@@ -30,8 +30,8 @@
 		<member name="advance_expression_base_node" type="NodePath" setter="set_advance_expression_base_node" getter="get_advance_expression_base_node" default="NodePath(&quot;.&quot;)">
 			The path to the [Node] used to evaluate the [AnimationNode] [Expression] if one is not explicitly specified internally.
 		</member>
-		<member name="anim_player" type="NodePath" setter="set_animation_player" getter="get_animation_player" default="NodePath(&quot;&quot;)">
-			The path to the [AnimationPlayer] used for animating.
+		<member name="anim_player" type="NodePath" setter="set_se_animation" getter="get_se_animation" default="NodePath(&quot;&quot;)">
+			The path to the [SEAnimation] used for animating.
 		</member>
 		<member name="callback_mode_discrete" type="int" setter="set_callback_mode_discrete" getter="get_callback_mode_discrete" overrides="AnimationMixer" enum="AnimationMixer.AnimationCallbackModeDiscrete" default="2" />
 		<member name="deterministic" type="bool" setter="set_deterministic" getter="is_deterministic" overrides="AnimationMixer" default="true" />
@@ -40,7 +40,7 @@
 		</member>
 	</members>
 	<signals>
-		<signal name="animation_player_changed">
+		<signal name="se_animation_changed">
 			<description>
 				Emitted when the [member anim_player] is changed.
 			</description>

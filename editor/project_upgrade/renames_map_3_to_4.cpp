@@ -143,7 +143,7 @@ const char *RenamesMap3To4::enum_renames[][2] = {
 
 	// Enums
 	{ "AlignMode", "AlignmentMode" }, // AspectRatioContainer
-	{ "AnimationProcessMode", "AnimationProcessCallback" }, // AnimationTree, AnimationPlayer
+	{ "AnimationProcessMode", "AnimationProcessCallback" }, // AnimationTree, SEAnimation
 	{ "Camera2DProcessMode", "Camera2DProcessCallback" }, // Camera2D
 	{ "CubeMapSide", "CubeMapLayer" }, // RenderingServer
 	{ "DampedStringParam", "DampedSpringParam" }, // PhysicsServer2D
@@ -163,7 +163,7 @@ const char *RenamesMap3To4::gdscript_function_renames[][2] = {
 
 	// { "_set_name", "get_tracker_name" }, // XRPositionalTracker -- CameraFeed uses this.
 	// { "_unhandled_input", "_unhandled_key_input" }, // BaseButton, ViewportContainer -- Breaks Node, FileDialog, SubViewportContainer.
-	// { "add_animation", "add_animation_library" }, // AnimationPlayer -- Breaks SpriteFrames (and isn't a correct conversion).
+	// { "add_animation", "add_animation_library" }, // SEAnimation -- Breaks SpriteFrames (and isn't a correct conversion).
 	// { "create_gizmo", "_create_gizmo" }, // EditorNode3DGizmoPlugin -- May be used.
 	// { "get_dependencies", "_get_dependencies" }, // ResourceFormatLoader -- Breaks ResourceLoader.
 	// { "get_extents", "get_size" }, // BoxShape, RectangleShape -- Breaks Decal, VoxelGI, GPUParticlesCollisionBox, GPUParticlesCollisionSDF, GPUParticlesCollisionHeightField, GPUParticlesAttractorBox, GPUParticlesAttractorVectorField, FogVolume
@@ -276,7 +276,7 @@ const char *RenamesMap3To4::gdscript_function_renames[][2] = {
 	{ "generate_small_preview_automatically", "_generate_small_preview_automatically" }, // EditorResourcePreviewGenerator
 	{ "get_action_list", "action_get_events" }, // InputMap
 	{ "get_alt", "is_alt_pressed" }, // InputEventWithModifiers
-	{ "get_animation_process_mode", "get_process_callback" }, // AnimationPlayer
+	{ "get_animation_process_mode", "get_process_callback" }, // SEAnimation
 	{ "get_applied_force", "get_constant_force" }, //RigidBody2D
 	{ "get_applied_torque", "get_constant_torque" }, //RigidBody2D
 	{ "get_audio_bus", "get_audio_bus_name" }, // Area3D
@@ -478,7 +478,7 @@ const char *RenamesMap3To4::gdscript_function_renames[][2] = {
 	{ "region_bake_navmesh", "region_bake_navigation_mesh" }, // Navigation3DServer
 	{ "region_set_navmesh", "region_set_navigation_mesh" }, // Navigation3DServer
 	{ "region_set_navpoly", "region_set_navigation_polygon" }, // Navigation2DServer
-	{ "remove_animation", "remove_animation_library" }, // AnimationPlayer
+	{ "remove_animation", "remove_animation_library" }, // SEAnimation
 	{ "remove_color_override", "remove_theme_color_override" }, // Control
 	{ "remove_constant_override", "remove_theme_constant_override" }, // Control
 	{ "remove_font_override", "remove_theme_font_override" }, // Control
@@ -486,7 +486,7 @@ const char *RenamesMap3To4::gdscript_function_renames[][2] = {
 	{ "remove_scene_import_plugin", "remove_scene_format_importer_plugin" }, //EditorPlugin
 	{ "remove_spatial_gizmo_plugin", "remove_node_3d_gizmo_plugin" }, // EditorPlugin
 	{ "remove_stylebox_override", "remove_theme_stylebox_override" }, // Control
-	{ "rename_animation", "rename_animation_library" }, // AnimationPlayer
+	{ "rename_animation", "rename_animation_library" }, // SEAnimation
 	{ "rename_dependencies", "_rename_dependencies" }, // ResourceFormatLoader
 	{ "save_external_data", "_save_external_data" }, // EditorPlugin
 	{ "segment_intersects_segment_2d", "segment_intersects_segment" }, // Geometry2D
@@ -494,7 +494,7 @@ const char *RenamesMap3To4::gdscript_function_renames[][2] = {
 	{ "set_alt", "set_alt_pressed" }, // InputEventWithModifiers
 	{ "set_anchor_and_margin", "set_anchor_and_offset" }, // Control
 	{ "set_anchors_and_margins_preset", "set_anchors_and_offsets_preset" }, // Control
-	{ "set_animation_process_mode", "set_process_callback" }, // AnimationPlayer
+	{ "set_animation_process_mode", "set_process_callback" }, // SEAnimation
 	{ "set_as_bulk_array", "set_buffer" }, // MultiMesh
 	{ "set_as_normalmap", "set_as_normal_map" }, // NoiseTexture
 	{ "set_as_toplevel", "set_as_top_level" }, // CanvasItem
@@ -640,7 +640,7 @@ const char *RenamesMap3To4::csharp_function_renames[][2] = {
 	{ "_GetConfigurationWarning", "_GetConfigurationWarnings" }, // Node
 	{ "_SetCurrent", "SetCurrent" }, // Camera2D
 	{ "_SetEditorDescription", "SetEditorDescription" }, // Node
-	{ "_SetPlaying", "SetPlaying" }, // AnimatedSprite3D
+	{ "_SetPlaying", "SetPlaying" }, // AnimatedSEImage
 	{ "_ToplevelRaiseSelf", "_TopLevelRaiseSelf" }, // CanvasItem
 	{ "AddCancel", "AddCancelButton" }, // AcceptDialog
 	{ "AddCentralForce", "AddConstantCentralForce" }, //RigidBody2D
@@ -699,7 +699,7 @@ const char *RenamesMap3To4::csharp_function_renames[][2] = {
 	{ "GenerateSmallPreviewAutomatically", "_GenerateSmallPreviewAutomatically" }, // EditorResourcePreviewGenerator
 	{ "GetActionList", "ActionGetEvents" }, // InputMap
 	{ "GetAlt", "IsAltPressed" }, // InputEventWithModifiers
-	{ "GetAnimationProcessMode", "GetProcessCallback" }, // AnimationPlayer
+	{ "GetAnimationProcessMode", "GetProcessCallback" }, // SEAnimation
 	{ "GetAppliedForce", "GetConstantForce" }, //RigidBody2D
 	{ "GetAppliedTorque", "GetConstantTorque" }, //RigidBody2D
 	{ "GetAudioBus", "GetAudioBusName" }, // Area3D
@@ -893,14 +893,14 @@ const char *RenamesMap3To4::csharp_function_renames[][2] = {
 	{ "RegionBakeNavmesh", "region_bake_navigation_mesh" }, // Navigation3DServer
 	{ "RegionSetNavmesh", "RegionSetNavigationMesh" }, // Navigation3DServer
 	{ "RegionSetNavpoly", "RegionSetNavigationPolygon" }, // Navigation2DServer
-	{ "RemoveAnimation", "RemoveAnimationLibrary" }, // AnimationPlayer
+	{ "RemoveAnimation", "RemoveAnimationLibrary" }, // SEAnimation
 	{ "RemoveColorOverride", "RemoveThemeColorOverride" }, // Control
 	{ "RemoveConstantOverride", "RemoveThemeConstantOverride" }, // Control
 	{ "RemoveFontOverride", "RemoveThemeFontOverride" }, // Control
 	{ "RemoveSceneImportPlugin", "RemoveSceneFormatImporterPlugin" }, //EditorPlugin
 	{ "RemoveSpatialGizmoPlugin", "RemoveNode3dGizmoPlugin" }, // EditorPlugin
 	{ "RemoveStyleboxOverride", "RemoveThemeStyleboxOverride" }, // Control
-	{ "RenameAnimation", "RenameAnimationLibrary" }, // AnimationPlayer
+	{ "RenameAnimation", "RenameAnimationLibrary" }, // SEAnimation
 	{ "RenameDependencies", "_RenameDependencies" }, // ResourceFormatLoader
 	{ "SaveExternalData", "_SaveExternalData" }, // EditorPlugin
 	{ "SegmentIntersectsSegment2d", "SegmentIntersectsSegment" }, // Geometry2D
@@ -908,7 +908,7 @@ const char *RenamesMap3To4::csharp_function_renames[][2] = {
 	{ "SetAlt", "SetAltPressed" }, // InputEventWithModifiers
 	{ "SetAnchorAndMargin", "SetAnchorAndOffset" }, // Control
 	{ "SetAnchorsAndMarginsPreset", "SetAnchorsAndOffsetsPreset" }, // Control
-	{ "SetAnimationProcessMode", "SetProcessCallback" }, // AnimationPlayer
+	{ "SetAnimationProcessMode", "SetProcessCallback" }, // SEAnimation
 	{ "SetAsBulkArray", "SetBuffer" }, // MultiMesh
 	{ "SetAsNormalmap", "SetAsNormalMap" }, // NoiseTexture
 	{ "SetAsToplevel", "SetAsTopLevel" }, // CanvasItem
@@ -1069,7 +1069,7 @@ const char *RenamesMap3To4::gdscript_properties_renames[][2] = {
 	// Would need bespoke solution.
 	// { "autowrap", "autowrap_mode" }, // Label -- Changed from bool to enum.
 	// { "extents", "size" }, // BoxShape3D, LightmapGI, ReflectionProbe
-	// { "frames", "sprite_frames" }, // AnimatedSprite2D, AnimatedSprite3D -- GH-73696
+	// { "frames", "sprite_frames" }, // AnimatedSprite2D, AnimatedSEImage -- GH-73696
 	// { "percent_visible, "show_percentage }, // ProgressBar -- Breaks Label and RichTextLabel.
 	// { "pressed", "button_pressed" }, // BaseButton -- Would also rename the signal.
 	// { "process_mode", "process_callback" }, // AnimationTree, Camera2D -- conflicts with Node.
@@ -1584,7 +1584,7 @@ const char *RenamesMap3To4::class_renames[][2] = {
 	{ "RayShape2D", "SeparationRayShape2D" },
 	{ "RemoteTransform", "RemoteTransform3D" },
 	{ "ResourceInteractiveLoader", "ResourceLoader" },
-	{ "RigidBody", "RigidBody3D" },
+	{ "RigidBody", "SEPhysicsBody" },
 	{ "SceneTreeTween", "Tween" },
 	{ "ShortCut", "Shortcut" },
 	{ "Skeleton", "Skeleton3D" },
@@ -1598,7 +1598,7 @@ const char *RenamesMap3To4::class_renames[][2] = {
 	{ "SpotLight", "SESpot" },
 	{ "SpringArm", "SpringArm3D" },
 	{ "Sprite", "Sprite2D" },
-	{ "StaticBody", "StaticBody3D" },
+	{ "StaticBody", "SEBody" },
 	{ "StreamCubemap", "CompressedCubemap" },
 	{ "StreamCubemapArray", "CompressedCubemapArray" },
 	{ "StreamPeerGDNative", "StreamPeerExtension" },

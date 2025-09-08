@@ -28,7 +28,7 @@ partial class AnimationNode
     }
 }
 
-partial class AnimationPlayer
+partial class SEAnimation
 {
     /// <inheritdoc cref="AnimationMixer.CallbackModeMethod"/>
     [EditorBrowsable(EditorBrowsableState.Never)]

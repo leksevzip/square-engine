@@ -40,7 +40,7 @@
 #include "editor/settings/editor_settings.h"
 #include "editor/themes/editor_scale.h"
 #include "scene/3d/importer_se_mesh.h"
-#include "scene/animation/animation_player.h"
+#include "scene/animation/se_animation.h"
 #include "scene/gui/subviewport_container.h"
 #include "scene/resources/3d/importer_mesh.h"
 #include "scene/resources/surface_tool.h"
@@ -450,11 +450,11 @@ void SceneImportSettingsDialog::_fill_scene(Node *p_node, TreeItem *p_parent_ite
 			ResourceImporterScene::InternalImportCategory category;
 			if (src_mesh_node) {
 				category = ResourceImporterScene::INTERNAL_IMPORT_CATEGORY_MESH_3D_NODE;
-			} else if (Object::cast_to<AnimationPlayer>(p_node)) {
+			} else if (Object::cast_to<SEAnimation>(p_node)) {
 				category = ResourceImporterScene::INTERNAL_IMPORT_CATEGORY_ANIMATION_NODE;
 
-				animation_player = Object::cast_to<AnimationPlayer>(p_node);
-				animation_player->connect(SceneStringName(animation_finished), callable_mp(this, &SceneImportSettingsDialog::_animation_finished));
+				se_animation = Object::cast_to<SEAnimation>(p_node);
+				se_animation->connect(SceneStringName(animation_finished), callable_mp(this, &SceneImportSettingsDialog::_animation_finished));
 			} else if (Object::cast_to<Skeleton3D>(p_node)) {
 				category = ResourceImporterScene::INTERNAL_IMPORT_CATEGORY_SKELETON_3D_NODE;
 				Skeleton3D *skeleton = Object::cast_to<Skeleton3D>(p_node);
@@ -474,7 +474,7 @@ void SceneImportSettingsDialog::_fill_scene(Node *p_node, TreeItem *p_parent_ite
 	node_data.node = p_node;
 	node_data.scene_node = item;
 
-	AnimationPlayer *anim_node = Object::cast_to<AnimationPlayer>(p_node);
+	SEAnimation *anim_node = Object::cast_to<SEAnimation>(p_node);
 	if (anim_node) {
 		Vector<String> animation_list;
 		List<StringName> animations;
@@ -895,7 +895,7 @@ void SceneImportSettingsDialog::_select(Tree *p_from, const String &p_type, cons
 			if (mi) {
 				scene_import_settings_data->category = ResourceImporterScene::INTERNAL_IMPORT_CATEGORY_MESH_3D_NODE;
 				scene_import_settings_data->hide_options = editing_animation;
-			} else if (Object::cast_to<AnimationPlayer>(nd.node)) {
+			} else if (Object::cast_to<SEAnimation>(nd.node)) {
 				scene_import_settings_data->category = ResourceImporterScene::INTERNAL_IMPORT_CATEGORY_ANIMATION_NODE;
 			} else if (Object::cast_to<Skeleton3D>(nd.node)) {
 				scene_import_settings_data->category = ResourceImporterScene::INTERNAL_IMPORT_CATEGORY_SKELETON_3D_NODE;
@@ -1072,17 +1072,17 @@ void SceneImportSettingsDialog::_reset_bone_transforms() {
 }
 
 void SceneImportSettingsDialog::_play_animation() {
-	if (animation_player == nullptr) {
+	if (se_animation == nullptr) {
 		return;
 	}
 	StringName id = StringName(selected_id);
-	if (animation_player->has_animation(id)) {
-		if (animation_player->is_playing()) {
-			animation_player->pause();
+	if (se_animation->has_animation(id)) {
+		if (se_animation->is_playing()) {
+			se_animation->pause();
 			animation_play_button->set_button_icon(get_editor_theme_icon(SNAME("MainPlay")));
 			set_process(false);
 		} else {
-			animation_player->play(id);
+			se_animation->play(id);
 			animation_play_button->set_button_icon(get_editor_theme_icon(SNAME("Pause")));
 			set_process(true);
 		}
@@ -1091,7 +1091,7 @@ void SceneImportSettingsDialog::_play_animation() {
 
 void SceneImportSettingsDialog::_stop_current_animation() {
 	animation_pingpong = false;
-	animation_player->stop();
+	se_animation->stop();
 	animation_play_button->set_button_icon(get_editor_theme_icon(SNAME("MainPlay")));
 	animation_slider->set_value_no_signal(0.0);
 	set_process(false);
@@ -1101,8 +1101,8 @@ void SceneImportSettingsDialog::_reset_animation(const String &p_animation_name)
 	if (p_animation_name.is_empty()) {
 		animation_preview->hide();
 
-		if (animation_player != nullptr && animation_player->is_playing()) {
-			animation_player->stop();
+		if (se_animation != nullptr && se_animation->is_playing()) {
+			se_animation->stop();
 		}
 		animation_play_button->set_button_icon(get_editor_theme_icon(SNAME("MainPlay")));
 
@@ -1122,13 +1122,13 @@ void SceneImportSettingsDialog::_reset_animation(const String &p_animation_name)
 			}
 		}
 
-		if (animation_player->is_playing() && animation_loop_mode != Animation::LoopMode::LOOP_NONE) {
-			animation_player->play(p_animation_name);
+		if (se_animation->is_playing() && animation_loop_mode != Animation::LoopMode::LOOP_NONE) {
+			se_animation->play(p_animation_name);
 		} else {
-			animation_player->stop(true);
+			se_animation->stop(true);
 			animation_play_button->set_button_icon(get_editor_theme_icon(SNAME("MainPlay")));
-			animation_player->set_assigned_animation(p_animation_name);
-			animation_player->seek(0.0, true);
+			se_animation->set_assigned_animation(p_animation_name);
+			se_animation->seek(0.0, true);
 			animation_slider->set_value_no_signal(0.0);
 			set_process(false);
 		}
@@ -1136,15 +1136,15 @@ void SceneImportSettingsDialog::_reset_animation(const String &p_animation_name)
 }
 
 void SceneImportSettingsDialog::_animation_slider_value_changed(double p_value) {
-	if (animation_player == nullptr || !animation_map.has(selected_id) || animation_map[selected_id].animation.is_null()) {
+	if (se_animation == nullptr || !animation_map.has(selected_id) || animation_map[selected_id].animation.is_null()) {
 		return;
 	}
-	if (animation_player->is_playing()) {
-		animation_player->stop();
+	if (se_animation->is_playing()) {
+		se_animation->stop();
 		animation_play_button->set_button_icon(get_editor_theme_icon(SNAME("MainPlay")));
 		set_process(false);
 	}
-	animation_player->seek(p_value * animation_map[selected_id].animation->get_length(), true);
+	se_animation->seek(p_value * animation_map[selected_id].animation->get_length(), true);
 }
 
 void SceneImportSettingsDialog::_skeleton_tree_entered(Skeleton3D *p_skeleton) {
@@ -1162,13 +1162,13 @@ void SceneImportSettingsDialog::_animation_finished(const StringName &p_name) {
 			set_process(false);
 		} break;
 		case Animation::LOOP_LINEAR: {
-			animation_player->play(p_name);
+			se_animation->play(p_name);
 		} break;
 		case Animation::LOOP_PINGPONG: {
 			if (animation_pingpong) {
-				animation_player->play(p_name);
+				se_animation->play(p_name);
 			} else {
-				animation_player->play_backwards(p_name);
+				se_animation->play_backwards(p_name);
 			}
 			animation_pingpong = !animation_pingpong;
 		} break;
@@ -1221,9 +1221,9 @@ void SceneImportSettingsDialog::_scene_tree_selected() {
 
 void SceneImportSettingsDialog::_cleanup() {
 	skeletons.clear();
-	if (animation_player != nullptr) {
-		animation_player->disconnect(SceneStringName(animation_finished), callable_mp(this, &SceneImportSettingsDialog::_animation_finished));
-		animation_player = nullptr;
+	if (se_animation != nullptr) {
+		se_animation->disconnect(SceneStringName(animation_finished), callable_mp(this, &SceneImportSettingsDialog::_animation_finished));
+		se_animation = nullptr;
 	}
 	set_process(false);
 }
@@ -1389,7 +1389,7 @@ void SceneImportSettingsDialog::_notification(int p_what) {
 			action_menu->add_theme_style_override(SceneStringName(pressed), get_theme_stylebox(SceneStringName(pressed), "Button"));
 			action_menu->end_bulk_theme_override();
 
-			if (animation_player != nullptr && animation_player->is_playing()) {
+			if (se_animation != nullptr && se_animation->is_playing()) {
 				animation_play_button->set_button_icon(get_editor_theme_icon(SNAME("Pause")));
 			} else {
 				animation_play_button->set_button_icon(get_editor_theme_icon(SNAME("MainPlay")));
@@ -1404,8 +1404,8 @@ void SceneImportSettingsDialog::_notification(int p_what) {
 		} break;
 
 		case NOTIFICATION_PROCESS: {
-			if (animation_player != nullptr) {
-				animation_slider->set_value_no_signal(animation_player->get_current_animation_position() / animation_player->get_current_animation_length());
+			if (se_animation != nullptr) {
+				animation_slider->set_value_no_signal(se_animation->get_current_animation_position() / se_animation->get_current_animation_length());
 			}
 		} break;
 

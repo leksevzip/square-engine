@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="Environment" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../class.xsd">
 	<brief_description>
-		Resource for environment nodes (like [WorldEnvironment]) that define multiple rendering options.
+		Resource for environment nodes (like [SEWorld]) that define multiple rendering options.
 	</brief_description>
 	<description>
-		Resource for environment nodes (like [WorldEnvironment]) that define multiple environment operations (such as background [Sky] or [Color], ambient light, fog, depth-of-field...). These parameters affect the final render of the scene. The order of these operations is:
+		Resource for environment nodes (like [SEWorld]) that define multiple environment operations (such as background [Sky] or [Color], ambient light, fog, depth-of-field...). These parameters affect the final render of the scene. The order of these operations is:
 		- Depth of Field Blur
 		- Glow
 		- Tonemap (Auto Exposure)

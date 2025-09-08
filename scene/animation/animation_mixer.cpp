@@ -35,7 +35,7 @@
 #include "core/config/project_settings.h"
 #include "core/string/string_name.h"
 #include "scene/2d/audio_stream_player_2d.h"
-#include "scene/animation/animation_player.h"
+#include "scene/animation/se_animation.h"
 #include "scene/audio/audio_stream_player.h"
 #include "scene/resources/animation.h"
 #include "servers/audio/audio_stream.h"
@@ -1772,7 +1772,7 @@ void AnimationMixer::_blend_process(double p_delta, bool p_update_only) {
 					if (!t_obj) {
 						continue;
 					}
-					AnimationPlayer *player2 = Object::cast_to<AnimationPlayer>(t_obj);
+					SEAnimation *player2 = Object::cast_to<SEAnimation>(t_obj);
 					if (!player2) {
 						continue;
 					}
@@ -2229,7 +2229,7 @@ void AnimationMixer::reset() {
 	Node *root_node_object = get_node_or_null(root_node);
 	ERR_FAIL_NULL(root_node_object);
 
-	AnimationPlayer *aux_player = memnew(AnimationPlayer);
+	SEAnimation *aux_player = memnew(SEAnimation);
 	root_node_object->add_child(aux_player);
 	Ref<AnimationLibrary> al;
 	al.instantiate();

@@ -23,6 +23,6 @@ func test():
 
 func test_no_exec():
 	# GH-99309
-	var sprite: Sprite3D = $Sprite3D
+	var sprite: SEImage = $SEImage
 	sprite.axis = Vector3.AXIS_Y # No warning.
 	sprite.set_axis(Vector3.AXIS_Y) # No warning.

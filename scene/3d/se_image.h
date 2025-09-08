@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  sprite_3d.h                                                           */
+/*  se_image.h                                                           */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -177,8 +177,8 @@ public:
 	~SpriteBase3D();
 };
 
-class Sprite3D : public SpriteBase3D {
-	GDCLASS(Sprite3D, SpriteBase3D);
+class SEImage : public SpriteBase3D {
+	GDCLASS(SEImage, SpriteBase3D);
 	Ref<Texture2D> texture;
 
 	bool region = false;
@@ -219,12 +219,12 @@ public:
 
 	virtual Rect2 get_item_rect() const override;
 
-	Sprite3D();
-	//~Sprite3D();
+	SEImage();
+	//~SEImage();
 };
 
-class AnimatedSprite3D : public SpriteBase3D {
-	GDCLASS(AnimatedSprite3D, SpriteBase3D);
+class AnimatedSEImage : public SpriteBase3D {
+	GDCLASS(AnimatedSEImage, SpriteBase3D);
 
 	Ref<SpriteFrames> frames;
 	String autoplay;
@@ -290,7 +290,7 @@ public:
 	virtual void get_argument_options(const StringName &p_function, int p_idx, List<String> *r_options) const override;
 #endif
 
-	AnimatedSprite3D();
+	AnimatedSEImage();
 };
 
 VARIANT_ENUM_CAST(SpriteBase3D::DrawFlags);
