@@ -289,7 +289,7 @@ const HashMap<EditorBuildProfile::BuildOption, LocalVector<String>> EditorBuildP
 	{ BUILD_OPTION_PHYSICS_3D, {
 			"CollisionObject3D",
 			"CollisionPolygon3D",
-			"CollisionShape3D",
+			"SECollision",
 			"SEOShape3D",
 			"GPUParticlesAttractor3D",
 			"GPUParticlesCollision3D",

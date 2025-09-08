@@ -37,7 +37,7 @@
 #include "editor/scene/3d/node_3d_editor_plugin.h"
 #include "editor/themes/editor_scale.h"
 #include "scene/3d/navigation/navigation_region_3d.h"
-#include "scene/3d/physics/collision_shape_3d.h"
+#include "scene/3d/physics/se_collision.h"
 #include "scene/3d/physics/se_body.h"
 #include "scene/gui/aspect_ratio_container.h"
 #include "scene/gui/box_container.h"
@@ -174,7 +174,7 @@ void SEMeshEditor::_create_collision_shape() {
 			ur->add_do_method(Node3DEditor::get_singleton(), SceneStringName(_request_gizmo), body);
 
 			for (Ref<Shape3D> shape : shapes) {
-				CollisionShape3D *cshape = memnew(CollisionShape3D);
+				SECollision *cshape = memnew(SECollision);
 				cshape->set_shape(shape);
 				body->add_child(cshape, true);
 				ur->add_do_method(cshape, "set_owner", owner);
@@ -184,9 +184,9 @@ void SEMeshEditor::_create_collision_shape() {
 			ur->add_undo_method(instance, "remove_child", body);
 		} else {
 			for (Ref<Shape3D> shape : shapes) {
-				CollisionShape3D *cshape = memnew(CollisionShape3D);
+				SECollision *cshape = memnew(SECollision);
 				cshape->set_shape(shape);
-				cshape->set_name("CollisionShape3D");
+				cshape->set_name("SECollision");
 				cshape->set_transform(instance->get_transform());
 				ur->add_do_method(E, "add_sibling", cshape, true);
 				ur->add_do_method(cshape, "set_owner", owner);

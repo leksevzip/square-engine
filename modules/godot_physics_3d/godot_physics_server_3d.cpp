@@ -145,7 +145,7 @@ RID GodotPhysicsServer3D::space_create() {
 	RID id = space_owner.make_rid(space);
 	space->set_self(id);
 	RID area_id = area_create();
-	GodotArea3D *area = area_owner.get_or_null(area_id);
+	GodotSEArea *area = area_owner.get_or_null(area_id);
 	ERR_FAIL_NULL_V(area, RID());
 	space->set_default_area(area);
 	area->set_space(space);
@@ -215,14 +215,14 @@ int GodotPhysicsServer3D::space_get_contact_count(RID p_space) const {
 }
 
 RID GodotPhysicsServer3D::area_create() {
-	GodotArea3D *area = memnew(GodotArea3D);
+	GodotSEArea *area = memnew(GodotSEArea);
 	RID rid = area_owner.make_rid(area);
 	area->set_self(rid);
 	return rid;
 }
 
 void GodotPhysicsServer3D::area_set_space(RID p_area, RID p_space) {
-	GodotArea3D *area = area_owner.get_or_null(p_area);
+	GodotSEArea *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_NULL(area);
 
 	GodotSpace3D *space = nullptr;
@@ -240,7 +240,7 @@ void GodotPhysicsServer3D::area_set_space(RID p_area, RID p_space) {
 }
 
 RID GodotPhysicsServer3D::area_get_space(RID p_area) const {
-	GodotArea3D *area = area_owner.get_or_null(p_area);
+	GodotSEArea *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_NULL_V(area, RID());
 
 	GodotSpace3D *space = area->get_space();
@@ -251,7 +251,7 @@ RID GodotPhysicsServer3D::area_get_space(RID p_area) const {
 }
 
 void GodotPhysicsServer3D::area_add_shape(RID p_area, RID p_shape, const Transform3D &p_transform, bool p_disabled) {
-	GodotArea3D *area = area_owner.get_or_null(p_area);
+	GodotSEArea *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_NULL(area);
 
 	GodotShape3D *shape = shape_owner.get_or_null(p_shape);
@@ -261,7 +261,7 @@ void GodotPhysicsServer3D::area_add_shape(RID p_area, RID p_shape, const Transfo
 }
 
 void GodotPhysicsServer3D::area_set_shape(RID p_area, int p_shape_idx, RID p_shape) {
-	GodotArea3D *area = area_owner.get_or_null(p_area);
+	GodotSEArea *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_NULL(area);
 
 	GodotShape3D *shape = shape_owner.get_or_null(p_shape);
@@ -272,21 +272,21 @@ void GodotPhysicsServer3D::area_set_shape(RID p_area, int p_shape_idx, RID p_sha
 }
 
 void GodotPhysicsServer3D::area_set_shape_transform(RID p_area, int p_shape_idx, const Transform3D &p_transform) {
-	GodotArea3D *area = area_owner.get_or_null(p_area);
+	GodotSEArea *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_NULL(area);
 
 	area->set_shape_transform(p_shape_idx, p_transform);
 }
 
 int GodotPhysicsServer3D::area_get_shape_count(RID p_area) const {
-	GodotArea3D *area = area_owner.get_or_null(p_area);
+	GodotSEArea *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_NULL_V(area, -1);
 
 	return area->get_shape_count();
 }
 
 RID GodotPhysicsServer3D::area_get_shape(RID p_area, int p_shape_idx) const {
-	GodotArea3D *area = area_owner.get_or_null(p_area);
+	GodotSEArea *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_NULL_V(area, RID());
 
 	GodotShape3D *shape = area->get_shape(p_shape_idx);
@@ -296,21 +296,21 @@ RID GodotPhysicsServer3D::area_get_shape(RID p_area, int p_shape_idx) const {
 }
 
 Transform3D GodotPhysicsServer3D::area_get_shape_transform(RID p_area, int p_shape_idx) const {
-	GodotArea3D *area = area_owner.get_or_null(p_area);
+	GodotSEArea *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_NULL_V(area, Transform3D());
 
 	return area->get_shape_transform(p_shape_idx);
 }
 
 void GodotPhysicsServer3D::area_remove_shape(RID p_area, int p_shape_idx) {
-	GodotArea3D *area = area_owner.get_or_null(p_area);
+	GodotSEArea *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_NULL(area);
 
 	area->remove_shape(p_shape_idx);
 }
 
 void GodotPhysicsServer3D::area_clear_shapes(RID p_area) {
-	GodotArea3D *area = area_owner.get_or_null(p_area);
+	GodotSEArea *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_NULL(area);
 
 	while (area->get_shape_count()) {
@@ -319,7 +319,7 @@ void GodotPhysicsServer3D::area_clear_shapes(RID p_area) {
 }
 
 void GodotPhysicsServer3D::area_set_shape_disabled(RID p_area, int p_shape_idx, bool p_disabled) {
-	GodotArea3D *area = area_owner.get_or_null(p_area);
+	GodotSEArea *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_NULL(area);
 	ERR_FAIL_INDEX(p_shape_idx, area->get_shape_count());
 	FLUSH_QUERY_CHECK(area);
@@ -331,7 +331,7 @@ void GodotPhysicsServer3D::area_attach_object_instance_id(RID p_area, ObjectID p
 		GodotSpace3D *space = space_owner.get_or_null(p_area);
 		p_area = space->get_default_area()->get_self();
 	}
-	GodotArea3D *area = area_owner.get_or_null(p_area);
+	GodotSEArea *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_NULL(area);
 	area->set_instance_id(p_id);
 }
@@ -341,7 +341,7 @@ ObjectID GodotPhysicsServer3D::area_get_object_instance_id(RID p_area) const {
 		GodotSpace3D *space = space_owner.get_or_null(p_area);
 		p_area = space->get_default_area()->get_self();
 	}
-	GodotArea3D *area = area_owner.get_or_null(p_area);
+	GodotSEArea *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_NULL_V(area, ObjectID());
 	return area->get_instance_id();
 }
@@ -351,13 +351,13 @@ void GodotPhysicsServer3D::area_set_param(RID p_area, AreaParameter p_param, con
 		GodotSpace3D *space = space_owner.get_or_null(p_area);
 		p_area = space->get_default_area()->get_self();
 	}
-	GodotArea3D *area = area_owner.get_or_null(p_area);
+	GodotSEArea *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_NULL(area);
 	area->set_param(p_param, p_value);
 }
 
 void GodotPhysicsServer3D::area_set_transform(RID p_area, const Transform3D &p_transform) {
-	GodotArea3D *area = area_owner.get_or_null(p_area);
+	GodotSEArea *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_NULL(area);
 	area->set_transform(p_transform);
 }
@@ -367,49 +367,49 @@ Variant GodotPhysicsServer3D::area_get_param(RID p_area, AreaParameter p_param) 
 		GodotSpace3D *space = space_owner.get_or_null(p_area);
 		p_area = space->get_default_area()->get_self();
 	}
-	GodotArea3D *area = area_owner.get_or_null(p_area);
+	GodotSEArea *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_NULL_V(area, Variant());
 
 	return area->get_param(p_param);
 }
 
 Transform3D GodotPhysicsServer3D::area_get_transform(RID p_area) const {
-	GodotArea3D *area = area_owner.get_or_null(p_area);
+	GodotSEArea *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_NULL_V(area, Transform3D());
 
 	return area->get_transform();
 }
 
 void GodotPhysicsServer3D::area_set_collision_layer(RID p_area, uint32_t p_layer) {
-	GodotArea3D *area = area_owner.get_or_null(p_area);
+	GodotSEArea *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_NULL(area);
 
 	area->set_collision_layer(p_layer);
 }
 
 uint32_t GodotPhysicsServer3D::area_get_collision_layer(RID p_area) const {
-	GodotArea3D *area = area_owner.get_or_null(p_area);
+	GodotSEArea *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_NULL_V(area, 0);
 
 	return area->get_collision_layer();
 }
 
 void GodotPhysicsServer3D::area_set_collision_mask(RID p_area, uint32_t p_mask) {
-	GodotArea3D *area = area_owner.get_or_null(p_area);
+	GodotSEArea *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_NULL(area);
 
 	area->set_collision_mask(p_mask);
 }
 
 uint32_t GodotPhysicsServer3D::area_get_collision_mask(RID p_area) const {
-	GodotArea3D *area = area_owner.get_or_null(p_area);
+	GodotSEArea *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_NULL_V(area, 0);
 
 	return area->get_collision_mask();
 }
 
 void GodotPhysicsServer3D::area_set_monitorable(RID p_area, bool p_monitorable) {
-	GodotArea3D *area = area_owner.get_or_null(p_area);
+	GodotSEArea *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_NULL(area);
 	FLUSH_QUERY_CHECK(area);
 
@@ -417,21 +417,21 @@ void GodotPhysicsServer3D::area_set_monitorable(RID p_area, bool p_monitorable) 
 }
 
 void GodotPhysicsServer3D::area_set_monitor_callback(RID p_area, const Callable &p_callback) {
-	GodotArea3D *area = area_owner.get_or_null(p_area);
+	GodotSEArea *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_NULL(area);
 
 	area->set_monitor_callback(p_callback.is_valid() ? p_callback : Callable());
 }
 
 void GodotPhysicsServer3D::area_set_ray_pickable(RID p_area, bool p_enable) {
-	GodotArea3D *area = area_owner.get_or_null(p_area);
+	GodotSEArea *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_NULL(area);
 
 	area->set_ray_pickable(p_enable);
 }
 
 void GodotPhysicsServer3D::area_set_area_monitor_callback(RID p_area, const Callable &p_callback) {
-	GodotArea3D *area = area_owner.get_or_null(p_area);
+	GodotSEArea *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_NULL(area);
 
 	area->set_area_monitor_callback(p_callback.is_valid() ? p_callback : Callable());
@@ -1627,7 +1627,7 @@ void GodotPhysicsServer3D::free(RID p_rid) {
 		soft_body_owner.free(p_rid);
 		memdelete(soft_body);
 	} else if (area_owner.owns(p_rid)) {
-		GodotArea3D *area = area_owner.get_or_null(p_rid);
+		GodotSEArea *area = area_owner.get_or_null(p_rid);
 
 		area->set_space(nullptr);
 

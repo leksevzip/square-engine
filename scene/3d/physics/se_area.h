@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  area_3d.h                                                             */
+/*  se_area.h                                                             */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -33,8 +33,8 @@
 #include "core/templates/vset.h"
 #include "scene/3d/physics/collision_object_3d.h"
 
-class Area3D : public CollisionObject3D {
-	GDCLASS(Area3D, CollisionObject3D);
+class SEArea : public CollisionObject3D {
+	GDCLASS(SEArea, CollisionObject3D);
 
 public:
 	enum SpaceOverride {
@@ -199,7 +199,7 @@ public:
 	bool is_monitorable() const;
 
 	TypedArray<Node3D> get_overlapping_bodies() const;
-	TypedArray<Area3D> get_overlapping_areas() const; //function for script
+	TypedArray<SEArea> get_overlapping_areas() const; //function for script
 
 	bool has_overlapping_bodies() const;
 	bool has_overlapping_areas() const;
@@ -225,8 +225,8 @@ public:
 	void set_reverb_uniformity(float p_uniformity);
 	float get_reverb_uniformity() const;
 
-	Area3D();
-	~Area3D();
+	SEArea();
+	~SEArea();
 };
 
-VARIANT_ENUM_CAST(Area3D::SpaceOverride);
+VARIANT_ENUM_CAST(SEArea::SpaceOverride);

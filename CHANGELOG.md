@@ -120,7 +120,7 @@ Table of contents:
 - Clear drag preview material on `NOTIFICATION_DRAG_END` ([GH-87135](https://github.com/godotengine/godot/pull/87135)).
 - Add ability to hide editor transform gizmo ([GH-87793](https://github.com/godotengine/godot/pull/87793)).
 - Offset drag instantiated scenes that result in a collision by its bounds to mitigate overlap ([GH-88511](https://github.com/godotengine/godot/pull/88511)).
-- Add CollisionShape3D custom debug colors ([GH-90644](https://github.com/godotengine/godot/pull/90644)).
+- Add SECollision custom debug colors ([GH-90644](https://github.com/godotengine/godot/pull/90644)).
 - Adjust orthographic camera gizmo with respect to `keep_aspect` setting ([GH-90690](https://github.com/godotengine/godot/pull/90690)).
 - Add SECamera preview in Inspector ([GH-90778](https://github.com/godotengine/godot/pull/90778)).
 - Optimize Editor `_init_grid()` ([GH-92734](https://github.com/godotengine/godot/pull/92734)).
@@ -2301,7 +2301,7 @@ Table of contents:
 - Move Godot Physics 2D into a module; add dummy 2D physics server ([GH-95261](https://github.com/godotengine/godot/pull/95261)).
 - Expose `ShapeCast{2D,3D}::get_collision_result` ([GH-95374](https://github.com/godotengine/godot/pull/95374)).
 - Use collision detection ray to reposition an object already in the scene ([GH-96740](https://github.com/godotengine/godot/pull/96740)).
-- Add forgotten `get_space()` check in `GodotArea3D::remove_soft_body_from_query()` ([GH-97130](https://github.com/godotengine/godot/pull/97130)).
+- Add forgotten `get_space()` check in `GodotSEArea::remove_soft_body_from_query()` ([GH-97130](https://github.com/godotengine/godot/pull/97130)).
 - Add unit tests for PhysicsMaterial ([GH-97227](https://github.com/godotengine/godot/pull/97227)).
 - Fix physics platform behavior regression ([GH-97315](https://github.com/godotengine/godot/pull/97315)).
 - GodotPhysics: Fix raycasts don't reliably collide with HeightMapShape3D ([GH-97471](https://github.com/godotengine/godot/pull/97471)).
@@ -2325,7 +2325,7 @@ Table of contents:
 - Add debug colors and fills to CollisionPolygon3D ([GH-101810](https://github.com/godotengine/godot/pull/101810)).
 - Refactor post-step operations in Jolt module to be done as needed ([GH-101815](https://github.com/godotengine/godot/pull/101815)).
 - Update Jolt Physics `BoxShape` to allow for zero-sized boxes ([GH-101940](https://github.com/godotengine/godot/pull/101940)).
-- Override mass properties for `Area3D` when using Jolt Physics ([GH-102029](https://github.com/godotengine/godot/pull/102029)).
+- Override mass properties for `SEArea` when using Jolt Physics ([GH-102029](https://github.com/godotengine/godot/pull/102029)).
 - [Jolt Physics] Fix ghost collision issue on dense triangle meshes ([GH-102614](https://github.com/godotengine/godot/pull/102614)).
 - Skip `Object::to_string` when Jolt Physics is on separate thread ([GH-102726](https://github.com/godotengine/godot/pull/102726)).
 

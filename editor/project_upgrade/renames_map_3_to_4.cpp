@@ -279,7 +279,7 @@ const char *RenamesMap3To4::gdscript_function_renames[][2] = {
 	{ "get_animation_process_mode", "get_process_callback" }, // SEAnimation
 	{ "get_applied_force", "get_constant_force" }, //RigidBody2D
 	{ "get_applied_torque", "get_constant_torque" }, //RigidBody2D
-	{ "get_audio_bus", "get_audio_bus_name" }, // Area3D
+	{ "get_audio_bus", "get_audio_bus_name" }, // SEArea
 	{ "get_bound_child_nodes_to_bone", "get_bone_children" }, // Skeleton3D
 	{ "get_camera", "get_camera_3d" }, // Viewport -- This is also convertible to get_camera_2d. Breaks GLTFNode.
 	{ "get_cancel", "get_cancel_button" }, // ConfirmationDialog
@@ -315,7 +315,7 @@ const char *RenamesMap3To4::gdscript_function_renames[][2] = {
 	{ "get_font_types", "get_font_type_list" }, // Theme
 	{ "get_frame_color", "get_color" }, // ColorRect
 	{ "get_global_rate_scale", "get_playback_speed_scale" }, // AudioServer
-	{ "get_gravity_distance_scale", "get_gravity_point_unit_distance" }, // Area2D, Area3D
+	{ "get_gravity_distance_scale", "get_gravity_point_unit_distance" }, // Area2D, SEArea
 	{ "get_gravity_vector", "get_gravity_direction" }, // Area(2D/3D)
 	{ "get_h_scrollbar", "get_h_scroll_bar" }, //ScrollContainer
 	{ "get_hand", "get_tracker_hand" }, // XRPositionalTracker
@@ -365,7 +365,7 @@ const char *RenamesMap3To4::gdscript_function_renames[][2] = {
 	{ "get_render_targetsize", "get_render_target_size" }, // XRInterface
 	{ "get_resource_type", "_get_resource_type" }, // ResourceFormatLoader
 	{ "get_result", "get_data" }, // JSON
-	{ "get_reverb_bus", "set_reverb_bus_name" }, // Area3D
+	{ "get_reverb_bus", "set_reverb_bus_name" }, // SEArea
 	{ "get_rpc_sender_id", "get_remote_sender_id" }, // Multiplayer API
 	{ "get_save_extension", "_get_save_extension" }, // EditorImportPlugin
 	{ "get_scancode", "get_keycode" }, // InputEventKey
@@ -455,7 +455,7 @@ const char *RenamesMap3To4::gdscript_function_renames[][2] = {
 	{ "line_intersects_line_2d", "line_intersects_line" }, // Geometry2D
 	{ "load_from_globals", "load_from_project_settings" }, // InputMap
 	{ "load_interactive", "load_threaded_request" }, // ResourceLoader -- "load_threaded_request" could be an alternative, but it is used differently.
-	{ "make_convex_from_brothers", "make_convex_from_siblings" }, // CollisionShape3D
+	{ "make_convex_from_brothers", "make_convex_from_siblings" }, // SECollision
 	{ "make_visible", "_make_visible" }, // EditorPlugin
 	{ "merge_polygons_2d", "merge_polygons" }, // Geometry2D
 	{ "mesh_surface_get_format", "mesh_surface_get_format_attribute_stride" }, // RenderingServer
@@ -498,7 +498,7 @@ const char *RenamesMap3To4::gdscript_function_renames[][2] = {
 	{ "set_as_bulk_array", "set_buffer" }, // MultiMesh
 	{ "set_as_normalmap", "set_as_normal_map" }, // NoiseTexture
 	{ "set_as_toplevel", "set_as_top_level" }, // CanvasItem
-	{ "set_audio_bus", "set_audio_bus_name" }, // Area3D
+	{ "set_audio_bus", "set_audio_bus_name" }, // SEArea
 	{ "set_autowrap", "set_autowrap_mode" }, // Label -- Breaks AcceptDialog.
 	{ "set_cast_to", "set_target_position" }, // RayCast2D, RayCast3D
 	{ "set_collision_layer_bit", "set_collision_layer_value" }, // SEOShape3D, and a lot of others like GridMap.
@@ -524,8 +524,8 @@ const char *RenamesMap3To4::gdscript_function_renames[][2] = {
 	{ "set_follow_smoothing", "set_position_smoothing_speed" }, // Camera2D
 	{ "set_frame_color", "set_color" }, // ColorRect
 	{ "set_global_rate_scale", "set_playback_speed_scale" }, // AudioServer
-	{ "set_gravity_distance_scale", "set_gravity_point_unit_distance" }, // Area2D, Area3D
-	{ "set_gravity_vector", "set_gravity_direction" }, // Area2D, Area3D
+	{ "set_gravity_distance_scale", "set_gravity_point_unit_distance" }, // Area2D, SEArea
+	{ "set_gravity_vector", "set_gravity_direction" }, // Area2D, SEArea
 	{ "set_h_drag_enabled", "set_drag_horizontal_enabled" }, // Camera2D
 	{ "set_icon_align", "set_icon_alignment" }, // Button
 	{ "set_interior_ambient", "set_ambient_color" }, // ReflectionProbe
@@ -551,7 +551,7 @@ const char *RenamesMap3To4::gdscript_function_renames[][2] = {
 	{ "set_refuse_new_network_connections", "set_refuse_new_connections" }, // Multiplayer API
 	{ "set_region", "set_region_enabled" }, // Sprite2D -- Sprite breaks AtlasTexture.
 	{ "set_region_filter_clip", "set_region_filter_clip_enabled" }, // Sprite2D
-	{ "set_reverb_bus", "set_reverb_bus_name" }, // Area3D
+	{ "set_reverb_bus", "set_reverb_bus_name" }, // SEArea
 	{ "set_rotate", "set_rotates" }, // PathFollow2D
 	{ "set_scancode", "set_keycode" }, // InputEventKey
 	{ "set_shader_param", "set_shader_parameter" }, // ShaderMaterial
@@ -702,7 +702,7 @@ const char *RenamesMap3To4::csharp_function_renames[][2] = {
 	{ "GetAnimationProcessMode", "GetProcessCallback" }, // SEAnimation
 	{ "GetAppliedForce", "GetConstantForce" }, //RigidBody2D
 	{ "GetAppliedTorque", "GetConstantTorque" }, //RigidBody2D
-	{ "GetAudioBus", "GetAudioBusName" }, // Area3D
+	{ "GetAudioBus", "GetAudioBusName" }, // SEArea
 	{ "GetBoundChildNodesToBone", "GetBoneChildren" }, // Skeleton3D
 	{ "GetCamera", "GetCamera3d" }, // Viewport -- This is also convertible to GetCamera2d. Breaks GLTFNode.
 	{ "GetCancel", "GetCancelButton" }, // ConfirmationDialog
@@ -786,7 +786,7 @@ const char *RenamesMap3To4::csharp_function_renames[][2] = {
 	{ "GetRenderTargetsize", "GetRenderTargetSize" }, // XRInterface
 	{ "GetResourceType", "_GetResourceType" }, // ResourceFormatLoader
 	{ "GetResult", "GetData" }, // JSON
-	{ "GetReverbBus", "GetReverbBusName" }, // Area3D
+	{ "GetReverbBus", "GetReverbBusName" }, // SEArea
 	{ "GetRpcSenderId", "GetRemoteSenderId" }, // Multiplayer API
 	{ "GetSaveExtension", "_GetSaveExtension" }, // EditorImportPlugin
 	{ "GetScancode", "GetKeycode" }, // InputEventKey
@@ -871,7 +871,7 @@ const char *RenamesMap3To4::csharp_function_renames[][2] = {
 	{ "JointCreateSlider", "JointMakeSlider" }, // PhysicsServer3D
 	{ "LineIntersectsLine2d", "LineIntersectsLine" }, // Geometry2D
 	{ "LoadFromGlobals", "LoadFromProjectSettings" }, // InputMap
-	{ "MakeConvexFromBrothers", "MakeConvexFromSiblings" }, // CollisionShape3D
+	{ "MakeConvexFromBrothers", "MakeConvexFromSiblings" }, // SECollision
 	{ "MergePolygons2d", "MergePolygons" }, // Geometry2D
 	{ "MeshSurfaceGetFormat", "MeshSurfaceGetFormatAttributeStride" }, // RenderingServer
 	{ "MeshSurfaceUpdateRegion", "MeshSurfaceUpdateAttributeRegion" }, // RenderingServer
@@ -912,7 +912,7 @@ const char *RenamesMap3To4::csharp_function_renames[][2] = {
 	{ "SetAsBulkArray", "SetBuffer" }, // MultiMesh
 	{ "SetAsNormalmap", "SetAsNormalMap" }, // NoiseTexture
 	{ "SetAsToplevel", "SetAsTopLevel" }, // CanvasItem
-	{ "SetAudioBus", "SetAudioBusName" }, // Area3D
+	{ "SetAudioBus", "SetAudioBusName" }, // SEArea
 	{ "SetAutowrap", "SetAutowrapMode" }, // Label -- Breaks AcceptDialog.
 	{ "SetCastTo", "SetTargetPosition" }, // RayCast2D, RayCast3D
 	{ "SetCollisionLayerBit", "SetCollisionLayerValue" }, // SEOShape3D, and a lot of others like GridMap.
@@ -961,7 +961,7 @@ const char *RenamesMap3To4::csharp_function_renames[][2] = {
 	{ "SetRefuseNewNetworkConnections", "SetRefuseNewConnections" }, // Multiplayer API
 	{ "SetRegion", "SetRegionEnabled" }, // Sprite2D -- Sprite breaks AtlasTexture.
 	{ "SetRegionFilterClip", "SetRegionFilterClipEnabled" }, // Sprite2D
-	{ "SetReverbBus", "SetReverbBusName" }, // Area3D
+	{ "SetReverbBus", "SetReverbBusName" }, // SEArea
 	{ "SetRotate", "SetRotates" }, // PathFollow2D
 	{ "SetScancode", "SetKeycode" }, // InputEventKey
 	{ "SetShaderParam", "SetShaderParameter" }, // ShaderMaterial
@@ -1145,7 +1145,7 @@ const char *RenamesMap3To4::gdscript_properties_renames[][2] = {
 	{ "rect_clip_content", "clip_contents" }, // Control
 	{ "refuse_new_network_connections", "refuse_new_connections" }, // MultiplayerAPI
 	{ "region_filter_clip", "region_filter_clip_enabled" }, // Sprite2D
-	{ "reverb_bus_enable", "reverb_bus_enabled" }, // Area3D
+	{ "reverb_bus_enable", "reverb_bus_enabled" }, // SEArea
 	{ "scancode", "keycode" }, // InputEventKey
 	{ "selectedframe", "selected_frame" }, // Theme
 	{ "size_override_stretch", "size_2d_override_stretch" }, // SubViewport
@@ -1243,7 +1243,7 @@ const char *RenamesMap3To4::csharp_properties_renames[][2] = {
 	{ "RectClipContent", "ClipContents" }, // Control
 	{ "RefuseNewNetworkConnections", "RefuseNewConnections" }, // MultiplayerAPI
 	{ "RegionFilterClip", "RegionFilterClipEnabled" }, // Sprite2D
-	{ "ReverbBusEnable", "ReverbBusEnabled" }, // Area3D
+	{ "ReverbBusEnable", "ReverbBusEnabled" }, // SEArea
 	{ "Scancode", "Keycode" }, // InputEventKey
 	{ "Selectedframe", "SelectedFrame" }, // Theme
 	{ "SizeOverrideStretch", "Size2dOverrideStretch" }, // SubViewport
@@ -1460,7 +1460,7 @@ const char *RenamesMap3To4::class_renames[][2] = {
 	// { "World", "World3D" }, // Too common.
 
 	// Risky as fairly common words, but worth it given how ubiquitous they are.
-	{ "Area", "Area3D" },
+	{ "Area", "SEArea" },
 	{ "Camera", "SECamera" },
 	{ "Path", "Path3D" },
 	{ "Reference", "RefCounted" },
@@ -1499,7 +1499,7 @@ const char *RenamesMap3To4::class_renames[][2] = {
 	{ "ClippedCamera", "SECamera" },
 	{ "CollisionObject", "CollisionObject3D" },
 	{ "CollisionPolygon", "CollisionPolygon3D" },
-	{ "CollisionShape", "CollisionShape3D" },
+	{ "CollisionShape", "SECollision" },
 	{ "ConcavePolygonShape", "ConcavePolygonShape3D" },
 	{ "ConeTwistJoint", "ConeTwistJoint3D" },
 	{ "ConvexPolygonShape", "ConvexPolygonShape3D" },

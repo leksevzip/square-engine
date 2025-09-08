@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  collision_shape_3d.cpp                                                */
+/*  se_collision.cpp                                                */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,7 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#include "collision_shape_3d.h"
+#include "se_collision.h"
 
 #include "scene/3d/se_mesh.h"
 #include "scene/3d/physics/character_body_3d.h"
@@ -37,7 +37,7 @@
 #include "scene/resources/3d/convex_polygon_shape_3d.h"
 #include "scene/resources/3d/world_boundary_shape_3d.h"
 
-void CollisionShape3D::make_convex_from_siblings() {
+void SECollision::make_convex_from_siblings() {
 	Node *p = get_parent();
 	if (!p) {
 		return;
@@ -69,7 +69,7 @@ void CollisionShape3D::make_convex_from_siblings() {
 	set_shape(shape_new);
 }
 
-void CollisionShape3D::_update_in_shape_owner(bool p_xform_only) {
+void SECollision::_update_in_shape_owner(bool p_xform_only) {
 	collision_object->shape_owner_set_transform(owner_id, get_transform());
 	if (p_xform_only) {
 		return;
@@ -77,7 +77,7 @@ void CollisionShape3D::_update_in_shape_owner(bool p_xform_only) {
 	collision_object->shape_owner_set_disabled(owner_id, disabled);
 }
 
-void CollisionShape3D::_notification(int p_what) {
+void SECollision::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_PARENTED: {
 			collision_object = Object::cast_to<CollisionObject3D>(get_parent());
@@ -115,20 +115,20 @@ void CollisionShape3D::_notification(int p_what) {
 }
 
 #ifndef DISABLE_DEPRECATED
-void CollisionShape3D::resource_changed(Ref<Resource> res) {
+void SECollision::resource_changed(Ref<Resource> res) {
 }
 #endif
 
-PackedStringArray CollisionShape3D::get_configuration_warnings() const {
+PackedStringArray SECollision::get_configuration_warnings() const {
 	PackedStringArray warnings = Node3D::get_configuration_warnings();
 
 	CollisionObject3D *col_object = Object::cast_to<CollisionObject3D>(get_parent());
 	if (col_object == nullptr) {
-		warnings.push_back(RTR("CollisionShape3D only serves to provide a collision shape to a CollisionObject3D derived node.\nPlease only use it as a child of Area3D, SEBody, SEPhysicsBody, CharacterBody3D, etc. to give them a shape."));
+		warnings.push_back(RTR("SECollision only serves to provide a collision shape to a CollisionObject3D derived node.\nPlease only use it as a child of SEArea, SEBody, SEPhysicsBody, CharacterBody3D, etc. to give them a shape."));
 	}
 
 	if (shape.is_null()) {
-		warnings.push_back(RTR("A shape must be provided for CollisionShape3D to function. Please create a shape resource for it."));
+		warnings.push_back(RTR("A shape must be provided for SECollision to function. Please create a shape resource for it."));
 	}
 
 	if (shape.is_valid() && Object::cast_to<SEPhysicsBody>(col_object)) {
@@ -152,32 +152,32 @@ PackedStringArray CollisionShape3D::get_configuration_warnings() const {
 
 	Vector3 scale = get_transform().get_basis().get_scale();
 	if (!(Math::is_zero_approx(scale.x - scale.y) && Math::is_zero_approx(scale.y - scale.z))) {
-		warnings.push_back(RTR("A non-uniformly scaled CollisionShape3D node will probably not function as expected.\nPlease make its scale uniform (i.e. the same on all axes), and change the size of its shape resource instead."));
+		warnings.push_back(RTR("A non-uniformly scaled SECollision node will probably not function as expected.\nPlease make its scale uniform (i.e. the same on all axes), and change the size of its shape resource instead."));
 	}
 
 	return warnings;
 }
 
-void CollisionShape3D::_bind_methods() {
+void SECollision::_bind_methods() {
 #ifndef DISABLE_DEPRECATED
-	ClassDB::bind_method(D_METHOD("resource_changed", "resource"), &CollisionShape3D::resource_changed);
+	ClassDB::bind_method(D_METHOD("resource_changed", "resource"), &SECollision::resource_changed);
 #endif
-	ClassDB::bind_method(D_METHOD("set_shape", "shape"), &CollisionShape3D::set_shape);
-	ClassDB::bind_method(D_METHOD("get_shape"), &CollisionShape3D::get_shape);
-	ClassDB::bind_method(D_METHOD("set_disabled", "enable"), &CollisionShape3D::set_disabled);
-	ClassDB::bind_method(D_METHOD("is_disabled"), &CollisionShape3D::is_disabled);
+	ClassDB::bind_method(D_METHOD("set_shape", "shape"), &SECollision::set_shape);
+	ClassDB::bind_method(D_METHOD("get_shape"), &SECollision::get_shape);
+	ClassDB::bind_method(D_METHOD("set_disabled", "enable"), &SECollision::set_disabled);
+	ClassDB::bind_method(D_METHOD("is_disabled"), &SECollision::is_disabled);
 
-	ClassDB::bind_method(D_METHOD("make_convex_from_siblings"), &CollisionShape3D::make_convex_from_siblings);
-	ClassDB::set_method_flags("CollisionShape3D", "make_convex_from_siblings", METHOD_FLAGS_DEFAULT | METHOD_FLAG_EDITOR);
+	ClassDB::bind_method(D_METHOD("make_convex_from_siblings"), &SECollision::make_convex_from_siblings);
+	ClassDB::set_method_flags("SECollision", "make_convex_from_siblings", METHOD_FLAGS_DEFAULT | METHOD_FLAG_EDITOR);
 
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "shape", PROPERTY_HINT_RESOURCE_TYPE, "Shape3D"), "set_shape", "get_shape");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "disabled"), "set_disabled", "is_disabled");
 
-	ClassDB::bind_method(D_METHOD("set_debug_color", "color"), &CollisionShape3D::set_debug_color);
-	ClassDB::bind_method(D_METHOD("get_debug_color"), &CollisionShape3D::get_debug_color);
+	ClassDB::bind_method(D_METHOD("set_debug_color", "color"), &SECollision::set_debug_color);
+	ClassDB::bind_method(D_METHOD("get_debug_color"), &SECollision::get_debug_color);
 
-	ClassDB::bind_method(D_METHOD("set_enable_debug_fill", "enable"), &CollisionShape3D::set_debug_fill_enabled);
-	ClassDB::bind_method(D_METHOD("get_enable_debug_fill"), &CollisionShape3D::get_debug_fill_enabled);
+	ClassDB::bind_method(D_METHOD("set_enable_debug_fill", "enable"), &SECollision::set_debug_fill_enabled);
+	ClassDB::bind_method(D_METHOD("get_enable_debug_fill"), &SECollision::get_debug_fill_enabled);
 
 	ADD_PROPERTY(PropertyInfo(Variant::COLOR, "debug_color"), "set_debug_color", "get_debug_color");
 	// Default value depends on a project setting, override for doc generation purposes.
@@ -186,13 +186,13 @@ void CollisionShape3D::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "debug_fill"), "set_enable_debug_fill", "get_enable_debug_fill");
 }
 
-void CollisionShape3D::set_shape(const Ref<Shape3D> &p_shape) {
+void SECollision::set_shape(const Ref<Shape3D> &p_shape) {
 	if (p_shape == shape) {
 		return;
 	}
 	if (shape.is_valid()) {
 #ifdef DEBUG_ENABLED
-		shape->disconnect_changed(callable_mp(this, &CollisionShape3D::_shape_changed));
+		shape->disconnect_changed(callable_mp(this, &SECollision::_shape_changed));
 #endif // DEBUG_ENABLED
 		shape->disconnect_changed(callable_mp((Node3D *)this, &Node3D::update_gizmos));
 	}
@@ -210,7 +210,7 @@ void CollisionShape3D::set_shape(const Ref<Shape3D> &p_shape) {
 
 		shape->connect_changed(callable_mp((Node3D *)this, &Node3D::update_gizmos));
 #ifdef DEBUG_ENABLED
-		shape->connect_changed(callable_mp(this, &CollisionShape3D::_shape_changed));
+		shape->connect_changed(callable_mp(this, &SECollision::_shape_changed));
 #endif // DEBUG_ENABLED
 	}
 	update_gizmos();
@@ -228,11 +228,11 @@ void CollisionShape3D::set_shape(const Ref<Shape3D> &p_shape) {
 	update_configuration_warnings();
 }
 
-Ref<Shape3D> CollisionShape3D::get_shape() const {
+Ref<Shape3D> SECollision::get_shape() const {
 	return shape;
 }
 
-void CollisionShape3D::set_disabled(bool p_disabled) {
+void SECollision::set_disabled(bool p_disabled) {
 	disabled = p_disabled;
 	update_gizmos();
 	if (collision_object) {
@@ -240,16 +240,16 @@ void CollisionShape3D::set_disabled(bool p_disabled) {
 	}
 }
 
-bool CollisionShape3D::is_disabled() const {
+bool SECollision::is_disabled() const {
 	return disabled;
 }
 
-Color CollisionShape3D::_get_default_debug_color() const {
+Color SECollision::_get_default_debug_color() const {
 	const SceneTree *st = SceneTree::get_singleton();
 	return st ? st->get_debug_collisions_color() : Color(0.0, 0.0, 0.0, 0.0);
 }
 
-void CollisionShape3D::set_debug_color(const Color &p_color) {
+void SECollision::set_debug_color(const Color &p_color) {
 	if (debug_color == p_color) {
 		return;
 	}
@@ -261,11 +261,11 @@ void CollisionShape3D::set_debug_color(const Color &p_color) {
 	}
 }
 
-Color CollisionShape3D::get_debug_color() const {
+Color SECollision::get_debug_color() const {
 	return debug_color;
 }
 
-void CollisionShape3D::set_debug_fill_enabled(bool p_enable) {
+void SECollision::set_debug_fill_enabled(bool p_enable) {
 	if (debug_fill == p_enable) {
 		return;
 	}
@@ -277,20 +277,20 @@ void CollisionShape3D::set_debug_fill_enabled(bool p_enable) {
 	}
 }
 
-bool CollisionShape3D::get_debug_fill_enabled() const {
+bool SECollision::get_debug_fill_enabled() const {
 	return debug_fill;
 }
 
 #ifdef DEBUG_ENABLED
 
-bool CollisionShape3D::_property_can_revert(const StringName &p_name) const {
+bool SECollision::_property_can_revert(const StringName &p_name) const {
 	if (p_name == "debug_color") {
 		return true;
 	}
 	return false;
 }
 
-bool CollisionShape3D::_property_get_revert(const StringName &p_name, Variant &r_property) const {
+bool SECollision::_property_get_revert(const StringName &p_name, Variant &r_property) const {
 	if (p_name == "debug_color") {
 		r_property = _get_default_debug_color();
 		return true;
@@ -298,7 +298,7 @@ bool CollisionShape3D::_property_get_revert(const StringName &p_name, Variant &r
 	return false;
 }
 
-void CollisionShape3D::_validate_property(PropertyInfo &p_property) const {
+void SECollision::_validate_property(PropertyInfo &p_property) const {
 	if (p_property.name == "debug_color") {
 		if (debug_color == _get_default_debug_color()) {
 			p_property.usage = PROPERTY_USAGE_DEFAULT & ~PROPERTY_USAGE_STORAGE;
@@ -308,7 +308,7 @@ void CollisionShape3D::_validate_property(PropertyInfo &p_property) const {
 	}
 }
 
-void CollisionShape3D::_shape_changed() {
+void SECollision::_shape_changed() {
 	if (shape->get_debug_color() != debug_color) {
 		set_debug_color(shape->get_debug_color());
 	}
@@ -319,12 +319,12 @@ void CollisionShape3D::_shape_changed() {
 
 #endif // DEBUG_ENABLED
 
-CollisionShape3D::CollisionShape3D() {
+SECollision::SECollision() {
 	//indicator = RenderingServer::get_singleton()->mesh_create();
 	set_notify_local_transform(true);
 	debug_color = _get_default_debug_color();
 }
 
-CollisionShape3D::~CollisionShape3D() {
+SECollision::~SECollision() {
 	//RenderingServer::get_singleton()->free(indicator);
 }

@@ -33,7 +33,7 @@
 #include "scene/3d/skeleton_3d.h"
 
 #ifndef PHYSICS_3D_DISABLED
-#include "scene/3d/physics/collision_shape_3d.h"
+#include "scene/3d/physics/se_collision.h"
 #include "scene/3d/physics/se_body.h"
 #include "scene/resources/3d/concave_polygon_shape_3d.h"
 #include "scene/resources/3d/convex_polygon_shape_3d.h"
@@ -247,7 +247,7 @@ Node *SEMesh::create_trimesh_collision_node() {
 	}
 
 	SEBody *static_body = memnew(SEBody);
-	CollisionShape3D *cshape = memnew(CollisionShape3D);
+	SECollision *cshape = memnew(SECollision);
 	cshape->set_shape(shape);
 	static_body->add_child(cshape, true);
 	return static_body;
@@ -260,7 +260,7 @@ void SEMesh::create_trimesh_collision() {
 
 	add_child(static_body, true);
 	if (get_owner()) {
-		CollisionShape3D *cshape = Object::cast_to<CollisionShape3D>(static_body->get_child(0));
+		SECollision *cshape = Object::cast_to<SECollision>(static_body->get_child(0));
 		static_body->set_owner(get_owner());
 		cshape->set_owner(get_owner());
 	}
@@ -277,7 +277,7 @@ Node *SEMesh::create_convex_collision_node(bool p_clean, bool p_simplify) {
 	}
 
 	SEBody *static_body = memnew(SEBody);
-	CollisionShape3D *cshape = memnew(CollisionShape3D);
+	SECollision *cshape = memnew(SECollision);
 	cshape->set_shape(shape);
 	static_body->add_child(cshape, true);
 	return static_body;
@@ -290,7 +290,7 @@ void SEMesh::create_convex_collision(bool p_clean, bool p_simplify) {
 
 	add_child(static_body, true);
 	if (get_owner()) {
-		CollisionShape3D *cshape = Object::cast_to<CollisionShape3D>(static_body->get_child(0));
+		SECollision *cshape = Object::cast_to<SECollision>(static_body->get_child(0));
 		static_body->set_owner(get_owner());
 		cshape->set_owner(get_owner());
 	}
@@ -315,7 +315,7 @@ Node *SEMesh::create_multiple_convex_collisions_node(const Ref<MeshConvexDecompo
 
 	SEBody *static_body = memnew(SEBody);
 	for (int i = 0; i < shapes.size(); i++) {
-		CollisionShape3D *cshape = memnew(CollisionShape3D);
+		SECollision *cshape = memnew(SECollision);
 		cshape->set_shape(shapes[i]);
 		static_body->add_child(cshape, true);
 	}
@@ -332,7 +332,7 @@ void SEMesh::create_multiple_convex_collisions(const Ref<MeshConvexDecomposition
 		static_body->set_owner(get_owner());
 		int count = static_body->get_child_count();
 		for (int i = 0; i < count; i++) {
-			CollisionShape3D *cshape = Object::cast_to<CollisionShape3D>(static_body->get_child(i));
+			SECollision *cshape = Object::cast_to<SECollision>(static_body->get_child(i));
 			cshape->set_owner(get_owner());
 		}
 	}

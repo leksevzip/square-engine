@@ -33,7 +33,7 @@
 #include "../../gltf_state.h"
 
 #include "core/math/convex_hull.h"
-#include "scene/3d/physics/area_3d.h"
+#include "scene/3d/physics/se_area.h"
 #include "scene/resources/3d/box_shape_3d.h"
 #include "scene/resources/3d/capsule_shape_3d.h"
 #include "scene/resources/3d/concave_polygon_shape_3d.h"
@@ -160,22 +160,22 @@ Ref<ImporterMesh> _convert_hull_points_to_mesh(const Vector<Vector3> &p_hull_poi
 	return importer_mesh;
 }
 
-Ref<GLTFPhysicsShape> GLTFPhysicsShape::from_node(const CollisionShape3D *p_godot_shape_node) {
+Ref<GLTFPhysicsShape> GLTFPhysicsShape::from_node(const SECollision *p_godot_shape_node) {
 	Ref<GLTFPhysicsShape> gltf_shape;
-	ERR_FAIL_NULL_V_MSG(p_godot_shape_node, gltf_shape, "Tried to create a GLTFPhysicsShape from a CollisionShape3D node, but the given node was null.");
+	ERR_FAIL_NULL_V_MSG(p_godot_shape_node, gltf_shape, "Tried to create a GLTFPhysicsShape from a SECollision node, but the given node was null.");
 	Ref<Shape3D> shape_resource = p_godot_shape_node->get_shape();
-	ERR_FAIL_COND_V_MSG(shape_resource.is_null(), gltf_shape, "Tried to create a GLTFPhysicsShape from a CollisionShape3D node, but the given node had a null shape.");
+	ERR_FAIL_COND_V_MSG(shape_resource.is_null(), gltf_shape, "Tried to create a GLTFPhysicsShape from a SECollision node, but the given node had a null shape.");
 	gltf_shape = from_resource(shape_resource);
 	// Check if the shape is part of a trigger.
 	Node *parent = p_godot_shape_node->get_parent();
-	if (cast_to<const Area3D>(parent)) {
+	if (cast_to<const SEArea>(parent)) {
 		gltf_shape->set_is_trigger(true);
 	}
 	return gltf_shape;
 }
 
-CollisionShape3D *GLTFPhysicsShape::to_node(bool p_cache_shapes) {
-	CollisionShape3D *godot_shape_node = memnew(CollisionShape3D);
+SECollision *GLTFPhysicsShape::to_node(bool p_cache_shapes) {
+	SECollision *godot_shape_node = memnew(SECollision);
 	to_resource(p_cache_shapes); // Sets `_shape_cache`.
 	godot_shape_node->set_shape(_shape_cache);
 	return godot_shape_node;

@@ -64,7 +64,7 @@
 #include "editor/scene/3d/gizmos/particles_3d_emission_shape_gizmo_plugin.h"
 #include "editor/scene/3d/gizmos/physics/collision_object_3d_gizmo_plugin.h"
 #include "editor/scene/3d/gizmos/physics/collision_polygon_3d_gizmo_plugin.h"
-#include "editor/scene/3d/gizmos/physics/collision_shape_3d_gizmo_plugin.h"
+#include "editor/scene/3d/gizmos/physics/se_collision_gizmo_plugin.h"
 #include "editor/scene/3d/gizmos/physics/joint_3d_gizmo_plugin.h"
 #include "editor/scene/3d/gizmos/physics/physics_bone_3d_gizmo_plugin.h"
 #include "editor/scene/3d/gizmos/physics/ray_cast_3d_gizmo_plugin.h"
@@ -86,7 +86,7 @@
 #include "scene/3d/decal.h"
 #include "scene/3d/se_light.h"
 #include "scene/3d/se_mesh.h"
-#include "scene/3d/physics/collision_shape_3d.h"
+#include "scene/3d/physics/se_collision.h"
 #include "scene/3d/physics/physics_body_3d.h"
 #include "scene/3d/se_image.h"
 #include "scene/3d/visual_instance_3d.h"
@@ -8258,20 +8258,20 @@ void Node3DEditor::_snap_selected_nodes_to_floor() {
 
 			// Priorities for snapping to floor are CollisionShapes, VisualInstances and then origin
 			HashSet<VisualInstance3D *> vi = _get_child_nodes<VisualInstance3D>(sp);
-			HashSet<CollisionShape3D *> cs = _get_child_nodes<CollisionShape3D>(sp);
+			HashSet<SECollision *> cs = _get_child_nodes<SECollision>(sp);
 			bool found_valid_shape = false;
 
 			if (cs.size()) {
 				AABB aabb;
-				HashSet<CollisionShape3D *>::Iterator I = cs.begin();
+				HashSet<SECollision *>::Iterator I = cs.begin();
 				if ((*I)->get_shape().is_valid()) {
-					CollisionShape3D *collision_shape = *cs.begin();
+					SECollision *collision_shape = *cs.begin();
 					aabb = collision_shape->get_global_transform().xform(collision_shape->get_shape()->get_debug_mesh()->get_aabb());
 					found_valid_shape = true;
 				}
 
 				for (++I; I; ++I) {
-					CollisionShape3D *col_shape = *I;
+					SECollision *col_shape = *I;
 					if (col_shape->get_shape().is_valid()) {
 						aabb.merge_with(col_shape->get_global_transform().xform(col_shape->get_shape()->get_debug_mesh()->get_aabb()));
 						found_valid_shape = true;
@@ -8930,7 +8930,7 @@ void Node3DEditor::_register_all_gizmos() {
 	add_gizmo_plugin(Ref<LightmapGIGizmoPlugin>(memnew(LightmapGIGizmoPlugin)));
 	add_gizmo_plugin(Ref<LightmapProbeGizmoPlugin>(memnew(LightmapProbeGizmoPlugin)));
 	add_gizmo_plugin(Ref<CollisionObject3DGizmoPlugin>(memnew(CollisionObject3DGizmoPlugin)));
-	add_gizmo_plugin(Ref<CollisionShape3DGizmoPlugin>(memnew(CollisionShape3DGizmoPlugin)));
+	add_gizmo_plugin(Ref<SECollisionGizmoPlugin>(memnew(SECollisionGizmoPlugin)));
 	add_gizmo_plugin(Ref<CollisionPolygon3DGizmoPlugin>(memnew(CollisionPolygon3DGizmoPlugin)));
 	add_gizmo_plugin(Ref<Joint3DGizmoPlugin>(memnew(Joint3DGizmoPlugin)));
 	add_gizmo_plugin(Ref<PhysicalBone3DGizmoPlugin>(memnew(PhysicalBone3DGizmoPlugin)));

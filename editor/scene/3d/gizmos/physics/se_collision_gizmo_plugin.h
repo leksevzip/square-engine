@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  collision_shape_3d_gizmo_plugin.h                                     */
+/*  se_collision_gizmo_plugin.h                                     */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -34,8 +34,8 @@
 
 class Gizmo3DHelper;
 
-class CollisionShape3DGizmoPlugin : public EditorNode3DGizmoPlugin {
-	GDCLASS(CollisionShape3DGizmoPlugin, EditorNode3DGizmoPlugin);
+class SECollisionGizmoPlugin : public EditorNode3DGizmoPlugin {
+	GDCLASS(SECollisionGizmoPlugin, EditorNode3DGizmoPlugin);
 
 	void create_collision_material(const String &p_name, float p_alpha);
 
@@ -53,5 +53,5 @@ public:
 	void set_handle(const EditorNode3DGizmo *p_gizmo, int p_id, bool p_secondary, SECamera *p_camera, const Point2 &p_point) override;
 	void commit_handle(const EditorNode3DGizmo *p_gizmo, int p_id, bool p_secondary, const Variant &p_restore, bool p_cancel = false) override;
 
-	CollisionShape3DGizmoPlugin();
+	SECollisionGizmoPlugin();
 };

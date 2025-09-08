@@ -41,7 +41,7 @@
 #include "editor/settings/editor_settings.h"
 #include "editor/themes/editor_scale.h"
 #include "scene/3d/se_mesh.h"
-#include "scene/3d/physics/collision_shape_3d.h"
+#include "scene/3d/physics/se_collision.h"
 #include "scene/3d/physics/physical_bone_3d.h"
 #include "scene/3d/physics/physical_bone_simulator_3d.h"
 #include "scene/gui/separator.h"
@@ -531,7 +531,7 @@ void Skeleton3DEditor::create_physical_skeleton() {
 			if (!bones_infos[parent].physical_bone) {
 				PhysicalBone3D *physical_bone = create_physical_bone(parent, bone_id, bones_infos);
 				if (physical_bone && physical_bone->get_child(0)) {
-					CollisionShape3D *collision_shape = Object::cast_to<CollisionShape3D>(physical_bone->get_child(0));
+					SECollision *collision_shape = Object::cast_to<SECollision>(physical_bone->get_child(0));
 					if (collision_shape) {
 						bones_infos.write[parent].physical_bone = physical_bone;
 
@@ -569,9 +569,9 @@ PhysicalBone3D *Skeleton3DEditor::create_physical_bone(int bone_id, int bone_chi
 	bone_shape_capsule->set_height(half_height * 2);
 	bone_shape_capsule->set_radius(radius);
 
-	CollisionShape3D *bone_shape = memnew(CollisionShape3D);
+	SECollision *bone_shape = memnew(SECollision);
 	bone_shape->set_shape(bone_shape_capsule);
-	bone_shape->set_name("CollisionShape3D");
+	bone_shape->set_name("SECollision");
 
 	Transform3D capsule_transform;
 	capsule_transform.basis.rows[0] = Vector3(1, 0, 0);

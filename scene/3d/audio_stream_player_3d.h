@@ -34,7 +34,7 @@
 #include "servers/audio_server.h"
 
 #ifndef PHYSICS_3D_DISABLED
-class Area3D;
+class SEArea;
 #endif // PHYSICS_3D_DISABLED
 struct AudioFrame;
 class AudioStream;
@@ -84,7 +84,7 @@ private:
 	static AudioFrame _calc_output_vol_stereo(const Vector3 &source_dir, real_t panning_strength);
 
 #ifndef PHYSICS_3D_DISABLED
-	void _calc_reverb_vol(Area3D *area, Vector3 listener_area_pos, Vector<AudioFrame> direct_path_vol, Vector<AudioFrame> &reverb_vol);
+	void _calc_reverb_vol(SEArea *area, Vector3 listener_area_pos, Vector<AudioFrame> direct_path_vol, Vector<AudioFrame> &reverb_vol);
 #endif // PHYSICS_3D_DISABLED
 
 	static void _listener_changed_cb(void *self) { reinterpret_cast<AudioStreamPlayer3D *>(self)->force_update_panning = true; }
@@ -93,7 +93,7 @@ private:
 	bool _is_active() const;
 	StringName _get_actual_bus();
 #ifndef PHYSICS_3D_DISABLED
-	Area3D *_get_overriding_area();
+	SEArea *_get_overriding_area();
 #endif // PHYSICS_3D_DISABLED
 	Vector<AudioFrame> _update_panning();
 

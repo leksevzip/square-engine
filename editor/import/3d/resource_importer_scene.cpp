@@ -42,8 +42,8 @@
 #include "scene/3d/se_mesh.h"
 #include "scene/3d/navigation/navigation_region_3d.h"
 #include "scene/3d/occluder_instance_3d.h"
-#include "scene/3d/physics/area_3d.h"
-#include "scene/3d/physics/collision_shape_3d.h"
+#include "scene/3d/physics/se_area.h"
+#include "scene/3d/physics/se_collision.h"
 #include "scene/3d/physics/se_body.h"
 #include "scene/3d/physics/vehicle_body_3d.h"
 #include "scene/animation/se_animation.h"
@@ -830,7 +830,7 @@ Node *ResourceImporterScene::_pre_fix_node(Node *p_node, Node *p_root, HashMap<R
 			p_node->set_owner(nullptr);
 			memdelete(p_node);
 			p_node = sb;
-			CollisionShape3D *colshape = memnew(CollisionShape3D);
+			SECollision *colshape = memnew(SECollision);
 			if (empty_draw_type == "CUBE") {
 				BoxShape3D *boxShape = memnew(BoxShape3D);
 				boxShape->set_size(Vector3(2, 2, 2));
@@ -1739,7 +1739,7 @@ Node *ResourceImporterScene::_post_fix_node(Node *p_node, Node *p_root, HashMap<
 								base = col;
 							} break;
 							case MESH_PHYSICS_AREA_ONLY: {
-								Area3D *area = memnew(Area3D);
+								SEArea *area = memnew(SEArea);
 								area->set_transform(mi->get_transform() * get_collision_shapes_transform(node_settings));
 								area->set_position(p_applied_root_scale * area->get_position());
 								area->set_name(p_node->get_name());
@@ -1757,7 +1757,7 @@ Node *ResourceImporterScene::_post_fix_node(Node *p_node, Node *p_root, HashMap<
 						base->set_collision_mask(node_settings["physics/mask"]);
 
 						for (const Ref<Shape3D> &E : shapes) {
-							CollisionShape3D *cshape = memnew(CollisionShape3D);
+							SECollision *cshape = memnew(SECollision);
 							cshape->set_shape(E);
 							base->add_child(cshape, true);
 
@@ -2797,7 +2797,7 @@ Node *ResourceImporterScene::_generate_meshes(Node *p_node, const Dictionary &p_
 
 void ResourceImporterScene::_add_shapes(Node *p_node, const Vector<Ref<Shape3D>> &p_shapes) {
 	for (const Ref<Shape3D> &E : p_shapes) {
-		CollisionShape3D *cshape = memnew(CollisionShape3D);
+		SECollision *cshape = memnew(SECollision);
 		cshape->set_shape(E);
 		p_node->add_child(cshape, true);
 

@@ -30,7 +30,7 @@
 
 #include "gltf_document_extension_physics.h"
 
-#include "scene/3d/physics/area_3d.h"
+#include "scene/3d/physics/se_area.h"
 #include "scene/3d/physics/se_physics_body.h"
 #include "scene/3d/physics/se_body.h"
 
@@ -126,7 +126,7 @@ Error GLTFDocumentExtensionPhysics::parse_node_extensions(Ref<GLTFState> p_state
 				p_gltf_node->set_additional_data(StringName("GLTFPhysicsTriggerShapeIndex"), node_shape_index);
 			} else {
 				// If this node is a trigger but does not have a trigger shape,
-				// then it's a trigger body, what Godot calls an Area3D node.
+				// then it's a trigger body, what Godot calls an SEArea node.
 				Ref<GLTFPhysicsBody> trigger_body;
 				trigger_body.instantiate();
 				trigger_body->set_body_type("trigger");
@@ -158,7 +158,7 @@ bool _will_gltf_shape_become_subnode(Ref<GLTFState> p_state, const Ref<GLTFNode>
 	const Variant parent_body_maybe = parent_gltf_node->get_additional_data(StringName("GLTFPhysicsBody"));
 	if (parent_body_maybe.get_type() != Variant::NIL) {
 		Ref<GLTFPhysicsBody> parent_body = parent_body_maybe;
-		// If the parent matches the triggerness, then this node will be generated as a shape (CollisionShape3D).
+		// If the parent matches the triggerness, then this node will be generated as a shape (SECollision).
 		// Otherwise, if there is a mismatch, a body will be generated for this node, and a subnode will also be generated for the shape.
 		if (parent_body->get_body_type() == "trigger") {
 			return p_gltf_node->has_additional_data(StringName("GLTFPhysicsColliderShape"));
@@ -237,7 +237,7 @@ Ref<GLTFObjectModelProperty> GLTFDocumentExtensionPhysics::import_object_model_p
 				// Not something we handle, return without appending a NodePath.
 				return ret;
 			}
-			// Example: `A/B/C/CollisionShape3D:shape:radius`.
+			// Example: `A/B/C/SECollision:shape:radius`.
 			Vector<StringName> subnames;
 			subnames.append("shape");
 			subnames.append(godot_prop_name);
@@ -323,11 +323,11 @@ CollisionObject3D *_generate_shape_with_body(Ref<GLTFState> p_state, Ref<GLTFNod
 			return body;
 		}
 	} else if (is_trigger) {
-		body = memnew(Area3D);
+		body = memnew(SEArea);
 	} else {
 		body = memnew(SEBody);
 	}
-	CollisionShape3D *shape = p_physics_shape->to_node();
+	SECollision *shape = p_physics_shape->to_node();
 	shape->set_name(p_gltf_node->get_name() + "Shape");
 	body->add_child(shape);
 	return body;
@@ -351,9 +351,9 @@ Node3D *_generate_shape_node_and_body_if_needed(Ref<GLTFState> p_state, Ref<GLTF
 	CollisionObject3D *body_node = nullptr;
 	if (p_is_trigger || p_physics_shape->get_is_trigger()) {
 		// If the shape wants to be a trigger but it doesn't
-		// have an Area3D parent, we need to make one.
-		if (!Object::cast_to<Area3D>(p_col_object)) {
-			body_node = memnew(Area3D);
+		// have an SEArea parent, we need to make one.
+		if (!Object::cast_to<SEArea>(p_col_object)) {
+			body_node = memnew(SEArea);
 		}
 	} else {
 		if (!Object::cast_to<PhysicsBody3D>(p_col_object)) {
@@ -362,7 +362,7 @@ Node3D *_generate_shape_node_and_body_if_needed(Ref<GLTFState> p_state, Ref<GLTF
 	}
 	// Generate the shape node.
 	_setup_shape_mesh_resource_from_index_if_needed(p_state, p_physics_shape);
-	CollisionShape3D *shape_node = p_physics_shape->to_node(true);
+	SECollision *shape_node = p_physics_shape->to_node(true);
 	if (body_node) {
 		shape_node->set_name(p_gltf_node->get_name() + "Shape");
 		body_node->add_child(shape_node);
@@ -377,9 +377,9 @@ Node3D *_add_physics_node_to_given_node(Node3D *p_current_node, Node3D *p_child,
 		return p_child;
 	}
 	String suffix;
-	if (Object::cast_to<CollisionShape3D>(p_child)) {
+	if (Object::cast_to<SECollision>(p_child)) {
 		suffix = "Shape";
-	} else if (Object::cast_to<Area3D>(p_child)) {
+	} else if (Object::cast_to<SEArea>(p_child)) {
 		suffix = "Trigger";
 	} else {
 		suffix = "Collider";
@@ -417,7 +417,7 @@ Node3D *GLTFDocumentExtensionPhysics::generate_scene_node(Ref<GLTFState> p_state
 		if (gltf_physics_shape->get_is_trigger()) {
 			// If the shape wants to be a trigger and it already has a
 			// trigger parent, we only need to make the shape node.
-			if (Object::cast_to<Area3D>(ancestor_col_obj)) {
+			if (Object::cast_to<SEArea>(ancestor_col_obj)) {
 				return gltf_physics_shape->to_node(true);
 			}
 		} else if (ancestor_col_obj != nullptr) {
@@ -437,8 +437,8 @@ Node3D *GLTFDocumentExtensionPhysics::generate_scene_node(Ref<GLTFState> p_state
 		ret = ancestor_col_obj;
 	} else {
 		ancestor_col_obj = _get_ancestor_collision_object(p_scene_parent);
-		if (Object::cast_to<Area3D>(ancestor_col_obj) && gltf_physics_trigger_shape.is_valid()) {
-			// At this point, we found an ancestor Area3D node. But do we want to use it for this trigger shape?
+		if (Object::cast_to<SEArea>(ancestor_col_obj) && gltf_physics_trigger_shape.is_valid()) {
+			// At this point, we found an ancestor SEArea node. But do we want to use it for this trigger shape?
 			TypedArray<GLTFNode> state_nodes = p_state->get_nodes();
 			GLTFNodeIndex self_index = state_nodes.find(p_gltf_node);
 			Array compound_trigger_nodes = _get_ancestor_compound_trigger_nodes(p_state, state_nodes, ancestor_col_obj);
@@ -446,8 +446,8 @@ Node3D *GLTFDocumentExtensionPhysics::generate_scene_node(Ref<GLTFState> p_state
 			// Remember that JSON does not have integers, only "number", aka double-precision floats.
 			if (compound_trigger_nodes.size() > 0 && !compound_trigger_nodes.has(double(self_index))) {
 				// If the compound trigger we found is not the intended user of
-				// this shape node, then we need to create a new Area3D node.
-				ancestor_col_obj = memnew(Area3D);
+				// this shape node, then we need to create a new SEArea node.
+				ancestor_col_obj = memnew(SEArea);
 				ret = ancestor_col_obj;
 			}
 		} else if (!Object::cast_to<PhysicsBody3D>(ancestor_col_obj)) {
@@ -462,7 +462,7 @@ Node3D *GLTFDocumentExtensionPhysics::generate_scene_node(Ref<GLTFState> p_state
 	// Add the shapes to the tree. When an ancestor body is present, use it.
 	// If an explicit body was specified, it has already been generated and
 	// set above. If there is no ancestor body, we will either generate an
-	// Area3D or SEBody implicitly, so prefer an Area3D as the base
+	// SEArea or SEBody implicitly, so prefer an SEArea as the base
 	// node for best compatibility with signal connections to this node.
 	bool is_ancestor_col_obj_solid = Object::cast_to<PhysicsBody3D>(ancestor_col_obj);
 	if (is_ancestor_col_obj_solid && gltf_physics_collider_shape.is_valid()) {
@@ -526,10 +526,10 @@ GLTFMeshIndex _get_or_insert_mesh_in_state(Ref<GLTFState> p_state, Ref<ImporterM
 }
 
 void GLTFDocumentExtensionPhysics::convert_scene_node(Ref<GLTFState> p_state, Ref<GLTFNode> p_gltf_node, Node *p_scene_node) {
-	if (cast_to<CollisionShape3D>(p_scene_node)) {
-		CollisionShape3D *godot_shape = Object::cast_to<CollisionShape3D>(p_scene_node);
+	if (cast_to<SECollision>(p_scene_node)) {
+		SECollision *godot_shape = Object::cast_to<SECollision>(p_scene_node);
 		Ref<GLTFPhysicsShape> gltf_shape = GLTFPhysicsShape::from_node(godot_shape);
-		ERR_FAIL_COND_MSG(gltf_shape.is_null(), "glTF Physics: Could not convert CollisionShape3D to GLTFPhysicsShape. Does it have a valid Shape3D?");
+		ERR_FAIL_COND_MSG(gltf_shape.is_null(), "glTF Physics: Could not convert SECollision to GLTFPhysicsShape. Does it have a valid Shape3D?");
 		{
 			Ref<ImporterMesh> importer_mesh = gltf_shape->get_importer_mesh();
 			if (importer_mesh.is_valid()) {
@@ -537,7 +537,7 @@ void GLTFDocumentExtensionPhysics::convert_scene_node(Ref<GLTFState> p_state, Re
 			}
 		}
 		CollisionObject3D *ancestor_col_obj = _get_ancestor_collision_object(p_scene_node->get_parent());
-		if (cast_to<Area3D>(ancestor_col_obj)) {
+		if (cast_to<SEArea>(ancestor_col_obj)) {
 			p_gltf_node->set_additional_data(StringName("GLTFPhysicsTriggerShape"), gltf_shape);
 			// Write explicit member shape nodes to the ancestor compound trigger node.
 			TypedArray<GLTFNode> state_nodes = p_state->get_nodes();
@@ -652,7 +652,7 @@ Ref<GLTFObjectModelProperty> GLTFDocumentExtensionPhysics::export_object_model_p
 			return ret;
 		}
 		ret->set_json_pointers({ split_json_pointer });
-	} else if (Object::cast_to<CollisionShape3D>(p_godot_node)) {
+	} else if (Object::cast_to<SECollision>(p_godot_node)) {
 		if (path_subnames.size() != 2) {
 			return ret;
 		}

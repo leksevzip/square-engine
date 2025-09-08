@@ -381,7 +381,7 @@ bool JoltSoftBody3D::can_interact_with(const JoltSoftBody3D &p_other) const {
 	return (can_collide_with(p_other) || p_other.can_collide_with(*this)) && !has_collision_exception(p_other.get_rid()) && !p_other.has_collision_exception(rid);
 }
 
-bool JoltSoftBody3D::can_interact_with(const JoltArea3D &p_other) const {
+bool JoltSoftBody3D::can_interact_with(const JoltSEArea &p_other) const {
 	return p_other.can_interact_with(*this);
 }
 

@@ -31,7 +31,7 @@
 #include "gltf_physics_body.h"
 
 #include "scene/3d/physics/animatable_body_3d.h"
-#include "scene/3d/physics/area_3d.h"
+#include "scene/3d/physics/se_area.h"
 #include "scene/3d/physics/character_body_3d.h"
 #include "scene/3d/physics/se_body.h"
 #include "scene/3d/physics/vehicle_body_3d.h"
@@ -200,7 +200,7 @@ Ref<GLTFPhysicsBody> GLTFPhysicsBody::from_node(const CollisionObject3D *p_body_
 		}
 	} else if (cast_to<SEBody>(p_body_node)) {
 		physics_body->body_type = PhysicsBodyType::STATIC;
-	} else if (cast_to<Area3D>(p_body_node)) {
+	} else if (cast_to<SEArea>(p_body_node)) {
 		physics_body->body_type = PhysicsBodyType::TRIGGER;
 	}
 	return physics_body;
@@ -241,7 +241,7 @@ CollisionObject3D *GLTFPhysicsBody::to_node() const {
 			return body;
 		}
 		case PhysicsBodyType::TRIGGER: {
-			Area3D *body = memnew(Area3D);
+			SEArea *body = memnew(SEArea);
 			return body;
 		}
 	}
@@ -338,7 +338,7 @@ Ref<GLTFPhysicsBody> GLTFPhysicsBody::from_dictionary(const Dictionary p_diction
 Dictionary GLTFPhysicsBody::to_dictionary() const {
 	Dictionary ret;
 	if (body_type == PhysicsBodyType::TRIGGER) {
-		// The equivalent of a Godot Area3D node in glTF is a node that
+		// The equivalent of a Godot SEArea node in glTF is a node that
 		// defines that it is a trigger, but does not have a shape.
 		Dictionary trigger;
 		ret["trigger"] = trigger;

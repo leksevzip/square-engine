@@ -1045,9 +1045,9 @@ void *GodotSpace3D::_broadphase_pair(GodotCollisionObject3D *A, int p_subindex_A
 	self->collision_pairs++;
 
 	if (type_A == GodotCollisionObject3D::TYPE_AREA) {
-		GodotArea3D *area = static_cast<GodotArea3D *>(A);
+		GodotSEArea *area = static_cast<GodotSEArea *>(A);
 		if (type_B == GodotCollisionObject3D::TYPE_AREA) {
-			GodotArea3D *area_b = static_cast<GodotArea3D *>(B);
+			GodotSEArea *area_b = static_cast<GodotSEArea *>(B);
 			GodotArea2Pair3D *area2_pair = memnew(GodotArea2Pair3D(area_b, p_subindex_B, area, p_subindex_A));
 			return area2_pair;
 		} else if (type_B == GodotCollisionObject3D::TYPE_SOFT_BODY) {
@@ -1131,23 +1131,23 @@ void GodotSpace3D::body_remove_from_state_query_list(SelfList<GodotBody3D> *p_bo
 	state_query_list.remove(p_body);
 }
 
-void GodotSpace3D::area_add_to_monitor_query_list(SelfList<GodotArea3D> *p_area) {
+void GodotSpace3D::area_add_to_monitor_query_list(SelfList<GodotSEArea> *p_area) {
 	monitor_query_list.add(p_area);
 }
 
-void GodotSpace3D::area_remove_from_monitor_query_list(SelfList<GodotArea3D> *p_area) {
+void GodotSpace3D::area_remove_from_monitor_query_list(SelfList<GodotSEArea> *p_area) {
 	monitor_query_list.remove(p_area);
 }
 
-void GodotSpace3D::area_add_to_moved_list(SelfList<GodotArea3D> *p_area) {
+void GodotSpace3D::area_add_to_moved_list(SelfList<GodotSEArea> *p_area) {
 	area_moved_list.add(p_area);
 }
 
-void GodotSpace3D::area_remove_from_moved_list(SelfList<GodotArea3D> *p_area) {
+void GodotSpace3D::area_remove_from_moved_list(SelfList<GodotSEArea> *p_area) {
 	area_moved_list.remove(p_area);
 }
 
-const SelfList<GodotArea3D>::List &GodotSpace3D::get_moved_area_list() const {
+const SelfList<GodotSEArea>::List &GodotSpace3D::get_moved_area_list() const {
 	return area_moved_list;
 }
 
@@ -1171,7 +1171,7 @@ void GodotSpace3D::call_queries() {
 	}
 
 	while (monitor_query_list.first()) {
-		GodotArea3D *a = monitor_query_list.first()->self();
+		GodotSEArea *a = monitor_query_list.first()->self();
 		monitor_query_list.remove(monitor_query_list.first());
 		a->call_queries();
 	}

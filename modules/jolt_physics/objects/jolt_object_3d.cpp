@@ -127,7 +127,7 @@ bool JoltObject3D::can_collide_with(const JoltObject3D &p_other) const {
 bool JoltObject3D::can_interact_with(const JoltObject3D &p_other) const {
 	if (const JoltBody3D *other_body = p_other.as_body()) {
 		return can_interact_with(*other_body);
-	} else if (const JoltArea3D *other_area = p_other.as_area()) {
+	} else if (const JoltSEArea *other_area = p_other.as_area()) {
 		return can_interact_with(*other_area);
 	} else if (const JoltSoftBody3D *other_soft_body = p_other.as_soft_body()) {
 		return can_interact_with(*other_soft_body);

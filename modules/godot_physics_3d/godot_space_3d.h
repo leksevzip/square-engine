@@ -77,8 +77,8 @@ private:
 	SelfList<GodotBody3D>::List active_list;
 	SelfList<GodotBody3D>::List mass_properties_update_list;
 	SelfList<GodotBody3D>::List state_query_list;
-	SelfList<GodotArea3D>::List monitor_query_list;
-	SelfList<GodotArea3D>::List area_moved_list;
+	SelfList<GodotSEArea>::List monitor_query_list;
+	SelfList<GodotSEArea>::List area_moved_list;
 	SelfList<GodotSoftBody3D>::List active_soft_body_list;
 
 	static void *_broadphase_pair(GodotCollisionObject3D *A, int p_subindex_A, GodotCollisionObject3D *B, int p_subindex_B, void *p_self);
@@ -86,7 +86,7 @@ private:
 
 	HashSet<GodotCollisionObject3D *> objects;
 
-	GodotArea3D *area = nullptr;
+	GodotSEArea *area = nullptr;
 
 	int solver_iterations = 0;
 
@@ -127,8 +127,8 @@ public:
 	_FORCE_INLINE_ void set_self(const RID &p_self) { self = p_self; }
 	_FORCE_INLINE_ RID get_self() const { return self; }
 
-	void set_default_area(GodotArea3D *p_area) { area = p_area; }
-	GodotArea3D *get_default_area() const { return area; }
+	void set_default_area(GodotSEArea *p_area) { area = p_area; }
+	GodotSEArea *get_default_area() const { return area; }
 
 	const SelfList<GodotBody3D>::List &get_active_body_list() const;
 	void body_add_to_active_list(SelfList<GodotBody3D> *p_body);
@@ -139,11 +139,11 @@ public:
 	void body_add_to_state_query_list(SelfList<GodotBody3D> *p_body);
 	void body_remove_from_state_query_list(SelfList<GodotBody3D> *p_body);
 
-	void area_add_to_monitor_query_list(SelfList<GodotArea3D> *p_area);
-	void area_remove_from_monitor_query_list(SelfList<GodotArea3D> *p_area);
-	void area_add_to_moved_list(SelfList<GodotArea3D> *p_area);
-	void area_remove_from_moved_list(SelfList<GodotArea3D> *p_area);
-	const SelfList<GodotArea3D>::List &get_moved_area_list() const;
+	void area_add_to_monitor_query_list(SelfList<GodotSEArea> *p_area);
+	void area_remove_from_monitor_query_list(SelfList<GodotSEArea> *p_area);
+	void area_add_to_moved_list(SelfList<GodotSEArea> *p_area);
+	void area_remove_from_moved_list(SelfList<GodotSEArea> *p_area);
+	const SelfList<GodotSEArea>::List &get_moved_area_list() const;
 
 	const SelfList<GodotSoftBody3D>::List &get_active_soft_body_list() const;
 	void soft_body_add_to_active_list(SelfList<GodotSoftBody3D> *p_soft_body);

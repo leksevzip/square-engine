@@ -92,7 +92,7 @@ void GodotAreaPair3D::solve(real_t p_step) {
 	// Nothing to do.
 }
 
-GodotAreaPair3D::GodotAreaPair3D(GodotBody3D *p_body, int p_body_shape, GodotArea3D *p_area, int p_area_shape) {
+GodotAreaPair3D::GodotAreaPair3D(GodotBody3D *p_body, int p_body_shape, GodotSEArea *p_area, int p_area_shape) {
 	body = p_body;
 	area = p_area;
 	body_shape = p_body_shape;
@@ -175,7 +175,7 @@ void GodotArea2Pair3D::solve(real_t p_step) {
 	// Nothing to do.
 }
 
-GodotArea2Pair3D::GodotArea2Pair3D(GodotArea3D *p_area_a, int p_shape_a, GodotArea3D *p_area_b, int p_shape_b) {
+GodotArea2Pair3D::GodotArea2Pair3D(GodotSEArea *p_area_a, int p_shape_a, GodotSEArea *p_area_b, int p_shape_b) {
 	area_a = p_area_a;
 	area_b = p_area_b;
 	shape_a = p_shape_a;
@@ -270,7 +270,7 @@ void GodotAreaSoftBodyPair3D::solve(real_t p_step) {
 	// Nothing to do.
 }
 
-GodotAreaSoftBodyPair3D::GodotAreaSoftBodyPair3D(GodotSoftBody3D *p_soft_body, int p_soft_body_shape, GodotArea3D *p_area, int p_area_shape) {
+GodotAreaSoftBodyPair3D::GodotAreaSoftBodyPair3D(GodotSoftBody3D *p_soft_body, int p_soft_body_shape, GodotSEArea *p_area, int p_area_shape) {
 	soft_body = p_soft_body;
 	area = p_area;
 	soft_body_shape = p_soft_body_shape;

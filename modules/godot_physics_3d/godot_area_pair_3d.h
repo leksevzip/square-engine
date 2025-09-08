@@ -37,7 +37,7 @@
 
 class GodotAreaPair3D : public GodotConstraint3D {
 	GodotBody3D *body = nullptr;
-	GodotArea3D *area = nullptr;
+	GodotSEArea *area = nullptr;
 	int body_shape;
 	int area_shape;
 	bool colliding = false;
@@ -50,13 +50,13 @@ public:
 	virtual bool pre_solve(real_t p_step) override;
 	virtual void solve(real_t p_step) override;
 
-	GodotAreaPair3D(GodotBody3D *p_body, int p_body_shape, GodotArea3D *p_area, int p_area_shape);
+	GodotAreaPair3D(GodotBody3D *p_body, int p_body_shape, GodotSEArea *p_area, int p_area_shape);
 	~GodotAreaPair3D();
 };
 
 class GodotArea2Pair3D : public GodotConstraint3D {
-	GodotArea3D *area_a = nullptr;
-	GodotArea3D *area_b = nullptr;
+	GodotSEArea *area_a = nullptr;
+	GodotSEArea *area_b = nullptr;
 	int shape_a;
 	int shape_b;
 	bool colliding_a = false;
@@ -71,13 +71,13 @@ public:
 	virtual bool pre_solve(real_t p_step) override;
 	virtual void solve(real_t p_step) override;
 
-	GodotArea2Pair3D(GodotArea3D *p_area_a, int p_shape_a, GodotArea3D *p_area_b, int p_shape_b);
+	GodotArea2Pair3D(GodotSEArea *p_area_a, int p_shape_a, GodotSEArea *p_area_b, int p_shape_b);
 	~GodotArea2Pair3D();
 };
 
 class GodotAreaSoftBodyPair3D : public GodotConstraint3D {
 	GodotSoftBody3D *soft_body = nullptr;
-	GodotArea3D *area = nullptr;
+	GodotSEArea *area = nullptr;
 	int soft_body_shape;
 	int area_shape;
 	bool colliding = false;
@@ -90,6 +90,6 @@ public:
 	virtual bool pre_solve(real_t p_step) override;
 	virtual void solve(real_t p_step) override;
 
-	GodotAreaSoftBodyPair3D(GodotSoftBody3D *p_sof_body, int p_soft_body_shape, GodotArea3D *p_area, int p_area_shape);
+	GodotAreaSoftBodyPair3D(GodotSoftBody3D *p_sof_body, int p_soft_body_shape, GodotSEArea *p_area, int p_area_shape);
 	~GodotAreaSoftBodyPair3D();
 };

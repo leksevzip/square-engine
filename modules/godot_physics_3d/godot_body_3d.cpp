@@ -566,7 +566,7 @@ void GodotBody3D::integrate_forces(real_t p_step) {
 
 	// Add default gravity and damping from space area.
 	if (!stopped) {
-		GodotArea3D *default_area = get_space()->get_default_area();
+		GodotSEArea *default_area = get_space()->get_default_area();
 		ERR_FAIL_NULL(default_area);
 
 		if (!gravity_done) {

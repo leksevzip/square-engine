@@ -5,7 +5,7 @@
 	</brief_description>
 	<description>
 		A deformable 3D physics mesh. Used to create elastic or deformable objects such as cloth, rubber, or other flexible materials.
-		Additionally, [SoftBody3D] is subject to wind forces defined in [Area3D] (see [member Area3D.wind_source_path], [member Area3D.wind_force_magnitude], and [member Area3D.wind_attenuation_factor]).
+		Additionally, [SoftBody3D] is subject to wind forces defined in [SEArea] (see [member SEArea.wind_source_path], [member SEArea.wind_force_magnitude], and [member SEArea.wind_attenuation_factor]).
 		[b]Note:[/b] It's recommended to use Jolt Physics when using [SoftBody3D] instead of the default GodotPhysics3D, as Jolt Physics' soft body implementation is faster and more reliable. You can switch the physics engine using the [member ProjectSettings.physics/3d/physics_engine] project setting.
 	</description>
 	<tutorials>

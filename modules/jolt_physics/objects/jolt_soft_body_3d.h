@@ -111,7 +111,7 @@ public:
 
 	virtual bool can_interact_with(const JoltBody3D &p_other) const override;
 	virtual bool can_interact_with(const JoltSoftBody3D &p_other) const override;
-	virtual bool can_interact_with(const JoltArea3D &p_other) const override;
+	virtual bool can_interact_with(const JoltSEArea &p_other) const override;
 
 	virtual bool reports_contacts() const override { return false; }
 

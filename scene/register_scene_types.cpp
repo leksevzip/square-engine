@@ -317,10 +317,10 @@
 
 #ifndef PHYSICS_3D_DISABLED
 #include "scene/3d/physics/animatable_body_3d.h"
-#include "scene/3d/physics/area_3d.h"
+#include "scene/3d/physics/se_area.h"
 #include "scene/3d/physics/character_body_3d.h"
 #include "scene/3d/physics/collision_polygon_3d.h"
-#include "scene/3d/physics/collision_shape_3d.h"
+#include "scene/3d/physics/se_collision.h"
 #include "scene/3d/physics/joints/cone_twist_joint_3d.h"
 #include "scene/3d/physics/joints/generic_6dof_joint_3d.h"
 #include "scene/3d/physics/joints/hinge_joint_3d.h"
@@ -687,8 +687,8 @@ void register_scene_types() {
 #ifndef PHYSICS_3D_DISABLED
 	GDREGISTER_CLASS(VehicleBody3D);
 	GDREGISTER_CLASS(VehicleWheel3D);
-	GDREGISTER_CLASS(Area3D);
-	GDREGISTER_CLASS(CollisionShape3D);
+	GDREGISTER_CLASS(SEArea);
+	GDREGISTER_CLASS(SECollision);
 	GDREGISTER_CLASS(CollisionPolygon3D);
 	GDREGISTER_CLASS(RayCast3D);
 	GDREGISTER_CLASS(ShapeCast3D);
@@ -1266,12 +1266,12 @@ void register_scene_types() {
 	ClassDB::add_compatibility_class("RayShape2D", "SeparationRayShape2D");
 #endif // PHYSICS_2D_DISABLED
 #ifndef PHYSICS_3D_DISABLED
-	ClassDB::add_compatibility_class("Area", "Area3D");
+	ClassDB::add_compatibility_class("Area", "SEArea");
 	ClassDB::add_compatibility_class("BoxShape", "BoxShape3D");
 	ClassDB::add_compatibility_class("CapsuleShape", "CapsuleShape3D");
 	ClassDB::add_compatibility_class("CollisionObject", "CollisionObject3D");
 	ClassDB::add_compatibility_class("CollisionPolygon", "CollisionPolygon3D");
-	ClassDB::add_compatibility_class("CollisionShape", "CollisionShape3D");
+	ClassDB::add_compatibility_class("CollisionShape", "SECollision");
 	ClassDB::add_compatibility_class("ConcavePolygonShape", "ConcavePolygonShape3D");
 	ClassDB::add_compatibility_class("ConeTwistJoint", "ConeTwistJoint3D");
 	ClassDB::add_compatibility_class("ConvexPolygonShape", "ConvexPolygonShape3D");

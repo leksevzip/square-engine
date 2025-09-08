@@ -42,7 +42,7 @@
 #include "Jolt/Physics/Constraints/Constraint.h"
 #include "Jolt/Physics/PhysicsSystem.h"
 
-class JoltArea3D;
+class JoltSEArea;
 class JoltBody3D;
 class JoltBodyActivationListener3D;
 class JoltContactListener3D;
@@ -58,7 +58,7 @@ class JoltSpace3D {
 	Mutex body_call_queries_mutex;
 
 	SelfList<JoltBody3D>::List body_call_queries_list;
-	SelfList<JoltArea3D>::List area_call_queries_list;
+	SelfList<JoltSEArea>::List area_call_queries_list;
 	SelfList<JoltShapedObject3D>::List shapes_changed_list;
 	SelfList<JoltShapedObject3D>::List needs_optimization_list;
 
@@ -74,7 +74,7 @@ class JoltSpace3D {
 	JoltBodyActivationListener3D *body_activation_listener = nullptr;
 	JPH::PhysicsSystem *physics_system = nullptr;
 	JoltPhysicsDirectSpaceState3D *direct_state = nullptr;
-	JoltArea3D *default_area = nullptr;
+	JoltSEArea *default_area = nullptr;
 
 	float last_step = 0.0f;
 
@@ -121,13 +121,13 @@ public:
 	JoltObject3D *try_get_object(const JPH::BodyID &p_body_id) const;
 	JoltShapedObject3D *try_get_shaped(const JPH::BodyID &p_body_id) const;
 	JoltBody3D *try_get_body(const JPH::BodyID &p_body_id) const;
-	JoltArea3D *try_get_area(const JPH::BodyID &p_body_id) const;
+	JoltSEArea *try_get_area(const JPH::BodyID &p_body_id) const;
 	JoltSoftBody3D *try_get_soft_body(const JPH::BodyID &p_body_id) const;
 
 	JoltPhysicsDirectSpaceState3D *get_direct_state();
 
-	JoltArea3D *get_default_area() const { return default_area; }
-	void set_default_area(JoltArea3D *p_area);
+	JoltSEArea *get_default_area() const { return default_area; }
+	void set_default_area(JoltSEArea *p_area);
 
 	float get_last_step() const { return last_step; }
 
@@ -139,9 +139,9 @@ public:
 	void set_is_object_sleeping(const JPH::BodyID &p_jolt_id, bool p_enable);
 
 	void enqueue_call_queries(SelfList<JoltBody3D> *p_body);
-	void enqueue_call_queries(SelfList<JoltArea3D> *p_area);
+	void enqueue_call_queries(SelfList<JoltSEArea> *p_area);
 	void dequeue_call_queries(SelfList<JoltBody3D> *p_body);
-	void dequeue_call_queries(SelfList<JoltArea3D> *p_area);
+	void dequeue_call_queries(SelfList<JoltSEArea> *p_area);
 
 	void enqueue_shapes_changed(SelfList<JoltShapedObject3D> *p_object);
 	void dequeue_shapes_changed(SelfList<JoltShapedObject3D> *p_object);

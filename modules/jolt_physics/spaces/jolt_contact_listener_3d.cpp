@@ -250,7 +250,7 @@ bool JoltContactListener3D::_try_evaluate_area_overlap(const JPH::Body &p_body1,
 		return p_object.get_previous_jolt_shape() != nullptr && p_object.get_jolt_shape()->GetSubShapeUserData(p_sub_shape_id) != p_object.get_previous_jolt_shape()->GetSubShapeUserData(p_sub_shape_id);
 	};
 
-	auto evaluate = [&](const JoltArea3D &p_area, const auto &p_object, const JPH::SubShapeIDPair &p_shape_pair) {
+	auto evaluate = [&](const JoltSEArea &p_area, const auto &p_object, const JPH::SubShapeIDPair &p_shape_pair) {
 		const MutexLock write_lock(write_mutex);
 
 		if (p_area.can_monitor(p_object)) {
@@ -276,8 +276,8 @@ bool JoltContactListener3D::_try_evaluate_area_overlap(const JPH::Body &p_body1,
 	const JoltObject3D *object1 = reinterpret_cast<JoltObject3D *>(p_body1.GetUserData());
 	const JoltObject3D *object2 = reinterpret_cast<JoltObject3D *>(p_body2.GetUserData());
 
-	const JoltArea3D *area1 = object1->as_area();
-	const JoltArea3D *area2 = object2->as_area();
+	const JoltSEArea *area1 = object1->as_area();
+	const JoltSEArea *area2 = object2->as_area();
 
 	const JoltBody3D *body1 = object1->as_body();
 	const JoltBody3D *body2 = object2->as_body();
@@ -447,8 +447,8 @@ void JoltContactListener3D::_flush_area_enters() {
 			continue;
 		}
 
-		JoltArea3D *area1 = object1->as_area();
-		JoltArea3D *area2 = object2->as_area();
+		JoltSEArea *area1 = object1->as_area();
+		JoltSEArea *area2 = object2->as_area();
 
 		const JPH::SubShapeID &sub_shape_id1 = shape_pair.GetSubShapeID1();
 		const JPH::SubShapeID &sub_shape_id2 = shape_pair.GetSubShapeID2();
@@ -473,8 +473,8 @@ void JoltContactListener3D::_flush_area_exits() {
 		JoltObject3D *object1 = space->try_get_object(body_id1);
 		JoltObject3D *object2 = space->try_get_object(body_id2);
 
-		JoltArea3D *area1 = object1 != nullptr ? object1->as_area() : nullptr;
-		JoltArea3D *area2 = object2 != nullptr ? object2->as_area() : nullptr;
+		JoltSEArea *area1 = object1 != nullptr ? object1->as_area() : nullptr;
+		JoltSEArea *area2 = object2 != nullptr ? object2->as_area() : nullptr;
 
 		const JoltBody3D *body1 = object1 != nullptr ? object1->as_body() : nullptr;
 		const JoltBody3D *body2 = object2 != nullptr ? object2->as_body() : nullptr;

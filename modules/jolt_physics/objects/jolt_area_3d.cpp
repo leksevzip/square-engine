@@ -50,11 +50,11 @@ const Vector3 AREA_DEFAULT_WIND_DIRECTION = Vector3();
 
 } // namespace
 
-JPH::BroadPhaseLayer JoltArea3D::_get_broad_phase_layer() const {
+JPH::BroadPhaseLayer JoltSEArea::_get_broad_phase_layer() const {
 	return monitorable ? JoltBroadPhaseLayer::AREA_DETECTABLE : JoltBroadPhaseLayer::AREA_UNDETECTABLE;
 }
 
-JPH::ObjectLayer JoltArea3D::_get_object_layer() const {
+JPH::ObjectLayer JoltSEArea::_get_object_layer() const {
 	ERR_FAIL_NULL_V(space, 0);
 
 	if (jolt_shape == nullptr || jolt_shape->GetType() == JPH::EShapeType::Empty) {
@@ -65,7 +65,7 @@ JPH::ObjectLayer JoltArea3D::_get_object_layer() const {
 	return space->map_to_object_layer(_get_broad_phase_layer(), collision_layer, collision_mask);
 }
 
-void JoltArea3D::_add_to_space() {
+void JoltSEArea::_add_to_space() {
 	jolt_shape = build_shapes(true);
 
 	JPH::CollisionGroup::GroupID group_id = 0;
@@ -96,19 +96,19 @@ void JoltArea3D::_add_to_space() {
 	jolt_settings = nullptr;
 }
 
-void JoltArea3D::_enqueue_call_queries() {
+void JoltSEArea::_enqueue_call_queries() {
 	if (space != nullptr) {
 		space->enqueue_call_queries(&call_queries_element);
 	}
 }
 
-void JoltArea3D::_dequeue_call_queries() {
+void JoltSEArea::_dequeue_call_queries() {
 	if (space != nullptr) {
 		space->dequeue_call_queries(&call_queries_element);
 	}
 }
 
-void JoltArea3D::_add_shape_pair(Overlap &p_overlap, const JPH::BodyID &p_body_id, const JPH::SubShapeID &p_other_shape_id, const JPH::SubShapeID &p_self_shape_id) {
+void JoltSEArea::_add_shape_pair(Overlap &p_overlap, const JPH::BodyID &p_body_id, const JPH::SubShapeID &p_other_shape_id, const JPH::SubShapeID &p_self_shape_id) {
 	const JoltShapedObject3D *other_object = space->try_get_shaped(p_body_id);
 	ERR_FAIL_NULL(other_object);
 
@@ -127,7 +127,7 @@ void JoltArea3D::_add_shape_pair(Overlap &p_overlap, const JPH::BodyID &p_body_i
 	_events_changed();
 }
 
-bool JoltArea3D::_remove_shape_pair(Overlap &p_overlap, const JPH::SubShapeID &p_other_shape_id, const JPH::SubShapeID &p_self_shape_id) {
+bool JoltSEArea::_remove_shape_pair(Overlap &p_overlap, const JPH::SubShapeID &p_other_shape_id, const JPH::SubShapeID &p_self_shape_id) {
 	HashMap<ShapeIDPair, ShapeIndexPair, ShapeIDPair>::Iterator shape_pair = p_overlap.shape_pairs.find(ShapeIDPair(p_other_shape_id, p_self_shape_id));
 
 	if (shape_pair == p_overlap.shape_pairs.end()) {
@@ -142,7 +142,7 @@ bool JoltArea3D::_remove_shape_pair(Overlap &p_overlap, const JPH::SubShapeID &p
 	return true;
 }
 
-void JoltArea3D::_flush_events(OverlapsById &p_objects, const Callable &p_callback) {
+void JoltSEArea::_flush_events(OverlapsById &p_objects, const Callable &p_callback) {
 	for (OverlapsById::Iterator E = p_objects.begin(); E;) {
 		Overlap &overlap = E->value;
 
@@ -178,7 +178,7 @@ void JoltArea3D::_flush_events(OverlapsById &p_objects, const Callable &p_callba
 	}
 }
 
-void JoltArea3D::_report_event(const Callable &p_callback, PhysicsServer3D::AreaBodyStatus p_status, const RID &p_other_rid, ObjectID p_other_instance_id, int p_other_shape_index, int p_self_shape_index) const {
+void JoltSEArea::_report_event(const Callable &p_callback, PhysicsServer3D::AreaBodyStatus p_status, const RID &p_other_rid, ObjectID p_other_instance_id, int p_other_shape_index, int p_self_shape_index) const {
 	ERR_FAIL_COND(!p_callback.is_valid());
 
 	const Variant arg1 = p_status;
@@ -197,19 +197,19 @@ void JoltArea3D::_report_event(const Callable &p_callback, PhysicsServer3D::Area
 	}
 }
 
-void JoltArea3D::_notify_body_entered(const JPH::BodyID &p_body_id) {
+void JoltSEArea::_notify_body_entered(const JPH::BodyID &p_body_id) {
 	if (JoltBody3D *other_body = space->try_get_body(p_body_id)) {
 		other_body->add_area(this);
 	}
 }
 
-void JoltArea3D::_notify_body_exited(const JPH::BodyID &p_body_id) {
+void JoltSEArea::_notify_body_exited(const JPH::BodyID &p_body_id) {
 	if (JoltBody3D *other_body = space->try_get_body(p_body_id)) {
 		other_body->remove_area(this);
 	}
 }
 
-void JoltArea3D::_remove_all_overlaps() {
+void JoltSEArea::_remove_all_overlaps() {
 	for (KeyValue<JPH::BodyID, Overlap> &E : bodies_by_id) {
 		_notify_body_exited(E.key);
 	}
@@ -218,7 +218,7 @@ void JoltArea3D::_remove_all_overlaps() {
 	areas_by_id.clear();
 }
 
-void JoltArea3D::_update_sleeping() {
+void JoltSEArea::_update_sleeping() {
 	if (!in_space()) {
 		return;
 	}
@@ -226,7 +226,7 @@ void JoltArea3D::_update_sleeping() {
 	space->set_is_object_sleeping(jolt_body->GetID(), _should_sleep());
 }
 
-void JoltArea3D::_update_group_filter() {
+void JoltSEArea::_update_group_filter() {
 	if (!in_space()) {
 		return;
 	}
@@ -234,62 +234,62 @@ void JoltArea3D::_update_group_filter() {
 	jolt_body->GetCollisionGroup().SetGroupFilter(JoltGroupFilter::instance);
 }
 
-void JoltArea3D::_update_default_gravity() {
+void JoltSEArea::_update_default_gravity() {
 	if (is_default_area()) {
 		space->get_physics_system().SetGravity(to_jolt(gravity_vector) * gravity);
 	}
 }
 
-void JoltArea3D::_space_changing() {
+void JoltSEArea::_space_changing() {
 	JoltShapedObject3D::_space_changing();
 
 	_remove_all_overlaps();
 	_dequeue_call_queries();
 }
 
-void JoltArea3D::_space_changed() {
+void JoltSEArea::_space_changed() {
 	JoltShapedObject3D::_space_changed();
 
 	_update_group_filter();
 	_update_default_gravity();
 }
 
-void JoltArea3D::_events_changed() {
+void JoltSEArea::_events_changed() {
 	_enqueue_call_queries();
 }
 
-void JoltArea3D::_body_monitoring_changed() {
+void JoltSEArea::_body_monitoring_changed() {
 	_update_sleeping();
 }
 
-void JoltArea3D::_area_monitoring_changed() {
+void JoltSEArea::_area_monitoring_changed() {
 	_update_sleeping();
 }
 
-void JoltArea3D::_monitorable_changed() {
+void JoltSEArea::_monitorable_changed() {
 	_update_object_layer();
 }
 
-void JoltArea3D::_gravity_changed() {
+void JoltSEArea::_gravity_changed() {
 	_update_default_gravity();
 }
 
-JoltArea3D::JoltArea3D() :
+JoltSEArea::JoltSEArea() :
 		JoltShapedObject3D(OBJECT_TYPE_AREA),
 		call_queries_element(this) {
 }
 
-bool JoltArea3D::is_default_area() const {
+bool JoltSEArea::is_default_area() const {
 	return space != nullptr && space->get_default_area() == this;
 }
 
-void JoltArea3D::set_default_area(bool p_value) {
+void JoltSEArea::set_default_area(bool p_value) {
 	if (p_value) {
 		_update_default_gravity();
 	}
 }
 
-void JoltArea3D::set_transform(Transform3D p_transform) {
+void JoltSEArea::set_transform(Transform3D p_transform) {
 	JOLT_ENSURE_SCALE_NOT_ZERO(p_transform, vformat("An invalid transform was passed to area '%s'.", to_string()));
 
 	Vector3 new_scale;
@@ -309,7 +309,7 @@ void JoltArea3D::set_transform(Transform3D p_transform) {
 	}
 }
 
-Variant JoltArea3D::get_param(PhysicsServer3D::AreaParameter p_param) const {
+Variant JoltSEArea::get_param(PhysicsServer3D::AreaParameter p_param) const {
 	switch (p_param) {
 		case PhysicsServer3D::AREA_PARAM_GRAVITY_OVERRIDE_MODE: {
 			return get_gravity_mode();
@@ -359,7 +359,7 @@ Variant JoltArea3D::get_param(PhysicsServer3D::AreaParameter p_param) const {
 	}
 }
 
-void JoltArea3D::set_param(PhysicsServer3D::AreaParameter p_param, const Variant &p_value) {
+void JoltSEArea::set_param(PhysicsServer3D::AreaParameter p_param, const Variant &p_value) {
 	switch (p_param) {
 		case PhysicsServer3D::AREA_PARAM_GRAVITY_OVERRIDE_MODE: {
 			set_gravity_mode((OverrideMode)(int)p_value);
@@ -417,7 +417,7 @@ void JoltArea3D::set_param(PhysicsServer3D::AreaParameter p_param, const Variant
 	}
 }
 
-void JoltArea3D::set_body_monitor_callback(const Callable &p_callback) {
+void JoltSEArea::set_body_monitor_callback(const Callable &p_callback) {
 	if (p_callback == body_monitor_callback) {
 		return;
 	}
@@ -427,7 +427,7 @@ void JoltArea3D::set_body_monitor_callback(const Callable &p_callback) {
 	_body_monitoring_changed();
 }
 
-void JoltArea3D::set_area_monitor_callback(const Callable &p_callback) {
+void JoltSEArea::set_area_monitor_callback(const Callable &p_callback) {
 	if (p_callback == area_monitor_callback) {
 		return;
 	}
@@ -437,7 +437,7 @@ void JoltArea3D::set_area_monitor_callback(const Callable &p_callback) {
 	_area_monitoring_changed();
 }
 
-void JoltArea3D::set_monitorable(bool p_monitorable) {
+void JoltSEArea::set_monitorable(bool p_monitorable) {
 	if (p_monitorable == monitorable) {
 		return;
 	}
@@ -447,35 +447,35 @@ void JoltArea3D::set_monitorable(bool p_monitorable) {
 	_monitorable_changed();
 }
 
-bool JoltArea3D::can_monitor(const JoltBody3D &p_other) const {
+bool JoltSEArea::can_monitor(const JoltBody3D &p_other) const {
 	return is_monitoring_bodies() && (collision_mask & p_other.get_collision_layer()) != 0;
 }
 
-bool JoltArea3D::can_monitor(const JoltSoftBody3D &p_other) const {
+bool JoltSEArea::can_monitor(const JoltSoftBody3D &p_other) const {
 	return false;
 }
 
-bool JoltArea3D::can_monitor(const JoltArea3D &p_other) const {
+bool JoltSEArea::can_monitor(const JoltSEArea &p_other) const {
 	return is_monitoring_areas() && p_other.is_monitorable() && (collision_mask & p_other.get_collision_layer()) != 0;
 }
 
-bool JoltArea3D::can_interact_with(const JoltBody3D &p_other) const {
+bool JoltSEArea::can_interact_with(const JoltBody3D &p_other) const {
 	return can_monitor(p_other);
 }
 
-bool JoltArea3D::can_interact_with(const JoltSoftBody3D &p_other) const {
+bool JoltSEArea::can_interact_with(const JoltSoftBody3D &p_other) const {
 	return false;
 }
 
-bool JoltArea3D::can_interact_with(const JoltArea3D &p_other) const {
+bool JoltSEArea::can_interact_with(const JoltSEArea &p_other) const {
 	return can_monitor(p_other) || p_other.can_monitor(*this);
 }
 
-Vector3 JoltArea3D::get_velocity_at_position(const Vector3 &p_position) const {
+Vector3 JoltSEArea::get_velocity_at_position(const Vector3 &p_position) const {
 	return Vector3();
 }
 
-void JoltArea3D::set_point_gravity(bool p_enabled) {
+void JoltSEArea::set_point_gravity(bool p_enabled) {
 	if (point_gravity == p_enabled) {
 		return;
 	}
@@ -485,7 +485,7 @@ void JoltArea3D::set_point_gravity(bool p_enabled) {
 	_gravity_changed();
 }
 
-void JoltArea3D::set_gravity(float p_gravity) {
+void JoltSEArea::set_gravity(float p_gravity) {
 	if (gravity == p_gravity) {
 		return;
 	}
@@ -495,7 +495,7 @@ void JoltArea3D::set_gravity(float p_gravity) {
 	_gravity_changed();
 }
 
-void JoltArea3D::set_point_gravity_distance(float p_distance) {
+void JoltSEArea::set_point_gravity_distance(float p_distance) {
 	if (point_gravity_distance == p_distance) {
 		return;
 	}
@@ -505,7 +505,7 @@ void JoltArea3D::set_point_gravity_distance(float p_distance) {
 	_gravity_changed();
 }
 
-void JoltArea3D::set_gravity_mode(OverrideMode p_mode) {
+void JoltSEArea::set_gravity_mode(OverrideMode p_mode) {
 	if (gravity_mode == p_mode) {
 		return;
 	}
@@ -515,7 +515,7 @@ void JoltArea3D::set_gravity_mode(OverrideMode p_mode) {
 	_gravity_changed();
 }
 
-void JoltArea3D::set_gravity_vector(const Vector3 &p_vector) {
+void JoltSEArea::set_gravity_vector(const Vector3 &p_vector) {
 	if (gravity_vector == p_vector) {
 		return;
 	}
@@ -525,7 +525,7 @@ void JoltArea3D::set_gravity_vector(const Vector3 &p_vector) {
 	_gravity_changed();
 }
 
-Vector3 JoltArea3D::compute_gravity(const Vector3 &p_position) const {
+Vector3 JoltSEArea::compute_gravity(const Vector3 &p_position) const {
 	if (!point_gravity) {
 		return gravity_vector * gravity;
 	}
@@ -544,7 +544,7 @@ Vector3 JoltArea3D::compute_gravity(const Vector3 &p_position) const {
 	return to_point_dir * (gravity * gravity_dist_sq / to_point_dist_sq);
 }
 
-void JoltArea3D::body_shape_entered(const JPH::BodyID &p_body_id, const JPH::SubShapeID &p_other_shape_id, const JPH::SubShapeID &p_self_shape_id) {
+void JoltSEArea::body_shape_entered(const JPH::BodyID &p_body_id, const JPH::SubShapeID &p_other_shape_id, const JPH::SubShapeID &p_self_shape_id) {
 	Overlap &overlap = bodies_by_id[p_body_id];
 
 	if (overlap.shape_pairs.is_empty()) {
@@ -554,7 +554,7 @@ void JoltArea3D::body_shape_entered(const JPH::BodyID &p_body_id, const JPH::Sub
 	_add_shape_pair(overlap, p_body_id, p_other_shape_id, p_self_shape_id);
 }
 
-bool JoltArea3D::body_shape_exited(const JPH::BodyID &p_body_id, const JPH::SubShapeID &p_other_shape_id, const JPH::SubShapeID &p_self_shape_id) {
+bool JoltSEArea::body_shape_exited(const JPH::BodyID &p_body_id, const JPH::SubShapeID &p_other_shape_id, const JPH::SubShapeID &p_self_shape_id) {
 	Overlap *overlap = bodies_by_id.getptr(p_body_id);
 	if (overlap == nullptr) {
 		return false;
@@ -571,11 +571,11 @@ bool JoltArea3D::body_shape_exited(const JPH::BodyID &p_body_id, const JPH::SubS
 	return true;
 }
 
-void JoltArea3D::area_shape_entered(const JPH::BodyID &p_body_id, const JPH::SubShapeID &p_other_shape_id, const JPH::SubShapeID &p_self_shape_id) {
+void JoltSEArea::area_shape_entered(const JPH::BodyID &p_body_id, const JPH::SubShapeID &p_other_shape_id, const JPH::SubShapeID &p_self_shape_id) {
 	_add_shape_pair(areas_by_id[p_body_id], p_body_id, p_other_shape_id, p_self_shape_id);
 }
 
-bool JoltArea3D::area_shape_exited(const JPH::BodyID &p_body_id, const JPH::SubShapeID &p_other_shape_id, const JPH::SubShapeID &p_self_shape_id) {
+bool JoltSEArea::area_shape_exited(const JPH::BodyID &p_body_id, const JPH::SubShapeID &p_other_shape_id, const JPH::SubShapeID &p_self_shape_id) {
 	Overlap *overlap = areas_by_id.getptr(p_body_id);
 	if (overlap == nullptr) {
 		return false;
@@ -584,11 +584,11 @@ bool JoltArea3D::area_shape_exited(const JPH::BodyID &p_body_id, const JPH::SubS
 	return _remove_shape_pair(*overlap, p_other_shape_id, p_self_shape_id);
 }
 
-bool JoltArea3D::shape_exited(const JPH::BodyID &p_body_id, const JPH::SubShapeID &p_other_shape_id, const JPH::SubShapeID &p_self_shape_id) {
+bool JoltSEArea::shape_exited(const JPH::BodyID &p_body_id, const JPH::SubShapeID &p_other_shape_id, const JPH::SubShapeID &p_self_shape_id) {
 	return body_shape_exited(p_body_id, p_other_shape_id, p_self_shape_id) || area_shape_exited(p_body_id, p_other_shape_id, p_self_shape_id);
 }
 
-void JoltArea3D::body_exited(const JPH::BodyID &p_body_id, bool p_notify) {
+void JoltSEArea::body_exited(const JPH::BodyID &p_body_id, bool p_notify) {
 	Overlap *overlap = bodies_by_id.getptr(p_body_id);
 	if (unlikely(overlap == nullptr)) {
 		return;
@@ -612,7 +612,7 @@ void JoltArea3D::body_exited(const JPH::BodyID &p_body_id, bool p_notify) {
 	}
 }
 
-void JoltArea3D::area_exited(const JPH::BodyID &p_body_id) {
+void JoltSEArea::area_exited(const JPH::BodyID &p_body_id) {
 	Overlap *overlap = areas_by_id.getptr(p_body_id);
 	if (unlikely(overlap == nullptr)) {
 		return;
@@ -632,7 +632,7 @@ void JoltArea3D::area_exited(const JPH::BodyID &p_body_id) {
 	overlap->shape_pairs.clear();
 }
 
-void JoltArea3D::call_queries() {
+void JoltSEArea::call_queries() {
 	_flush_events(bodies_by_id, body_monitor_callback);
 	_flush_events(areas_by_id, area_monitor_callback);
 }

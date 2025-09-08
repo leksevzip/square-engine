@@ -37,7 +37,7 @@
 #include "editor/settings/editor_settings.h"
 #include "scene/3d/se_camera.h"
 #include "scene/3d/se_mesh.h"
-#include "scene/3d/physics/collision_shape_3d.h"
+#include "scene/3d/physics/se_collision.h"
 #include "scene/gui/dialogs.h"
 #include "scene/gui/menu_button.h"
 
@@ -135,9 +135,9 @@ void SEOShapeEditor::_create_baked_collision_shape() {
 
 	Node *owner = get_tree()->get_edited_scene_root();
 
-	CollisionShape3D *cshape = memnew(CollisionShape3D);
+	SECollision *cshape = memnew(SECollision);
 	cshape->set_shape(shape);
-	cshape->set_name("SEOBakedCollisionShape3D");
+	cshape->set_name("SEOBakedSECollision");
 	cshape->set_transform(node->get_transform());
 	ur->add_do_method(node, "add_sibling", cshape, true);
 	ur->add_do_method(cshape, "set_owner", owner);

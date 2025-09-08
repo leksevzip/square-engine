@@ -322,7 +322,7 @@ void JoltBody3D::_update_gravity(JPH::Body &p_jolt_body) {
 
 	bool gravity_done = false;
 
-	for (const JoltArea3D *area : areas) {
+	for (const JoltSEArea *area : areas) {
 		gravity_done = integrate(gravity, area->get_gravity_mode(), [&]() {
 			return area->compute_gravity(position);
 		});
@@ -350,7 +350,7 @@ void JoltBody3D::_update_damp() {
 	bool linear_damp_done = linear_damp_mode == PhysicsServer3D::BODY_DAMP_MODE_REPLACE;
 	bool angular_damp_done = angular_damp_mode == PhysicsServer3D::BODY_DAMP_MODE_REPLACE;
 
-	for (const JoltArea3D *area : areas) {
+	for (const JoltSEArea *area : areas) {
 		if (!linear_damp_done) {
 			linear_damp_done = integrate(total_linear_damp, area->get_linear_damp_mode(), [&]() {
 				return area->get_linear_damp();
@@ -368,7 +368,7 @@ void JoltBody3D::_update_damp() {
 		}
 	}
 
-	const JoltArea3D *default_area = space->get_default_area();
+	const JoltSEArea *default_area = space->get_default_area();
 
 	if (!linear_damp_done) {
 		total_linear_damp += default_area->get_linear_damp();
@@ -442,7 +442,7 @@ void JoltBody3D::_exit_all_areas() {
 		return;
 	}
 
-	for (JoltArea3D *area : areas) {
+	for (JoltSEArea *area : areas) {
 		area->body_exited(jolt_body->GetID(), false);
 	}
 
@@ -1060,7 +1060,7 @@ bool JoltBody3D::has_collision_exception(const RID &p_excepted_body) const {
 	return exceptions.find(p_excepted_body) >= 0;
 }
 
-void JoltBody3D::add_area(JoltArea3D *p_area) {
+void JoltBody3D::add_area(JoltSEArea *p_area) {
 	int i = 0;
 	for (; i < (int)areas.size(); i++) {
 		if (p_area->get_priority() > areas[i]->get_priority()) {
@@ -1073,7 +1073,7 @@ void JoltBody3D::add_area(JoltArea3D *p_area) {
 	_areas_changed();
 }
 
-void JoltBody3D::remove_area(JoltArea3D *p_area) {
+void JoltBody3D::remove_area(JoltSEArea *p_area) {
 	areas.erase(p_area);
 
 	_areas_changed();
@@ -1331,6 +1331,6 @@ bool JoltBody3D::can_interact_with(const JoltSoftBody3D &p_other) const {
 	return p_other.can_interact_with(*this);
 }
 
-bool JoltBody3D::can_interact_with(const JoltArea3D &p_other) const {
+bool JoltBody3D::can_interact_with(const JoltSEArea &p_other) const {
 	return p_other.can_interact_with(*this);
 }

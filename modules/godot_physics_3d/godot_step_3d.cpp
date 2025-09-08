@@ -234,7 +234,7 @@ void GodotStep3D::step(GodotSpace3D *p_space, real_t p_delta) {
 
 	uint32_t island_count = 0;
 
-	const SelfList<GodotArea3D>::List &aml = p_space->get_moved_area_list();
+	const SelfList<GodotSEArea>::List &aml = p_space->get_moved_area_list();
 
 	while (aml.first()) {
 		for (GodotConstraint3D *E : aml.first()->self()->get_constraints()) {
@@ -255,7 +255,7 @@ void GodotStep3D::step(GodotSpace3D *p_space, real_t p_delta) {
 			all_constraints.push_back(constraint);
 			constraint_island.push_back(constraint);
 		}
-		p_space->area_remove_from_moved_list((SelfList<GodotArea3D> *)aml.first()); //faster to remove here
+		p_space->area_remove_from_moved_list((SelfList<GodotSEArea> *)aml.first()); //faster to remove here
 	}
 
 	/* GENERATE CONSTRAINT ISLANDS FOR ACTIVE RIGID BODIES */

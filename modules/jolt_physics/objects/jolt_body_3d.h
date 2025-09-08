@@ -33,7 +33,7 @@
 #include "jolt_physics_direct_body_state_3d.h"
 #include "jolt_shaped_object_3d.h"
 
-class JoltArea3D;
+class JoltSEArea;
 class JoltJoint3D;
 class JoltSoftBody3D;
 
@@ -62,7 +62,7 @@ private:
 
 	LocalVector<RID> exceptions;
 	LocalVector<Contact> contacts;
-	LocalVector<JoltArea3D *> areas;
+	LocalVector<JoltSEArea *> areas;
 	LocalVector<JoltJoint3D *> joints;
 
 	Variant custom_integration_userdata;
@@ -239,8 +239,8 @@ public:
 
 	const LocalVector<RID> &get_collision_exceptions() const { return exceptions; }
 
-	void add_area(JoltArea3D *p_area);
-	void remove_area(JoltArea3D *p_area);
+	void add_area(JoltSEArea *p_area);
+	void remove_area(JoltSEArea *p_area);
 
 	void add_joint(JoltJoint3D *p_joint);
 	void remove_joint(JoltJoint3D *p_joint);
@@ -305,5 +305,5 @@ public:
 
 	virtual bool can_interact_with(const JoltBody3D &p_other) const override;
 	virtual bool can_interact_with(const JoltSoftBody3D &p_other) const override;
-	virtual bool can_interact_with(const JoltArea3D &p_other) const override;
+	virtual bool can_interact_with(const JoltSEArea &p_other) const override;
 };

@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  collision_shape_3d_gizmo_plugin.cpp                                   */
+/*  se_collision_gizmo_plugin.cpp                                   */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,14 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#include "collision_shape_3d_gizmo_plugin.h"
+#include "se_collision_gizmo_plugin.h"
 
 #include "core/math/convex_hull.h"
 #include "core/math/geometry_3d.h"
 #include "editor/editor_undo_redo_manager.h"
 #include "editor/scene/3d/gizmos/gizmo_3d_helper.h"
 #include "editor/scene/3d/node_3d_editor_plugin.h"
-#include "scene/3d/physics/collision_shape_3d.h"
+#include "scene/3d/physics/se_collision.h"
 #include "scene/resources/3d/box_shape_3d.h"
 #include "scene/resources/3d/capsule_shape_3d.h"
 #include "scene/resources/3d/concave_polygon_shape_3d.h"
@@ -46,7 +46,7 @@
 #include "scene/resources/3d/sphere_shape_3d.h"
 #include "scene/resources/3d/world_boundary_shape_3d.h"
 
-CollisionShape3DGizmoPlugin::CollisionShape3DGizmoPlugin() {
+SECollisionGizmoPlugin::SECollisionGizmoPlugin() {
 	helper.instantiate();
 
 	create_collision_material("shape_material", 2.0);
@@ -58,7 +58,7 @@ CollisionShape3DGizmoPlugin::CollisionShape3DGizmoPlugin() {
 	create_handle_material("handles");
 }
 
-void CollisionShape3DGizmoPlugin::create_collision_material(const String &p_name, float p_alpha) {
+void SECollisionGizmoPlugin::create_collision_material(const String &p_name, float p_alpha) {
 	Vector<Ref<StandardMaterial3D>> mats;
 
 	const Color collision_color(1.0, 1.0, 1.0, p_alpha);
@@ -86,20 +86,20 @@ void CollisionShape3DGizmoPlugin::create_collision_material(const String &p_name
 	materials[p_name] = mats;
 }
 
-bool CollisionShape3DGizmoPlugin::has_gizmo(Node3D *p_spatial) {
-	return Object::cast_to<CollisionShape3D>(p_spatial) != nullptr;
+bool SECollisionGizmoPlugin::has_gizmo(Node3D *p_spatial) {
+	return Object::cast_to<SECollision>(p_spatial) != nullptr;
 }
 
-String CollisionShape3DGizmoPlugin::get_gizmo_name() const {
-	return "CollisionShape3D";
+String SECollisionGizmoPlugin::get_gizmo_name() const {
+	return "SECollision";
 }
 
-int CollisionShape3DGizmoPlugin::get_priority() const {
+int SECollisionGizmoPlugin::get_priority() const {
 	return -1;
 }
 
-String CollisionShape3DGizmoPlugin::get_handle_name(const EditorNode3DGizmo *p_gizmo, int p_id, bool p_secondary) const {
-	const CollisionShape3D *cs = Object::cast_to<CollisionShape3D>(p_gizmo->get_node_3d());
+String SECollisionGizmoPlugin::get_handle_name(const EditorNode3DGizmo *p_gizmo, int p_id, bool p_secondary) const {
+	const SECollision *cs = Object::cast_to<SECollision>(p_gizmo->get_node_3d());
 
 	Ref<Shape3D> s = cs->get_shape();
 	if (s.is_null()) {
@@ -129,8 +129,8 @@ String CollisionShape3DGizmoPlugin::get_handle_name(const EditorNode3DGizmo *p_g
 	return "";
 }
 
-Variant CollisionShape3DGizmoPlugin::get_handle_value(const EditorNode3DGizmo *p_gizmo, int p_id, bool p_secondary) const {
-	CollisionShape3D *cs = Object::cast_to<CollisionShape3D>(p_gizmo->get_node_3d());
+Variant SECollisionGizmoPlugin::get_handle_value(const EditorNode3DGizmo *p_gizmo, int p_id, bool p_secondary) const {
+	SECollision *cs = Object::cast_to<SECollision>(p_gizmo->get_node_3d());
 
 	Ref<Shape3D> s = cs->get_shape();
 	if (s.is_null()) {
@@ -165,12 +165,12 @@ Variant CollisionShape3DGizmoPlugin::get_handle_value(const EditorNode3DGizmo *p
 	return Variant();
 }
 
-void CollisionShape3DGizmoPlugin::begin_handle_action(const EditorNode3DGizmo *p_gizmo, int p_id, bool p_secondary) {
+void SECollisionGizmoPlugin::begin_handle_action(const EditorNode3DGizmo *p_gizmo, int p_id, bool p_secondary) {
 	helper->initialize_handle_action(get_handle_value(p_gizmo, p_id, p_secondary), p_gizmo->get_node_3d()->get_global_transform());
 }
 
-void CollisionShape3DGizmoPlugin::set_handle(const EditorNode3DGizmo *p_gizmo, int p_id, bool p_secondary, SECamera *p_camera, const Point2 &p_point) {
-	CollisionShape3D *cs = Object::cast_to<CollisionShape3D>(p_gizmo->get_node_3d());
+void SECollisionGizmoPlugin::set_handle(const EditorNode3DGizmo *p_gizmo, int p_id, bool p_secondary, SECamera *p_camera, const Point2 &p_point) {
+	SECollision *cs = Object::cast_to<SECollision>(p_gizmo->get_node_3d());
 
 	Ref<Shape3D> s = cs->get_shape();
 	if (s.is_null()) {
@@ -246,8 +246,8 @@ void CollisionShape3DGizmoPlugin::set_handle(const EditorNode3DGizmo *p_gizmo, i
 	}
 }
 
-void CollisionShape3DGizmoPlugin::commit_handle(const EditorNode3DGizmo *p_gizmo, int p_id, bool p_secondary, const Variant &p_restore, bool p_cancel) {
-	CollisionShape3D *cs = Object::cast_to<CollisionShape3D>(p_gizmo->get_node_3d());
+void SECollisionGizmoPlugin::commit_handle(const EditorNode3DGizmo *p_gizmo, int p_id, bool p_secondary, const Variant &p_restore, bool p_cancel) {
+	SECollision *cs = Object::cast_to<SECollision>(p_gizmo->get_node_3d());
 
 	Ref<Shape3D> s = cs->get_shape();
 	if (s.is_null()) {
@@ -297,8 +297,8 @@ void CollisionShape3DGizmoPlugin::commit_handle(const EditorNode3DGizmo *p_gizmo
 	}
 }
 
-void CollisionShape3DGizmoPlugin::redraw(EditorNode3DGizmo *p_gizmo) {
-	CollisionShape3D *cs = Object::cast_to<CollisionShape3D>(p_gizmo->get_node_3d());
+void SECollisionGizmoPlugin::redraw(EditorNode3DGizmo *p_gizmo) {
+	SECollision *cs = Object::cast_to<SECollision>(p_gizmo->get_node_3d());
 
 	p_gizmo->clear();
 

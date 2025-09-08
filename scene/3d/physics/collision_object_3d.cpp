@@ -734,7 +734,7 @@ PackedStringArray CollisionObject3D::get_configuration_warnings() const {
 	PackedStringArray warnings = Node3D::get_configuration_warnings();
 
 	if (shapes.is_empty()) {
-		warnings.push_back(RTR("This node has no shape, so it can't collide or interact with other objects.\nConsider adding a CollisionShape3D or CollisionPolygon3D as a child to define its shape."));
+		warnings.push_back(RTR("This node has no shape, so it can't collide or interact with other objects.\nConsider adding a SECollision or CollisionPolygon3D as a child to define its shape."));
 	}
 
 	Vector3 scale = get_transform().get_basis().get_scale();

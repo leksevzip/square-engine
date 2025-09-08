@@ -32,7 +32,7 @@
 
 #include "scene/3d/physics/collision_object_3d.h"
 #include "scene/3d/physics/collision_polygon_3d.h"
-#include "scene/3d/physics/collision_shape_3d.h"
+#include "scene/3d/physics/se_collision.h"
 #include "scene/resources/surface_tool.h"
 
 CollisionObject3DGizmoPlugin::CollisionObject3DGizmoPlugin() {
@@ -65,8 +65,8 @@ void CollisionObject3DGizmoPlugin::redraw(EditorNode3DGizmo *p_gizmo) {
 	for (uint32_t &owner_id : owner_ids) {
 		Transform3D xform = co->shape_owner_get_transform(owner_id);
 		Object *owner = co->shape_owner_get_owner(owner_id);
-		// Exclude CollisionShape3D and CollisionPolygon3D as they have their gizmo.
-		if (!Object::cast_to<CollisionShape3D>(owner) && !Object::cast_to<CollisionPolygon3D>(owner)) {
+		// Exclude SECollision and CollisionPolygon3D as they have their gizmo.
+		if (!Object::cast_to<SECollision>(owner) && !Object::cast_to<CollisionPolygon3D>(owner)) {
 			Ref<Material> material = get_material(!co->is_shape_owner_disabled(owner_id) ? "shape_material" : "shape_material_disabled", p_gizmo);
 			for (int shape_id = 0; shape_id < co->shape_owner_get_shape_count(owner_id); shape_id++) {
 				Ref<Shape3D> s = co->shape_owner_get_shape(owner_id, shape_id);

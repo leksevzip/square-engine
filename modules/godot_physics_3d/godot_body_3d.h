@@ -155,7 +155,7 @@ public:
 
 	GodotPhysicsDirectBodyState3D *get_direct_state();
 
-	_FORCE_INLINE_ void add_area(GodotArea3D *p_area) {
+	_FORCE_INLINE_ void add_area(GodotSEArea *p_area) {
 		int index = areas.find(AreaCMP(p_area));
 		if (index > -1) {
 			areas.write[index].refCount += 1;
@@ -164,7 +164,7 @@ public:
 		}
 	}
 
-	_FORCE_INLINE_ void remove_area(GodotArea3D *p_area) {
+	_FORCE_INLINE_ void remove_area(GodotSEArea *p_area) {
 		int index = areas.find(AreaCMP(p_area));
 		if (index > -1) {
 			areas.write[index].refCount -= 1;

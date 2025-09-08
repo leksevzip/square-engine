@@ -33,7 +33,7 @@
 #include "core/templates/rid_owner.h"
 #include "servers/physics_server_3d.h"
 
-class JoltArea3D;
+class JoltSEArea;
 class JoltBody3D;
 class JoltJobSystem;
 class JoltJoint3D;
@@ -47,7 +47,7 @@ class JoltPhysicsServer3D final : public PhysicsServer3D {
 	inline static JoltPhysicsServer3D *singleton = nullptr;
 
 	mutable RID_PtrOwner<JoltSpace3D, true> space_owner;
-	mutable RID_PtrOwner<JoltArea3D, true> area_owner;
+	mutable RID_PtrOwner<JoltSEArea, true> area_owner;
 	mutable RID_PtrOwner<JoltBody3D, true> body_owner{ 65536, 1048576 };
 	mutable RID_PtrOwner<JoltSoftBody3D, true> soft_body_owner;
 	mutable RID_PtrOwner<JoltShape3D, true> shape_owner;
@@ -432,14 +432,14 @@ public:
 	bool is_active() const { return active; }
 
 	void free_space(JoltSpace3D *p_space);
-	void free_area(JoltArea3D *p_area);
+	void free_area(JoltSEArea *p_area);
 	void free_body(JoltBody3D *p_body);
 	void free_soft_body(JoltSoftBody3D *p_body);
 	void free_shape(JoltShape3D *p_shape);
 	void free_joint(JoltJoint3D *p_joint);
 
 	JoltSpace3D *get_space(RID p_rid) const { return space_owner.get_or_null(p_rid); }
-	JoltArea3D *get_area(RID p_rid) const { return area_owner.get_or_null(p_rid); }
+	JoltSEArea *get_area(RID p_rid) const { return area_owner.get_or_null(p_rid); }
 	JoltBody3D *get_body(RID p_rid) const { return body_owner.get_or_null(p_rid); }
 	JoltShape3D *get_shape(RID p_rid) const { return shape_owner.get_or_null(p_rid); }
 	JoltJoint3D *get_joint(RID p_rid) const { return joint_owner.get_or_null(p_rid); }

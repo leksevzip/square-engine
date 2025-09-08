@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  area_3d.cpp                                                           */
+/*  se_area.cpp                                                           */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,143 +28,143 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#include "area_3d.h"
+#include "se_area.h"
 
 #include "servers/audio_server.h"
 
-void Area3D::set_gravity_space_override_mode(SpaceOverride p_mode) {
+void SEArea::set_gravity_space_override_mode(SpaceOverride p_mode) {
 	gravity_space_override = p_mode;
 	PhysicsServer3D::get_singleton()->area_set_param(get_rid(), PhysicsServer3D::AREA_PARAM_GRAVITY_OVERRIDE_MODE, p_mode);
 }
 
-Area3D::SpaceOverride Area3D::get_gravity_space_override_mode() const {
+SEArea::SpaceOverride SEArea::get_gravity_space_override_mode() const {
 	return gravity_space_override;
 }
 
-void Area3D::set_gravity_is_point(bool p_enabled) {
+void SEArea::set_gravity_is_point(bool p_enabled) {
 	gravity_is_point = p_enabled;
 	PhysicsServer3D::get_singleton()->area_set_param(get_rid(), PhysicsServer3D::AREA_PARAM_GRAVITY_IS_POINT, p_enabled);
 }
 
-bool Area3D::is_gravity_a_point() const {
+bool SEArea::is_gravity_a_point() const {
 	return gravity_is_point;
 }
 
-void Area3D::set_gravity_point_unit_distance(real_t p_scale) {
+void SEArea::set_gravity_point_unit_distance(real_t p_scale) {
 	gravity_point_unit_distance = p_scale;
 	PhysicsServer3D::get_singleton()->area_set_param(get_rid(), PhysicsServer3D::AREA_PARAM_GRAVITY_POINT_UNIT_DISTANCE, p_scale);
 }
 
-real_t Area3D::get_gravity_point_unit_distance() const {
+real_t SEArea::get_gravity_point_unit_distance() const {
 	return gravity_point_unit_distance;
 }
 
-void Area3D::set_gravity_point_center(const Vector3 &p_center) {
+void SEArea::set_gravity_point_center(const Vector3 &p_center) {
 	gravity_vec = p_center;
 	PhysicsServer3D::get_singleton()->area_set_param(get_rid(), PhysicsServer3D::AREA_PARAM_GRAVITY_VECTOR, p_center);
 }
 
-const Vector3 &Area3D::get_gravity_point_center() const {
+const Vector3 &SEArea::get_gravity_point_center() const {
 	return gravity_vec;
 }
 
-void Area3D::set_gravity_direction(const Vector3 &p_direction) {
+void SEArea::set_gravity_direction(const Vector3 &p_direction) {
 	gravity_vec = p_direction;
 	PhysicsServer3D::get_singleton()->area_set_param(get_rid(), PhysicsServer3D::AREA_PARAM_GRAVITY_VECTOR, p_direction);
 }
 
-const Vector3 &Area3D::get_gravity_direction() const {
+const Vector3 &SEArea::get_gravity_direction() const {
 	return gravity_vec;
 }
 
-void Area3D::set_gravity(real_t p_gravity) {
+void SEArea::set_gravity(real_t p_gravity) {
 	gravity = p_gravity;
 	PhysicsServer3D::get_singleton()->area_set_param(get_rid(), PhysicsServer3D::AREA_PARAM_GRAVITY, p_gravity);
 }
 
-real_t Area3D::get_gravity() const {
+real_t SEArea::get_gravity() const {
 	return gravity;
 }
 
-void Area3D::set_linear_damp_space_override_mode(SpaceOverride p_mode) {
+void SEArea::set_linear_damp_space_override_mode(SpaceOverride p_mode) {
 	linear_damp_space_override = p_mode;
 	PhysicsServer3D::get_singleton()->area_set_param(get_rid(), PhysicsServer3D::AREA_PARAM_LINEAR_DAMP_OVERRIDE_MODE, p_mode);
 }
 
-Area3D::SpaceOverride Area3D::get_linear_damp_space_override_mode() const {
+SEArea::SpaceOverride SEArea::get_linear_damp_space_override_mode() const {
 	return linear_damp_space_override;
 }
 
-void Area3D::set_angular_damp_space_override_mode(SpaceOverride p_mode) {
+void SEArea::set_angular_damp_space_override_mode(SpaceOverride p_mode) {
 	angular_damp_space_override = p_mode;
 	PhysicsServer3D::get_singleton()->area_set_param(get_rid(), PhysicsServer3D::AREA_PARAM_ANGULAR_DAMP_OVERRIDE_MODE, p_mode);
 }
 
-Area3D::SpaceOverride Area3D::get_angular_damp_space_override_mode() const {
+SEArea::SpaceOverride SEArea::get_angular_damp_space_override_mode() const {
 	return angular_damp_space_override;
 }
 
-void Area3D::set_linear_damp(real_t p_linear_damp) {
+void SEArea::set_linear_damp(real_t p_linear_damp) {
 	linear_damp = p_linear_damp;
 	PhysicsServer3D::get_singleton()->area_set_param(get_rid(), PhysicsServer3D::AREA_PARAM_LINEAR_DAMP, p_linear_damp);
 }
 
-real_t Area3D::get_linear_damp() const {
+real_t SEArea::get_linear_damp() const {
 	return linear_damp;
 }
 
-void Area3D::set_angular_damp(real_t p_angular_damp) {
+void SEArea::set_angular_damp(real_t p_angular_damp) {
 	angular_damp = p_angular_damp;
 	PhysicsServer3D::get_singleton()->area_set_param(get_rid(), PhysicsServer3D::AREA_PARAM_ANGULAR_DAMP, p_angular_damp);
 }
 
-real_t Area3D::get_angular_damp() const {
+real_t SEArea::get_angular_damp() const {
 	return angular_damp;
 }
 
-void Area3D::set_priority(int p_priority) {
+void SEArea::set_priority(int p_priority) {
 	priority = p_priority;
 	PhysicsServer3D::get_singleton()->area_set_param(get_rid(), PhysicsServer3D::AREA_PARAM_PRIORITY, p_priority);
 }
 
-int Area3D::get_priority() const {
+int SEArea::get_priority() const {
 	return priority;
 }
 
-void Area3D::set_wind_force_magnitude(real_t p_wind_force_magnitude) {
+void SEArea::set_wind_force_magnitude(real_t p_wind_force_magnitude) {
 	wind_force_magnitude = p_wind_force_magnitude;
 	if (is_inside_tree()) {
 		_initialize_wind();
 	}
 }
 
-real_t Area3D::get_wind_force_magnitude() const {
+real_t SEArea::get_wind_force_magnitude() const {
 	return wind_force_magnitude;
 }
 
-void Area3D::set_wind_attenuation_factor(real_t p_wind_force_attenuation_factor) {
+void SEArea::set_wind_attenuation_factor(real_t p_wind_force_attenuation_factor) {
 	wind_attenuation_factor = p_wind_force_attenuation_factor;
 	if (is_inside_tree()) {
 		_initialize_wind();
 	}
 }
 
-real_t Area3D::get_wind_attenuation_factor() const {
+real_t SEArea::get_wind_attenuation_factor() const {
 	return wind_attenuation_factor;
 }
 
-void Area3D::set_wind_source_path(const NodePath &p_wind_source_path) {
+void SEArea::set_wind_source_path(const NodePath &p_wind_source_path) {
 	wind_source_path = p_wind_source_path;
 	if (is_inside_tree()) {
 		_initialize_wind();
 	}
 }
 
-const NodePath &Area3D::get_wind_source_path() const {
+const NodePath &SEArea::get_wind_source_path() const {
 	return wind_source_path;
 }
 
-void Area3D::_initialize_wind() {
+void SEArea::_initialize_wind() {
 	real_t temp_magnitude = 0.0;
 	Vector3 wind_direction(0., 0., 0.);
 	Vector3 wind_source(0., 0., 0.);
@@ -188,7 +188,7 @@ void Area3D::_initialize_wind() {
 	PhysicsServer3D::get_singleton()->area_set_param(get_rid(), PhysicsServer3D::AREA_PARAM_WIND_FORCE_MAGNITUDE, temp_magnitude);
 }
 
-void Area3D::_body_enter_tree(ObjectID p_id) {
+void SEArea::_body_enter_tree(ObjectID p_id) {
 	Object *obj = ObjectDB::get_instance(p_id);
 	Node *node = Object::cast_to<Node>(obj);
 	ERR_FAIL_NULL(node);
@@ -204,7 +204,7 @@ void Area3D::_body_enter_tree(ObjectID p_id) {
 	}
 }
 
-void Area3D::_body_exit_tree(ObjectID p_id) {
+void SEArea::_body_exit_tree(ObjectID p_id) {
 	Object *obj = ObjectDB::get_instance(p_id);
 	Node *node = Object::cast_to<Node>(obj);
 	ERR_FAIL_NULL(node);
@@ -218,7 +218,7 @@ void Area3D::_body_exit_tree(ObjectID p_id) {
 	}
 }
 
-void Area3D::_body_inout(int p_status, const RID &p_body, ObjectID p_instance, int p_body_shape, int p_area_shape) {
+void SEArea::_body_inout(int p_status, const RID &p_body, ObjectID p_instance, int p_body_shape, int p_area_shape) {
 	bool body_in = p_status == PhysicsServer3D::AREA_BODY_ADDED;
 	ObjectID objid = p_instance;
 
@@ -256,8 +256,8 @@ void Area3D::_body_inout(int p_status, const RID &p_body, ObjectID p_instance, i
 			E->value.rc = 0;
 			E->value.in_tree = node && node->is_inside_tree();
 			if (node) {
-				node->connect(SceneStringName(tree_entered), callable_mp(this, &Area3D::_body_enter_tree).bind(objid));
-				node->connect(SceneStringName(tree_exiting), callable_mp(this, &Area3D::_body_exit_tree).bind(objid));
+				node->connect(SceneStringName(tree_entered), callable_mp(this, &SEArea::_body_enter_tree).bind(objid));
+				node->connect(SceneStringName(tree_exiting), callable_mp(this, &SEArea::_body_exit_tree).bind(objid));
 				if (E->value.in_tree) {
 					emit_signal(SceneStringName(body_entered), node);
 				}
@@ -283,8 +283,8 @@ void Area3D::_body_inout(int p_status, const RID &p_body, ObjectID p_instance, i
 		if (E->value.rc == 0) {
 			body_map.remove(E);
 			if (node) {
-				node->disconnect(SceneStringName(tree_entered), callable_mp(this, &Area3D::_body_enter_tree));
-				node->disconnect(SceneStringName(tree_exiting), callable_mp(this, &Area3D::_body_exit_tree));
+				node->disconnect(SceneStringName(tree_entered), callable_mp(this, &SEArea::_body_enter_tree));
+				node->disconnect(SceneStringName(tree_exiting), callable_mp(this, &SEArea::_body_exit_tree));
 				if (in_tree) {
 					emit_signal(SceneStringName(body_exited), obj);
 				}
@@ -299,7 +299,7 @@ void Area3D::_body_inout(int p_status, const RID &p_body, ObjectID p_instance, i
 	unlock_callback();
 }
 
-void Area3D::_clear_monitoring() {
+void SEArea::_clear_monitoring() {
 	ERR_FAIL_COND_MSG(locked, "This function can't be used during the in/out signal.");
 
 	{
@@ -316,8 +316,8 @@ void Area3D::_clear_monitoring() {
 			}
 			//ERR_CONTINUE(!node);
 
-			node->disconnect(SceneStringName(tree_entered), callable_mp(this, &Area3D::_body_enter_tree));
-			node->disconnect(SceneStringName(tree_exiting), callable_mp(this, &Area3D::_body_exit_tree));
+			node->disconnect(SceneStringName(tree_entered), callable_mp(this, &SEArea::_body_enter_tree));
+			node->disconnect(SceneStringName(tree_exiting), callable_mp(this, &SEArea::_body_exit_tree));
 
 			if (!E.value.in_tree) {
 				continue;
@@ -345,8 +345,8 @@ void Area3D::_clear_monitoring() {
 			}
 			//ERR_CONTINUE(!node);
 
-			node->disconnect(SceneStringName(tree_entered), callable_mp(this, &Area3D::_area_enter_tree));
-			node->disconnect(SceneStringName(tree_exiting), callable_mp(this, &Area3D::_area_exit_tree));
+			node->disconnect(SceneStringName(tree_entered), callable_mp(this, &SEArea::_area_enter_tree));
+			node->disconnect(SceneStringName(tree_exiting), callable_mp(this, &SEArea::_area_exit_tree));
 
 			if (!E.value.in_tree) {
 				continue;
@@ -361,13 +361,13 @@ void Area3D::_clear_monitoring() {
 	}
 }
 
-void Area3D::_space_changed(const RID &p_new_space) {
+void SEArea::_space_changed(const RID &p_new_space) {
 	if (p_new_space.is_null()) {
 		_clear_monitoring();
 	}
 }
 
-void Area3D::_notification(int p_what) {
+void SEArea::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_ENTER_TREE: {
 			_initialize_wind();
@@ -375,7 +375,7 @@ void Area3D::_notification(int p_what) {
 	}
 }
 
-void Area3D::set_monitoring(bool p_enable) {
+void SEArea::set_monitoring(bool p_enable) {
 	ERR_FAIL_COND_MSG(locked, "Function blocked during in/out signal. Use set_deferred(\"monitoring\", true/false).");
 
 	if (p_enable == monitoring) {
@@ -385,8 +385,8 @@ void Area3D::set_monitoring(bool p_enable) {
 	monitoring = p_enable;
 
 	if (monitoring) {
-		PhysicsServer3D::get_singleton()->area_set_monitor_callback(get_rid(), callable_mp(this, &Area3D::_body_inout));
-		PhysicsServer3D::get_singleton()->area_set_area_monitor_callback(get_rid(), callable_mp(this, &Area3D::_area_inout));
+		PhysicsServer3D::get_singleton()->area_set_monitor_callback(get_rid(), callable_mp(this, &SEArea::_body_inout));
+		PhysicsServer3D::get_singleton()->area_set_area_monitor_callback(get_rid(), callable_mp(this, &SEArea::_area_inout));
 	} else {
 		PhysicsServer3D::get_singleton()->area_set_monitor_callback(get_rid(), Callable());
 		PhysicsServer3D::get_singleton()->area_set_area_monitor_callback(get_rid(), Callable());
@@ -394,7 +394,7 @@ void Area3D::set_monitoring(bool p_enable) {
 	}
 }
 
-void Area3D::_area_enter_tree(ObjectID p_id) {
+void SEArea::_area_enter_tree(ObjectID p_id) {
 	Object *obj = ObjectDB::get_instance(p_id);
 	Node *node = Object::cast_to<Node>(obj);
 	ERR_FAIL_NULL(node);
@@ -410,7 +410,7 @@ void Area3D::_area_enter_tree(ObjectID p_id) {
 	}
 }
 
-void Area3D::_area_exit_tree(ObjectID p_id) {
+void SEArea::_area_exit_tree(ObjectID p_id) {
 	Object *obj = ObjectDB::get_instance(p_id);
 	Node *node = Object::cast_to<Node>(obj);
 	ERR_FAIL_NULL(node);
@@ -424,7 +424,7 @@ void Area3D::_area_exit_tree(ObjectID p_id) {
 	}
 }
 
-void Area3D::_area_inout(int p_status, const RID &p_area, ObjectID p_instance, int p_area_shape, int p_self_shape) {
+void SEArea::_area_inout(int p_status, const RID &p_area, ObjectID p_instance, int p_area_shape, int p_self_shape) {
 	bool area_in = p_status == PhysicsServer3D::AREA_BODY_ADDED;
 	ObjectID objid = p_instance;
 
@@ -462,8 +462,8 @@ void Area3D::_area_inout(int p_status, const RID &p_area, ObjectID p_instance, i
 			E->value.rc = 0;
 			E->value.in_tree = node && node->is_inside_tree();
 			if (node) {
-				node->connect(SceneStringName(tree_entered), callable_mp(this, &Area3D::_area_enter_tree).bind(objid));
-				node->connect(SceneStringName(tree_exiting), callable_mp(this, &Area3D::_area_exit_tree).bind(objid));
+				node->connect(SceneStringName(tree_entered), callable_mp(this, &SEArea::_area_enter_tree).bind(objid));
+				node->connect(SceneStringName(tree_exiting), callable_mp(this, &SEArea::_area_exit_tree).bind(objid));
 				if (E->value.in_tree) {
 					emit_signal(SceneStringName(area_entered), node);
 				}
@@ -489,8 +489,8 @@ void Area3D::_area_inout(int p_status, const RID &p_area, ObjectID p_instance, i
 		if (E->value.rc == 0) {
 			area_map.remove(E);
 			if (node) {
-				node->disconnect(SceneStringName(tree_entered), callable_mp(this, &Area3D::_area_enter_tree));
-				node->disconnect(SceneStringName(tree_exiting), callable_mp(this, &Area3D::_area_exit_tree));
+				node->disconnect(SceneStringName(tree_entered), callable_mp(this, &SEArea::_area_enter_tree));
+				node->disconnect(SceneStringName(tree_exiting), callable_mp(this, &SEArea::_area_exit_tree));
 				if (in_tree) {
 					emit_signal(SceneStringName(area_exited), obj);
 				}
@@ -505,11 +505,11 @@ void Area3D::_area_inout(int p_status, const RID &p_area, ObjectID p_instance, i
 	unlock_callback();
 }
 
-bool Area3D::is_monitoring() const {
+bool SEArea::is_monitoring() const {
 	return monitoring;
 }
 
-TypedArray<Node3D> Area3D::get_overlapping_bodies() const {
+TypedArray<Node3D> SEArea::get_overlapping_bodies() const {
 	TypedArray<Node3D> ret;
 	ERR_FAIL_COND_V_MSG(!monitoring, ret, "Can't find overlapping bodies when monitoring is off.");
 	ret.resize(body_map.size());
@@ -526,12 +526,12 @@ TypedArray<Node3D> Area3D::get_overlapping_bodies() const {
 	return ret;
 }
 
-bool Area3D::has_overlapping_bodies() const {
+bool SEArea::has_overlapping_bodies() const {
 	ERR_FAIL_COND_V_MSG(!monitoring, false, "Can't find overlapping bodies when monitoring is off.");
 	return !body_map.is_empty();
 }
 
-void Area3D::set_monitorable(bool p_enable) {
+void SEArea::set_monitorable(bool p_enable) {
 	ERR_FAIL_COND_MSG(locked || (is_inside_tree() && PhysicsServer3D::get_singleton()->is_flushing_queries()), "Function blocked during in/out signal. Use set_deferred(\"monitorable\", true/false).");
 
 	if (p_enable == monitorable) {
@@ -543,12 +543,12 @@ void Area3D::set_monitorable(bool p_enable) {
 	PhysicsServer3D::get_singleton()->area_set_monitorable(get_rid(), monitorable);
 }
 
-bool Area3D::is_monitorable() const {
+bool SEArea::is_monitorable() const {
 	return monitorable;
 }
 
-TypedArray<Area3D> Area3D::get_overlapping_areas() const {
-	TypedArray<Area3D> ret;
+TypedArray<SEArea> SEArea::get_overlapping_areas() const {
+	TypedArray<SEArea> ret;
 	ERR_FAIL_COND_V_MSG(!monitoring, ret, "Can't find overlapping areas when monitoring is off.");
 	ret.resize(area_map.size());
 	int idx = 0;
@@ -563,12 +563,12 @@ TypedArray<Area3D> Area3D::get_overlapping_areas() const {
 	return ret;
 }
 
-bool Area3D::has_overlapping_areas() const {
+bool SEArea::has_overlapping_areas() const {
 	ERR_FAIL_COND_V_MSG(!monitoring, false, "Can't find overlapping areas when monitoring is off.");
 	return !area_map.is_empty();
 }
 
-bool Area3D::overlaps_area(Node *p_area) const {
+bool SEArea::overlaps_area(Node *p_area) const {
 	ERR_FAIL_NULL_V(p_area, false);
 	HashMap<ObjectID, AreaState>::ConstIterator E = area_map.find(p_area->get_instance_id());
 	if (!E) {
@@ -577,7 +577,7 @@ bool Area3D::overlaps_area(Node *p_area) const {
 	return E->value.in_tree;
 }
 
-bool Area3D::overlaps_body(Node *p_body) const {
+bool SEArea::overlaps_body(Node *p_body) const {
 	ERR_FAIL_NULL_V(p_body, false);
 	HashMap<ObjectID, BodyState>::ConstIterator E = body_map.find(p_body->get_instance_id());
 	if (!E) {
@@ -586,19 +586,19 @@ bool Area3D::overlaps_body(Node *p_body) const {
 	return E->value.in_tree;
 }
 
-void Area3D::set_audio_bus_override(bool p_override) {
+void SEArea::set_audio_bus_override(bool p_override) {
 	audio_bus_override = p_override;
 }
 
-bool Area3D::is_overriding_audio_bus() const {
+bool SEArea::is_overriding_audio_bus() const {
 	return audio_bus_override;
 }
 
-void Area3D::set_audio_bus_name(const StringName &p_audio_bus) {
+void SEArea::set_audio_bus_name(const StringName &p_audio_bus) {
 	audio_bus = p_audio_bus;
 }
 
-StringName Area3D::get_audio_bus_name() const {
+StringName SEArea::get_audio_bus_name() const {
 	for (int i = 0; i < AudioServer::get_singleton()->get_bus_count(); i++) {
 		if (AudioServer::get_singleton()->get_bus_name(i) == audio_bus) {
 			return audio_bus;
@@ -607,19 +607,19 @@ StringName Area3D::get_audio_bus_name() const {
 	return SceneStringName(Master);
 }
 
-void Area3D::set_use_reverb_bus(bool p_enable) {
+void SEArea::set_use_reverb_bus(bool p_enable) {
 	use_reverb_bus = p_enable;
 }
 
-bool Area3D::is_using_reverb_bus() const {
+bool SEArea::is_using_reverb_bus() const {
 	return use_reverb_bus;
 }
 
-void Area3D::set_reverb_bus_name(const StringName &p_audio_bus) {
+void SEArea::set_reverb_bus_name(const StringName &p_audio_bus) {
 	reverb_bus = p_audio_bus;
 }
 
-StringName Area3D::get_reverb_bus_name() const {
+StringName SEArea::get_reverb_bus_name() const {
 	for (int i = 0; i < AudioServer::get_singleton()->get_bus_count(); i++) {
 		if (AudioServer::get_singleton()->get_bus_name(i) == reverb_bus) {
 			return reverb_bus;
@@ -628,23 +628,23 @@ StringName Area3D::get_reverb_bus_name() const {
 	return SceneStringName(Master);
 }
 
-void Area3D::set_reverb_amount(float p_amount) {
+void SEArea::set_reverb_amount(float p_amount) {
 	reverb_amount = p_amount;
 }
 
-float Area3D::get_reverb_amount() const {
+float SEArea::get_reverb_amount() const {
 	return reverb_amount;
 }
 
-void Area3D::set_reverb_uniformity(float p_uniformity) {
+void SEArea::set_reverb_uniformity(float p_uniformity) {
 	reverb_uniformity = p_uniformity;
 }
 
-float Area3D::get_reverb_uniformity() const {
+float SEArea::get_reverb_uniformity() const {
 	return reverb_uniformity;
 }
 
-void Area3D::_validate_property(PropertyInfo &p_property) const {
+void SEArea::_validate_property(PropertyInfo &p_property) const {
 	if (!Engine::get_singleton()->is_editor_hint()) {
 		return;
 	}
@@ -684,91 +684,91 @@ void Area3D::_validate_property(PropertyInfo &p_property) const {
 	}
 }
 
-void Area3D::_bind_methods() {
-	ClassDB::bind_method(D_METHOD("set_gravity_space_override_mode", "space_override_mode"), &Area3D::set_gravity_space_override_mode);
-	ClassDB::bind_method(D_METHOD("get_gravity_space_override_mode"), &Area3D::get_gravity_space_override_mode);
+void SEArea::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("set_gravity_space_override_mode", "space_override_mode"), &SEArea::set_gravity_space_override_mode);
+	ClassDB::bind_method(D_METHOD("get_gravity_space_override_mode"), &SEArea::get_gravity_space_override_mode);
 
-	ClassDB::bind_method(D_METHOD("set_gravity_is_point", "enable"), &Area3D::set_gravity_is_point);
-	ClassDB::bind_method(D_METHOD("is_gravity_a_point"), &Area3D::is_gravity_a_point);
+	ClassDB::bind_method(D_METHOD("set_gravity_is_point", "enable"), &SEArea::set_gravity_is_point);
+	ClassDB::bind_method(D_METHOD("is_gravity_a_point"), &SEArea::is_gravity_a_point);
 
-	ClassDB::bind_method(D_METHOD("set_gravity_point_unit_distance", "distance_scale"), &Area3D::set_gravity_point_unit_distance);
-	ClassDB::bind_method(D_METHOD("get_gravity_point_unit_distance"), &Area3D::get_gravity_point_unit_distance);
+	ClassDB::bind_method(D_METHOD("set_gravity_point_unit_distance", "distance_scale"), &SEArea::set_gravity_point_unit_distance);
+	ClassDB::bind_method(D_METHOD("get_gravity_point_unit_distance"), &SEArea::get_gravity_point_unit_distance);
 
-	ClassDB::bind_method(D_METHOD("set_gravity_point_center", "center"), &Area3D::set_gravity_point_center);
-	ClassDB::bind_method(D_METHOD("get_gravity_point_center"), &Area3D::get_gravity_point_center);
+	ClassDB::bind_method(D_METHOD("set_gravity_point_center", "center"), &SEArea::set_gravity_point_center);
+	ClassDB::bind_method(D_METHOD("get_gravity_point_center"), &SEArea::get_gravity_point_center);
 
-	ClassDB::bind_method(D_METHOD("set_gravity_direction", "direction"), &Area3D::set_gravity_direction);
-	ClassDB::bind_method(D_METHOD("get_gravity_direction"), &Area3D::get_gravity_direction);
+	ClassDB::bind_method(D_METHOD("set_gravity_direction", "direction"), &SEArea::set_gravity_direction);
+	ClassDB::bind_method(D_METHOD("get_gravity_direction"), &SEArea::get_gravity_direction);
 
-	ClassDB::bind_method(D_METHOD("set_gravity", "gravity"), &Area3D::set_gravity);
-	ClassDB::bind_method(D_METHOD("get_gravity"), &Area3D::get_gravity);
+	ClassDB::bind_method(D_METHOD("set_gravity", "gravity"), &SEArea::set_gravity);
+	ClassDB::bind_method(D_METHOD("get_gravity"), &SEArea::get_gravity);
 
-	ClassDB::bind_method(D_METHOD("set_linear_damp_space_override_mode", "space_override_mode"), &Area3D::set_linear_damp_space_override_mode);
-	ClassDB::bind_method(D_METHOD("get_linear_damp_space_override_mode"), &Area3D::get_linear_damp_space_override_mode);
+	ClassDB::bind_method(D_METHOD("set_linear_damp_space_override_mode", "space_override_mode"), &SEArea::set_linear_damp_space_override_mode);
+	ClassDB::bind_method(D_METHOD("get_linear_damp_space_override_mode"), &SEArea::get_linear_damp_space_override_mode);
 
-	ClassDB::bind_method(D_METHOD("set_angular_damp_space_override_mode", "space_override_mode"), &Area3D::set_angular_damp_space_override_mode);
-	ClassDB::bind_method(D_METHOD("get_angular_damp_space_override_mode"), &Area3D::get_angular_damp_space_override_mode);
+	ClassDB::bind_method(D_METHOD("set_angular_damp_space_override_mode", "space_override_mode"), &SEArea::set_angular_damp_space_override_mode);
+	ClassDB::bind_method(D_METHOD("get_angular_damp_space_override_mode"), &SEArea::get_angular_damp_space_override_mode);
 
-	ClassDB::bind_method(D_METHOD("set_angular_damp", "angular_damp"), &Area3D::set_angular_damp);
-	ClassDB::bind_method(D_METHOD("get_angular_damp"), &Area3D::get_angular_damp);
+	ClassDB::bind_method(D_METHOD("set_angular_damp", "angular_damp"), &SEArea::set_angular_damp);
+	ClassDB::bind_method(D_METHOD("get_angular_damp"), &SEArea::get_angular_damp);
 
-	ClassDB::bind_method(D_METHOD("set_linear_damp", "linear_damp"), &Area3D::set_linear_damp);
-	ClassDB::bind_method(D_METHOD("get_linear_damp"), &Area3D::get_linear_damp);
+	ClassDB::bind_method(D_METHOD("set_linear_damp", "linear_damp"), &SEArea::set_linear_damp);
+	ClassDB::bind_method(D_METHOD("get_linear_damp"), &SEArea::get_linear_damp);
 
-	ClassDB::bind_method(D_METHOD("set_priority", "priority"), &Area3D::set_priority);
-	ClassDB::bind_method(D_METHOD("get_priority"), &Area3D::get_priority);
+	ClassDB::bind_method(D_METHOD("set_priority", "priority"), &SEArea::set_priority);
+	ClassDB::bind_method(D_METHOD("get_priority"), &SEArea::get_priority);
 
-	ClassDB::bind_method(D_METHOD("set_wind_force_magnitude", "wind_force_magnitude"), &Area3D::set_wind_force_magnitude);
-	ClassDB::bind_method(D_METHOD("get_wind_force_magnitude"), &Area3D::get_wind_force_magnitude);
+	ClassDB::bind_method(D_METHOD("set_wind_force_magnitude", "wind_force_magnitude"), &SEArea::set_wind_force_magnitude);
+	ClassDB::bind_method(D_METHOD("get_wind_force_magnitude"), &SEArea::get_wind_force_magnitude);
 
-	ClassDB::bind_method(D_METHOD("set_wind_attenuation_factor", "wind_attenuation_factor"), &Area3D::set_wind_attenuation_factor);
-	ClassDB::bind_method(D_METHOD("get_wind_attenuation_factor"), &Area3D::get_wind_attenuation_factor);
+	ClassDB::bind_method(D_METHOD("set_wind_attenuation_factor", "wind_attenuation_factor"), &SEArea::set_wind_attenuation_factor);
+	ClassDB::bind_method(D_METHOD("get_wind_attenuation_factor"), &SEArea::get_wind_attenuation_factor);
 
-	ClassDB::bind_method(D_METHOD("set_wind_source_path", "wind_source_path"), &Area3D::set_wind_source_path);
-	ClassDB::bind_method(D_METHOD("get_wind_source_path"), &Area3D::get_wind_source_path);
+	ClassDB::bind_method(D_METHOD("set_wind_source_path", "wind_source_path"), &SEArea::set_wind_source_path);
+	ClassDB::bind_method(D_METHOD("get_wind_source_path"), &SEArea::get_wind_source_path);
 
-	ClassDB::bind_method(D_METHOD("set_monitorable", "enable"), &Area3D::set_monitorable);
-	ClassDB::bind_method(D_METHOD("is_monitorable"), &Area3D::is_monitorable);
+	ClassDB::bind_method(D_METHOD("set_monitorable", "enable"), &SEArea::set_monitorable);
+	ClassDB::bind_method(D_METHOD("is_monitorable"), &SEArea::is_monitorable);
 
-	ClassDB::bind_method(D_METHOD("set_monitoring", "enable"), &Area3D::set_monitoring);
-	ClassDB::bind_method(D_METHOD("is_monitoring"), &Area3D::is_monitoring);
+	ClassDB::bind_method(D_METHOD("set_monitoring", "enable"), &SEArea::set_monitoring);
+	ClassDB::bind_method(D_METHOD("is_monitoring"), &SEArea::is_monitoring);
 
-	ClassDB::bind_method(D_METHOD("get_overlapping_bodies"), &Area3D::get_overlapping_bodies);
-	ClassDB::bind_method(D_METHOD("get_overlapping_areas"), &Area3D::get_overlapping_areas);
+	ClassDB::bind_method(D_METHOD("get_overlapping_bodies"), &SEArea::get_overlapping_bodies);
+	ClassDB::bind_method(D_METHOD("get_overlapping_areas"), &SEArea::get_overlapping_areas);
 
-	ClassDB::bind_method(D_METHOD("has_overlapping_bodies"), &Area3D::has_overlapping_bodies);
-	ClassDB::bind_method(D_METHOD("has_overlapping_areas"), &Area3D::has_overlapping_areas);
+	ClassDB::bind_method(D_METHOD("has_overlapping_bodies"), &SEArea::has_overlapping_bodies);
+	ClassDB::bind_method(D_METHOD("has_overlapping_areas"), &SEArea::has_overlapping_areas);
 
-	ClassDB::bind_method(D_METHOD("overlaps_body", "body"), &Area3D::overlaps_body);
-	ClassDB::bind_method(D_METHOD("overlaps_area", "area"), &Area3D::overlaps_area);
+	ClassDB::bind_method(D_METHOD("overlaps_body", "body"), &SEArea::overlaps_body);
+	ClassDB::bind_method(D_METHOD("overlaps_area", "area"), &SEArea::overlaps_area);
 
-	ClassDB::bind_method(D_METHOD("set_audio_bus_override", "enable"), &Area3D::set_audio_bus_override);
-	ClassDB::bind_method(D_METHOD("is_overriding_audio_bus"), &Area3D::is_overriding_audio_bus);
+	ClassDB::bind_method(D_METHOD("set_audio_bus_override", "enable"), &SEArea::set_audio_bus_override);
+	ClassDB::bind_method(D_METHOD("is_overriding_audio_bus"), &SEArea::is_overriding_audio_bus);
 
-	ClassDB::bind_method(D_METHOD("set_audio_bus_name", "name"), &Area3D::set_audio_bus_name);
-	ClassDB::bind_method(D_METHOD("get_audio_bus_name"), &Area3D::get_audio_bus_name);
+	ClassDB::bind_method(D_METHOD("set_audio_bus_name", "name"), &SEArea::set_audio_bus_name);
+	ClassDB::bind_method(D_METHOD("get_audio_bus_name"), &SEArea::get_audio_bus_name);
 
-	ClassDB::bind_method(D_METHOD("set_use_reverb_bus", "enable"), &Area3D::set_use_reverb_bus);
-	ClassDB::bind_method(D_METHOD("is_using_reverb_bus"), &Area3D::is_using_reverb_bus);
+	ClassDB::bind_method(D_METHOD("set_use_reverb_bus", "enable"), &SEArea::set_use_reverb_bus);
+	ClassDB::bind_method(D_METHOD("is_using_reverb_bus"), &SEArea::is_using_reverb_bus);
 
-	ClassDB::bind_method(D_METHOD("set_reverb_bus_name", "name"), &Area3D::set_reverb_bus_name);
-	ClassDB::bind_method(D_METHOD("get_reverb_bus_name"), &Area3D::get_reverb_bus_name);
+	ClassDB::bind_method(D_METHOD("set_reverb_bus_name", "name"), &SEArea::set_reverb_bus_name);
+	ClassDB::bind_method(D_METHOD("get_reverb_bus_name"), &SEArea::get_reverb_bus_name);
 
-	ClassDB::bind_method(D_METHOD("set_reverb_amount", "amount"), &Area3D::set_reverb_amount);
-	ClassDB::bind_method(D_METHOD("get_reverb_amount"), &Area3D::get_reverb_amount);
+	ClassDB::bind_method(D_METHOD("set_reverb_amount", "amount"), &SEArea::set_reverb_amount);
+	ClassDB::bind_method(D_METHOD("get_reverb_amount"), &SEArea::get_reverb_amount);
 
-	ClassDB::bind_method(D_METHOD("set_reverb_uniformity", "amount"), &Area3D::set_reverb_uniformity);
-	ClassDB::bind_method(D_METHOD("get_reverb_uniformity"), &Area3D::get_reverb_uniformity);
+	ClassDB::bind_method(D_METHOD("set_reverb_uniformity", "amount"), &SEArea::set_reverb_uniformity);
+	ClassDB::bind_method(D_METHOD("get_reverb_uniformity"), &SEArea::get_reverb_uniformity);
 
 	ADD_SIGNAL(MethodInfo("body_shape_entered", PropertyInfo(Variant::RID, "body_rid"), PropertyInfo(Variant::OBJECT, "body", PROPERTY_HINT_RESOURCE_TYPE, "Node3D"), PropertyInfo(Variant::INT, "body_shape_index"), PropertyInfo(Variant::INT, "local_shape_index")));
 	ADD_SIGNAL(MethodInfo("body_shape_exited", PropertyInfo(Variant::RID, "body_rid"), PropertyInfo(Variant::OBJECT, "body", PROPERTY_HINT_RESOURCE_TYPE, "Node3D"), PropertyInfo(Variant::INT, "body_shape_index"), PropertyInfo(Variant::INT, "local_shape_index")));
 	ADD_SIGNAL(MethodInfo("body_entered", PropertyInfo(Variant::OBJECT, "body", PROPERTY_HINT_RESOURCE_TYPE, "Node3D")));
 	ADD_SIGNAL(MethodInfo("body_exited", PropertyInfo(Variant::OBJECT, "body", PROPERTY_HINT_RESOURCE_TYPE, "Node3D")));
 
-	ADD_SIGNAL(MethodInfo("area_shape_entered", PropertyInfo(Variant::RID, "area_rid"), PropertyInfo(Variant::OBJECT, "area", PROPERTY_HINT_RESOURCE_TYPE, "Area3D"), PropertyInfo(Variant::INT, "area_shape_index"), PropertyInfo(Variant::INT, "local_shape_index")));
-	ADD_SIGNAL(MethodInfo("area_shape_exited", PropertyInfo(Variant::RID, "area_rid"), PropertyInfo(Variant::OBJECT, "area", PROPERTY_HINT_RESOURCE_TYPE, "Area3D"), PropertyInfo(Variant::INT, "area_shape_index"), PropertyInfo(Variant::INT, "local_shape_index")));
-	ADD_SIGNAL(MethodInfo("area_entered", PropertyInfo(Variant::OBJECT, "area", PROPERTY_HINT_RESOURCE_TYPE, "Area3D")));
-	ADD_SIGNAL(MethodInfo("area_exited", PropertyInfo(Variant::OBJECT, "area", PROPERTY_HINT_RESOURCE_TYPE, "Area3D")));
+	ADD_SIGNAL(MethodInfo("area_shape_entered", PropertyInfo(Variant::RID, "area_rid"), PropertyInfo(Variant::OBJECT, "area", PROPERTY_HINT_RESOURCE_TYPE, "SEArea"), PropertyInfo(Variant::INT, "area_shape_index"), PropertyInfo(Variant::INT, "local_shape_index")));
+	ADD_SIGNAL(MethodInfo("area_shape_exited", PropertyInfo(Variant::RID, "area_rid"), PropertyInfo(Variant::OBJECT, "area", PROPERTY_HINT_RESOURCE_TYPE, "SEArea"), PropertyInfo(Variant::INT, "area_shape_index"), PropertyInfo(Variant::INT, "local_shape_index")));
+	ADD_SIGNAL(MethodInfo("area_entered", PropertyInfo(Variant::OBJECT, "area", PROPERTY_HINT_RESOURCE_TYPE, "SEArea")));
+	ADD_SIGNAL(MethodInfo("area_exited", PropertyInfo(Variant::OBJECT, "area", PROPERTY_HINT_RESOURCE_TYPE, "SEArea")));
 
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "monitoring"), "set_monitoring", "is_monitoring");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "monitorable"), "set_monitorable", "is_monitorable");
@@ -812,7 +812,7 @@ void Area3D::_bind_methods() {
 	BIND_ENUM_CONSTANT(SPACE_OVERRIDE_REPLACE_COMBINE);
 }
 
-Area3D::Area3D() :
+SEArea::SEArea() :
 		CollisionObject3D(PhysicsServer3D::get_singleton()->area_create(), true) {
 	audio_bus = SceneStringName(Master);
 	reverb_bus = SceneStringName(Master);
@@ -822,5 +822,5 @@ Area3D::Area3D() :
 	set_monitorable(true);
 }
 
-Area3D::~Area3D() {
+SEArea::~SEArea() {
 }

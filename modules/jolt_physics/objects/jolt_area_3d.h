@@ -37,7 +37,7 @@
 class JoltBody3D;
 class JoltSoftBody3D;
 
-class JoltArea3D final : public JoltShapedObject3D {
+class JoltSEArea final : public JoltShapedObject3D {
 public:
 	typedef PhysicsServer3D::AreaSpaceOverrideMode OverrideMode;
 
@@ -95,7 +95,7 @@ private:
 
 	typedef HashMap<JPH::BodyID, Overlap, BodyIDHasher> OverlapsById;
 
-	SelfList<JoltArea3D> call_queries_element;
+	SelfList<JoltSEArea> call_queries_element;
 
 	OverlapsById bodies_by_id;
 	OverlapsById areas_by_id;
@@ -155,7 +155,7 @@ private:
 	void _gravity_changed();
 
 public:
-	JoltArea3D();
+	JoltSEArea();
 
 	bool is_default_area() const;
 	void set_default_area(bool p_value);
@@ -180,11 +180,11 @@ public:
 
 	bool can_monitor(const JoltBody3D &p_other) const;
 	bool can_monitor(const JoltSoftBody3D &p_other) const;
-	bool can_monitor(const JoltArea3D &p_other) const;
+	bool can_monitor(const JoltSEArea &p_other) const;
 
 	virtual bool can_interact_with(const JoltBody3D &p_other) const override;
 	virtual bool can_interact_with(const JoltSoftBody3D &p_other) const override;
-	virtual bool can_interact_with(const JoltArea3D &p_other) const override;
+	virtual bool can_interact_with(const JoltSEArea &p_other) const override;
 
 	virtual Vector3 get_velocity_at_position(const Vector3 &p_position) const override;
 

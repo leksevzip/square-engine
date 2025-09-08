@@ -40,7 +40,7 @@
 #include "servers/audio/audio_stream.h"
 
 #ifndef PHYSICS_3D_DISABLED
-#include "scene/3d/physics/area_3d.h"
+#include "scene/3d/physics/se_area.h"
 #endif // PHYSICS_3D_DISABLED
 
 // Based on "A Novel Multichannel Panning Method for Standard and Arbitrary Loudspeaker Configurations" by Ramy Sadek and Chris Kyriakakis (2004)
@@ -159,7 +159,7 @@ AudioFrame AudioStreamPlayer3D::_calc_output_vol_stereo(const Vector3 &source_di
 }
 
 #ifndef PHYSICS_3D_DISABLED
-void AudioStreamPlayer3D::_calc_reverb_vol(Area3D *area, Vector3 listener_area_pos, Vector<AudioFrame> direct_path_vol, Vector<AudioFrame> &reverb_vol) {
+void AudioStreamPlayer3D::_calc_reverb_vol(SEArea *area, Vector3 listener_area_pos, Vector<AudioFrame> direct_path_vol, Vector<AudioFrame> &reverb_vol) {
 	reverb_vol.resize(4);
 	reverb_vol.write[0] = AudioFrame(0, 0);
 	reverb_vol.write[1] = AudioFrame(0, 0);
@@ -304,7 +304,7 @@ void AudioStreamPlayer3D::_notification(int p_what) {
 
 #ifndef PHYSICS_3D_DISABLED
 // Interacts with PhysicsServer3D, so can only be called during _physics_process
-Area3D *AudioStreamPlayer3D::_get_overriding_area() {
+SEArea *AudioStreamPlayer3D::_get_overriding_area() {
 	//check if any area is diverting sound into a bus
 	Ref<World3D> world_3d = get_world_3d();
 	ERR_FAIL_COND_V(world_3d.is_null(), nullptr);
@@ -328,7 +328,7 @@ Area3D *AudioStreamPlayer3D::_get_overriding_area() {
 			continue;
 		}
 
-		Area3D *tarea = Object::cast_to<Area3D>(sr[i].collider);
+		SEArea *tarea = Object::cast_to<SEArea>(sr[i].collider);
 		if (!tarea) {
 			continue;
 		}
@@ -346,7 +346,7 @@ Area3D *AudioStreamPlayer3D::_get_overriding_area() {
 // Interacts with PhysicsServer3D, so can only be called during _physics_process.
 StringName AudioStreamPlayer3D::_get_actual_bus() {
 #ifndef PHYSICS_3D_DISABLED
-	Area3D *overriding_area = _get_overriding_area();
+	SEArea *overriding_area = _get_overriding_area();
 	if (overriding_area && overriding_area->is_overriding_audio_bus() && !overriding_area->is_using_reverb_bus()) {
 		return overriding_area->get_audio_bus_name();
 	}
@@ -412,7 +412,7 @@ Vector<AudioFrame> AudioStreamPlayer3D::_update_panning() {
 		Vector3 area_sound_pos;
 		Vector3 listener_area_pos;
 
-		Area3D *area = _get_overriding_area();
+		SEArea *area = _get_overriding_area();
 		if (area && area->is_using_reverb_bus() && area->get_reverb_uniformity() > 0) {
 			area_sound_pos = space_state->get_closest_point_to_object_volume(area->get_rid(), listener_node->get_global_transform().origin);
 			listener_area_pos = listener_node->get_global_transform().affine_inverse().xform(area_sound_pos);

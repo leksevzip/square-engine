@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  collision_shape_3d.h                                                  */
+/*  se_collision.h                                                  */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -34,8 +34,8 @@
 #include "scene/resources/3d/shape_3d.h"
 
 class CollisionObject3D;
-class CollisionShape3D : public Node3D {
-	GDCLASS(CollisionShape3D, Node3D);
+class SECollision : public Node3D {
+	GDCLASS(SECollision, Node3D);
 
 	Ref<Shape3D> shape;
 
@@ -86,6 +86,6 @@ public:
 
 	PackedStringArray get_configuration_warnings() const override;
 
-	CollisionShape3D();
-	~CollisionShape3D();
+	SECollision();
+	~SECollision();
 };

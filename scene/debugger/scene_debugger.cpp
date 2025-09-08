@@ -56,7 +56,7 @@
 #include "scene/3d/se_camera.h"
 #ifndef PHYSICS_3D_DISABLED
 #include "scene/3d/physics/collision_object_3d.h"
-#include "scene/3d/physics/collision_shape_3d.h"
+#include "scene/3d/physics/se_collision.h"
 #endif // PHYSICS_3D_DISABLED
 #include "scene/3d/visual_instance_3d.h"
 #include "scene/resources/3d/convex_polygon_shape_3d.h"
@@ -2192,7 +2192,7 @@ void RuntimeNodeSelect::_update_selection() {
 			bounds = visual_instance->get_aabb();
 		} else {
 #ifndef PHYSICS_3D_DISABLED
-			CollisionShape3D *collision_shape = Object::cast_to<CollisionShape3D>(node_3d);
+			SECollision *collision_shape = Object::cast_to<SECollision>(node_3d);
 			if (collision_shape) {
 				Ref<Shape3D> shape = collision_shape->get_shape();
 				if (shape.is_valid()) {

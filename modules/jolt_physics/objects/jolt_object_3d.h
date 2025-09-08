@@ -44,7 +44,7 @@
 #include "Jolt/Physics/Collision/BroadPhase/BroadPhaseLayer.h"
 #include "Jolt/Physics/Collision/ObjectLayer.h"
 
-class JoltArea3D;
+class JoltSEArea;
 class JoltBody3D;
 class JoltShapedObject3D;
 class JoltShape3D;
@@ -111,8 +111,8 @@ public:
 	JoltSoftBody3D *as_soft_body() { return is_soft_body() ? reinterpret_cast<JoltSoftBody3D *>(this) : nullptr; }
 	const JoltSoftBody3D *as_soft_body() const { return is_soft_body() ? reinterpret_cast<const JoltSoftBody3D *>(this) : nullptr; }
 
-	JoltArea3D *as_area() { return is_area() ? reinterpret_cast<JoltArea3D *>(this) : nullptr; }
-	const JoltArea3D *as_area() const { return is_area() ? reinterpret_cast<const JoltArea3D *>(this) : nullptr; }
+	JoltSEArea *as_area() { return is_area() ? reinterpret_cast<JoltSEArea *>(this) : nullptr; }
+	const JoltSEArea *as_area() const { return is_area() ? reinterpret_cast<const JoltSEArea *>(this) : nullptr; }
 
 	RID get_rid() const { return rid; }
 	void set_rid(const RID &p_rid) { rid = p_rid; }
@@ -144,7 +144,7 @@ public:
 
 	virtual bool can_interact_with(const JoltBody3D &p_other) const = 0;
 	virtual bool can_interact_with(const JoltSoftBody3D &p_other) const = 0;
-	virtual bool can_interact_with(const JoltArea3D &p_other) const = 0;
+	virtual bool can_interact_with(const JoltSEArea &p_other) const = 0;
 
 	virtual bool reports_contacts() const = 0;
 

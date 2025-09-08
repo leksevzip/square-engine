@@ -223,7 +223,7 @@ void JoltSpace3D::call_queries() {
 	}
 
 	while (area_call_queries_list.first()) {
-		JoltArea3D *body = area_call_queries_list.first()->self();
+		JoltSEArea *body = area_call_queries_list.first()->self();
 		area_call_queries_list.remove(area_call_queries_list.first());
 		body->call_queries();
 	}
@@ -352,7 +352,7 @@ JoltBody3D *JoltSpace3D::try_get_body(const JPH::BodyID &p_body_id) const {
 	return object->as_body();
 }
 
-JoltArea3D *JoltSpace3D::try_get_area(const JPH::BodyID &p_body_id) const {
+JoltSEArea *JoltSpace3D::try_get_area(const JPH::BodyID &p_body_id) const {
 	JoltObject3D *object = try_get_object(p_body_id);
 	if (unlikely(object == nullptr)) {
 		return nullptr;
@@ -378,7 +378,7 @@ JoltPhysicsDirectSpaceState3D *JoltSpace3D::get_direct_state() {
 	return direct_state;
 }
 
-void JoltSpace3D::set_default_area(JoltArea3D *p_area) {
+void JoltSpace3D::set_default_area(JoltSEArea *p_area) {
 	if (default_area == p_area) {
 		return;
 	}
@@ -504,7 +504,7 @@ void JoltSpace3D::enqueue_call_queries(SelfList<JoltBody3D> *p_body) {
 	}
 }
 
-void JoltSpace3D::enqueue_call_queries(SelfList<JoltArea3D> *p_area) {
+void JoltSpace3D::enqueue_call_queries(SelfList<JoltSEArea> *p_area) {
 	if (!p_area->in_list()) {
 		area_call_queries_list.add(p_area);
 	}
@@ -516,7 +516,7 @@ void JoltSpace3D::dequeue_call_queries(SelfList<JoltBody3D> *p_body) {
 	}
 }
 
-void JoltSpace3D::dequeue_call_queries(SelfList<JoltArea3D> *p_area) {
+void JoltSpace3D::dequeue_call_queries(SelfList<JoltSEArea> *p_area) {
 	if (p_area->in_list()) {
 		area_call_queries_list.remove(p_area);
 	}
