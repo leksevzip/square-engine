@@ -344,7 +344,7 @@
 		</member>
 		<member name="scale" type="Vector3" setter="set_scale" getter="get_scale" default="Vector3(1, 1, 1)">
 			Scale of this node in local space (relative to this node). This value is obtained from [member basis]'s scale.
-			[b]Note:[/b] The behavior of some 3D node types is not affected by this property. These include [Light3D], [SECamera], [AudioStreamPlayer3D], and more.
+			[b]Note:[/b] The behavior of some 3D node types is not affected by this property. These include [SELight], [SECamera], [AudioStreamPlayer3D], and more.
 			[b]Warning:[/b] The scale's components must either be all positive or all negative, and [b]not[/b] exactly [code]0.0[/code]. Otherwise, it won't be possible to obtain the scale from the [member basis]. This may cause the intended scale to be lost when reloaded from disk, and potentially other unstable behavior.
 		</member>
 		<member name="top_level" type="bool" setter="set_as_top_level" getter="is_set_as_top_level" default="false">

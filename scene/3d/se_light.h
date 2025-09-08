@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  light_3d.h                                                            */
+/*  se_light.h                                                            */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -32,8 +32,8 @@
 
 #include "scene/3d/visual_instance_3d.h"
 
-class Light3D : public VisualInstance3D {
-	GDCLASS(Light3D, VisualInstance3D);
+class SELight : public VisualInstance3D {
+	GDCLASS(SELight, VisualInstance3D);
 
 public:
 	enum Param {
@@ -98,7 +98,7 @@ protected:
 	void _notification(int p_what);
 	void _validate_property(PropertyInfo &p_property) const;
 
-	Light3D(RenderingServer::LightType p_type);
+	SELight(RenderingServer::LightType p_type);
 
 public:
 	RS::LightType get_light_type() const { return type; }
@@ -152,15 +152,15 @@ public:
 	virtual AABB get_aabb() const override;
 	virtual PackedStringArray get_configuration_warnings() const override;
 
-	Light3D();
-	~Light3D();
+	SELight();
+	~SELight();
 };
 
-VARIANT_ENUM_CAST(Light3D::Param);
-VARIANT_ENUM_CAST(Light3D::BakeMode);
+VARIANT_ENUM_CAST(SELight::Param);
+VARIANT_ENUM_CAST(SELight::BakeMode);
 
-class DirectionalLight3D : public Light3D {
-	GDCLASS(DirectionalLight3D, Light3D);
+class SEDirectional : public SELight {
+	GDCLASS(SEDirectional, SELight);
 
 public:
 	enum ShadowMode {
@@ -194,14 +194,14 @@ public:
 	void set_sky_mode(SkyMode p_mode);
 	SkyMode get_sky_mode() const;
 
-	DirectionalLight3D();
+	SEDirectional();
 };
 
-VARIANT_ENUM_CAST(DirectionalLight3D::ShadowMode)
-VARIANT_ENUM_CAST(DirectionalLight3D::SkyMode)
+VARIANT_ENUM_CAST(SEDirectional::ShadowMode)
+VARIANT_ENUM_CAST(SEDirectional::SkyMode)
 
-class OmniLight3D : public Light3D {
-	GDCLASS(OmniLight3D, Light3D);
+class SEOmni : public SELight {
+	GDCLASS(SEOmni, SELight);
 
 public:
 	// omni light
@@ -222,13 +222,13 @@ public:
 
 	PackedStringArray get_configuration_warnings() const override;
 
-	OmniLight3D();
+	SEOmni();
 };
 
-VARIANT_ENUM_CAST(OmniLight3D::ShadowMode)
+VARIANT_ENUM_CAST(SEOmni::ShadowMode)
 
-class SpotLight3D : public Light3D {
-	GDCLASS(SpotLight3D, Light3D);
+class SESpot : public SELight {
+	GDCLASS(SESpot, SELight);
 
 protected:
 	static void _bind_methods();
@@ -236,5 +236,5 @@ protected:
 public:
 	PackedStringArray get_configuration_warnings() const override;
 
-	SpotLight3D();
+	SESpot();
 };

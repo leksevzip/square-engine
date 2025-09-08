@@ -1879,12 +1879,12 @@ SceneImportSettingsDialog::SceneImportSettingsDialog() {
 	environment->set_sky_custom_fov(50.0);
 	camera->set_environment(environment);
 
-	light1 = memnew(DirectionalLight3D);
+	light1 = memnew(SEDirectional);
 	light1->set_transform(Transform3D(Basis::looking_at(Vector3(-1, -1, -1))));
 	light1->set_shadow(true);
 	camera->add_child(light1);
 
-	light2 = memnew(DirectionalLight3D);
+	light2 = memnew(SEDirectional);
 	light2->set_transform(Transform3D(Basis::looking_at(Vector3(0, 1, 0), Vector3(0, 0, 1))));
 	light2->set_color(Color(0.5f, 0.5f, 0.5f));
 	camera->add_child(light2);

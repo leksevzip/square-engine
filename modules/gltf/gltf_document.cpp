@@ -49,7 +49,7 @@
 #include "scene/3d/bone_attachment_3d.h"
 #include "scene/3d/se_camera.h"
 #include "scene/3d/importer_se_mesh.h"
-#include "scene/3d/light_3d.h"
+#include "scene/3d/se_light.h"
 #include "scene/3d/se_mesh.h"
 #include "scene/3d/multise_mesh.h"
 #include "scene/animation/animation_player.h"
@@ -5888,7 +5888,7 @@ ImporterSEMesh *GLTFDocument::_generate_mesh_instance(Ref<GLTFState> p_state, co
 	return mi;
 }
 
-Light3D *GLTFDocument::_generate_light(Ref<GLTFState> p_state, const GLTFNodeIndex p_node_index) {
+SELight *GLTFDocument::_generate_light(Ref<GLTFState> p_state, const GLTFNodeIndex p_node_index) {
 	Ref<GLTFNode> gltf_node = p_state->nodes[p_node_index];
 
 	ERR_FAIL_INDEX_V(gltf_node->light, p_state->lights.size(), nullptr);
@@ -5919,7 +5919,7 @@ GLTFCameraIndex GLTFDocument::_convert_camera(Ref<GLTFState> p_state, SECamera *
 	return camera_index;
 }
 
-GLTFLightIndex GLTFDocument::_convert_light(Ref<GLTFState> p_state, Light3D *p_light) {
+GLTFLightIndex GLTFDocument::_convert_light(Ref<GLTFState> p_state, SELight *p_light) {
 	print_verbose("glTF: Converting light: " + p_light->get_name());
 
 	Ref<GLTFLight> l = GLTFLight::from_node(p_light);
@@ -5995,8 +5995,8 @@ void GLTFDocument::_convert_scene_node(Ref<GLTFState> p_state, Node *p_current, 
 	} else if (Object::cast_to<SECamera>(p_current)) {
 		SECamera *camera = Object::cast_to<SECamera>(p_current);
 		_convert_camera_to_gltf(camera, p_state, gltf_node);
-	} else if (Object::cast_to<Light3D>(p_current)) {
-		Light3D *light = Object::cast_to<Light3D>(p_current);
+	} else if (Object::cast_to<SELight>(p_current)) {
+		SELight *light = Object::cast_to<SELight>(p_current);
 		_convert_light_to_gltf(light, p_state, gltf_node);
 	} else if (Object::cast_to<AnimationPlayer>(p_current)) {
 		AnimationPlayer *animation_player = Object::cast_to<AnimationPlayer>(p_current);
@@ -6091,7 +6091,7 @@ void GLTFDocument::_convert_camera_to_gltf(SECamera *camera, Ref<GLTFState> p_st
 	}
 }
 
-void GLTFDocument::_convert_light_to_gltf(Light3D *light, Ref<GLTFState> p_state, Ref<GLTFNode> p_gltf_node) {
+void GLTFDocument::_convert_light_to_gltf(SELight *light, Ref<GLTFState> p_state, Ref<GLTFNode> p_gltf_node) {
 	ERR_FAIL_NULL(light);
 	GLTFLightIndex light_index = _convert_light(p_state, light);
 	if (light_index != -1) {
@@ -7164,7 +7164,7 @@ Ref<GLTFObjectModelProperty> GLTFDocument::export_object_model_property(Ref<GLTF
 			} else {
 				split_json_pointer.clear();
 			}
-		} else if (Object::cast_to<Light3D>(target_object) && gltf_node->light >= 0) {
+		} else if (Object::cast_to<SELight>(target_object) && gltf_node->light >= 0) {
 			split_json_pointer.append("extensions");
 			split_json_pointer.append("KHR_lights_punctual");
 			split_json_pointer.append("lights");

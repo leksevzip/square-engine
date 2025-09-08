@@ -472,7 +472,7 @@
 			Setting to hardcode audio delay when playing video. Best to leave this unchanged unless you know what you are doing.
 		</member>
 		<member name="collada/use_ambient" type="bool" setter="" getter="" default="false">
-			If [code]true[/code], ambient lights will be imported from COLLADA models as [DirectionalLight3D]. If [code]false[/code], ambient lights will be ignored.
+			If [code]true[/code], ambient lights will be imported from COLLADA models as [SEDirectional]. If [code]false[/code], ambient lights will be ignored.
 		</member>
 		<member name="compression/formats/gzip/compression_level" type="int" setter="" getter="" default="-1">
 			The default compression level for gzip. Affects compressed scenes and resources. Higher levels result in smaller files at the cost of compression speed. Decompression speed is mostly unaffected by the compression level. [code]-1[/code] uses the default gzip compression level, which is identical to [code]6[/code] but could change in the future due to underlying zlib updates.
@@ -2936,7 +2936,7 @@
 		</member>
 		<member name="rendering/global_illumination/sdfgi/frames_to_update_lights" type="int" setter="" getter="" default="2">
 			The number of frames over which dynamic lights should be updated in signed distance field global illumination. Higher values take more time to update indirect lighting coming from dynamic lights, but result in better performance when many dynamic lights are present. See also [member rendering/global_illumination/sdfgi/frames_to_converge] and [member rendering/global_illumination/sdfgi/probe_ray_count].
-			[b]Note:[/b] This only affects [Light3D] nodes whose [member Light3D.light_bake_mode] is [constant Light3D.BAKE_DYNAMIC] (which is the default). Consider making non-moving lights use the [constant Light3D.BAKE_STATIC] bake mode to improve performance.
+			[b]Note:[/b] This only affects [SELight] nodes whose [member SELight.light_bake_mode] is [constant SELight.BAKE_DYNAMIC] (which is the default). Consider making non-moving lights use the [constant SELight.BAKE_STATIC] bake mode to improve performance.
 			[b]Note:[/b] This property is only read when the project starts. To control SDFGI light update speed at runtime, call [method RenderingServer.environment_set_sdfgi_frames_to_update_light] instead.
 		</member>
 		<member name="rendering/global_illumination/sdfgi/probe_ray_count" type="int" setter="" getter="" default="1">
@@ -3016,8 +3016,8 @@
 			Lower-end override for [member rendering/lights_and_shadows/directional_shadow/size] on mobile devices, due to performance concerns or driver support.
 		</member>
 		<member name="rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality" type="int" setter="" getter="" default="2">
-			Quality setting for shadows cast by [DirectionalLight3D]s. Higher quality settings use more samples when reading from shadow maps and are thus slower. Low quality settings may result in shadows looking grainy.
-			[b]Note:[/b] The Soft Very Low setting will automatically multiply [i]constant[/i] shadow blur by 0.75x to reduce the amount of noise visible. This automatic blur change only affects the constant blur factor defined in [member Light3D.shadow_blur], not the variable blur performed by [DirectionalLight3D]s' [member Light3D.light_angular_distance].
+			Quality setting for shadows cast by [SEDirectional]s. Higher quality settings use more samples when reading from shadow maps and are thus slower. Low quality settings may result in shadows looking grainy.
+			[b]Note:[/b] The Soft Very Low setting will automatically multiply [i]constant[/i] shadow blur by 0.75x to reduce the amount of noise visible. This automatic blur change only affects the constant blur factor defined in [member SELight.shadow_blur], not the variable blur performed by [SEDirectional]s' [member SELight.light_angular_distance].
 			[b]Note:[/b] The Soft High and Soft Ultra settings will automatically multiply [i]constant[/i] shadow blur by 1.5× and 2× respectively to make better use of the increased sample count. This increased blur also improves stability of dynamic object shadows.
 		</member>
 		<member name="rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality.mobile" type="int" setter="" getter="" default="0">
@@ -3039,14 +3039,14 @@
 			The subdivision amount of the fourth quadrant on the shadow atlas. See the [url=$DOCS_URL/tutorials/tutorials/3d/lights_and_shadows.html#shadow-atlas]documentation[/url] for more information.
 		</member>
 		<member name="rendering/lights_and_shadows/positional_shadow/atlas_size" type="int" setter="" getter="" default="4096">
-			The size of the shadow atlas used for [OmniLight3D] and [SpotLight3D] nodes. See the [url=$DOCS_URL/tutorials/tutorials/3d/lights_and_shadows.html#shadow-atlas]documentation[/url] for more information.
+			The size of the shadow atlas used for [SEOmni] and [SESpot] nodes. See the [url=$DOCS_URL/tutorials/tutorials/3d/lights_and_shadows.html#shadow-atlas]documentation[/url] for more information.
 		</member>
 		<member name="rendering/lights_and_shadows/positional_shadow/atlas_size.mobile" type="int" setter="" getter="" default="2048">
 			Lower-end override for [member rendering/lights_and_shadows/positional_shadow/atlas_size] on mobile devices, due to performance concerns or driver support.
 		</member>
 		<member name="rendering/lights_and_shadows/positional_shadow/soft_shadow_filter_quality" type="int" setter="" getter="" default="2">
-			Quality setting for shadows cast by [OmniLight3D]s and [SpotLight3D]s. Higher quality settings use more samples when reading from shadow maps and are thus slower. Low quality settings may result in shadows looking grainy.
-			[b]Note:[/b] The Soft Very Low setting will automatically multiply [i]constant[/i] shadow blur by 0.75x to reduce the amount of noise visible. This automatic blur change only affects the constant blur factor defined in [member Light3D.shadow_blur], not the variable blur performed by [DirectionalLight3D]s' [member Light3D.light_angular_distance].
+			Quality setting for shadows cast by [SEOmni]s and [SESpot]s. Higher quality settings use more samples when reading from shadow maps and are thus slower. Low quality settings may result in shadows looking grainy.
+			[b]Note:[/b] The Soft Very Low setting will automatically multiply [i]constant[/i] shadow blur by 0.75x to reduce the amount of noise visible. This automatic blur change only affects the constant blur factor defined in [member SELight.shadow_blur], not the variable blur performed by [SEDirectional]s' [member SELight.light_angular_distance].
 			[b]Note:[/b] The Soft High and Soft Ultra settings will automatically multiply shadow blur by 1.5× and 2× respectively to make better use of the increased sample count. This increased blur also improves stability of dynamic object shadows.
 		</member>
 		<member name="rendering/lights_and_shadows/positional_shadow/soft_shadow_filter_quality.mobile" type="int" setter="" getter="" default="0">
@@ -3060,7 +3060,7 @@
 			Enables the use of physically based units for light sources. Physically based units tend to be much larger than the arbitrary units used by Godot, but they can be used to match lighting within Godot to real-world lighting. Due to the large dynamic range of lighting conditions present in nature, Godot bakes exposure into the various lighting quantities before rendering. Most light sources bake exposure automatically at run time based on the active [CameraAttributes] resource, but [LightmapGI] and [VoxelGI] require a [CameraAttributes] resource to be set at bake time to reduce the dynamic range. At run time, Godot will automatically reconcile the baked exposure with the active exposure to ensure lighting remains consistent.
 		</member>
 		<member name="rendering/limits/cluster_builder/max_clustered_elements" type="float" setter="" getter="" default="512">
-			The maximum number of clustered elements ([OmniLight3D] + [SpotLight3D] + [Decal] + [ReflectionProbe]) that can be rendered at once in the camera view. If there are more clustered elements present in the camera view, some of them will not be rendered (leading to pop-in during camera movement). Enabling distance fade on lights and decals ([member Light3D.distance_fade_enabled], [member Decal.distance_fade_enabled]) can help avoid reaching this limit.
+			The maximum number of clustered elements ([SEOmni] + [SESpot] + [Decal] + [ReflectionProbe]) that can be rendered at once in the camera view. If there are more clustered elements present in the camera view, some of them will not be rendered (leading to pop-in during camera movement). Enabling distance fade on lights and decals ([member SELight.distance_fade_enabled], [member Decal.distance_fade_enabled]) can help avoid reaching this limit.
 			Decreasing this value may improve GPU performance on certain setups, even if the maximum number of clustered elements is never reached in the project.
 			[b]Note:[/b] This setting is only effective when using the Forward+ rendering method, not Mobile and Compatibility.
 		</member>
@@ -3345,7 +3345,7 @@
 			[b]Note:[/b] This property is only read when the project starts. There is currently no way to change this setting at run-time.
 		</member>
 		<member name="rendering/textures/light_projectors/filter" type="int" setter="" getter="" default="3">
-			The filtering quality to use for [OmniLight3D] and [SpotLight3D] projectors. When using one of the anisotropic filtering modes, the anisotropic filtering level is controlled by [member rendering/textures/default_filters/anisotropic_filtering_level].
+			The filtering quality to use for [SEOmni] and [SESpot] projectors. When using one of the anisotropic filtering modes, the anisotropic filtering level is controlled by [member rendering/textures/default_filters/anisotropic_filtering_level].
 		</member>
 		<member name="rendering/textures/lossless_compression/force_png" type="bool" setter="" getter="" default="false">
 			If [code]true[/code], the texture importer will import lossless textures using the PNG format. Otherwise, it will default to using WebP.

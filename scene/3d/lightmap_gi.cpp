@@ -442,9 +442,9 @@ void LightmapGI::_find_meshes_and_lights(Node *p_at_node, Vector<MeshesFound> &m
 		}
 	}
 
-	Light3D *light = Object::cast_to<Light3D>(p_at_node);
+	SELight *light = Object::cast_to<SELight>(p_at_node);
 
-	if (light && light->get_bake_mode() != Light3D::BAKE_DISABLED) {
+	if (light && light->get_bake_mode() != SELight::BAKE_DISABLED) {
 		LightsFound lf;
 		lf.xform = get_global_transform().affine_inverse() * light->get_global_transform();
 		lf.light = light;
@@ -1166,7 +1166,7 @@ LightmapGI::BakeError LightmapGI::bake(Node *p_from_node, String p_image_data_pa
 			lightmapper->add_mesh(mesh_data[i]);
 		}
 		for (int i = 0; i < lights_found.size(); i++) {
-			Light3D *light = lights_found[i].light;
+			SELight *light = lights_found[i].light;
 			if (light->is_editor_only()) {
 				// Don't include editor-only lights in the lightmap bake,
 				// as this results in inconsistent visuals when running the project.
@@ -1176,31 +1176,31 @@ LightmapGI::BakeError LightmapGI::bake(Node *p_from_node, String p_image_data_pa
 			Transform3D xf = lights_found[i].xform;
 
 			// For the lightmapper, the indirect energy represents the multiplier for the indirect bounces caused by the light, so the value is not converted when using physical units.
-			float indirect_energy = light->get_param(Light3D::PARAM_INDIRECT_ENERGY);
+			float indirect_energy = light->get_param(SELight::PARAM_INDIRECT_ENERGY);
 			Color linear_color = light->get_color().srgb_to_linear();
-			float energy = light->get_param(Light3D::PARAM_ENERGY);
+			float energy = light->get_param(SELight::PARAM_ENERGY);
 			if (use_physical_light_units) {
-				energy *= light->get_param(Light3D::PARAM_INTENSITY);
+				energy *= light->get_param(SELight::PARAM_INTENSITY);
 				linear_color *= light->get_correlated_color().srgb_to_linear();
 			}
 
-			if (Object::cast_to<DirectionalLight3D>(light)) {
-				DirectionalLight3D *l = Object::cast_to<DirectionalLight3D>(light);
-				if (l->get_sky_mode() != DirectionalLight3D::SKY_MODE_SKY_ONLY) {
-					lightmapper->add_directional_light(light->get_name(), light->get_bake_mode() == Light3D::BAKE_STATIC, -xf.basis.get_column(Vector3::AXIS_Z).normalized(), linear_color, energy, indirect_energy, l->get_param(Light3D::PARAM_SIZE), l->get_param(Light3D::PARAM_SHADOW_BLUR));
+			if (Object::cast_to<SEDirectional>(light)) {
+				SEDirectional *l = Object::cast_to<SEDirectional>(light);
+				if (l->get_sky_mode() != SEDirectional::SKY_MODE_SKY_ONLY) {
+					lightmapper->add_directional_light(light->get_name(), light->get_bake_mode() == SELight::BAKE_STATIC, -xf.basis.get_column(Vector3::AXIS_Z).normalized(), linear_color, energy, indirect_energy, l->get_param(SELight::PARAM_SIZE), l->get_param(SELight::PARAM_SHADOW_BLUR));
 				}
-			} else if (Object::cast_to<OmniLight3D>(light)) {
-				OmniLight3D *l = Object::cast_to<OmniLight3D>(light);
+			} else if (Object::cast_to<SEOmni>(light)) {
+				SEOmni *l = Object::cast_to<SEOmni>(light);
 				if (use_physical_light_units) {
 					energy *= (1.0 / (Math::PI * 4.0));
 				}
-				lightmapper->add_omni_light(light->get_name(), light->get_bake_mode() == Light3D::BAKE_STATIC, xf.origin, linear_color, energy, indirect_energy, l->get_param(Light3D::PARAM_RANGE), l->get_param(Light3D::PARAM_ATTENUATION), l->get_param(Light3D::PARAM_SIZE), l->get_param(Light3D::PARAM_SHADOW_BLUR));
-			} else if (Object::cast_to<SpotLight3D>(light)) {
-				SpotLight3D *l = Object::cast_to<SpotLight3D>(light);
+				lightmapper->add_omni_light(light->get_name(), light->get_bake_mode() == SELight::BAKE_STATIC, xf.origin, linear_color, energy, indirect_energy, l->get_param(SELight::PARAM_RANGE), l->get_param(SELight::PARAM_ATTENUATION), l->get_param(SELight::PARAM_SIZE), l->get_param(SELight::PARAM_SHADOW_BLUR));
+			} else if (Object::cast_to<SESpot>(light)) {
+				SESpot *l = Object::cast_to<SESpot>(light);
 				if (use_physical_light_units) {
 					energy *= (1.0 / Math::PI);
 				}
-				lightmapper->add_spot_light(light->get_name(), light->get_bake_mode() == Light3D::BAKE_STATIC, xf.origin, -xf.basis.get_column(Vector3::AXIS_Z).normalized(), linear_color, energy, indirect_energy, l->get_param(Light3D::PARAM_RANGE), l->get_param(Light3D::PARAM_ATTENUATION), l->get_param(Light3D::PARAM_SPOT_ANGLE), l->get_param(Light3D::PARAM_SPOT_ATTENUATION), l->get_param(Light3D::PARAM_SIZE), l->get_param(Light3D::PARAM_SHADOW_BLUR));
+				lightmapper->add_spot_light(light->get_name(), light->get_bake_mode() == SELight::BAKE_STATIC, xf.origin, -xf.basis.get_column(Vector3::AXIS_Z).normalized(), linear_color, energy, indirect_energy, l->get_param(SELight::PARAM_RANGE), l->get_param(SELight::PARAM_ATTENUATION), l->get_param(SELight::PARAM_SPOT_ANGLE), l->get_param(SELight::PARAM_SPOT_ATTENUATION), l->get_param(SELight::PARAM_SIZE), l->get_param(SELight::PARAM_SHADOW_BLUR));
 			}
 		}
 		for (int i = 0; i < probes_found.size(); i++) {

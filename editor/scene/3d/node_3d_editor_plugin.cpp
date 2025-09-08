@@ -55,7 +55,7 @@
 #include "editor/scene/3d/gizmos/gpu_particles_3d_gizmo_plugin.h"
 #include "editor/scene/3d/gizmos/gpu_particles_collision_3d_gizmo_plugin.h"
 #include "editor/scene/3d/gizmos/label_3d_gizmo_plugin.h"
-#include "editor/scene/3d/gizmos/light_3d_gizmo_plugin.h"
+#include "editor/scene/3d/gizmos/se_light_gizmo_plugin.h"
 #include "editor/scene/3d/gizmos/lightmap_gi_gizmo_plugin.h"
 #include "editor/scene/3d/gizmos/lightmap_probe_gizmo_plugin.h"
 #include "editor/scene/3d/gizmos/marker_3d_gizmo_plugin.h"
@@ -84,7 +84,7 @@
 #include "scene/3d/audio_stream_player_3d.h"
 #include "scene/3d/se_camera.h"
 #include "scene/3d/decal.h"
-#include "scene/3d/light_3d.h"
+#include "scene/3d/se_light.h"
 #include "scene/3d/se_mesh.h"
 #include "scene/3d/physics/collision_shape_3d.h"
 #include "scene/3d/physics/physics_body_3d.h"
@@ -5801,9 +5801,9 @@ Node3DEditorViewport::Node3DEditorViewport(Node3DEditor *p_spatial_editor, int p
 	_add_advanced_debug_draw_mode_item(display_submenu, TTRC("Normal Buffer"), VIEW_DISPLAY_NORMAL_BUFFER, SupportedRenderingMethods::FORWARD_PLUS);
 	display_submenu->add_separator();
 	_add_advanced_debug_draw_mode_item(display_submenu, TTRC("Shadow Atlas"), VIEW_DISPLAY_DEBUG_SHADOW_ATLAS, SupportedRenderingMethods::ALL,
-			TTRC("Displays the shadow atlas used for positional (omni/spot) shadow mapping.\nRequires a visible OmniLight3D or SpotLight3D node with shadows enabled to have a visible effect."));
+			TTRC("Displays the shadow atlas used for positional (omni/spot) shadow mapping.\nRequires a visible SEOmni or SESpot node with shadows enabled to have a visible effect."));
 	_add_advanced_debug_draw_mode_item(display_submenu, TTRC("Directional Shadow Map"), VIEW_DISPLAY_DEBUG_DIRECTIONAL_SHADOW_ATLAS, SupportedRenderingMethods::ALL,
-			TTRC("Displays the shadow map used for directional shadow mapping.\nRequires a visible DirectionalLight3D node with shadows enabled to have a visible effect."));
+			TTRC("Displays the shadow map used for directional shadow mapping.\nRequires a visible SEDirectional node with shadows enabled to have a visible effect."));
 	display_submenu->add_separator();
 	_add_advanced_debug_draw_mode_item(display_submenu, TTRC("Decal Atlas"), VIEW_DISPLAY_DEBUG_DECAL_ATLAS, SupportedRenderingMethods::FORWARD_PLUS_MOBILE);
 	display_submenu->add_separator();
@@ -5833,10 +5833,10 @@ Node3DEditorViewport::Node3DEditorViewport(Node3DEditor *p_spatial_editor, int p
 	_add_advanced_debug_draw_mode_item(display_submenu, TTRC("Disable Mesh LOD"), VIEW_DISPLAY_DEBUG_DISABLE_LOD, SupportedRenderingMethods::ALL,
 			TTRC("Renders all meshes with their highest level of detail regardless of their distance from the camera."));
 	display_submenu->add_separator();
-	_add_advanced_debug_draw_mode_item(display_submenu, TTRC("OmniLight3D Cluster"), VIEW_DISPLAY_DEBUG_CLUSTER_OMNI_LIGHTS, SupportedRenderingMethods::FORWARD_PLUS,
-			TTRC("Highlights tiles of pixels that are affected by at least one OmniLight3D."));
-	_add_advanced_debug_draw_mode_item(display_submenu, TTRC("SpotLight3D Cluster"), VIEW_DISPLAY_DEBUG_CLUSTER_SPOT_LIGHTS, SupportedRenderingMethods::FORWARD_PLUS,
-			TTRC("Highlights tiles of pixels that are affected by at least one SpotLight3D."));
+	_add_advanced_debug_draw_mode_item(display_submenu, TTRC("SEOmni Cluster"), VIEW_DISPLAY_DEBUG_CLUSTER_OMNI_LIGHTS, SupportedRenderingMethods::FORWARD_PLUS,
+			TTRC("Highlights tiles of pixels that are affected by at least one SEOmni."));
+	_add_advanced_debug_draw_mode_item(display_submenu, TTRC("SESpot Cluster"), VIEW_DISPLAY_DEBUG_CLUSTER_SPOT_LIGHTS, SupportedRenderingMethods::FORWARD_PLUS,
+			TTRC("Highlights tiles of pixels that are affected by at least one SESpot."));
 	_add_advanced_debug_draw_mode_item(display_submenu, TTRC("Decal Cluster"), VIEW_DISPLAY_DEBUG_CLUSTER_DECALS, SupportedRenderingMethods::FORWARD_PLUS,
 			TTRC("Highlights tiles of pixels that are affected by at least one Decal."));
 	_add_advanced_debug_draw_mode_item(display_submenu, TTRC("ReflectionProbe Cluster"), VIEW_DISPLAY_DEBUG_CLUSTER_REFLECTION_PROBES, SupportedRenderingMethods::FORWARD_PLUS,
@@ -8866,7 +8866,7 @@ void Node3DEditor::_node_added(Node *p_node) {
 			if (world_env_count == 1) {
 				_update_preview_environment();
 			}
-		} else if (Object::cast_to<DirectionalLight3D>(p_node)) {
+		} else if (Object::cast_to<SEDirectional>(p_node)) {
 			directional_light_count++;
 			if (directional_light_count == 1) {
 				_update_preview_environment();
@@ -8882,7 +8882,7 @@ void Node3DEditor::_node_removed(Node *p_node) {
 			if (world_env_count == 0) {
 				_update_preview_environment();
 			}
-		} else if (Object::cast_to<DirectionalLight3D>(p_node)) {
+		} else if (Object::cast_to<SEDirectional>(p_node)) {
 			directional_light_count--;
 			if (directional_light_count == 0) {
 				_update_preview_environment();
@@ -8903,7 +8903,7 @@ void Node3DEditor::_node_removed(Node *p_node) {
 
 void Node3DEditor::_register_all_gizmos() {
 	add_gizmo_plugin(Ref<Camera3DGizmoPlugin>(memnew(Camera3DGizmoPlugin)));
-	add_gizmo_plugin(Ref<Light3DGizmoPlugin>(memnew(Light3DGizmoPlugin)));
+	add_gizmo_plugin(Ref<SELightGizmoPlugin>(memnew(SELightGizmoPlugin)));
 	add_gizmo_plugin(Ref<AudioStreamPlayer3DGizmoPlugin>(memnew(AudioStreamPlayer3DGizmoPlugin)));
 	add_gizmo_plugin(Ref<AudioListener3DGizmoPlugin>(memnew(AudioListener3DGizmoPlugin)));
 	add_gizmo_plugin(Ref<SEMeshGizmoPlugin>(memnew(SEMeshGizmoPlugin)));
@@ -9010,8 +9010,8 @@ void Node3DEditor::_preview_settings_changed() {
 		t.basis = Basis::from_euler(Vector3(sun_rotation.x, sun_rotation.y, 0));
 		preview_sun->set_transform(t);
 		sun_direction->queue_redraw();
-		preview_sun->set_param(Light3D::PARAM_ENERGY, sun_energy->get_value());
-		preview_sun->set_param(Light3D::PARAM_SHADOW_MAX_DISTANCE, sun_shadow_max_distance->get_value());
+		preview_sun->set_param(SELight::PARAM_ENERGY, sun_energy->get_value());
+		preview_sun->set_param(SELight::PARAM_SHADOW_MAX_DISTANCE, sun_shadow_max_distance->get_value());
 		preview_sun->set_color(sun_color->get_pick_color());
 	}
 
@@ -9077,7 +9077,7 @@ void Node3DEditor::_update_preview_environment() {
 		}
 
 		if (directional_light_count > 0) {
-			sun_state->set_text(TTRC("Scene contains\nDirectionalLight3D.\nPreview disabled."));
+			sun_state->set_text(TTRC("Scene contains\nSEDirectional.\nPreview disabled."));
 		} else {
 			sun_state->set_text(TTRC("Preview disabled."));
 		}
@@ -9174,7 +9174,7 @@ void Node3DEditor::_sun_set_energy(float p_energy) {
 	EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
 	undo_redo->create_action(TTR("Set Preview Sun Energy"), UndoRedo::MergeMode::MERGE_ENDS);
 	undo_redo->add_do_method(sun_energy, "set_value_no_signal", p_energy);
-	undo_redo->add_undo_method(sun_energy, "set_value_no_signal", preview_sun->get_param(Light3D::PARAM_ENERGY));
+	undo_redo->add_undo_method(sun_energy, "set_value_no_signal", preview_sun->get_param(SELight::PARAM_ENERGY));
 	undo_redo->add_do_method(this, "_preview_settings_changed");
 	undo_redo->add_undo_method(this, "_preview_settings_changed");
 	undo_redo->commit_action();
@@ -9184,7 +9184,7 @@ void Node3DEditor::_sun_set_shadow_max_distance(float p_shadow_max_distance) {
 	EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
 	undo_redo->create_action(TTR("Set Preview Sun Max Shadow Distance"), UndoRedo::MergeMode::MERGE_ENDS);
 	undo_redo->add_do_method(sun_shadow_max_distance, "set_value_no_signal", p_shadow_max_distance);
-	undo_redo->add_undo_method(sun_shadow_max_distance, "set_value_no_signal", preview_sun->get_param(Light3D::PARAM_SHADOW_MAX_DISTANCE));
+	undo_redo->add_undo_method(sun_shadow_max_distance, "set_value_no_signal", preview_sun->get_param(SELight::PARAM_SHADOW_MAX_DISTANCE));
 	undo_redo->add_do_method(this, "_preview_settings_changed");
 	undo_redo->add_undo_method(this, "_preview_settings_changed");
 	undo_redo->commit_action();
@@ -9436,7 +9436,7 @@ Node3DEditor::Node3DEditor() {
 
 	main_menu_hbox->add_child(memnew(VSeparator));
 	sun_button = memnew(Button);
-	sun_button->set_tooltip_text(TTRC("Toggle preview sunlight.\nIf a DirectionalLight3D node is added to the scene, preview sunlight is disabled."));
+	sun_button->set_tooltip_text(TTRC("Toggle preview sunlight.\nIf a SEDirectional node is added to the scene, preview sunlight is disabled."));
 	sun_button->set_toggle_mode(true);
 	sun_button->set_accessibility_name(TTRC("Toggle preview sunlight."));
 	sun_button->set_theme_type_variation(SceneStringName(FlatButton));
@@ -9838,7 +9838,7 @@ void fragment() {
 
 		sun_add_to_scene = memnew(Button);
 		sun_add_to_scene->set_text(TTRC("Add Sun to Scene"));
-		sun_add_to_scene->set_tooltip_text(TTRC("Adds a DirectionalLight3D node matching the preview sun settings to the current scene.\nHold Shift while clicking to also add the preview environment to the current scene."));
+		sun_add_to_scene->set_tooltip_text(TTRC("Adds a SEDirectional node matching the preview sun settings to the current scene.\nHold Shift while clicking to also add the preview environment to the current scene."));
 		sun_add_to_scene->connect(SceneStringName(pressed), callable_mp(this, &Node3DEditor::_add_sun_to_scene).bind(false));
 		sun_vb->add_spacer();
 		sun_vb->add_child(sun_add_to_scene);
@@ -9924,9 +9924,9 @@ void fragment() {
 		environ_state->set_vertical_alignment(VERTICAL_ALIGNMENT_CENTER);
 		environ_state->set_h_size_flags(SIZE_EXPAND_FILL);
 
-		preview_sun = memnew(DirectionalLight3D);
+		preview_sun = memnew(SEDirectional);
 		preview_sun->set_shadow(true);
-		preview_sun->set_shadow_mode(DirectionalLight3D::SHADOW_PARALLEL_4_SPLITS);
+		preview_sun->set_shadow_mode(SEDirectional::SHADOW_PARALLEL_4_SPLITS);
 		preview_environment = memnew(WorldEnvironment);
 		environment.instantiate();
 		preview_environment->set_environment(environment);

@@ -31,7 +31,7 @@
 #include "gltf_light.h"
 
 #include "../structures/gltf_object_model_property.h"
-#include "scene/3d/light_3d.h"
+#include "scene/3d/se_light.h"
 
 void GLTFLight::_bind_methods() {
 	ClassDB::bind_static_method("GLTFLight", D_METHOD("from_node", "light_node"), &GLTFLight::from_node);
@@ -126,63 +126,63 @@ void GLTFLight::set_outer_cone_angle(float p_outer_cone_angle) {
 	outer_cone_angle = p_outer_cone_angle;
 }
 
-Ref<GLTFLight> GLTFLight::from_node(const Light3D *p_light) {
+Ref<GLTFLight> GLTFLight::from_node(const SELight *p_light) {
 	Ref<GLTFLight> l;
 	l.instantiate();
-	ERR_FAIL_NULL_V_MSG(p_light, l, "Tried to create a GLTFLight from a Light3D node, but the given node was null.");
+	ERR_FAIL_NULL_V_MSG(p_light, l, "Tried to create a GLTFLight from a SELight node, but the given node was null.");
 	l->color = p_light->get_color().srgb_to_linear();
-	if (cast_to<DirectionalLight3D>(p_light)) {
+	if (cast_to<SEDirectional>(p_light)) {
 		l->light_type = "directional";
-		const DirectionalLight3D *light = cast_to<const DirectionalLight3D>(p_light);
-		l->intensity = light->get_param(DirectionalLight3D::PARAM_ENERGY);
+		const SEDirectional *light = cast_to<const SEDirectional>(p_light);
+		l->intensity = light->get_param(SEDirectional::PARAM_ENERGY);
 		l->range = FLT_MAX; // Range for directional lights is infinite in Godot.
-	} else if (cast_to<const OmniLight3D>(p_light)) {
+	} else if (cast_to<const SEOmni>(p_light)) {
 		l->light_type = "point";
-		const OmniLight3D *light = cast_to<const OmniLight3D>(p_light);
-		l->range = light->get_param(OmniLight3D::PARAM_RANGE);
-		l->intensity = light->get_param(OmniLight3D::PARAM_ENERGY);
-	} else if (cast_to<const SpotLight3D>(p_light)) {
+		const SEOmni *light = cast_to<const SEOmni>(p_light);
+		l->range = light->get_param(SEOmni::PARAM_RANGE);
+		l->intensity = light->get_param(SEOmni::PARAM_ENERGY);
+	} else if (cast_to<const SESpot>(p_light)) {
 		l->light_type = "spot";
-		const SpotLight3D *light = cast_to<const SpotLight3D>(p_light);
-		l->range = light->get_param(SpotLight3D::PARAM_RANGE);
-		l->intensity = light->get_param(SpotLight3D::PARAM_ENERGY);
-		l->outer_cone_angle = Math::deg_to_rad(light->get_param(SpotLight3D::PARAM_SPOT_ANGLE));
+		const SESpot *light = cast_to<const SESpot>(p_light);
+		l->range = light->get_param(SESpot::PARAM_RANGE);
+		l->intensity = light->get_param(SESpot::PARAM_ENERGY);
+		l->outer_cone_angle = Math::deg_to_rad(light->get_param(SESpot::PARAM_SPOT_ANGLE));
 		// This equation is the inverse of the import equation (which has a desmos link).
-		float angle_ratio = 1 - (0.2 / (0.1 + light->get_param(SpotLight3D::PARAM_SPOT_ATTENUATION)));
+		float angle_ratio = 1 - (0.2 / (0.1 + light->get_param(SESpot::PARAM_SPOT_ATTENUATION)));
 		angle_ratio = MAX(0, angle_ratio);
 		l->inner_cone_angle = l->outer_cone_angle * angle_ratio;
 	}
 	return l;
 }
 
-Light3D *GLTFLight::to_node() const {
-	Light3D *light = nullptr;
+SELight *GLTFLight::to_node() const {
+	SELight *light = nullptr;
 	if (light_type == "directional") {
-		DirectionalLight3D *dir_light = memnew(DirectionalLight3D);
-		dir_light->set_param(Light3D::PARAM_ENERGY, intensity);
+		SEDirectional *dir_light = memnew(SEDirectional);
+		dir_light->set_param(SELight::PARAM_ENERGY, intensity);
 		light = dir_light;
 	} else if (light_type == "point") {
-		OmniLight3D *omni_light = memnew(OmniLight3D);
-		omni_light->set_param(OmniLight3D::PARAM_ENERGY, intensity);
-		omni_light->set_param(OmniLight3D::PARAM_RANGE, CLAMP(range, 0, 4096));
+		SEOmni *omni_light = memnew(SEOmni);
+		omni_light->set_param(SEOmni::PARAM_ENERGY, intensity);
+		omni_light->set_param(SEOmni::PARAM_RANGE, CLAMP(range, 0, 4096));
 		light = omni_light;
 	} else if (light_type == "spot") {
-		SpotLight3D *spot_light = memnew(SpotLight3D);
-		spot_light->set_param(SpotLight3D::PARAM_ENERGY, intensity);
-		spot_light->set_param(SpotLight3D::PARAM_RANGE, CLAMP(range, 0, 4096));
-		spot_light->set_param(SpotLight3D::PARAM_SPOT_ANGLE, Math::rad_to_deg(outer_cone_angle));
+		SESpot *spot_light = memnew(SESpot);
+		spot_light->set_param(SESpot::PARAM_ENERGY, intensity);
+		spot_light->set_param(SESpot::PARAM_RANGE, CLAMP(range, 0, 4096));
+		spot_light->set_param(SESpot::PARAM_SPOT_ANGLE, Math::rad_to_deg(outer_cone_angle));
 		// Line of best fit derived from guessing, see https://www.desmos.com/calculator/biiflubp8b
 		// The points in desmos are not exact, except for (1, infinity).
 		float angle_ratio = inner_cone_angle / outer_cone_angle;
 		float angle_attenuation = 0.2 / (1 - angle_ratio) - 0.1;
-		spot_light->set_param(SpotLight3D::PARAM_SPOT_ATTENUATION, angle_attenuation);
+		spot_light->set_param(SESpot::PARAM_SPOT_ATTENUATION, angle_attenuation);
 		light = spot_light;
 	} else {
-		ERR_PRINT("Failed to create a Light3D node from GLTFLight, unknown light type '" + light_type + "'.");
+		ERR_PRINT("Failed to create a SELight node from GLTFLight, unknown light type '" + light_type + "'.");
 		return nullptr;
 	}
 	light->set_color(color.linear_to_srgb());
-	light->set_param(Light3D::PARAM_ATTENUATION, 2.0);
+	light->set_param(SELight::PARAM_ATTENUATION, 2.0);
 	return light;
 }
 

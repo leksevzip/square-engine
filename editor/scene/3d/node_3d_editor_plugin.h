@@ -43,7 +43,7 @@ class AcceptDialog;
 class CheckBox;
 class ColorPickerButton;
 class ConfirmationDialog;
-class DirectionalLight3D;
+class SEDirectional;
 class EditorData;
 class EditorSelection;
 class EditorSpinSlider;
@@ -897,7 +897,7 @@ private:
 
 	Button *sun_environ_settings = nullptr;
 
-	DirectionalLight3D *preview_sun = nullptr;
+	SEDirectional *preview_sun = nullptr;
 	bool preview_sun_dangling = false;
 	WorldEnvironment *preview_environment = nullptr;
 	bool preview_env_dangling = false;

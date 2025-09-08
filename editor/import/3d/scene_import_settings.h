@@ -32,7 +32,7 @@
 
 #include "editor/import/3d/resource_importer_scene.h"
 #include "scene/3d/se_camera.h"
-#include "scene/3d/light_3d.h"
+#include "scene/3d/se_light.h"
 #include "scene/3d/se_mesh.h"
 #include "scene/3d/skeleton_3d.h"
 #include "scene/gui/dialogs.h"
@@ -92,8 +92,8 @@ class SceneImportSettingsDialog : public ConfirmationDialog {
 		Ref<Texture2D> rotate_icon;
 	} theme_cache;
 
-	DirectionalLight3D *light1 = nullptr;
-	DirectionalLight3D *light2 = nullptr;
+	SEDirectional *light1 = nullptr;
+	SEDirectional *light2 = nullptr;
 	Ref<ArrayMesh> selection_mesh;
 	SEMesh *node_selected = nullptr;
 

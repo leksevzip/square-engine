@@ -88,7 +88,7 @@ private:
 			const GLTFNodeIndex p_bone_index);
 	ImporterSEMesh *_generate_mesh_instance(Ref<FBXState> p_state, const GLTFNodeIndex p_node_index);
 	SECamera *_generate_camera(Ref<FBXState> p_state, const GLTFNodeIndex p_node_index);
-	Light3D *_generate_light(Ref<FBXState> p_state, const GLTFNodeIndex p_node_index);
+	SELight *_generate_light(Ref<FBXState> p_state, const GLTFNodeIndex p_node_index);
 	Node3D *_generate_spatial(Ref<FBXState> p_state, const GLTFNodeIndex p_node_index);
 	void _assign_node_names(Ref<FBXState> p_state);
 	Error _parse_cameras(Ref<FBXState> p_state);

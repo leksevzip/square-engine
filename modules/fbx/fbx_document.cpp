@@ -40,7 +40,7 @@
 #include "scene/3d/bone_attachment_3d.h"
 #include "scene/3d/se_camera.h"
 #include "scene/3d/importer_se_mesh.h"
-#include "scene/3d/light_3d.h"
+#include "scene/3d/se_light.h"
 #include "scene/resources/image_texture.h"
 #include "scene/resources/material.h"
 #include "scene/resources/portable_compressed_texture.h"
@@ -1515,7 +1515,7 @@ SECamera *FBXDocument::_generate_camera(Ref<FBXState> p_state, const GLTFNodeInd
 	return c->to_node();
 }
 
-Light3D *FBXDocument::_generate_light(Ref<FBXState> p_state, const GLTFNodeIndex p_node_index) {
+SELight *FBXDocument::_generate_light(Ref<FBXState> p_state, const GLTFNodeIndex p_node_index) {
 	Ref<GLTFNode> fbx_node = p_state->nodes[p_node_index];
 
 	ERR_FAIL_INDEX_V(fbx_node->light, p_state->lights.size(), nullptr);
@@ -1523,14 +1523,14 @@ Light3D *FBXDocument::_generate_light(Ref<FBXState> p_state, const GLTFNodeIndex
 	print_verbose("FBX: Creating light for: " + fbx_node->get_name());
 
 	Ref<GLTFLight> l = p_state->lights[fbx_node->light];
-	Light3D *light = nullptr;
+	SELight *light = nullptr;
 
 	if (l->get_light_type() == "point") {
-		light = memnew(OmniLight3D);
+		light = memnew(SEOmni);
 	} else if (l->get_light_type() == "directional") {
-		light = memnew(DirectionalLight3D);
+		light = memnew(SEDirectional);
 	} else if (l->get_light_type() == "spot") {
-		light = memnew(SpotLight3D);
+		light = memnew(SESpot);
 	} else {
 		ERR_FAIL_NULL_V(light, nullptr);
 	}
@@ -1538,7 +1538,7 @@ Light3D *FBXDocument::_generate_light(Ref<FBXState> p_state, const GLTFNodeIndex
 	if (light) {
 		light->set_name(l->get_name());
 		light->set_color(l->get_color());
-		light->set_param(Light3D::PARAM_ENERGY, l->get_intensity());
+		light->set_param(SELight::PARAM_ENERGY, l->get_intensity());
 		Dictionary additional_data = l->get_additional_data("GODOT_fbx_light");
 		if (additional_data.has("castShadows")) {
 			light->set_shadow(additional_data["castShadows"]);
@@ -1548,17 +1548,17 @@ Light3D *FBXDocument::_generate_light(Ref<FBXState> p_state, const GLTFNodeIndex
 		}
 
 		Transform3D transform;
-		DirectionalLight3D *dir_light = Object::cast_to<DirectionalLight3D>(light);
-		SpotLight3D *spot_light = Object::cast_to<SpotLight3D>(light);
-		OmniLight3D *omni_light = Object::cast_to<OmniLight3D>(light);
+		SEDirectional *dir_light = Object::cast_to<SEDirectional>(light);
+		SESpot *spot_light = Object::cast_to<SESpot>(light);
+		SEOmni *omni_light = Object::cast_to<SEOmni>(light);
 		if (dir_light) {
 			dir_light->set_transform(transform);
 		} else if (spot_light) {
 			spot_light->set_transform(transform);
-			spot_light->set_param(SpotLight3D::PARAM_SPOT_ANGLE, l->get_outer_cone_angle() / 2.0f);
+			spot_light->set_param(SESpot::PARAM_SPOT_ANGLE, l->get_outer_cone_angle() / 2.0f);
 		}
 		if (omni_light || spot_light) {
-			light->set_param(OmniLight3D::PARAM_RANGE, 4096);
+			light->set_param(SEOmni::PARAM_RANGE, 4096);
 		}
 
 // This is "correct", but FBX files may have unexpected decay modes.
@@ -1578,7 +1578,7 @@ Light3D *FBXDocument::_generate_light(Ref<FBXState> p_state, const GLTFNodeIndex
 					attenuation = 3.0f;
 				}
 			}
-			light->set_param(Light3D::PARAM_ATTENUATION, attenuation);
+			light->set_param(SELight::PARAM_ATTENUATION, attenuation);
 		}
 #endif
 
@@ -1587,7 +1587,7 @@ Light3D *FBXDocument::_generate_light(Ref<FBXState> p_state, const GLTFNodeIndex
 			// The points in desmos are not exact, except for (1, infinity).
 			float angle_ratio = l->get_inner_cone_angle() / l->get_outer_cone_angle();
 			float angle_attenuation = 0.2 / (1 - angle_ratio) - 0.1;
-			light->set_param(SpotLight3D::PARAM_SPOT_ATTENUATION, angle_attenuation);
+			light->set_param(SESpot::PARAM_SPOT_ATTENUATION, angle_attenuation);
 		}
 	}
 

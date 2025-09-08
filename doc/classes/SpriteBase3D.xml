@@ -96,7 +96,7 @@
 			[b]Note:[/b] This only applies to sorting of transparent objects. This will not impact how transparent objects are sorted relative to opaque objects. This is because opaque objects are not sorted, while transparent objects are sorted from back to front (subject to priority).
 		</member>
 		<member name="shaded" type="bool" setter="set_draw_flag" getter="get_draw_flag" default="false">
-			If [code]true[/code], the [Light3D] in the [Environment] has effects on the sprite.
+			If [code]true[/code], the [SELight] in the [Environment] has effects on the sprite.
 		</member>
 		<member name="texture_filter" type="int" setter="set_texture_filter" getter="get_texture_filter" enum="BaseMaterial3D.TextureFilter" default="3">
 			Filter flags for the texture.

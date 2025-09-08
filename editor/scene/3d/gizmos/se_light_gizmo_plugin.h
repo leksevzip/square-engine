@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  light_3d_gizmo_plugin.h                                               */
+/*  se_light_gizmo_plugin.h                                               */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -32,8 +32,8 @@
 
 #include "editor/scene/3d/node_3d_editor_gizmos.h"
 
-class Light3DGizmoPlugin : public EditorNode3DGizmoPlugin {
-	GDCLASS(Light3DGizmoPlugin, EditorNode3DGizmoPlugin);
+class SELightGizmoPlugin : public EditorNode3DGizmoPlugin {
+	GDCLASS(SELightGizmoPlugin, EditorNode3DGizmoPlugin);
 
 private:
 	static float _find_closest_angle_to_half_pi_arc(const Vector3 &p_from, const Vector3 &p_to, float p_arc_radius, const Transform3D &p_arc_xform);
@@ -49,5 +49,5 @@ public:
 	void commit_handle(const EditorNode3DGizmo *p_gizmo, int p_id, bool p_secondary, const Variant &p_restore, bool p_cancel = false) override;
 	void redraw(EditorNode3DGizmo *p_gizmo) override;
 
-	Light3DGizmoPlugin();
+	SELightGizmoPlugin();
 };

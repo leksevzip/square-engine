@@ -3516,11 +3516,11 @@ msgstr ""
 
 msgid ""
 "Scene contains\n"
-"DirectionalLight3D.\n"
+"SEDirectional.\n"
 "Preview disabled."
 msgstr ""
 "Сцената съдържа\n"
-"DirectionalLight3D.\n"
+"SEDirectional.\n"
 "Прегледът е невъзможен."
 
 msgid "Preview disabled."

@@ -1217,7 +1217,7 @@
 				Creates a directional light and adds it to the RenderingServer. It can be accessed with the RID that is returned. This RID can be used in most [code]light_*[/code] RenderingServer functions.
 				Once finished with your RID, you will want to free the RID using the RenderingServer's [method free_rid] method.
 				To place in a scene, attach this directional light to an instance using [method instance_set_base] using the returned RID.
-				[b]Note:[/b] The equivalent node is [DirectionalLight3D].
+				[b]Note:[/b] The equivalent node is [SEDirectional].
 			</description>
 		</method>
 		<method name="directional_shadow_atlas_set_size">
@@ -2044,7 +2044,7 @@
 			<param index="0" name="aabb" type="AABB" />
 			<param index="1" name="scenario" type="RID" default="RID()" />
 			<description>
-				Returns an array of object IDs intersecting with the provided AABB. Only 3D nodes that inherit from [VisualInstance3D] are considered, such as [SEMesh] or [DirectionalLight3D]. Use [method @GlobalScope.instance_from_id] to obtain the actual nodes. A scenario RID must be provided, which is available in the [World3D] you want to query. This forces an update for all resources queued to update.
+				Returns an array of object IDs intersecting with the provided AABB. Only 3D nodes that inherit from [VisualInstance3D] are considered, such as [SEMesh] or [SEDirectional]. Use [method @GlobalScope.instance_from_id] to obtain the actual nodes. A scenario RID must be provided, which is available in the [World3D] you want to query. This forces an update for all resources queued to update.
 				[b]Warning:[/b] This function is primarily intended for editor usage. For in-game use cases, prefer physics collision.
 			</description>
 		</method>
@@ -2053,7 +2053,7 @@
 			<param index="0" name="convex" type="Plane[]" />
 			<param index="1" name="scenario" type="RID" default="RID()" />
 			<description>
-				Returns an array of object IDs intersecting with the provided convex shape. Only 3D nodes that inherit from [VisualInstance3D] are considered, such as [SEMesh] or [DirectionalLight3D]. Use [method @GlobalScope.instance_from_id] to obtain the actual nodes. A scenario RID must be provided, which is available in the [World3D] you want to query. This forces an update for all resources queued to update.
+				Returns an array of object IDs intersecting with the provided convex shape. Only 3D nodes that inherit from [VisualInstance3D] are considered, such as [SEMesh] or [SEDirectional]. Use [method @GlobalScope.instance_from_id] to obtain the actual nodes. A scenario RID must be provided, which is available in the [World3D] you want to query. This forces an update for all resources queued to update.
 				[b]Warning:[/b] This function is primarily intended for editor usage. For in-game use cases, prefer physics collision.
 			</description>
 		</method>
@@ -2063,7 +2063,7 @@
 			<param index="1" name="to" type="Vector3" />
 			<param index="2" name="scenario" type="RID" default="RID()" />
 			<description>
-				Returns an array of object IDs intersecting with the provided 3D ray. Only 3D nodes that inherit from [VisualInstance3D] are considered, such as [SEMesh] or [DirectionalLight3D]. Use [method @GlobalScope.instance_from_id] to obtain the actual nodes. A scenario RID must be provided, which is available in the [World3D] you want to query. This forces an update for all resources queued to update.
+				Returns an array of object IDs intersecting with the provided 3D ray. Only 3D nodes that inherit from [VisualInstance3D] are considered, such as [SEMesh] or [SEDirectional]. Use [method @GlobalScope.instance_from_id] to obtain the actual nodes. A scenario RID must be provided, which is available in the [World3D] you want to query. This forces an update for all resources queued to update.
 				[b]Warning:[/b] This function is primarily intended for editor usage. For in-game use cases, prefer physics collision.
 			</description>
 		</method>
@@ -2078,7 +2078,7 @@
 			<param index="0" name="light" type="RID" />
 			<param index="1" name="enable" type="bool" />
 			<description>
-				If [code]true[/code], this directional light will blend between shadow map splits resulting in a smoother transition between them. Equivalent to [member DirectionalLight3D.directional_shadow_blend_splits].
+				If [code]true[/code], this directional light will blend between shadow map splits resulting in a smoother transition between them. Equivalent to [member SEDirectional.directional_shadow_blend_splits].
 			</description>
 		</method>
 		<method name="light_directional_set_shadow_mode">
@@ -2086,7 +2086,7 @@
 			<param index="0" name="light" type="RID" />
 			<param index="1" name="mode" type="int" enum="RenderingServer.LightDirectionalShadowMode" />
 			<description>
-				Sets the shadow mode for this directional light. Equivalent to [member DirectionalLight3D.directional_shadow_mode].
+				Sets the shadow mode for this directional light. Equivalent to [member SEDirectional.directional_shadow_mode].
 			</description>
 		</method>
 		<method name="light_directional_set_sky_mode">
@@ -2102,7 +2102,7 @@
 			<param index="0" name="light" type="RID" />
 			<param index="1" name="mode" type="int" enum="RenderingServer.LightOmniShadowMode" />
 			<description>
-				Sets whether to use a dual paraboloid or a cubemap for the shadow map. Dual paraboloid is faster but may suffer from artifacts. Equivalent to [member OmniLight3D.omni_shadow_mode].
+				Sets whether to use a dual paraboloid or a cubemap for the shadow map. Dual paraboloid is faster but may suffer from artifacts. Equivalent to [member SEOmni.omni_shadow_mode].
 			</description>
 		</method>
 		<method name="light_projectors_set_filter">
@@ -2117,7 +2117,7 @@
 			<param index="0" name="light" type="RID" />
 			<param index="1" name="bake_mode" type="int" enum="RenderingServer.LightBakeMode" />
 			<description>
-				Sets the bake mode to use for the specified 3D light. Equivalent to [member Light3D.light_bake_mode].
+				Sets the bake mode to use for the specified 3D light. Equivalent to [member SELight.light_bake_mode].
 			</description>
 		</method>
 		<method name="light_set_color">
@@ -2125,7 +2125,7 @@
 			<param index="0" name="light" type="RID" />
 			<param index="1" name="color" type="Color" />
 			<description>
-				Sets the color of the light. Equivalent to [member Light3D.light_color].
+				Sets the color of the light. Equivalent to [member SELight.light_color].
 			</description>
 		</method>
 		<method name="light_set_cull_mask">
@@ -2133,7 +2133,7 @@
 			<param index="0" name="light" type="RID" />
 			<param index="1" name="mask" type="int" />
 			<description>
-				Sets the cull mask for this 3D light. Lights only affect objects in the selected layers. Equivalent to [member Light3D.light_cull_mask].
+				Sets the cull mask for this 3D light. Lights only affect objects in the selected layers. Equivalent to [member SELight.light_cull_mask].
 			</description>
 		</method>
 		<method name="light_set_distance_fade" keywords="light_set_lod">
@@ -2144,7 +2144,7 @@
 			<param index="3" name="shadow" type="float" />
 			<param index="4" name="length" type="float" />
 			<description>
-				Sets the distance fade for this 3D light. This acts as a form of level of detail (LOD) and can be used to improve performance. Equivalent to [member Light3D.distance_fade_enabled], [member Light3D.distance_fade_begin], [member Light3D.distance_fade_shadow], and [member Light3D.distance_fade_length].
+				Sets the distance fade for this 3D light. This acts as a form of level of detail (LOD) and can be used to improve performance. Equivalent to [member SELight.distance_fade_enabled], [member SELight.distance_fade_begin], [member SELight.distance_fade_shadow], and [member SELight.distance_fade_length].
 			</description>
 		</method>
 		<method name="light_set_max_sdfgi_cascade">
@@ -2160,7 +2160,7 @@
 			<param index="0" name="light" type="RID" />
 			<param index="1" name="enable" type="bool" />
 			<description>
-				If [code]true[/code], the 3D light will subtract light instead of adding light. Equivalent to [member Light3D.light_negative].
+				If [code]true[/code], the 3D light will subtract light instead of adding light. Equivalent to [member SELight.light_negative].
 			</description>
 		</method>
 		<method name="light_set_param">
@@ -2169,7 +2169,7 @@
 			<param index="1" name="param" type="int" enum="RenderingServer.LightParam" />
 			<param index="2" name="value" type="float" />
 			<description>
-				Sets the specified 3D light parameter. Equivalent to [method Light3D.set_param].
+				Sets the specified 3D light parameter. Equivalent to [method SELight.set_param].
 			</description>
 		</method>
 		<method name="light_set_projector" keywords="light_set_cookie">
@@ -2177,7 +2177,7 @@
 			<param index="0" name="light" type="RID" />
 			<param index="1" name="texture" type="RID" />
 			<description>
-				Sets the projector texture to use for the specified 3D light. Equivalent to [member Light3D.light_projector].
+				Sets the projector texture to use for the specified 3D light. Equivalent to [member SELight.light_projector].
 			</description>
 		</method>
 		<method name="light_set_reverse_cull_face_mode">
@@ -2185,7 +2185,7 @@
 			<param index="0" name="light" type="RID" />
 			<param index="1" name="enabled" type="bool" />
 			<description>
-				If [code]true[/code], reverses the backface culling of the mesh. This can be useful when you have a flat mesh that has a light behind it. If you need to cast a shadow on both sides of the mesh, set the mesh to use double-sided shadows with [method instance_geometry_set_cast_shadows_setting]. Equivalent to [member Light3D.shadow_reverse_cull_face].
+				If [code]true[/code], reverses the backface culling of the mesh. This can be useful when you have a flat mesh that has a light behind it. If you need to cast a shadow on both sides of the mesh, set the mesh to use double-sided shadows with [method instance_geometry_set_cast_shadows_setting]. Equivalent to [member SELight.shadow_reverse_cull_face].
 			</description>
 		</method>
 		<method name="light_set_shadow">
@@ -2193,7 +2193,7 @@
 			<param index="0" name="light" type="RID" />
 			<param index="1" name="enabled" type="bool" />
 			<description>
-				If [code]true[/code], light will cast shadows. Equivalent to [member Light3D.shadow_enabled].
+				If [code]true[/code], light will cast shadows. Equivalent to [member SELight.shadow_enabled].
 			</description>
 		</method>
 		<method name="light_set_shadow_caster_mask">
@@ -2201,7 +2201,7 @@
 			<param index="0" name="light" type="RID" />
 			<param index="1" name="mask" type="int" />
 			<description>
-				Sets the shadow caster mask for this 3D light. Shadows will only be cast using objects in the selected layers. Equivalent to [member Light3D.shadow_caster_mask].
+				Sets the shadow caster mask for this 3D light. Shadows will only be cast using objects in the selected layers. Equivalent to [member SELight.shadow_caster_mask].
 			</description>
 		</method>
 		<method name="lightmap_create">
@@ -2842,7 +2842,7 @@
 				Creates a new omni light and adds it to the RenderingServer. It can be accessed with the RID that is returned. This RID can be used in most [code]light_*[/code] RenderingServer functions.
 				Once finished with your RID, you will want to free the RID using the RenderingServer's [method free_rid] method.
 				To place in a scene, attach this omni light to an instance using [method instance_set_base] using the returned RID.
-				[b]Note:[/b] The equivalent node is [OmniLight3D].
+				[b]Note:[/b] The equivalent node is [SEOmni].
 			</description>
 		</method>
 		<method name="particles_collision_create">
@@ -4782,13 +4782,13 @@
 			Linear filter for light projectors (use for non-pixel art light projectors). Anisotropic mipmaps are used for rendering, which means light projectors at a distance will look smooth and sharp when viewed from oblique angles. This looks better compared to isotropic mipmaps, but is slower. The level of anisotropic filtering is defined by [member ProjectSettings.rendering/textures/default_filters/anisotropic_filtering_level].
 		</constant>
 		<constant name="LIGHT_DIRECTIONAL" value="0" enum="LightType">
-			Directional (sun/moon) light (see [DirectionalLight3D]).
+			Directional (sun/moon) light (see [SEDirectional]).
 		</constant>
 		<constant name="LIGHT_OMNI" value="1" enum="LightType">
-			Omni light (see [OmniLight3D]).
+			Omni light (see [SEOmni]).
 		</constant>
 		<constant name="LIGHT_SPOT" value="2" enum="LightType">
-			Spot light (see [SpotLight3D]).
+			Spot light (see [SESpot]).
 		</constant>
 		<constant name="LIGHT_PARAM_ENERGY" value="0" enum="LightParam">
 			The light's energy multiplier.
@@ -4850,7 +4850,7 @@
 		<constant name="LIGHT_PARAM_TRANSMITTANCE_BIAS" value="19" enum="LightParam">
 		</constant>
 		<constant name="LIGHT_PARAM_INTENSITY" value="20" enum="LightParam">
-			Constant representing the intensity of the light, measured in Lumens when dealing with a [SpotLight3D] or [OmniLight3D], or measured in Lux with a [DirectionalLight3D]. Only used when [member ProjectSettings.rendering/lights_and_shadows/use_physical_light_units] is [code]true[/code].
+			Constant representing the intensity of the light, measured in Lumens when dealing with a [SESpot] or [SEOmni], or measured in Lux with a [SEDirectional]. Only used when [member ProjectSettings.rendering/lights_and_shadows/use_physical_light_units] is [code]true[/code].
 		</constant>
 		<constant name="LIGHT_PARAM_MAX" value="21" enum="LightParam">
 			Represents the size of the [enum LightParam] enum.
@@ -4880,20 +4880,20 @@
 			Use 4 splits for shadow projection when using directional light.
 		</constant>
 		<constant name="LIGHT_DIRECTIONAL_SKY_MODE_LIGHT_AND_SKY" value="0" enum="LightDirectionalSkyMode">
-			Use DirectionalLight3D in both sky rendering and scene lighting.
+			Use SEDirectional in both sky rendering and scene lighting.
 		</constant>
 		<constant name="LIGHT_DIRECTIONAL_SKY_MODE_LIGHT_ONLY" value="1" enum="LightDirectionalSkyMode">
-			Only use DirectionalLight3D in scene lighting.
+			Only use SEDirectional in scene lighting.
 		</constant>
 		<constant name="LIGHT_DIRECTIONAL_SKY_MODE_SKY_ONLY" value="2" enum="LightDirectionalSkyMode">
-			Only use DirectionalLight3D in sky rendering.
+			Only use SEDirectional in sky rendering.
 		</constant>
 		<constant name="SHADOW_QUALITY_HARD" value="0" enum="ShadowQuality">
-			Lowest shadow filtering quality (fastest). Soft shadows are not available with this quality setting, which means the [member Light3D.shadow_blur] property is ignored if [member Light3D.light_size] and [member Light3D.light_angular_distance] is [code]0.0[/code].
-			[b]Note:[/b] The variable shadow blur performed by [member Light3D.light_size] and [member Light3D.light_angular_distance] is still effective when using hard shadow filtering. In this case, [member Light3D.shadow_blur] [i]is[/i] taken into account. However, the results will not be blurred, instead the blur amount is treated as a maximum radius for the penumbra.
+			Lowest shadow filtering quality (fastest). Soft shadows are not available with this quality setting, which means the [member SELight.shadow_blur] property is ignored if [member SELight.light_size] and [member SELight.light_angular_distance] is [code]0.0[/code].
+			[b]Note:[/b] The variable shadow blur performed by [member SELight.light_size] and [member SELight.light_angular_distance] is still effective when using hard shadow filtering. In this case, [member SELight.shadow_blur] [i]is[/i] taken into account. However, the results will not be blurred, instead the blur amount is treated as a maximum radius for the penumbra.
 		</constant>
 		<constant name="SHADOW_QUALITY_SOFT_VERY_LOW" value="1" enum="ShadowQuality">
-			Very low shadow filtering quality (faster). When using this quality setting, [member Light3D.shadow_blur] is automatically multiplied by 0.75× to avoid introducing too much noise. This division only applies to lights whose [member Light3D.light_size] or [member Light3D.light_angular_distance] is [code]0.0[/code]).
+			Very low shadow filtering quality (faster). When using this quality setting, [member SELight.shadow_blur] is automatically multiplied by 0.75× to avoid introducing too much noise. This division only applies to lights whose [member SELight.light_size] or [member SELight.light_angular_distance] is [code]0.0[/code]).
 		</constant>
 		<constant name="SHADOW_QUALITY_SOFT_LOW" value="2" enum="ShadowQuality">
 			Low shadow filtering quality (fast).
@@ -4902,10 +4902,10 @@
 			Medium low shadow filtering quality (average).
 		</constant>
 		<constant name="SHADOW_QUALITY_SOFT_HIGH" value="4" enum="ShadowQuality">
-			High low shadow filtering quality (slow). When using this quality setting, [member Light3D.shadow_blur] is automatically multiplied by 1.5× to better make use of the high sample count. This increased blur also improves the stability of dynamic object shadows. This multiplier only applies to lights whose [member Light3D.light_size] or [member Light3D.light_angular_distance] is [code]0.0[/code]).
+			High low shadow filtering quality (slow). When using this quality setting, [member SELight.shadow_blur] is automatically multiplied by 1.5× to better make use of the high sample count. This increased blur also improves the stability of dynamic object shadows. This multiplier only applies to lights whose [member SELight.light_size] or [member SELight.light_angular_distance] is [code]0.0[/code]).
 		</constant>
 		<constant name="SHADOW_QUALITY_SOFT_ULTRA" value="5" enum="ShadowQuality">
-			Highest low shadow filtering quality (slowest). When using this quality setting, [member Light3D.shadow_blur] is automatically multiplied by 2× to better make use of the high sample count. This increased blur also improves the stability of dynamic object shadows. This multiplier only applies to lights whose [member Light3D.light_size] or [member Light3D.light_angular_distance] is [code]0.0[/code]).
+			Highest low shadow filtering quality (slowest). When using this quality setting, [member SELight.shadow_blur] is automatically multiplied by 2× to better make use of the high sample count. This increased blur also improves the stability of dynamic object shadows. This multiplier only applies to lights whose [member SELight.light_size] or [member SELight.light_angular_distance] is [code]0.0[/code]).
 		</constant>
 		<constant name="SHADOW_QUALITY_MAX" value="6" enum="ShadowQuality">
 			Represents the size of the [enum ShadowQuality] enum.
@@ -5242,10 +5242,10 @@
 			[b]Note:[/b] Only supported when using the Forward+ rendering method.
 		</constant>
 		<constant name="VIEWPORT_DEBUG_DRAW_SHADOW_ATLAS" value="9" enum="ViewportDebugDraw">
-			Draws the shadow atlas that stores shadows from [OmniLight3D]s and [SpotLight3D]s in the upper left quadrant of the [Viewport].
+			Draws the shadow atlas that stores shadows from [SEOmni]s and [SESpot]s in the upper left quadrant of the [Viewport].
 		</constant>
 		<constant name="VIEWPORT_DEBUG_DRAW_DIRECTIONAL_SHADOW_ATLAS" value="10" enum="ViewportDebugDraw">
-			Draws the shadow atlas that stores shadows from [DirectionalLight3D]s in the upper left quadrant of the [Viewport].
+			Draws the shadow atlas that stores shadows from [SEDirectional]s in the upper left quadrant of the [Viewport].
 			The slice of the camera frustum related to the shadow map cascade is superimposed to visualize coverage. The color of each slice matches the colors used for [constant VIEWPORT_DEBUG_DRAW_PSSM_SPLITS]. When shadow cascades are blended the overlap is taken into account when drawing the frustum slices.
 			The last cascade shows all frustum slices to illustrate the coverage of all slices.
 		</constant>
@@ -5262,7 +5262,7 @@
 			[b]Note:[/b] Only supported when using the Forward+ rendering method.
 		</constant>
 		<constant name="VIEWPORT_DEBUG_DRAW_PSSM_SPLITS" value="14" enum="ViewportDebugDraw">
-			Colors each PSSM split for the [DirectionalLight3D]s in the scene a different color so you can see where the splits are. In order (from closest to furthest from the camera), they are colored red, green, blue, and yellow.
+			Colors each PSSM split for the [SEDirectional]s in the scene a different color so you can see where the splits are. In order (from closest to furthest from the camera), they are colored red, green, blue, and yellow.
 			[b]Note:[/b] When using this debug draw mode, custom shaders are ignored since all materials in the scene temporarily use a debug material. This means the result from custom shader functions (such as vertex displacement) won't be visible anymore when using this debug draw mode.
 			[b]Note:[/b] Only supported when using the Forward+ or Mobile rendering methods.
 		</constant>
@@ -5286,11 +5286,11 @@
 			Disable mesh LOD. All meshes are drawn with full detail, which can be used to compare performance.
 		</constant>
 		<constant name="VIEWPORT_DEBUG_DRAW_CLUSTER_OMNI_LIGHTS" value="20" enum="ViewportDebugDraw">
-			Draws the [OmniLight3D] cluster. Clustering determines where lights are positioned in screen-space, which allows the engine to only process these portions of the screen for lighting.
+			Draws the [SEOmni] cluster. Clustering determines where lights are positioned in screen-space, which allows the engine to only process these portions of the screen for lighting.
 			[b]Note:[/b] Only supported when using the Forward+ rendering method.
 		</constant>
 		<constant name="VIEWPORT_DEBUG_DRAW_CLUSTER_SPOT_LIGHTS" value="21" enum="ViewportDebugDraw">
-			Draws the [SpotLight3D] cluster. Clustering determines where lights are positioned in screen-space, which allows the engine to only process these portions of the screen for lighting.
+			Draws the [SESpot] cluster. Clustering determines where lights are positioned in screen-space, which allows the engine to only process these portions of the screen for lighting.
 			[b]Note:[/b] Only supported when using the Forward+ rendering method.
 		</constant>
 		<constant name="VIEWPORT_DEBUG_DRAW_CLUSTER_DECALS" value="22" enum="ViewportDebugDraw">

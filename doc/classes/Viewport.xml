@@ -674,10 +674,10 @@
 			[b]Note:[/b] Only supported when using the Forward+ rendering method.
 		</constant>
 		<constant name="DEBUG_DRAW_SHADOW_ATLAS" value="9" enum="DebugDraw">
-			Draws the shadow atlas that stores shadows from [OmniLight3D]s and [SpotLight3D]s in the upper left quadrant of the [Viewport].
+			Draws the shadow atlas that stores shadows from [SEOmni]s and [SESpot]s in the upper left quadrant of the [Viewport].
 		</constant>
 		<constant name="DEBUG_DRAW_DIRECTIONAL_SHADOW_ATLAS" value="10" enum="DebugDraw">
-			Draws the shadow atlas that stores shadows from [DirectionalLight3D]s in the upper left quadrant of the [Viewport].
+			Draws the shadow atlas that stores shadows from [SEDirectional]s in the upper left quadrant of the [Viewport].
 		</constant>
 		<constant name="DEBUG_DRAW_SCENE_LUMINANCE" value="11" enum="DebugDraw">
 			Draws the scene luminance buffer (if available) in the upper left quadrant of the [Viewport].
@@ -692,7 +692,7 @@
 			[b]Note:[/b] Only supported when using the Forward+ rendering method.
 		</constant>
 		<constant name="DEBUG_DRAW_PSSM_SPLITS" value="14" enum="DebugDraw">
-			Colors each PSSM split for the [DirectionalLight3D]s in the scene a different color so you can see where the splits are. In order (from closest to furthest from the camera), they are colored red, green, blue, and yellow.
+			Colors each PSSM split for the [SEDirectional]s in the scene a different color so you can see where the splits are. In order (from closest to furthest from the camera), they are colored red, green, blue, and yellow.
 			[b]Note:[/b] When using this debug draw mode, custom shaders are ignored since all materials in the scene temporarily use a debug material. This means the result from custom shader functions (such as vertex displacement) won't be visible anymore when using this debug draw mode.
 			[b]Note:[/b] Only supported when using the Forward+ or Mobile rendering methods.
 		</constant>
@@ -718,11 +718,11 @@
 			Draws all of the objects at their highest polycount regardless of their distance from the camera. No low level of detail (LOD) is applied.
 		</constant>
 		<constant name="DEBUG_DRAW_CLUSTER_OMNI_LIGHTS" value="20" enum="DebugDraw">
-			Draws the cluster used by [OmniLight3D] nodes to optimize light rendering.
+			Draws the cluster used by [SEOmni] nodes to optimize light rendering.
 			[b]Note:[/b] Only supported when using the Forward+ rendering method.
 		</constant>
 		<constant name="DEBUG_DRAW_CLUSTER_SPOT_LIGHTS" value="21" enum="DebugDraw">
-			Draws the cluster used by [SpotLight3D] nodes to optimize light rendering.
+			Draws the cluster used by [SESpot] nodes to optimize light rendering.
 			[b]Note:[/b] Only supported when using the Forward+ rendering method.
 		</constant>
 		<constant name="DEBUG_DRAW_CLUSTER_DECALS" value="22" enum="DebugDraw">

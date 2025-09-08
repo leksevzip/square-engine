@@ -130,7 +130,7 @@ void AudioStreamPlayer3DGizmoPlugin::redraw(EditorNode3DGizmo *p_gizmo) {
 		if (player->get_attenuation_model() != AudioStreamPlayer3D::ATTENUATION_DISABLED || player->get_max_distance() > CMP_EPSILON) {
 			// Draw a circle to represent sound volume attenuation.
 			// Use only a billboard circle to represent radius.
-			// This helps distinguish AudioStreamPlayer3D gizmos from OmniLight3D gizmos.
+			// This helps distinguish AudioStreamPlayer3D gizmos from SEOmni gizmos.
 			const Ref<Material> lines_billboard_material = get_material("stream_player_3d_material_billboard", p_gizmo);
 
 			// Soft distance cap varies depending on attenuation model, as some will fade out more aggressively than others.

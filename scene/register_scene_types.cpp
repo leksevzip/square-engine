@@ -229,7 +229,7 @@
 #include "scene/3d/gpu_particles_collision_3d.h"
 #include "scene/3d/importer_se_mesh.h"
 #include "scene/3d/label_3d.h"
-#include "scene/3d/light_3d.h"
+#include "scene/3d/se_light.h"
 #include "scene/3d/lightmap_gi.h"
 #include "scene/3d/lightmap_probe.h"
 #include "scene/3d/look_at_modifier_3d.h"
@@ -623,10 +623,10 @@ void register_scene_types() {
 	GDREGISTER_CLASS(Sprite3D);
 	GDREGISTER_CLASS(AnimatedSprite3D);
 	GDREGISTER_CLASS(Label3D);
-	GDREGISTER_ABSTRACT_CLASS(Light3D);
-	GDREGISTER_CLASS(DirectionalLight3D);
-	GDREGISTER_CLASS(OmniLight3D);
-	GDREGISTER_CLASS(SpotLight3D);
+	GDREGISTER_ABSTRACT_CLASS(SELight);
+	GDREGISTER_CLASS(SEDirectional);
+	GDREGISTER_CLASS(SEOmni);
+	GDREGISTER_CLASS(SESpot);
 	GDREGISTER_CLASS(ReflectionProbe);
 	GDREGISTER_CLASS(Decal);
 	GDREGISTER_CLASS(VoxelGI);
@@ -1209,7 +1209,7 @@ void register_scene_types() {
 	ClassDB::add_compatibility_class("GIProbe", "VoxelGI");
 	ClassDB::add_compatibility_class("GIProbeData", "VoxelGIData");
 	ClassDB::add_compatibility_class("GradientTexture", "GradientTexture1D");
-	ClassDB::add_compatibility_class("Light", "Light3D");
+	ClassDB::add_compatibility_class("Light", "SELight");
 	ClassDB::add_compatibility_class("Light2D", "PointLight2D");
 	ClassDB::add_compatibility_class("LineShape2D", "WorldBoundaryShape2D");
 	ClassDB::add_compatibility_class("Listener", "AudioListener3D");
@@ -1226,7 +1226,7 @@ void register_scene_types() {
 	ClassDB::add_compatibility_class("NavigationPolygonInstance", "NavigationRegion2D");
 	ClassDB::add_compatibility_class("Navigation2DServer", "NavigationServer2D");
 #endif // NAVIGATION_2D_DISABLED
-	ClassDB::add_compatibility_class("OmniLight", "OmniLight3D");
+	ClassDB::add_compatibility_class("OmniLight", "SEOmni");
 	ClassDB::add_compatibility_class("PanoramaSky", "Sky");
 	ClassDB::add_compatibility_class("Particles", "GPUParticles3D");
 	ClassDB::add_compatibility_class("Particles2D", "GPUParticles2D");
@@ -1243,7 +1243,7 @@ void register_scene_types() {
 	ClassDB::add_compatibility_class("Spatial", "Node3D");
 	ClassDB::add_compatibility_class("SpatialGizmo", "Node3DGizmo");
 	ClassDB::add_compatibility_class("SpatialMaterial", "StandardMaterial3D");
-	ClassDB::add_compatibility_class("SpotLight", "SpotLight3D");
+	ClassDB::add_compatibility_class("SpotLight", "SESpot");
 	ClassDB::add_compatibility_class("Sprite", "Sprite2D");
 	ClassDB::add_compatibility_class("StaticBody", "StaticBody3D");
 	ClassDB::add_compatibility_class("StreamTexture", "CompressedTexture2D");
@@ -1277,7 +1277,7 @@ void register_scene_types() {
 	ClassDB::add_compatibility_class("ConvexPolygonShape", "ConvexPolygonShape3D");
 	ClassDB::add_compatibility_class("CPUParticles", "CPUParticles3D");
 	ClassDB::add_compatibility_class("CylinderShape", "CylinderShape3D");
-	ClassDB::add_compatibility_class("DirectionalLight", "DirectionalLight3D");
+	ClassDB::add_compatibility_class("DirectionalLight", "SEDirectional");
 	ClassDB::add_compatibility_class("EditorSpatialGizmo", "EditorNode3DGizmo");
 	ClassDB::add_compatibility_class("EditorSpatialGizmoPlugin", "EditorNode3DGizmoPlugin");
 	ClassDB::add_compatibility_class("Generic6DOFJoint", "Generic6DOFJoint3D");

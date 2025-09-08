@@ -3454,11 +3454,11 @@ msgstr "(ni li ken lon nasin ale.)"
 
 msgid ""
 "Scene contains\n"
-"DirectionalLight3D.\n"
+"SEDirectional.\n"
 "Preview disabled."
 msgstr ""
 "ma pali li jo e\n"
-"ijo pali DirectionalLight3D.\n"
+"ijo pali SEDirectional.\n"
 "mi ken ala e lukin lili."
 
 msgid "Preview disabled."

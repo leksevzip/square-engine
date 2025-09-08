@@ -34,7 +34,7 @@
 #include "editor/import/3d/collada.h"
 #include "scene/3d/se_camera.h"
 #include "scene/3d/importer_se_mesh.h"
-#include "scene/3d/light_3d.h"
+#include "scene/3d/se_light.h"
 #include "scene/3d/node_3d.h"
 #include "scene/3d/path_3d.h"
 #include "scene/3d/skeleton_3d.h"
@@ -209,7 +209,7 @@ Error ColladaImport::_create_scene(Collada::Node *p_node, Node3D *p_parent) {
 						return OK;
 					}
 					//well, it's an ambient light..
-					Light3D *l = memnew(DirectionalLight3D);
+					SELight *l = memnew(SEDirectional);
 					//l->set_color(Light::COLOR_AMBIENT,ld.color);
 					//l->set_color(Light::COLOR_DIFFUSE,Color(0,0,0));
 					//l->set_color(Light::COLOR_SPECULAR,Color(0,0,0));
@@ -217,7 +217,7 @@ Error ColladaImport::_create_scene(Collada::Node *p_node, Node3D *p_parent) {
 
 				} else if (ld.mode == Collada::LightData::MODE_DIRECTIONAL) {
 					//well, it's an ambient light..
-					Light3D *l = memnew(DirectionalLight3D);
+					SELight *l = memnew(SEDirectional);
 					/*
 					if (found_ambient) //use it here
 						l->set_color(Light::COLOR_AMBIENT,ambient);
@@ -227,12 +227,12 @@ Error ColladaImport::_create_scene(Collada::Node *p_node, Node3D *p_parent) {
 					*/
 					node = l;
 				} else {
-					Light3D *l;
+					SELight *l;
 
 					if (ld.mode == Collada::LightData::MODE_OMNI) {
-						l = memnew(OmniLight3D);
+						l = memnew(SEOmni);
 					} else {
-						l = memnew(SpotLight3D);
+						l = memnew(SESpot);
 						//l->set_parameter(Light::PARAM_SPOT_ANGLE,ld.spot_angle);
 						//l->set_parameter(Light::PARAM_SPOT_ATTENUATION,ld.spot_exp);
 					}

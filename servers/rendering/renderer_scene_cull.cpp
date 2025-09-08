@@ -2184,7 +2184,7 @@ void RendererSceneCull::_light_instance_setup_directional_shadow(int p_shadow_in
 	cull.shadows[p_shadow_index].caster_mask = RSG::light_storage->light_get_shadow_caster_mask(p_instance->base);
 
 	for (int i = 0; i < splits; i++) {
-		RENDER_TIMESTAMP("Cull DirectionalLight3D, Split " + itos(i));
+		RENDER_TIMESTAMP("Cull SEDirectional, Split " + itos(i));
 
 		// setup a camera matrix for that range!
 		Projection camera_matrix;
@@ -2372,7 +2372,7 @@ bool RendererSceneCull::_light_instance_update_shadow(Instance *p_instance, cons
 				}
 				for (int i = 0; i < 2; i++) {
 					//using this one ensures that raster deferred will have it
-					RENDER_TIMESTAMP("Cull OmniLight3D Shadow Paraboloid, Half " + itos(i));
+					RENDER_TIMESTAMP("Cull SEOmni Shadow Paraboloid, Half " + itos(i));
 
 					real_t radius = RSG::light_storage->light_get_param(p_instance->base, RS::LIGHT_PARAM_RANGE);
 
@@ -2445,7 +2445,7 @@ bool RendererSceneCull::_light_instance_update_shadow(Instance *p_instance, cons
 				cm.set_perspective(90, 1, z_near, radius);
 
 				for (int i = 0; i < 6; i++) {
-					RENDER_TIMESTAMP("Cull OmniLight3D Shadow Cube, Side " + itos(i));
+					RENDER_TIMESTAMP("Cull SEOmni Shadow Cube, Side " + itos(i));
 					//using this one ensures that raster deferred will have it
 
 					static const Vector3 view_normals[6] = {
@@ -2522,7 +2522,7 @@ bool RendererSceneCull::_light_instance_update_shadow(Instance *p_instance, cons
 
 		} break;
 		case RS::LIGHT_SPOT: {
-			RENDER_TIMESTAMP("Cull SpotLight3D Shadow");
+			RENDER_TIMESTAMP("Cull SESpot Shadow");
 
 			if (max_shadows_used + 1 > MAX_UPDATE_SHADOWS) {
 				return true;
@@ -3411,11 +3411,11 @@ void RendererSceneCull::_render_scene(const RendererSceneRender::CameraData *p_c
 
 			if (redraw && max_shadows_used < MAX_UPDATE_SHADOWS) {
 				//must redraw!
-				RENDER_TIMESTAMP("> Render Light3D " + itos(i));
+				RENDER_TIMESTAMP("> Render SELight " + itos(i));
 				if (_light_instance_update_shadow(ins, p_camera_data->main_transform, p_camera_data->main_projection, p_camera_data->is_orthogonal, p_camera_data->vaspect, p_shadow_atlas, scenario, p_screen_mesh_lod_threshold, p_visible_layers)) {
 					light->make_shadow_dirty();
 				}
-				RENDER_TIMESTAMP("< Render Light3D " + itos(i));
+				RENDER_TIMESTAMP("< Render SELight " + itos(i));
 			} else {
 				if (redraw) {
 					light->make_shadow_dirty();

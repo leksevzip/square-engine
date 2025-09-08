@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  light_3d_gizmo_plugin.cpp                                             */
+/*  se_light_gizmo_plugin.cpp                                             */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,15 +28,15 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#include "light_3d_gizmo_plugin.h"
+#include "se_light_gizmo_plugin.h"
 
 #include "editor/editor_node.h"
 #include "editor/editor_string_names.h"
 #include "editor/editor_undo_redo_manager.h"
 #include "editor/scene/3d/node_3d_editor_plugin.h"
-#include "scene/3d/light_3d.h"
+#include "scene/3d/se_light.h"
 
-Light3DGizmoPlugin::Light3DGizmoPlugin() {
+SELightGizmoPlugin::SELightGizmoPlugin() {
 	// Enable vertex colors for the materials below as the gizmo color depends on the light color.
 	create_material("lines_primary", Color(1, 1, 1), false, false, true);
 	create_material("lines_secondary", Color(1, 1, 1, 0.35), false, false, true);
@@ -50,19 +50,19 @@ Light3DGizmoPlugin::Light3DGizmoPlugin() {
 	create_handle_material("handles_billboard", true);
 }
 
-bool Light3DGizmoPlugin::has_gizmo(Node3D *p_spatial) {
-	return Object::cast_to<Light3D>(p_spatial) != nullptr;
+bool SELightGizmoPlugin::has_gizmo(Node3D *p_spatial) {
+	return Object::cast_to<SELight>(p_spatial) != nullptr;
 }
 
-String Light3DGizmoPlugin::get_gizmo_name() const {
-	return "Light3D";
+String SELightGizmoPlugin::get_gizmo_name() const {
+	return "SELight";
 }
 
-int Light3DGizmoPlugin::get_priority() const {
+int SELightGizmoPlugin::get_priority() const {
 	return -1;
 }
 
-String Light3DGizmoPlugin::get_handle_name(const EditorNode3DGizmo *p_gizmo, int p_id, bool p_secondary) const {
+String SELightGizmoPlugin::get_handle_name(const EditorNode3DGizmo *p_gizmo, int p_id, bool p_secondary) const {
 	if (p_id == 0) {
 		return "Radius";
 	} else {
@@ -70,20 +70,20 @@ String Light3DGizmoPlugin::get_handle_name(const EditorNode3DGizmo *p_gizmo, int
 	}
 }
 
-Variant Light3DGizmoPlugin::get_handle_value(const EditorNode3DGizmo *p_gizmo, int p_id, bool p_secondary) const {
-	Light3D *light = Object::cast_to<Light3D>(p_gizmo->get_node_3d());
+Variant SELightGizmoPlugin::get_handle_value(const EditorNode3DGizmo *p_gizmo, int p_id, bool p_secondary) const {
+	SELight *light = Object::cast_to<SELight>(p_gizmo->get_node_3d());
 	if (p_id == 0) {
-		return light->get_param(Light3D::PARAM_RANGE);
+		return light->get_param(SELight::PARAM_RANGE);
 	}
 	if (p_id == 1) {
-		return light->get_param(Light3D::PARAM_SPOT_ANGLE);
+		return light->get_param(SELight::PARAM_SPOT_ANGLE);
 	}
 
 	return Variant();
 }
 
-void Light3DGizmoPlugin::set_handle(const EditorNode3DGizmo *p_gizmo, int p_id, bool p_secondary, SECamera *p_camera, const Point2 &p_point) {
-	Light3D *light = Object::cast_to<Light3D>(p_gizmo->get_node_3d());
+void SELightGizmoPlugin::set_handle(const EditorNode3DGizmo *p_gizmo, int p_id, bool p_secondary, SECamera *p_camera, const Point2 &p_point) {
+	SELight *light = Object::cast_to<SELight>(p_gizmo->get_node_3d());
 	Transform3D gt = light->get_global_transform();
 	Transform3D gi = gt.affine_inverse();
 
@@ -92,7 +92,7 @@ void Light3DGizmoPlugin::set_handle(const EditorNode3DGizmo *p_gizmo, int p_id, 
 
 	Vector3 s[2] = { gi.xform(ray_from), gi.xform(ray_from + ray_dir * 4096) };
 	if (p_id == 0) {
-		if (Object::cast_to<SpotLight3D>(light)) {
+		if (Object::cast_to<SESpot>(light)) {
 			Vector3 ra, rb;
 			Geometry3D::get_closest_points_between_segments(Vector3(), Vector3(0, 0, -4096), s[0], s[1], ra, rb);
 
@@ -105,8 +105,8 @@ void Light3DGizmoPlugin::set_handle(const EditorNode3DGizmo *p_gizmo, int p_id, 
 				d = 0;
 			}
 
-			light->set_param(Light3D::PARAM_RANGE, d);
-		} else if (Object::cast_to<OmniLight3D>(light)) {
+			light->set_param(SELight::PARAM_RANGE, d);
+		} else if (Object::cast_to<SEOmni>(light)) {
 			Plane cp = Plane(p_camera->get_transform().basis.get_column(2), gt.origin);
 
 			Vector3 inters;
@@ -116,38 +116,38 @@ void Light3DGizmoPlugin::set_handle(const EditorNode3DGizmo *p_gizmo, int p_id, 
 					r = Math::snapped(r, Node3DEditor::get_singleton()->get_translate_snap());
 				}
 
-				light->set_param(Light3D::PARAM_RANGE, r);
+				light->set_param(SELight::PARAM_RANGE, r);
 			}
 		}
 
 	} else if (p_id == 1) {
-		float a = _find_closest_angle_to_half_pi_arc(s[0], s[1], light->get_param(Light3D::PARAM_RANGE), gt);
-		light->set_param(Light3D::PARAM_SPOT_ANGLE, CLAMP(a, 0.01, 89.99));
+		float a = _find_closest_angle_to_half_pi_arc(s[0], s[1], light->get_param(SELight::PARAM_RANGE), gt);
+		light->set_param(SELight::PARAM_SPOT_ANGLE, CLAMP(a, 0.01, 89.99));
 	}
 }
 
-void Light3DGizmoPlugin::commit_handle(const EditorNode3DGizmo *p_gizmo, int p_id, bool p_secondary, const Variant &p_restore, bool p_cancel) {
-	Light3D *light = Object::cast_to<Light3D>(p_gizmo->get_node_3d());
+void SELightGizmoPlugin::commit_handle(const EditorNode3DGizmo *p_gizmo, int p_id, bool p_secondary, const Variant &p_restore, bool p_cancel) {
+	SELight *light = Object::cast_to<SELight>(p_gizmo->get_node_3d());
 	if (p_cancel) {
-		light->set_param(p_id == 0 ? Light3D::PARAM_RANGE : Light3D::PARAM_SPOT_ANGLE, p_restore);
+		light->set_param(p_id == 0 ? SELight::PARAM_RANGE : SELight::PARAM_SPOT_ANGLE, p_restore);
 
 	} else if (p_id == 0) {
 		EditorUndoRedoManager *ur = EditorUndoRedoManager::get_singleton();
 		ur->create_action(TTR("Change Light Radius"));
-		ur->add_do_method(light, "set_param", Light3D::PARAM_RANGE, light->get_param(Light3D::PARAM_RANGE));
-		ur->add_undo_method(light, "set_param", Light3D::PARAM_RANGE, p_restore);
+		ur->add_do_method(light, "set_param", SELight::PARAM_RANGE, light->get_param(SELight::PARAM_RANGE));
+		ur->add_undo_method(light, "set_param", SELight::PARAM_RANGE, p_restore);
 		ur->commit_action();
 	} else if (p_id == 1) {
 		EditorUndoRedoManager *ur = EditorUndoRedoManager::get_singleton();
 		ur->create_action(TTR("Change Light Radius"));
-		ur->add_do_method(light, "set_param", Light3D::PARAM_SPOT_ANGLE, light->get_param(Light3D::PARAM_SPOT_ANGLE));
-		ur->add_undo_method(light, "set_param", Light3D::PARAM_SPOT_ANGLE, p_restore);
+		ur->add_do_method(light, "set_param", SELight::PARAM_SPOT_ANGLE, light->get_param(SELight::PARAM_SPOT_ANGLE));
+		ur->add_undo_method(light, "set_param", SELight::PARAM_SPOT_ANGLE, p_restore);
 		ur->commit_action();
 	}
 }
 
-void Light3DGizmoPlugin::redraw(EditorNode3DGizmo *p_gizmo) {
-	Light3D *light = Object::cast_to<Light3D>(p_gizmo->get_node_3d());
+void SELightGizmoPlugin::redraw(EditorNode3DGizmo *p_gizmo) {
+	SELight *light = Object::cast_to<SELight>(p_gizmo->get_node_3d());
 
 	Color color = light->get_color().srgb_to_linear() * light->get_correlated_color().srgb_to_linear();
 	color = color.linear_to_srgb();
@@ -156,7 +156,7 @@ void Light3DGizmoPlugin::redraw(EditorNode3DGizmo *p_gizmo) {
 
 	p_gizmo->clear();
 
-	if (Object::cast_to<DirectionalLight3D>(light)) {
+	if (Object::cast_to<SEDirectional>(light)) {
 		if (p_gizmo->is_selected()) {
 			Ref<Material> material = get_material("lines_primary", p_gizmo);
 
@@ -196,14 +196,14 @@ void Light3DGizmoPlugin::redraw(EditorNode3DGizmo *p_gizmo) {
 		p_gizmo->add_unscaled_billboard(icon, 0.05, color);
 	}
 
-	if (Object::cast_to<OmniLight3D>(light)) {
+	if (Object::cast_to<SEOmni>(light)) {
 		if (p_gizmo->is_selected()) {
 			// Use both a billboard circle and 3 non-billboard circles for a better sphere-like representation
 			const Ref<Material> lines_material = get_material("lines_secondary", p_gizmo);
 			const Ref<Material> lines_billboard_material = get_material("lines_billboard", p_gizmo);
 
-			OmniLight3D *on = Object::cast_to<OmniLight3D>(light);
-			const float r = on->get_param(Light3D::PARAM_RANGE);
+			SEOmni *on = Object::cast_to<SEOmni>(light);
+			const float r = on->get_param(SELight::PARAM_RANGE);
 			Vector<Vector3> points;
 			Vector<Vector3> points_billboard;
 
@@ -239,18 +239,18 @@ void Light3DGizmoPlugin::redraw(EditorNode3DGizmo *p_gizmo) {
 		p_gizmo->add_unscaled_billboard(icon, 0.05, color);
 	}
 
-	if (Object::cast_to<SpotLight3D>(light)) {
+	if (Object::cast_to<SESpot>(light)) {
 		if (p_gizmo->is_selected()) {
 			const Ref<Material> material_primary = get_material("lines_primary", p_gizmo);
 			const Ref<Material> material_secondary = get_material("lines_secondary", p_gizmo);
 
 			Vector<Vector3> points_primary;
 			Vector<Vector3> points_secondary;
-			SpotLight3D *sl = Object::cast_to<SpotLight3D>(light);
+			SESpot *sl = Object::cast_to<SESpot>(light);
 
-			float r = sl->get_param(Light3D::PARAM_RANGE);
-			float w = r * Math::sin(Math::deg_to_rad(sl->get_param(Light3D::PARAM_SPOT_ANGLE)));
-			float d = r * Math::cos(Math::deg_to_rad(sl->get_param(Light3D::PARAM_SPOT_ANGLE)));
+			float r = sl->get_param(SELight::PARAM_RANGE);
+			float w = r * Math::sin(Math::deg_to_rad(sl->get_param(SELight::PARAM_SPOT_ANGLE)));
+			float d = r * Math::cos(Math::deg_to_rad(sl->get_param(SELight::PARAM_SPOT_ANGLE)));
 
 			for (int i = 0; i < 120; i++) {
 				// Draw a circle
@@ -288,7 +288,7 @@ void Light3DGizmoPlugin::redraw(EditorNode3DGizmo *p_gizmo) {
 	}
 }
 
-float Light3DGizmoPlugin::_find_closest_angle_to_half_pi_arc(const Vector3 &p_from, const Vector3 &p_to, float p_arc_radius, const Transform3D &p_arc_xform) {
+float SELightGizmoPlugin::_find_closest_angle_to_half_pi_arc(const Vector3 &p_from, const Vector3 &p_to, float p_arc_radius, const Transform3D &p_arc_xform) {
 	//bleh, discrete is simpler
 	static const int arc_test_points = 64;
 	float min_d = 1e20;

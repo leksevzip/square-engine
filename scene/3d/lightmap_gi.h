@@ -31,7 +31,7 @@
 #pragma once
 
 #include "core/templates/local_vector.h"
-#include "scene/3d/light_3d.h"
+#include "scene/3d/se_light.h"
 #include "scene/3d/lightmapper.h"
 #include "scene/3d/visual_instance_3d.h"
 
@@ -209,7 +209,7 @@ private:
 
 	struct LightsFound {
 		Transform3D xform;
-		Light3D *light = nullptr;
+		SELight *light = nullptr;
 	};
 
 	struct MeshesFound {

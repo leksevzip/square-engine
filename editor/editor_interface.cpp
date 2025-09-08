@@ -53,7 +53,7 @@
 #include "editor/settings/editor_settings.h"
 #include "editor/themes/editor_scale.h"
 #include "main/main.h"
-#include "scene/3d/light_3d.h"
+#include "scene/3d/se_light.h"
 #include "scene/3d/se_mesh.h"
 #include "scene/gui/box_container.h"
 #include "scene/gui/control.h"
@@ -270,9 +270,9 @@ void EditorInterface::make_scene_preview(const String &p_path, Node *p_scene, in
 
 	camera->set_position(Vector3(0.0, 0.0, 3.0));
 
-	DirectionalLight3D *light = memnew(DirectionalLight3D);
+	SEDirectional *light = memnew(SEDirectional);
 	light->set_name("Light");
-	DirectionalLight3D *light2 = memnew(DirectionalLight3D);
+	SEDirectional *light2 = memnew(SEDirectional);
 	light2->set_name("Light2");
 	light2->set_color(Color(0.7, 0.7, 0.7, 1.0));
 

@@ -113,7 +113,7 @@
 			[b]Note:[/b] This only applies to sorting of transparent objects. This will not impact how transparent objects are sorted relative to opaque objects. This is because opaque objects are not sorted, while transparent objects are sorted from back to front (subject to priority).
 		</member>
 		<member name="shaded" type="bool" setter="set_draw_flag" getter="get_draw_flag" default="false">
-			If [code]true[/code], the [Light3D] in the [Environment] has effects on the label.
+			If [code]true[/code], the [SELight] in the [Environment] has effects on the label.
 		</member>
 		<member name="structured_text_bidi_override" type="int" setter="set_structured_text_bidi_override" getter="get_structured_text_bidi_override" enum="TextServer.StructuredTextParser" default="0">
 			Set BiDi algorithm override for the structured text.

@@ -38,7 +38,7 @@
 
 class SECamera;
 class ColorRect;
-class DirectionalLight3D;
+class SEDirectional;
 class HBoxContainer;
 class SEMesh;
 class SubViewport;
@@ -62,8 +62,8 @@ class MaterialEditor : public Control {
 	SEMesh *sphere_instance = nullptr;
 	SEMesh *box_instance = nullptr;
 	SEMesh *quad_instance = nullptr;
-	DirectionalLight3D *light1 = nullptr;
-	DirectionalLight3D *light2 = nullptr;
+	SEDirectional *light1 = nullptr;
+	SEDirectional *light2 = nullptr;
 	SECamera *camera = nullptr;
 	Ref<CameraAttributesPractical> camera_attributes;
 

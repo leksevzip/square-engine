@@ -173,7 +173,7 @@ Table of contents:
 - Remove solid boxes in gizmos of VoxelGI and ReflectionProbe ([GH-100370](https://github.com/godotengine/godot/pull/100370)).
 - Fix errors when undoing collision generation for multiple meshes with different parents ([GH-100500](https://github.com/godotengine/godot/pull/100500)).
 - Update the warnings for SEOShape3D ([GH-100526](https://github.com/godotengine/godot/pull/100526)).
-- Fix crash when duplicating `Decal` or `Light3D` nodes ([GH-100632](https://github.com/godotengine/godot/pull/100632)).
+- Fix crash when duplicating `Decal` or `SELight` nodes ([GH-100632](https://github.com/godotengine/godot/pull/100632)).
 - Follow-up of `ArrayMesh::surface_remove` addition ([GH-100643](https://github.com/godotengine/godot/pull/100643)).
 - Fix 3D camera override when there is no camera in scene tree ([GH-100698](https://github.com/godotengine/godot/pull/100698)).
 - Remove unused editor setting `editors/grid_map/editor_side` ([GH-100702](https://github.com/godotengine/godot/pull/100702)).
@@ -2472,8 +2472,8 @@ Table of contents:
 - Allow more flexible adjustments of VisualInstance3D Lightmap Scale ([GH-75164](https://github.com/godotengine/godot/pull/75164)).
 - Implement vertex shading ([GH-83360](https://github.com/godotengine/godot/pull/83360)).
 - Fix generated light probes placing too close to manual light probes ([GH-83497](https://github.com/godotengine/godot/pull/83497)).
-- Implement per-light Specular property in DirectionalLight3D ([GH-83917](https://github.com/godotengine/godot/pull/83917)).
-- Add `shadow_caster_mask` to Light3D ([GH-85338](https://github.com/godotengine/godot/pull/85338)).
+- Implement per-light Specular property in SEDirectional ([GH-83917](https://github.com/godotengine/godot/pull/83917)).
+- Add `shadow_caster_mask` to SELight ([GH-85338](https://github.com/godotengine/godot/pull/85338)).
 - Faster exit from `_cull_canvas_item` if alpha is zero ([GH-85359](https://github.com/godotengine/godot/pull/85359)).
 - Expose RenderingServer methods to get rendering driver and method name ([GH-85430](https://github.com/godotengine/godot/pull/85430)).
 - Implement LightmapGI shadowmasks ([GH-85653](https://github.com/godotengine/godot/pull/85653)).
@@ -2484,7 +2484,7 @@ Table of contents:
 - Reduce shader permutations in the compatibility backend ([GH-87558](https://github.com/godotengine/godot/pull/87558)).
 - Add Metal support for macOS (arm64) and iOS ([GH-88199](https://github.com/godotengine/godot/pull/88199)).
 - Allow changing the anisotropic filter level at run-time per Viewport ([GH-88313](https://github.com/godotengine/godot/pull/88313)).
-- Only allow valid types in Decal, Light3D projector, PointLight2D texture and SEOMesh3D mesh ([GH-88349](https://github.com/godotengine/godot/pull/88349)).
+- Only allow valid types in Decal, SELight projector, PointLight2D texture and SEOMesh3D mesh ([GH-88349](https://github.com/godotengine/godot/pull/88349)).
 - Implement bicubic sampling for lightmaps ([GH-89919](https://github.com/godotengine/godot/pull/89919)).
 - Ubershaders and pipeline pre-compilation (and dedicated transfer queues) ([GH-90400](https://github.com/godotengine/godot/pull/90400)).
 - Add debug utilities for Vulkan ([GH-90993](https://github.com/godotengine/godot/pull/90993)).
@@ -2681,14 +2681,14 @@ Table of contents:
 - Fix a command buffer leak that occurs in D3D12 ([GH-100151](https://github.com/godotengine/godot/pull/100151)).
 - Improve thread-safety of pipeline hash map ([GH-100213](https://github.com/godotengine/godot/pull/100213)).
 - Fix incorrect return value on partial coverage detection ([GH-100222](https://github.com/godotengine/godot/pull/100222)).
-- Fix wide `SpotLight3D` clustering ([GH-100236](https://github.com/godotengine/godot/pull/100236)).
+- Fix wide `SESpot` clustering ([GH-100236](https://github.com/godotengine/godot/pull/100236)).
 - Add priority-based blending to reflection probes ([GH-100241](https://github.com/godotengine/godot/pull/100241)).
 - Keep processing Graphics if there are pending operations ([GH-100257](https://github.com/godotengine/godot/pull/100257)).
 - Replace `textureSize()` with a uniform in BaseMaterial3D for MSDF rendering ([GH-100280](https://github.com/godotengine/godot/pull/100280)).
 - Add renderer motion vectors API for use with OpenXR ([GH-100282](https://github.com/godotengine/godot/pull/100282)).
 - Optimize PointLight2D shadow rendering by reducing draw calls and RD state changes ([GH-100302](https://github.com/godotengine/godot/pull/100302)).
 - Remove positional light mask from directional lights in Canvas Item shaders ([GH-100305](https://github.com/godotengine/godot/pull/100305)).
-- Fix shadows of long range `OmniLight3D` and `SpotLight3D` ([GH-100319](https://github.com/godotengine/godot/pull/100319)).
+- Fix shadows of long range `SEOmni` and `SESpot` ([GH-100319](https://github.com/godotengine/godot/pull/100319)).
 - Fix several ubsan reported misaligned accesses ([GH-100325](https://github.com/godotengine/godot/pull/100325)).
 - Small fixups for the new reflection probe blending ([GH-100344](https://github.com/godotengine/godot/pull/100344)).
 - Fix ubsan reported errors in rendering ([GH-100374](https://github.com/godotengine/godot/pull/100374)).

@@ -37,7 +37,7 @@
 #include "editor/settings/editor_settings.h"
 #include "editor/themes/editor_scale.h"
 #include "scene/3d/se_camera.h"
-#include "scene/3d/light_3d.h"
+#include "scene/3d/se_light.h"
 #include "scene/3d/se_mesh.h"
 #include "scene/gui/box_container.h"
 #include "scene/gui/button.h"
@@ -267,11 +267,11 @@ MaterialEditor::MaterialEditor() {
 	}
 	viewport->add_child(camera);
 
-	light1 = memnew(DirectionalLight3D);
+	light1 = memnew(SEDirectional);
 	light1->set_transform(Transform3D().looking_at(Vector3(-1, -1, -1), Vector3(0, 1, 0)));
 	viewport->add_child(light1);
 
-	light2 = memnew(DirectionalLight3D);
+	light2 = memnew(SEDirectional);
 	light2->set_transform(Transform3D().looking_at(Vector3(0, 1, 0), Vector3(0, 0, 1)));
 	light2->set_color(Color(0.7, 0.7, 0.7));
 	viewport->add_child(light2);
