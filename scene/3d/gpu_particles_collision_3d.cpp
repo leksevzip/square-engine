@@ -31,7 +31,7 @@
 #include "gpu_particles_collision_3d.h"
 
 #include "core/object/worker_thread_pool.h"
-#include "mesh_instance_3d.h"
+#include "se_mesh.h"
 #include "scene/3d/se_camera.h"
 #include "scene/main/viewport.h"
 
@@ -144,7 +144,7 @@ GPUParticlesCollisionBox3D::~GPUParticlesCollisionBox3D() {
 ///////////////////////////
 
 void GPUParticlesCollisionSDF3D::_find_meshes(const AABB &p_aabb, Node *p_at_node, List<PlotMesh> &plot_meshes) {
-	MeshInstance3D *mi = Object::cast_to<MeshInstance3D>(p_at_node);
+	SEMesh *mi = Object::cast_to<SEMesh>(p_at_node);
 	if (mi && mi->is_visible_in_tree()) {
 		if ((mi->get_layer_mask() & bake_mask) == 0) {
 			return;

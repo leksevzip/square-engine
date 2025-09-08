@@ -59,7 +59,7 @@
 #include "editor/scene/3d/gizmos/lightmap_gi_gizmo_plugin.h"
 #include "editor/scene/3d/gizmos/lightmap_probe_gizmo_plugin.h"
 #include "editor/scene/3d/gizmos/marker_3d_gizmo_plugin.h"
-#include "editor/scene/3d/gizmos/mesh_instance_3d_gizmo_plugin.h"
+#include "editor/scene/3d/gizmos/se_mesh_gizmo_plugin.h"
 #include "editor/scene/3d/gizmos/occluder_instance_3d_gizmo_plugin.h"
 #include "editor/scene/3d/gizmos/particles_3d_emission_shape_gizmo_plugin.h"
 #include "editor/scene/3d/gizmos/physics/collision_object_3d_gizmo_plugin.h"
@@ -85,7 +85,7 @@
 #include "scene/3d/se_camera.h"
 #include "scene/3d/decal.h"
 #include "scene/3d/light_3d.h"
-#include "scene/3d/mesh_instance_3d.h"
+#include "scene/3d/se_mesh.h"
 #include "scene/3d/physics/collision_shape_3d.h"
 #include "scene/3d/physics/physics_body_3d.h"
 #include "scene/3d/sprite_3d.h"
@@ -4591,7 +4591,7 @@ void _insert_rid_recursive(Node *node, HashSet<RID> &rids) {
 
 	if (co) {
 		rids.insert(co->get_rid());
-	} else if (node->is_class("CSGShape3D")) { // HACK: We should avoid referencing module logic.
+	} else if (node->is_class("SEOShape3D")) { // HACK: We should avoid referencing module logic.
 		rids.insert(node->call("_get_root_collision_instance"));
 	}
 
@@ -4773,7 +4773,7 @@ void Node3DEditorViewport::_create_preview_node(const Vector<String> &files) con
 
 		Ref<Mesh> mesh = res;
 		if (mesh.is_valid()) {
-			MeshInstance3D *mesh_instance = memnew(MeshInstance3D);
+			SEMesh *mesh_instance = memnew(SEMesh);
 			mesh_instance->set_mesh(mesh);
 			preview_node->add_child(mesh_instance);
 			add_preview = true;
@@ -4821,7 +4821,7 @@ bool Node3DEditorViewport::_apply_preview_material(ObjectID p_target, const Poin
 
 	bool is_ctrl = Input::get_singleton()->is_key_pressed(Key::CTRL);
 
-	MeshInstance3D *mesh_instance = Object::cast_to<MeshInstance3D>(target_inst);
+	SEMesh *mesh_instance = Object::cast_to<SEMesh>(target_inst);
 	if (is_ctrl && mesh_instance) {
 		Ref<Mesh> mesh = mesh_instance->get_mesh();
 		int surface_count = mesh->get_surface_count();
@@ -4887,7 +4887,7 @@ void Node3DEditorViewport::_reset_preview_material() const {
 	}
 	Object *last_target_inst = ObjectDB::get_instance(last_target);
 
-	MeshInstance3D *mesh_instance = Object::cast_to<MeshInstance3D>(last_target_inst);
+	SEMesh *mesh_instance = Object::cast_to<SEMesh>(last_target_inst);
 	GeometryInstance3D *geometry_instance = Object::cast_to<GeometryInstance3D>(last_target_inst);
 	if (mesh_instance && spatial_editor->get_preview_material_surface() != -1) {
 		mesh_instance->set_surface_override_material(spatial_editor->get_preview_material_surface(), spatial_editor->get_preview_reset_material());
@@ -4932,7 +4932,7 @@ bool Node3DEditorViewport::_create_instance(Node *p_parent, const String &p_path
 
 	if (mesh.is_valid() || scene.is_valid()) {
 		if (mesh.is_valid()) {
-			MeshInstance3D *mesh_instance = memnew(MeshInstance3D);
+			SEMesh *mesh_instance = memnew(SEMesh);
 			mesh_instance->set_mesh(mesh);
 
 			// Adjust casing according to project setting. The file name is expected to be in snake_case, but will work for others.
@@ -5044,7 +5044,7 @@ void Node3DEditorViewport::_perform_drop_data() {
 	EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
 	if (spatial_editor->get_preview_material_target().is_valid()) {
 		GeometryInstance3D *geometry_instance = ObjectDB::get_instance<GeometryInstance3D>(spatial_editor->get_preview_material_target());
-		MeshInstance3D *mesh_instance = ObjectDB::get_instance<MeshInstance3D>(spatial_editor->get_preview_material_target());
+		SEMesh *mesh_instance = ObjectDB::get_instance<SEMesh>(spatial_editor->get_preview_material_target());
 		if (mesh_instance && spatial_editor->get_preview_material_surface() != -1) {
 			undo_redo->create_action(vformat(TTR("Set Surface %d Override Material"), spatial_editor->get_preview_material_surface()));
 			undo_redo->add_do_method(geometry_instance, "set_surface_override_material", spatial_editor->get_preview_material_surface(), spatial_editor->get_preview_material());
@@ -6088,11 +6088,11 @@ Node3DEditorViewport::Node3DEditorViewport(Node3DEditor *p_spatial_editor, int p
 
 	geometry.instantiate();
 
-	ruler_line = memnew(MeshInstance3D);
+	ruler_line = memnew(SEMesh);
 	ruler_line->set_mesh(geometry);
 	ruler_line->set_material_override(ruler_material);
 
-	ruler_line_xray = memnew(MeshInstance3D);
+	ruler_line_xray = memnew(SEMesh);
 	ruler_line_xray->set_mesh(geometry);
 	ruler_line_xray->set_material_override(ruler_material_xray);
 
@@ -8906,7 +8906,7 @@ void Node3DEditor::_register_all_gizmos() {
 	add_gizmo_plugin(Ref<Light3DGizmoPlugin>(memnew(Light3DGizmoPlugin)));
 	add_gizmo_plugin(Ref<AudioStreamPlayer3DGizmoPlugin>(memnew(AudioStreamPlayer3DGizmoPlugin)));
 	add_gizmo_plugin(Ref<AudioListener3DGizmoPlugin>(memnew(AudioListener3DGizmoPlugin)));
-	add_gizmo_plugin(Ref<MeshInstance3DGizmoPlugin>(memnew(MeshInstance3DGizmoPlugin)));
+	add_gizmo_plugin(Ref<SEMeshGizmoPlugin>(memnew(SEMeshGizmoPlugin)));
 	add_gizmo_plugin(Ref<OccluderInstance3DGizmoPlugin>(memnew(OccluderInstance3DGizmoPlugin)));
 	add_gizmo_plugin(Ref<SoftBody3DGizmoPlugin>(memnew(SoftBody3DGizmoPlugin)));
 	add_gizmo_plugin(Ref<SpriteBase3DGizmoPlugin>(memnew(SpriteBase3DGizmoPlugin)));

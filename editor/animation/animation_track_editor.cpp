@@ -46,7 +46,7 @@
 #include "editor/script/script_editor_plugin.h"
 #include "editor/settings/editor_settings.h"
 #include "editor/themes/editor_scale.h"
-#include "scene/3d/mesh_instance_3d.h"
+#include "scene/3d/se_mesh.h"
 #include "scene/animation/animation_player.h"
 #include "scene/animation/tween.h"
 #include "scene/gui/check_box.h"
@@ -5432,8 +5432,8 @@ void AnimationTrackEditor::_new_track_node_selected(NodePath p_path) {
 	ERR_FAIL_NULL(node);
 	NodePath path_to = root->get_path_to(node, true);
 
-	if (adding_track_type == Animation::TYPE_BLEND_SHAPE && !node->is_class("MeshInstance3D")) {
-		EditorNode::get_singleton()->show_warning(TTR("Blend Shape tracks only apply to MeshInstance3D nodes."));
+	if (adding_track_type == Animation::TYPE_BLEND_SHAPE && !node->is_class("SEMesh")) {
+		EditorNode::get_singleton()->show_warning(TTR("Blend Shape tracks only apply to SEMesh nodes."));
 		return;
 	}
 
@@ -5531,8 +5531,8 @@ void AnimationTrackEditor::_add_track(int p_type) {
 	Vector<StringName> valid_types;
 	switch (adding_track_type) {
 		case Animation::TYPE_BLEND_SHAPE: {
-			// Blend Shape is a property of MeshInstance3D.
-			valid_types.push_back(SNAME("MeshInstance3D"));
+			// Blend Shape is a property of SEMesh.
+			valid_types.push_back(SNAME("SEMesh"));
 		} break;
 		case Animation::TYPE_POSITION_3D:
 		case Animation::TYPE_ROTATION_3D:
@@ -5757,10 +5757,10 @@ void AnimationTrackEditor::_insert_key_from_track(float p_ofs, int p_track) {
 			id.value = base->get_scale();
 		} break;
 		case Animation::TYPE_BLEND_SHAPE: {
-			MeshInstance3D *base = Object::cast_to<MeshInstance3D>(node);
+			SEMesh *base = Object::cast_to<SEMesh>(node);
 
 			if (!base) {
-				EditorNode::get_singleton()->show_warning(TTR("Track is not of type MeshInstance3D, can't insert key"));
+				EditorNode::get_singleton()->show_warning(TTR("Track is not of type SEMesh, can't insert key"));
 				return;
 			}
 

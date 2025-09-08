@@ -828,8 +828,8 @@ msgstr "Vojo de trako estas nevalida, do ne eblas aldoni ŝlosilon."
 msgid "Track is not of type Node3D, can't insert key"
 msgstr "Trako ne estas de tipo Node3D, ne eblas enmeti ŝlosilon"
 
-msgid "Track is not of type MeshInstance3D, can't insert key"
-msgstr "Trako ne estas de tipo MeshInstance3D, ne eblas enmeti ŝlosilon"
+msgid "Track is not of type SEMesh, can't insert key"
+msgstr "Trako ne estas de tipo SEMesh, ne eblas enmeti ŝlosilon"
 
 msgid "Track path is invalid, so can't add a method key."
 msgstr "Vojo de trako estas nevalida, do ne eblas aldoni metodan ŝlosilon."

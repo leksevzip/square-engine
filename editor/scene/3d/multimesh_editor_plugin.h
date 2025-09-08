@@ -31,7 +31,7 @@
 #pragma once
 
 #include "editor/plugins/editor_plugin.h"
-#include "scene/3d/multimesh_instance_3d.h"
+#include "scene/3d/multise_mesh.h"
 #include "scene/gui/slider.h"
 #include "scene/gui/spin_box.h"
 
@@ -48,11 +48,11 @@ class MultiMeshEditor : public Control {
 
 	AcceptDialog *err_dialog = nullptr;
 	MenuButton *options = nullptr;
-	MultiMeshInstance3D *_last_pp_node = nullptr;
+	MultiSEMesh *_last_pp_node = nullptr;
 	bool browsing_source = false;
 
 	Panel *panel = nullptr;
-	MultiMeshInstance3D *node = nullptr;
+	MultiSEMesh *node = nullptr;
 
 	LineEdit *surface_source = nullptr;
 	LineEdit *mesh_source = nullptr;
@@ -80,7 +80,7 @@ protected:
 	void _node_removed(Node *p_node);
 
 public:
-	void edit(MultiMeshInstance3D *p_multimesh);
+	void edit(MultiSEMesh *p_multimesh);
 	MultiMeshEditor();
 };
 

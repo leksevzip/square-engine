@@ -33,7 +33,7 @@
 #include "editor/import/3d/resource_importer_scene.h"
 #include "scene/3d/se_camera.h"
 #include "scene/3d/light_3d.h"
-#include "scene/3d/mesh_instance_3d.h"
+#include "scene/3d/se_mesh.h"
 #include "scene/3d/skeleton_3d.h"
 #include "scene/gui/dialogs.h"
 #include "scene/gui/menu_button.h"
@@ -95,9 +95,9 @@ class SceneImportSettingsDialog : public ConfirmationDialog {
 	DirectionalLight3D *light1 = nullptr;
 	DirectionalLight3D *light2 = nullptr;
 	Ref<ArrayMesh> selection_mesh;
-	MeshInstance3D *node_selected = nullptr;
+	SEMesh *node_selected = nullptr;
 
-	MeshInstance3D *mesh_preview = nullptr;
+	SEMesh *mesh_preview = nullptr;
 	Ref<SphereMesh> material_preview;
 
 	AnimationPlayer *animation_player = nullptr;
@@ -111,7 +111,7 @@ class SceneImportSettingsDialog : public ConfirmationDialog {
 	bool animation_pingpong = false;
 	bool previous_import_as_skeleton = false;
 	bool previous_rest_as_reset = false;
-	MeshInstance3D *bones_mesh_preview = nullptr;
+	SEMesh *bones_mesh_preview = nullptr;
 
 	Ref<StandardMaterial3D> collider_mat;
 

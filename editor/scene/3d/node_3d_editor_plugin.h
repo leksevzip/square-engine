@@ -61,7 +61,7 @@ class VSeparator;
 class VSplitContainer;
 class ViewportNavigationControl;
 class WorldEnvironment;
-class MeshInstance3D;
+class SEMesh;
 
 class ViewportRotationControl : public Control {
 	GDCLASS(ViewportRotationControl, Control);
@@ -221,8 +221,8 @@ private:
 	Node3D *ruler_start_point = nullptr;
 	Node3D *ruler_end_point = nullptr;
 	Ref<ImmediateMesh> geometry;
-	MeshInstance3D *ruler_line = nullptr;
-	MeshInstance3D *ruler_line_xray = nullptr;
+	SEMesh *ruler_line = nullptr;
+	SEMesh *ruler_line_xray = nullptr;
 	Label *ruler_label = nullptr;
 	Ref<StandardMaterial3D> ruler_material;
 	Ref<StandardMaterial3D> ruler_material_xray;

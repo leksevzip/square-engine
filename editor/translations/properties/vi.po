@@ -1234,8 +1234,8 @@ msgstr "Voxel GI"
 msgid "Skeleton"
 msgstr "Khung xương"
 
-msgid "CSG"
-msgstr "CSG"
+msgid "SEO"
+msgstr "SEO"
 
 msgid "Path 3D Tilt Disk Size"
 msgstr "Đường nghiêng 3D Kích thước đĩa"

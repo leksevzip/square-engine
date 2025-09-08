@@ -1507,9 +1507,9 @@ msgstr "تغيير خطوة الحركة"
 msgid "Rearrange Tracks"
 msgstr "إعادة ترتيب المقاطع"
 
-msgid "Blend Shape tracks only apply to MeshInstance3D nodes."
+msgid "Blend Shape tracks only apply to SEMesh nodes."
 msgstr ""
-"مقاطع \"خلط الأشكال\" تنطبق فقط على عُقد مثيل-مجسم-ثلاثي (MeshInstance3D)."
+"مقاطع \"خلط الأشكال\" تنطبق فقط على عُقد مثيل-مجسم-ثلاثي (SEMesh)."
 
 msgid "Position/Rotation/Scale 3D tracks only apply to 3D-based nodes."
 msgstr ""
@@ -1548,7 +1548,7 @@ msgstr "مسار المقطع غير صالح, إذن لا يمكن إضافة �
 msgid "Track is not of type Node3D, can't insert key"
 msgstr "المقطع ليس عقدة ثلاثية الأبعاد، لا يمكن إضافة مفتاح"
 
-msgid "Track is not of type MeshInstance3D, can't insert key"
+msgid "Track is not of type SEMesh, can't insert key"
 msgstr "المقطع ليس من نوع تنسيخ-مجسم-ثلاثي، لا يمكن إدخال مفتاح"
 
 msgid "Track path is invalid, so can't add a method key."
@@ -9242,7 +9242,7 @@ msgstr "المجسّم ليس لديه UV في الطبقة %d."
 msgid "Create Navigation Mesh"
 msgstr "إنشاء مجسم التنقل"
 
-msgid "MeshInstance3D lacks a Mesh."
+msgid "SEMesh lacks a Mesh."
 msgstr "مثيل-المُجسّم-الثلاثي يفقتر إلى مُجسم."
 
 msgid "Mesh has no surface to create outlines from."
@@ -9384,8 +9384,8 @@ msgstr "لا يوجد مجسّم محدد (والمجسمات-المتعددة �
 msgid "Mesh source is invalid (invalid path)."
 msgstr "مصدر الميش خاطئ (المسار خاطئ)."
 
-msgid "Mesh source is invalid (not a MeshInstance3D)."
-msgstr "مصدر المجسم غير صالح (ليس MeshInstance3D)."
+msgid "Mesh source is invalid (not a SEMesh)."
+msgstr "مصدر المجسم غير صالح (ليس SEMesh)."
 
 msgid "Mesh source is invalid (contains no Mesh resource)."
 msgstr "مصدر الميش خاطئ (لا يحتوي علي مصادر للميش)."
@@ -10170,11 +10170,11 @@ msgstr ""
 
 msgid ""
 "No meshes to bake.\n"
-"Make sure there is at least one MeshInstance3D node in the scene whose visual "
+"Make sure there is at least one SEMesh node in the scene whose visual "
 "layers are part of the OccluderInstance3D's Bake Mask property."
 msgstr ""
 "لا يوجد مجسم للدمج.\n"
-"تأكد من وجود عقدة MeshInstance3D واحدة على الأقل في المشهد الذي تعد طبقاته "
+"تأكد من وجود عقدة SEMesh واحدة على الأقل في المشهد الذي تعد طبقاته "
 "المرئية جزءًا من خاصية دمج المجسم الخاصة بـ OccluderInstance3D."
 
 msgid "Could not save the new occluder at the specified path:"

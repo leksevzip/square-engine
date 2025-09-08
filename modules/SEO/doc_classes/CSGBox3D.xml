@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="SEOBox3D" inherits="SEOPrimitive3D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../doc/class.xsd">
+	<brief_description>
+		A SEO Box shape.
+	</brief_description>
+	<description>
+		This node allows you to create a box for use with the SEO system.
+		[b]Note:[/b] SEO nodes are intended to be used for level prototyping. Creating SEO nodes has a significant CPU cost compared to creating a [SEMesh] with a [PrimitiveMesh]. Moving a SEO node within another SEO node also has a significant CPU cost, so it should be avoided during gameplay.
+	</description>
+	<tutorials>
+		<link title="Prototyping levels with SEO">$DOCS_URL/tutorials/3d/SEO_tools.html</link>
+	</tutorials>
+	<members>
+		<member name="material" type="Material" setter="set_material" getter="get_material">
+			The material used to render the box.
+		</member>
+		<member name="size" type="Vector3" setter="set_size" getter="get_size" default="Vector3(1, 1, 1)">
+			The box's width, height and depth.
+		</member>
+	</members>
+</class>

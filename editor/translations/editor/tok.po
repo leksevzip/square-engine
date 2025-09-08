@@ -3314,8 +3314,8 @@ msgstr "o sin tan ma pali"
 msgid "Mesh source is invalid (invalid path)."
 msgstr "tan selo li ken ala (nasin pi ken ala)."
 
-msgid "Mesh source is invalid (not a MeshInstance3D)."
-msgstr "tan selo li ken ala (li ijo pali MeshInstance3D ala)."
+msgid "Mesh source is invalid (not a SEMesh)."
+msgstr "tan selo li ken ala (li ijo pali SEMesh ala)."
 
 msgid "Mesh source is invalid (contains no Mesh resource)."
 msgstr "tan selo li ken ala (li jo e poki sona sel ala)."
@@ -4958,11 +4958,11 @@ msgstr "ni li jo e nimi sin"
 msgid "Deleted"
 msgstr "ni li weka"
 
-msgid "CSG"
-msgstr "CSG"
+msgid "SEO"
+msgstr "SEO"
 
-msgid "Change CSG Box Size"
-msgstr "o ante e suli pi leko CSG"
+msgid "Change SEO Box Size"
+msgstr "o ante e suli pi leko SEO"
 
 msgid "Previous Floor"
 msgstr "anpa kama"

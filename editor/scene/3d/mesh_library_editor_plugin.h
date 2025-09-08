@@ -36,7 +36,7 @@
 class EditorFileDialog;
 class ConfirmationDialog;
 class MenuButton;
-class MeshInstance3D;
+class SEMesh;
 
 class MeshLibraryEditor : public Control {
 	GDCLASS(MeshLibraryEditor, Control);
@@ -65,7 +65,7 @@ class MeshLibraryEditor : public Control {
 	void _menu_update_confirm(bool p_apply_xforms);
 
 	static void _import_scene(Node *p_scene, Ref<MeshLibrary> p_library, bool p_merge, bool p_apply_xforms);
-	static void _import_scene_parse_node(Ref<MeshLibrary> p_library, HashMap<int, MeshInstance3D *> &p_mesh_instances, Node *p_node, bool p_merge, bool p_apply_xforms);
+	static void _import_scene_parse_node(Ref<MeshLibrary> p_library, HashMap<int, SEMesh *> &p_mesh_instances, Node *p_node, bool p_merge, bool p_apply_xforms);
 
 public:
 	MenuButton *get_menu_button() const { return menu; }

@@ -16,7 +16,7 @@ def main():
     parser.add_argument(
         "name",
         type=str,
-        help="Specifies the class or component name to be tested, in PascalCase (e.g., MeshInstance3D). The name will be prefixed with 'test_' for the header file and 'Test' for the namespace.",
+        help="Specifies the class or component name to be tested, in PascalCase (e.g., SEMesh). The name will be prefixed with 'test_' for the header file and 'Test' for the namespace.",
     )
     parser.add_argument(
         "path",

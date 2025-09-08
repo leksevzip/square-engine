@@ -23,7 +23,7 @@
 		<method name="get_base" qualifiers="const">
 			<return type="RID" />
 			<description>
-				Returns the RID of the resource associated with this [VisualInstance3D]. For example, if the Node is a [MeshInstance3D], this will return the RID of the associated [Mesh].
+				Returns the RID of the resource associated with this [VisualInstance3D]. For example, if the Node is a [SEMesh], this will return the RID of the associated [Mesh].
 			</description>
 		</method>
 		<method name="get_instance" qualifiers="const">

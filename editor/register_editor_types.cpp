@@ -91,7 +91,7 @@
 #include "editor/scene/3d/gpu_particles_collision_sdf_editor_plugin.h"
 #include "editor/scene/3d/lightmap_gi_editor_plugin.h"
 #include "editor/scene/3d/mesh_editor_plugin.h"
-#include "editor/scene/3d/mesh_instance_3d_editor_plugin.h"
+#include "editor/scene/3d/se_mesh_editor_plugin.h"
 #include "editor/scene/3d/mesh_library_editor_plugin.h"
 #include "editor/scene/3d/multimesh_editor_plugin.h"
 #include "editor/scene/3d/node_3d_editor_gizmos.h"
@@ -232,7 +232,7 @@ void register_editor_types() {
 	EditorPlugins::add_by_type<LightmapGIEditorPlugin>();
 	EditorPlugins::add_by_type<MaterialEditorPlugin>();
 	EditorPlugins::add_by_type<MeshEditorPlugin>();
-	EditorPlugins::add_by_type<MeshInstance3DEditorPlugin>();
+	EditorPlugins::add_by_type<SEMeshEditorPlugin>();
 	EditorPlugins::add_by_type<MeshLibraryEditorPlugin>();
 	EditorPlugins::add_by_type<MultiMeshEditorPlugin>();
 	EditorPlugins::add_by_type<OccluderInstance3DEditorPlugin>();

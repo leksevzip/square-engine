@@ -35,7 +35,7 @@
 #include "editor/scene/scene_tree_editor.h"
 #include "scene/3d/cpu_particles_3d.h"
 #include "scene/3d/gpu_particles_3d.h"
-#include "scene/3d/mesh_instance_3d.h"
+#include "scene/3d/se_mesh.h"
 #include "scene/gui/box_container.h"
 #include "scene/gui/option_button.h"
 #include "scene/gui/spin_box.h"
@@ -95,7 +95,7 @@ void Particles3DEditorPlugin::_node_selected(const NodePath &p_path) {
 		return;
 	}
 
-	MeshInstance3D *mi = Object::cast_to<MeshInstance3D>(sel);
+	SEMesh *mi = Object::cast_to<SEMesh>(sel);
 	if (!mi || mi->get_mesh().is_null()) {
 		EditorNode::get_singleton()->show_warning(vformat(TTR("\"%s\" doesn't contain geometry."), sel->get_name()));
 		return;
@@ -284,7 +284,7 @@ Particles3DEditorPlugin::Particles3DEditorPlugin() {
 
 	emission_tree_dialog = memnew(SceneTreeDialog);
 	Vector<StringName> valid_types;
-	valid_types.push_back("MeshInstance3D");
+	valid_types.push_back("SEMesh");
 	emission_tree_dialog->set_valid_types(valid_types);
 	EditorNode::get_singleton()->get_gui_base()->add_child(emission_tree_dialog);
 	emission_tree_dialog->connect("selected", callable_mp(this, &Particles3DEditorPlugin::_node_selected));

@@ -3716,8 +3716,8 @@ msgstr "মিশ্রিত আকার দিয়ে জাল খুল�
 msgid "Create Navigation Mesh"
 msgstr "Navigation Mesh তৈরি করুন"
 
-msgid "MeshInstance3D lacks a Mesh."
-msgstr "MeshInstance3D-এ Mesh নেই।"
+msgid "SEMesh lacks a Mesh."
+msgstr "SEMesh-এ Mesh নেই।"
 
 msgid "Mesh has no surface to create outlines from."
 msgstr "প্রান্তরেখা তৈরি করার জন্য প্রয়োজনীয় Mesh এর কোনো পৃষ্ঠতল নেই।"

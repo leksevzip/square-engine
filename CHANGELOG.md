@@ -115,8 +115,8 @@ Table of contents:
 - Add option to bake a mesh from animated skeleton pose ([GH-85018](https://github.com/godotengine/godot/pull/85018)).
 - Add ShadowCastingSetting to MeshLibrary / GridMap items ([GH-85443](https://github.com/godotengine/godot/pull/85443)).
 - Add `closed` property to `Curve3D` ([GH-86195](https://github.com/godotengine/godot/pull/86195)).
-- Fix CSGShape3D's `_mesh_changed` to be thread safe ([GH-86538](https://github.com/godotengine/godot/pull/86538)).
-- Fix `CSGShape3D` debug collision shapes being visible in editor ([GH-86699](https://github.com/godotengine/godot/pull/86699)).
+- Fix SEOShape3D's `_mesh_changed` to be thread safe ([GH-86538](https://github.com/godotengine/godot/pull/86538)).
+- Fix `SEOShape3D` debug collision shapes being visible in editor ([GH-86699](https://github.com/godotengine/godot/pull/86699)).
 - Clear drag preview material on `NOTIFICATION_DRAG_END` ([GH-87135](https://github.com/godotengine/godot/pull/87135)).
 - Add ability to hide editor transform gizmo ([GH-87793](https://github.com/godotengine/godot/pull/87793)).
 - Offset drag instantiated scenes that result in a collision by its bounds to mitigate overlap ([GH-88511](https://github.com/godotengine/godot/pull/88511)).
@@ -124,11 +124,11 @@ Table of contents:
 - Adjust orthographic camera gizmo with respect to `keep_aspect` setting ([GH-90690](https://github.com/godotengine/godot/pull/90690)).
 - Add SECamera preview in Inspector ([GH-90778](https://github.com/godotengine/godot/pull/90778)).
 - Optimize Editor `_init_grid()` ([GH-92734](https://github.com/godotengine/godot/pull/92734)).
-- Add CSG options to bake to static mesh and collision shape ([GH-93252](https://github.com/godotengine/godot/pull/93252)).
+- Add SEO options to bake to static mesh and collision shape ([GH-93252](https://github.com/godotengine/godot/pull/93252)).
 - Allow tool scripts to alter transform of Node3DEditorViewport camera ([GH-93503](https://github.com/godotengine/godot/pull/93503)).
 - Make viewport grid visible on all three planes in orthogonal camera view ([GH-93869](https://github.com/godotengine/godot/pull/93869)).
-- Fix mesh corruption of CSG by using elalish/manifold ([GH-94321](https://github.com/godotengine/godot/pull/94321)).
-- Add flag to enable use of accurate path tangents for polygon rotation in `CSGPolygon3D` ([GH-94479](https://github.com/godotengine/godot/pull/94479)).
+- Fix mesh corruption of SEO by using elalish/manifold ([GH-94321](https://github.com/godotengine/godot/pull/94321)).
+- Add flag to enable use of accurate path tangents for polygon rotation in `SEOPolygon3D` ([GH-94479](https://github.com/godotengine/godot/pull/94479)).
 - Fix gizmos without visible geometry not being selectable ([GH-94553](https://github.com/godotengine/godot/pull/94553)).
 - Improve time to close scene with many 3D gizmos ([GH-94698](https://github.com/godotengine/godot/pull/94698)).
 - Make primitive meshes react to texel size change ([GH-94726](https://github.com/godotengine/godot/pull/94726)).
@@ -147,7 +147,7 @@ Table of contents:
 - Hide white circle outline during instant transformations ([GH-96766](https://github.com/godotengine/godot/pull/96766)).
 - Move GridMapEditor to bottom panel ([GH-96922](https://github.com/godotengine/godot/pull/96922)).
 - Add quad mesh to material preview ([GH-97030](https://github.com/godotengine/godot/pull/97030)).
-- Remove redundant `_3D_DISABLED` check from csg module ([GH-97479](https://github.com/godotengine/godot/pull/97479)).
+- Remove redundant `_3D_DISABLED` check from SEO module ([GH-97479](https://github.com/godotengine/godot/pull/97479)).
 - Editor: Improve cylinder gizmos ([GH-97535](https://github.com/godotengine/godot/pull/97535)).
 - Improve global bone pose calculation in `Skeleton3D` ([GH-97538](https://github.com/godotengine/godot/pull/97538)).
 - Improve UI of sun angle in the sun/preview env popup ([GH-97747](https://github.com/godotengine/godot/pull/97747)).
@@ -161,23 +161,23 @@ Table of contents:
 - Update gridmap editor nodes when the gridmap node transform changes ([GH-99393](https://github.com/godotengine/godot/pull/99393)).
 - Expose GridMapEditorPlugin to scripts and add methods to manipulate to the selection and selected palette item ([GH-99639](https://github.com/godotengine/godot/pull/99639)).
 - Clean up UI of ReflectionProbe ([GH-99920](https://github.com/godotengine/godot/pull/99920)).
-- Print better manifold errors and avoid crash on non manifold csg input ([GH-99959](https://github.com/godotengine/godot/pull/99959)).
+- Print better manifold errors and avoid crash on non manifold SEO input ([GH-99959](https://github.com/godotengine/godot/pull/99959)).
 - Adjust VoxelGI gizmo opacity ([GH-99969](https://github.com/godotengine/godot/pull/99969)).
 - Allow Viewport children to lock, group, and insert keyframes ([GH-99994](https://github.com/godotengine/godot/pull/99994)).
 - Mend gaps in meshes caused by trigonometric funcs ([GH-100020](https://github.com/godotengine/godot/pull/100020)).
 - Enable Emulate Numpad by default in the 3D editor settings ([GH-100059](https://github.com/godotengine/godot/pull/100059)).
 - Add ruler mode to 3D ([GH-100162](https://github.com/godotengine/godot/pull/100162)).
 - Fix 3D editor snap setting values not being displayed correctly ([GH-100306](https://github.com/godotengine/godot/pull/100306)).
-- Fix 3D CSG not reacting to child node order changes ([GH-100340](https://github.com/godotengine/godot/pull/100340)).
-- Push some warnings for CSG non manifold and other errors ([GH-100361](https://github.com/godotengine/godot/pull/100361)).
+- Fix 3D SEO not reacting to child node order changes ([GH-100340](https://github.com/godotengine/godot/pull/100340)).
+- Push some warnings for SEO non manifold and other errors ([GH-100361](https://github.com/godotengine/godot/pull/100361)).
 - Remove solid boxes in gizmos of VoxelGI and ReflectionProbe ([GH-100370](https://github.com/godotengine/godot/pull/100370)).
 - Fix errors when undoing collision generation for multiple meshes with different parents ([GH-100500](https://github.com/godotengine/godot/pull/100500)).
-- Update the warnings for CSGShape3D ([GH-100526](https://github.com/godotengine/godot/pull/100526)).
+- Update the warnings for SEOShape3D ([GH-100526](https://github.com/godotengine/godot/pull/100526)).
 - Fix crash when duplicating `Decal` or `Light3D` nodes ([GH-100632](https://github.com/godotengine/godot/pull/100632)).
 - Follow-up of `ArrayMesh::surface_remove` addition ([GH-100643](https://github.com/godotengine/godot/pull/100643)).
 - Fix 3D camera override when there is no camera in scene tree ([GH-100698](https://github.com/godotengine/godot/pull/100698)).
 - Remove unused editor setting `editors/grid_map/editor_side` ([GH-100702](https://github.com/godotengine/godot/pull/100702)).
-- Fix gaps in CSGPolygon3D spin mode at 360 degrees ([GH-100826](https://github.com/godotengine/godot/pull/100826)).
+- Fix gaps in SEOPolygon3D spin mode at 360 degrees ([GH-100826](https://github.com/godotengine/godot/pull/100826)).
 - Add an editor setting for the GridMap grid color ([GH-101101](https://github.com/godotengine/godot/pull/101101)).
 - Make the GridMap editor cursor translucent ([GH-101103](https://github.com/godotengine/godot/pull/101103)).
 - LightmapGI: Including `modules_enabled.gen.h` to properly check the configuration warning ([GH-101323](https://github.com/godotengine/godot/pull/101323)).
@@ -185,7 +185,7 @@ Table of contents:
 - Make GridMap editor Preview Size setting take effect immediately after change ([GH-101455](https://github.com/godotengine/godot/pull/101455)).
 - Fix SceneTreeDock::_new_scene_from()'s reset_scale in 3D ([GH-101943](https://github.com/godotengine/godot/pull/101943)).
 - Fix visible viewport gizmos when preview camera is enabled on startup ([GH-102014](https://github.com/godotengine/godot/pull/102014)).
-- Fix collision reposition with `CSGShape3D` ([GH-102286](https://github.com/godotengine/godot/pull/102286)).
+- Fix collision reposition with `SEOShape3D` ([GH-102286](https://github.com/godotengine/godot/pull/102286)).
 - Physics Interpolation - Fix client interpolation pump ([GH-102653](https://github.com/godotengine/godot/pull/102653)).
 - Add changeable freelook speed in Game Window ([GH-102704](https://github.com/godotengine/godot/pull/102704)).
 - Fix stale VoxelGI warnings ([GH-102843](https://github.com/godotengine/godot/pull/102843)).
@@ -1203,7 +1203,7 @@ Table of contents:
 - Add simple minor version migration ([GH-96861](https://github.com/godotengine/godot/pull/96861)).
 - ResourceLoader: Fix deadlocks caused by the resource changed feature ([GH-96904](https://github.com/godotengine/godot/pull/96904)).
 - Make script list default wider, minimum narrower ([GH-96909](https://github.com/godotengine/godot/pull/96909)).
-- Fix `MeshInstance3D` gizmo redraw performance for `PlaneMesh` with larger subdiv value ([GH-96934](https://github.com/godotengine/godot/pull/96934)).
+- Fix `SEMesh` gizmo redraw performance for `PlaneMesh` with larger subdiv value ([GH-96934](https://github.com/godotengine/godot/pull/96934)).
 - Fix `editor_doc_cache` locked by `adb` process on editor startup ([GH-97000](https://github.com/godotengine/godot/pull/97000)).
 - Fix empty load errors popup ([GH-97013](https://github.com/godotengine/godot/pull/97013)).
 - Fix error reopening non existing scene on startup ([GH-97028](https://github.com/godotengine/godot/pull/97028)).
@@ -2055,7 +2055,7 @@ Table of contents:
 - Add import tab `import_script/path` relative path support ([GH-96079](https://github.com/godotengine/godot/pull/96079)).
 - Fix owner warning when importing FBX ([GH-96117](https://github.com/godotengine/godot/pull/96117)).
 - Prevent empty post-import script paths throwing errors ([GH-96122](https://github.com/godotengine/godot/pull/96122)).
-- GLTF: Only create MeshInstance3D when needed ([GH-96133](https://github.com/godotengine/godot/pull/96133)).
+- GLTF: Only create SEMesh when needed ([GH-96133](https://github.com/godotengine/godot/pull/96133)).
 - Prevent automapper throwing obscure error ([GH-96136](https://github.com/godotengine/godot/pull/96136)).
 - Make reimported models reimport their owner ([GH-96144](https://github.com/godotengine/godot/pull/96144)).
 - Add `get_supported_gltf_extensions` to GLTFDocument ([GH-96251](https://github.com/godotengine/godot/pull/96251)).
@@ -2079,7 +2079,7 @@ Table of contents:
 - Fix layered HDR texture import with lossless compression ([GH-97830](https://github.com/godotengine/godot/pull/97830)).
 - Assign the correct bone rest transform to nodes with matrix in GLTF ([GH-97938](https://github.com/godotengine/godot/pull/97938)).
 - Fix spinbox scrolling for advanced importer controls ([GH-98016](https://github.com/godotengine/godot/pull/98016)).
-- GLTF: Fix bad pointer to ImporterMeshInstance3D root node at runtime ([GH-98048](https://github.com/godotengine/godot/pull/98048)).
+- GLTF: Fix bad pointer to ImporterSEMesh root node at runtime ([GH-98048](https://github.com/godotengine/godot/pull/98048)).
 - Clean up ResourceImporterTexture ([GH-98071](https://github.com/godotengine/godot/pull/98071)).
 - Image: More cleanup and reduced code duplication ([GH-98100](https://github.com/godotengine/godot/pull/98100)).
 - Fix freeze on non-thread-safe custom importers ([GH-98150](https://github.com/godotengine/godot/pull/98150)).
@@ -2484,7 +2484,7 @@ Table of contents:
 - Reduce shader permutations in the compatibility backend ([GH-87558](https://github.com/godotengine/godot/pull/87558)).
 - Add Metal support for macOS (arm64) and iOS ([GH-88199](https://github.com/godotengine/godot/pull/88199)).
 - Allow changing the anisotropic filter level at run-time per Viewport ([GH-88313](https://github.com/godotengine/godot/pull/88313)).
-- Only allow valid types in Decal, Light3D projector, PointLight2D texture and CSGMesh3D mesh ([GH-88349](https://github.com/godotengine/godot/pull/88349)).
+- Only allow valid types in Decal, Light3D projector, PointLight2D texture and SEOMesh3D mesh ([GH-88349](https://github.com/godotengine/godot/pull/88349)).
 - Implement bicubic sampling for lightmaps ([GH-89919](https://github.com/godotengine/godot/pull/89919)).
 - Ubershaders and pipeline pre-compilation (and dedicated transfer queues) ([GH-90400](https://github.com/godotengine/godot/pull/90400)).
 - Add debug utilities for Vulkan ([GH-90993](https://github.com/godotengine/godot/pull/90993)).

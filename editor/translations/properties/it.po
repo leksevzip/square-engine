@@ -2617,8 +2617,8 @@ msgstr "Scheletro"
 msgid "Selected Bone"
 msgstr "Osso selezionato"
 
-msgid "CSG"
-msgstr "CSG"
+msgid "SEO"
+msgstr "SEO"
 
 msgid "GridMap Grid"
 msgstr "Griglia della Gridmap"

@@ -950,8 +950,8 @@ msgstr "Izmainīt Animācijas Soli"
 msgid "Rearrange Tracks"
 msgstr "Pārkārtot Celiņus"
 
-msgid "Blend Shape tracks only apply to MeshInstance3D nodes."
-msgstr "Saplūšanas Formu celiņi tiek tikai pievienoti MeshInstance3D mezgliem."
+msgid "Blend Shape tracks only apply to SEMesh nodes."
+msgstr "Saplūšanas Formu celiņi tiek tikai pievienoti SEMesh mezgliem."
 
 msgid "Add Track"
 msgstr "Pievienot celiņu"
@@ -982,7 +982,7 @@ msgstr "Pievienot Bezjē Celiņu"
 msgid "Track path is invalid, so can't add a key."
 msgstr "Ceļš uz Celiņu nav derīgs, tāpēc nevar pievienot atslēgu."
 
-msgid "Track is not of type MeshInstance3D, can't insert key"
+msgid "Track is not of type SEMesh, can't insert key"
 msgstr "Celiņš nepieder tipam , nevar ievietot atslēgu"
 
 msgid "Track path is invalid, so can't add a method key."

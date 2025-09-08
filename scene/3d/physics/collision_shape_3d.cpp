@@ -30,7 +30,7 @@
 
 #include "collision_shape_3d.h"
 
-#include "scene/3d/mesh_instance_3d.h"
+#include "scene/3d/se_mesh.h"
 #include "scene/3d/physics/character_body_3d.h"
 #include "scene/3d/physics/vehicle_body_3d.h"
 #include "scene/resources/3d/concave_polygon_shape_3d.h"
@@ -47,7 +47,7 @@ void CollisionShape3D::make_convex_from_siblings() {
 
 	for (int i = 0; i < p->get_child_count(); i++) {
 		Node *n = p->get_child(i);
-		MeshInstance3D *mi = Object::cast_to<MeshInstance3D>(n);
+		SEMesh *mi = Object::cast_to<SEMesh>(n);
 		if (mi) {
 			Ref<Mesh> m = mi->get_mesh();
 			if (m.is_valid()) {

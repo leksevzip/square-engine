@@ -2641,8 +2641,8 @@ msgstr "İskelet"
 msgid "Selected Bone"
 msgstr "Seçili İskelet"
 
-msgid "CSG"
-msgstr "CSG"
+msgid "SEO"
+msgstr "SEO"
 
 msgid "GridMap Grid"
 msgstr "IzgaraHaritası Izgara"

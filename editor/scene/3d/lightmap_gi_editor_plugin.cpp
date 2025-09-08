@@ -99,7 +99,7 @@ void LightmapGIEditorPlugin::_bake_select_file(const String &p_file) {
 						TTR("No meshes with lightmapping support to bake. Make sure they contain UV2 data and their Global Illumination property is set to Static.") +
 						String::utf8("\n\n•  ") + TTR("To import a scene with lightmapping support, set Meshes > Light Baking to Static Lightmaps in the Import dock.") +
 						String::utf8("\n•  ") + TTR("To enable lightmapping support on a primitive mesh, edit the PrimitiveMesh resource in the inspector and check Add UV2.") +
-						String::utf8("\n•  ") + TTR("To enable lightmapping support on a CSG mesh, select the root CSG node and choose CSG > Bake Mesh Instance at the top of the 3D editor viewport.\nSelect the generated MeshInstance3D node and choose Mesh > Unwrap UV2 for Lightmap/AO at the top of the 3D editor viewport."));
+						String::utf8("\n•  ") + TTR("To enable lightmapping support on a SEO mesh, select the root SEO node and choose SEO > Bake Mesh Instance at the top of the 3D editor viewport.\nSelect the generated SEMesh node and choose Mesh > Unwrap UV2 for Lightmap/AO at the top of the 3D editor viewport."));
 			} break;
 			case LightmapGI::BAKE_ERROR_CANT_CREATE_IMAGE: {
 				EditorNode::get_singleton()->show_warning(TTR("Failed creating lightmap images. Make sure the lightmap destination path is writable."));

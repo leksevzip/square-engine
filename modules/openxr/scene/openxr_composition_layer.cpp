@@ -33,7 +33,7 @@
 #include "../openxr_api.h"
 #include "../openxr_interface.h"
 
-#include "scene/3d/mesh_instance_3d.h"
+#include "scene/3d/se_mesh.h"
 #include "scene/3d/xr/xr_nodes.h"
 #include "scene/main/viewport.h"
 
@@ -202,7 +202,7 @@ bool OpenXRCompositionLayer::_should_use_fallback_node() {
 
 void OpenXRCompositionLayer::_create_fallback_node() {
 	ERR_FAIL_COND(fallback);
-	fallback = memnew(MeshInstance3D);
+	fallback = memnew(SEMesh);
 	fallback->set_cast_shadows_setting(GeometryInstance3D::SHADOW_CASTING_SETTING_OFF);
 	add_child(fallback, false, INTERNAL_MODE_FRONT);
 	should_update_fallback_mesh = true;

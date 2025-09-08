@@ -43,7 +43,7 @@ private:
 	Ref<ArrayMesh> debug_mesh;
 	Ref<Material> debug_material;
 
-	Callable update_callback; // Used only by CSG currently.
+	Callable update_callback; // Used only by SEO currently.
 
 	void _update_debug_mesh();
 	void _update_debug_path_material();

@@ -54,7 +54,7 @@
 #include "editor/themes/editor_scale.h"
 #include "main/main.h"
 #include "scene/3d/light_3d.h"
-#include "scene/3d/mesh_instance_3d.h"
+#include "scene/3d/se_mesh.h"
 #include "scene/gui/box_container.h"
 #include "scene/gui/control.h"
 #include "scene/main/window.h"
@@ -104,7 +104,7 @@ EditorUndoRedoManager *EditorInterface::get_editor_undo_redo() const {
 }
 
 AABB EditorInterface::_calculate_aabb_for_scene(Node *p_node, AABB &p_scene_aabb) {
-	MeshInstance3D *mesh_node = Object::cast_to<MeshInstance3D>(p_node);
+	SEMesh *mesh_node = Object::cast_to<SEMesh>(p_node);
 	if (mesh_node && mesh_node->get_mesh().is_valid()) {
 		Transform3D accum_xform;
 		Node3D *base = mesh_node;

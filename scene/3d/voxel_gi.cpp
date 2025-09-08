@@ -31,8 +31,8 @@
 #include "voxel_gi.h"
 
 #include "core/config/project_settings.h"
-#include "mesh_instance_3d.h"
-#include "multimesh_instance_3d.h"
+#include "se_mesh.h"
+#include "multise_mesh.h"
 #include "scene/resources/camera_attributes.h"
 #include "voxelizer.h"
 
@@ -327,7 +327,7 @@ static bool is_node_voxel_bakeable(Node3D *p_node) {
 }
 
 void VoxelGI::_find_meshes(Node *p_at_node, List<PlotMesh> &plot_meshes) {
-	MeshInstance3D *mi = Object::cast_to<MeshInstance3D>(p_at_node);
+	SEMesh *mi = Object::cast_to<SEMesh>(p_at_node);
 	if (mi && is_node_voxel_bakeable(mi)) {
 		Ref<Mesh> mesh = mi->get_mesh();
 		if (mesh.is_valid()) {
@@ -352,7 +352,7 @@ void VoxelGI::_find_meshes(Node *p_at_node, List<PlotMesh> &plot_meshes) {
 	if (s) {
 		if (is_node_voxel_bakeable(s)) {
 			Array meshes;
-			MultiMeshInstance3D *multi_mesh = Object::cast_to<MultiMeshInstance3D>(p_at_node);
+			MultiSEMesh *multi_mesh = Object::cast_to<MultiSEMesh>(p_at_node);
 			if (multi_mesh) {
 				meshes = multi_mesh->get_meshes();
 			} else {
@@ -472,7 +472,7 @@ void VoxelGI::bake(Node *p_from_node, bool p_create_visual_debug) {
 	//create the data for rendering server
 
 	if (p_create_visual_debug) {
-		MultiMeshInstance3D *mmi = memnew(MultiMeshInstance3D);
+		MultiSEMesh *mmi = memnew(MultiSEMesh);
 		mmi->set_multimesh(baker.create_debug_multimesh());
 		add_child(mmi, true);
 #ifdef TOOLS_ENABLED

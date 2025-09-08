@@ -1269,8 +1269,8 @@ msgstr "Vaihda animaation askelta"
 msgid "Rearrange Tracks"
 msgstr "Järjestele uudelleen raidat"
 
-msgid "Blend Shape tracks only apply to MeshInstance3D nodes."
-msgstr "Muodonsulautusraitojen muunnos toimii vain MeshInstance3D-solmuille."
+msgid "Blend Shape tracks only apply to SEMesh nodes."
+msgstr "Muodonsulautusraitojen muunnos toimii vain SEMesh-solmuille."
 
 msgid "Position/Rotation/Scale 3D tracks only apply to 3D-based nodes."
 msgstr ""
@@ -6065,8 +6065,8 @@ msgstr "Meshillä ei ole UV-kanavaa kerroksella %d."
 msgid "Create Navigation Mesh"
 msgstr "Luo navigointiverkko"
 
-msgid "MeshInstance3D lacks a Mesh."
-msgstr "MeshInstance3D:ltä puuttuu Mesh."
+msgid "SEMesh lacks a Mesh."
+msgstr "SEMesh:ltä puuttuu Mesh."
 
 msgid "Mesh has no surface to create outlines from."
 msgstr "Meshillä ei ole pintaa, josta ääriviivat voitaisiin luoda."

@@ -547,7 +547,7 @@ Polygon3DEditor::Polygon3DEditor() {
 
 	mode = MODE_EDIT;
 	wip_active = false;
-	imgeom = memnew(MeshInstance3D);
+	imgeom = memnew(SEMesh);
 	imesh.instantiate();
 	imgeom->set_mesh(imesh);
 	imgeom->set_transform(Transform3D(Basis(), Vector3(0, 0, 0.00001)));
@@ -573,7 +573,7 @@ Polygon3DEditor::Polygon3DEditor() {
 	handle_material->set_point_size(handle->get_width());
 	handle_material->set_texture(StandardMaterial3D::TEXTURE_ALBEDO, handle);
 
-	pointsm = memnew(MeshInstance3D);
+	pointsm = memnew(SEMesh);
 	imgeom->add_child(pointsm);
 	m.instantiate();
 	pointsm->set_mesh(m);

@@ -30,7 +30,7 @@
 
 #pragma once
 
-#include "scene/3d/mesh_instance_3d.h"
+#include "scene/3d/se_mesh.h"
 #include "scene/resources/3d/primitive_meshes.h"
 #include "servers/navigation_server_3d.h"
 
@@ -526,7 +526,7 @@ TEST_SUITE("[Navigation3D]") {
 		SceneTree::get_singleton()->get_root()->add_child(node_3d);
 		Ref<PlaneMesh> plane_mesh = memnew(PlaneMesh);
 		plane_mesh->set_size(Size2(10.0, 10.0));
-		MeshInstance3D *mesh_instance = memnew(MeshInstance3D);
+		SEMesh *mesh_instance = memnew(SEMesh);
 		mesh_instance->set_mesh(plane_mesh);
 		node_3d->add_child(mesh_instance);
 
@@ -577,7 +577,7 @@ TEST_SUITE("[Navigation3D]") {
 		SceneTree::get_singleton()->get_root()->add_child(node_3d);
 		Ref<PlaneMesh> plane_mesh = memnew(PlaneMesh);
 		plane_mesh->set_size(Size2(10.0, 10.0));
-		MeshInstance3D *mesh_instance = memnew(MeshInstance3D);
+		SEMesh *mesh_instance = memnew(SEMesh);
 		mesh_instance->set_mesh(plane_mesh);
 		node_3d->add_child(mesh_instance);
 
@@ -623,7 +623,7 @@ TEST_SUITE("[Navigation3D]") {
 		SceneTree::get_singleton()->get_root()->add_child(node_3d);
 		Ref<PlaneMesh> plane_mesh = memnew(PlaneMesh);
 		plane_mesh->set_size(Size2(10.0, 10.0));
-		MeshInstance3D *mesh_instance = memnew(MeshInstance3D);
+		SEMesh *mesh_instance = memnew(SEMesh);
 		mesh_instance->set_mesh(plane_mesh);
 		node_3d->add_child(mesh_instance);
 

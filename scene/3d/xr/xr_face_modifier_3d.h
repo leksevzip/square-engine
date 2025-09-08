@@ -30,11 +30,11 @@
 
 #pragma once
 
-#include "scene/3d/mesh_instance_3d.h"
+#include "scene/3d/se_mesh.h"
 #include "scene/3d/node_3d.h"
 
 /**
-	The XRFaceModifier3D node drives the blend shapes of a MeshInstance3D
+	The XRFaceModifier3D node drives the blend shapes of a SEMesh
 	with facial expressions from an XRFaceTracking instance.
 
 	The blend shapes provided by the mesh are interrogated, and used to
@@ -52,7 +52,7 @@ private:
 	// Map from XRFaceTracker blend shape index to mesh blend shape index.
 	RBMap<int, int> blend_mapping;
 
-	MeshInstance3D *get_mesh_instance() const;
+	SEMesh *get_mesh_instance() const;
 	void _get_blend_data();
 	void _update_face_blends() const;
 

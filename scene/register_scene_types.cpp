@@ -227,16 +227,16 @@
 #include "scene/3d/fog_volume.h"
 #include "scene/3d/gpu_particles_3d.h"
 #include "scene/3d/gpu_particles_collision_3d.h"
-#include "scene/3d/importer_mesh_instance_3d.h"
+#include "scene/3d/importer_se_mesh.h"
 #include "scene/3d/label_3d.h"
 #include "scene/3d/light_3d.h"
 #include "scene/3d/lightmap_gi.h"
 #include "scene/3d/lightmap_probe.h"
 #include "scene/3d/look_at_modifier_3d.h"
 #include "scene/3d/marker_3d.h"
-#include "scene/3d/mesh_instance_3d.h"
+#include "scene/3d/se_mesh.h"
 #include "scene/3d/modifier_bone_target_3d.h"
-#include "scene/3d/multimesh_instance_3d.h"
+#include "scene/3d/multise_mesh.h"
 #include "scene/3d/node_3d.h"
 #include "scene/3d/occluder_instance_3d.h"
 #include "scene/3d/path_3d.h"
@@ -596,7 +596,7 @@ void register_scene_types() {
 	GDREGISTER_ABSTRACT_CLASS(SkinReference);
 	GDREGISTER_CLASS(Skeleton3D);
 	GDREGISTER_CLASS(ImporterMesh);
-	GDREGISTER_CLASS(ImporterMeshInstance3D);
+	GDREGISTER_CLASS(ImporterSEMesh);
 	GDREGISTER_VIRTUAL_CLASS(VisualInstance3D);
 	GDREGISTER_VIRTUAL_CLASS(GeometryInstance3D);
 	GDREGISTER_CLASS(SECamera);
@@ -611,7 +611,7 @@ void register_scene_types() {
 	GDREGISTER_CLASS(XRHandModifier3D);
 	GDREGISTER_CLASS(XRFaceModifier3D);
 #endif // XR_DISABLED
-	GDREGISTER_CLASS(MeshInstance3D);
+	GDREGISTER_CLASS(SEMesh);
 	GDREGISTER_CLASS(OccluderInstance3D);
 	GDREGISTER_ABSTRACT_CLASS(Occluder3D);
 	GDREGISTER_CLASS(ArrayOccluder3D);
@@ -693,7 +693,7 @@ void register_scene_types() {
 	GDREGISTER_CLASS(RayCast3D);
 	GDREGISTER_CLASS(ShapeCast3D);
 #endif // PHYSICS_3D_DISABLED
-	GDREGISTER_CLASS(MultiMeshInstance3D);
+	GDREGISTER_CLASS(MultiSEMesh);
 
 	GDREGISTER_CLASS(Curve3D);
 	GDREGISTER_CLASS(Path3D);
@@ -1139,8 +1139,8 @@ void register_scene_types() {
 
 #ifndef NAVIGATION_3D_DISABLED
 	// 3D nodes that support navmesh baking need to server register their source geometry parsers.
-	MeshInstance3D::navmesh_parse_init();
-	MultiMeshInstance3D::navmesh_parse_init();
+	SEMesh::navmesh_parse_init();
+	MultiSEMesh::navmesh_parse_init();
 	NavigationObstacle3D::navmesh_parse_init();
 #ifndef PHYSICS_3D_DISABLED
 	StaticBody3D::navmesh_parse_init();
@@ -1196,15 +1196,15 @@ void register_scene_types() {
 	ClassDB::add_compatibility_class("BoneAttachment", "BoneAttachment3D");
 	ClassDB::add_compatibility_class("Camera", "SECamera");
 	ClassDB::add_compatibility_class("ClippedCamera", "ClippedCamera3D");
-	ClassDB::add_compatibility_class("CSGBox", "CSGBox3D");
-	ClassDB::add_compatibility_class("CSGCombiner", "CSGCombiner3D");
-	ClassDB::add_compatibility_class("CSGCylinder", "CSGCylinder3D");
-	ClassDB::add_compatibility_class("CSGMesh", "CSGMesh3D");
-	ClassDB::add_compatibility_class("CSGPolygon", "CSGPolygon3D");
-	ClassDB::add_compatibility_class("CSGPrimitive", "CSGPrimitive3D");
-	ClassDB::add_compatibility_class("CSGShape", "CSGShape3D");
-	ClassDB::add_compatibility_class("CSGSphere", "CSGSphere3D");
-	ClassDB::add_compatibility_class("CSGTorus", "CSGTorus3D");
+	ClassDB::add_compatibility_class("SEOBox", "SEOBox3D");
+	ClassDB::add_compatibility_class("SEOCombiner", "SEOCombiner3D");
+	ClassDB::add_compatibility_class("SEOCylinder", "SEOCylinder3D");
+	ClassDB::add_compatibility_class("SEOMesh", "SEOMesh3D");
+	ClassDB::add_compatibility_class("SEOPolygon", "SEOPolygon3D");
+	ClassDB::add_compatibility_class("SEOPrimitive", "SEOPrimitive3D");
+	ClassDB::add_compatibility_class("SEOShape", "SEOShape3D");
+	ClassDB::add_compatibility_class("SEOSphere", "SEOSphere3D");
+	ClassDB::add_compatibility_class("SEOTorus", "SEOTorus3D");
 	ClassDB::add_compatibility_class("CubeMesh", "BoxMesh");
 	ClassDB::add_compatibility_class("GIProbe", "VoxelGI");
 	ClassDB::add_compatibility_class("GIProbeData", "VoxelGIData");
@@ -1213,8 +1213,8 @@ void register_scene_types() {
 	ClassDB::add_compatibility_class("Light2D", "PointLight2D");
 	ClassDB::add_compatibility_class("LineShape2D", "WorldBoundaryShape2D");
 	ClassDB::add_compatibility_class("Listener", "AudioListener3D");
-	ClassDB::add_compatibility_class("MeshInstance", "MeshInstance3D");
-	ClassDB::add_compatibility_class("MultiMeshInstance", "MultiMeshInstance3D");
+	ClassDB::add_compatibility_class("MeshInstance", "SEMesh");
+	ClassDB::add_compatibility_class("MultiMeshInstance", "MultiSEMesh");
 #ifndef NAVIGATION_3D_DISABLED
 	ClassDB::add_compatibility_class("NavigationAgent", "NavigationAgent3D");
 	ClassDB::add_compatibility_class("NavigationMeshInstance", "NavigationRegion3D");

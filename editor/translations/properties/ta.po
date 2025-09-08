@@ -2612,7 +2612,7 @@ msgstr "எலும்புக் கூடு"
 msgid "Selected Bone"
 msgstr "தேர்ந்தெடுக்கப்பட்ட எலும்பு"
 
-msgid "CSG"
+msgid "SEO"
 msgstr "சி.எச்.சி."
 
 msgid "GridMap Grid"

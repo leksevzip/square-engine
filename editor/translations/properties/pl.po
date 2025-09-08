@@ -2709,8 +2709,8 @@ msgstr "Szkielet"
 msgid "Selected Bone"
 msgstr "Zaznaczona kość"
 
-msgid "CSG"
-msgstr "CSG"
+msgid "SEO"
+msgstr "SEO"
 
 msgid "GridMap Grid"
 msgstr "Siatka GridMap"

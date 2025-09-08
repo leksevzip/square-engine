@@ -36,7 +36,7 @@
 #include "editor/plugins/editor_plugin.h"
 #include "editor/scene/3d/node_3d_editor_plugin.h"
 #include "scene/3d/se_camera.h"
-#include "scene/3d/mesh_instance_3d.h"
+#include "scene/3d/se_mesh.h"
 #include "scene/3d/skeleton_3d.h"
 #include "scene/resources/immediate_mesh.h"
 
@@ -187,7 +187,7 @@ class Skeleton3DEditor : public VBoxContainer {
 	void set_bone_options_enabled(const bool p_bone_options_enabled);
 
 	// Handle.
-	MeshInstance3D *handles_mesh_instance = nullptr;
+	SEMesh *handles_mesh_instance = nullptr;
 	Ref<ImmediateMesh> handles_mesh;
 	Ref<ShaderMaterial> handle_material;
 	Ref<Shader> handle_shader;

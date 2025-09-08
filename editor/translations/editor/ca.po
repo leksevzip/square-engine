@@ -1223,7 +1223,7 @@ msgstr "Canvia el Pas d'Animació"
 msgid "Rearrange Tracks"
 msgstr "Reorganitza pistes"
 
-msgid "Blend Shape tracks only apply to MeshInstance3D nodes."
+msgid "Blend Shape tracks only apply to SEMesh nodes."
 msgstr ""
 "Les pistes de Mescla (Blend) només s'apliquen a nodes del tipus "
 "Meshinstance3D."
@@ -1265,8 +1265,8 @@ msgstr "El camí de la Pista no és vàlid i per tant no s'hi poden afegir claus
 msgid "Track is not of type Node3D, can't insert key"
 msgstr "La pista no és de tipus Node3D, no s'hi pot inserir la clau"
 
-msgid "Track is not of type MeshInstance3D, can't insert key"
-msgstr "La pista no és de tipus MeshInstance3D, no s'hi pot inserir la clau"
+msgid "Track is not of type SEMesh, can't insert key"
+msgstr "La pista no és de tipus SEMesh, no s'hi pot inserir la clau"
 
 msgid "Track path is invalid, so can't add a method key."
 msgstr "No s'hi pot afegit cap clau de mètode. El camí de la pista no és vàlid."

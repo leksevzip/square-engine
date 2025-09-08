@@ -2507,8 +2507,8 @@ msgstr "Skelett"
 msgid "Selected Bone"
 msgstr "Ausgewählter Knochen"
 
-msgid "CSG"
-msgstr "CSG"
+msgid "SEO"
+msgstr "SEO"
 
 msgid "Gizmo Settings"
 msgstr "Gizmo-Einstellungen"

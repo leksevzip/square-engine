@@ -1614,8 +1614,8 @@ msgstr "ჩონჩხი"
 msgid "Selected Bone"
 msgstr "არჩეული ძვალი"
 
-msgid "CSG"
-msgstr "CSG"
+msgid "SEO"
+msgstr "SEO"
 
 msgid "Gizmo Settings"
 msgstr "Gizmo-ის მორგება"

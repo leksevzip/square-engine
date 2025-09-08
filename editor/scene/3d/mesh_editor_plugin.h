@@ -34,7 +34,7 @@
 #include "editor/plugins/editor_plugin.h"
 #include "scene/3d/se_camera.h"
 #include "scene/3d/light_3d.h"
-#include "scene/3d/mesh_instance_3d.h"
+#include "scene/3d/se_mesh.h"
 #include "scene/gui/subviewport_container.h"
 #include "scene/resources/camera_attributes.h"
 
@@ -48,7 +48,7 @@ class MeshEditor : public SubViewportContainer {
 	float rot_y;
 
 	SubViewport *viewport = nullptr;
-	MeshInstance3D *mesh_instance = nullptr;
+	SEMesh *mesh_instance = nullptr;
 	Node3D *rotation = nullptr;
 	DirectionalLight3D *light1 = nullptr;
 	DirectionalLight3D *light2 = nullptr;

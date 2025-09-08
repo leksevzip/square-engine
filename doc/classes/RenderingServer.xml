@@ -2005,7 +2005,7 @@
 			<param index="1" name="surface" type="int" />
 			<param index="2" name="material" type="RID" />
 			<description>
-				Sets the override material of a specific surface. Equivalent to [method MeshInstance3D.set_surface_override_material].
+				Sets the override material of a specific surface. Equivalent to [method SEMesh.set_surface_override_material].
 			</description>
 		</method>
 		<method name="instance_set_transform">
@@ -2044,7 +2044,7 @@
 			<param index="0" name="aabb" type="AABB" />
 			<param index="1" name="scenario" type="RID" default="RID()" />
 			<description>
-				Returns an array of object IDs intersecting with the provided AABB. Only 3D nodes that inherit from [VisualInstance3D] are considered, such as [MeshInstance3D] or [DirectionalLight3D]. Use [method @GlobalScope.instance_from_id] to obtain the actual nodes. A scenario RID must be provided, which is available in the [World3D] you want to query. This forces an update for all resources queued to update.
+				Returns an array of object IDs intersecting with the provided AABB. Only 3D nodes that inherit from [VisualInstance3D] are considered, such as [SEMesh] or [DirectionalLight3D]. Use [method @GlobalScope.instance_from_id] to obtain the actual nodes. A scenario RID must be provided, which is available in the [World3D] you want to query. This forces an update for all resources queued to update.
 				[b]Warning:[/b] This function is primarily intended for editor usage. For in-game use cases, prefer physics collision.
 			</description>
 		</method>
@@ -2053,7 +2053,7 @@
 			<param index="0" name="convex" type="Plane[]" />
 			<param index="1" name="scenario" type="RID" default="RID()" />
 			<description>
-				Returns an array of object IDs intersecting with the provided convex shape. Only 3D nodes that inherit from [VisualInstance3D] are considered, such as [MeshInstance3D] or [DirectionalLight3D]. Use [method @GlobalScope.instance_from_id] to obtain the actual nodes. A scenario RID must be provided, which is available in the [World3D] you want to query. This forces an update for all resources queued to update.
+				Returns an array of object IDs intersecting with the provided convex shape. Only 3D nodes that inherit from [VisualInstance3D] are considered, such as [SEMesh] or [DirectionalLight3D]. Use [method @GlobalScope.instance_from_id] to obtain the actual nodes. A scenario RID must be provided, which is available in the [World3D] you want to query. This forces an update for all resources queued to update.
 				[b]Warning:[/b] This function is primarily intended for editor usage. For in-game use cases, prefer physics collision.
 			</description>
 		</method>
@@ -2063,7 +2063,7 @@
 			<param index="1" name="to" type="Vector3" />
 			<param index="2" name="scenario" type="RID" default="RID()" />
 			<description>
-				Returns an array of object IDs intersecting with the provided 3D ray. Only 3D nodes that inherit from [VisualInstance3D] are considered, such as [MeshInstance3D] or [DirectionalLight3D]. Use [method @GlobalScope.instance_from_id] to obtain the actual nodes. A scenario RID must be provided, which is available in the [World3D] you want to query. This forces an update for all resources queued to update.
+				Returns an array of object IDs intersecting with the provided 3D ray. Only 3D nodes that inherit from [VisualInstance3D] are considered, such as [SEMesh] or [DirectionalLight3D]. Use [method @GlobalScope.instance_from_id] to obtain the actual nodes. A scenario RID must be provided, which is available in the [World3D] you want to query. This forces an update for all resources queued to update.
 				[b]Warning:[/b] This function is primarily intended for editor usage. For in-game use cases, prefer physics collision.
 			</description>
 		</method>
@@ -2946,7 +2946,7 @@
 				Once finished with your RID, you will want to free the RID using the RenderingServer's [method free_rid] method.
 				To place in a scene, attach these particles to an instance using [method instance_set_base] using the returned RID.
 				[b]Note:[/b] The equivalent nodes are [GPUParticles2D] and [GPUParticles3D].
-				[b]Note:[/b] All [code]particles_*[/code] methods only apply to GPU-based particles, not CPU-based particles. [CPUParticles2D] and [CPUParticles3D] do not have equivalent RenderingServer functions available, as these use [MultiMeshInstance2D] and [MultiMeshInstance3D] under the hood (see [code]multimesh_*[/code] methods).
+				[b]Note:[/b] All [code]particles_*[/code] methods only apply to GPU-based particles, not CPU-based particles. [CPUParticles2D] and [CPUParticles3D] do not have equivalent RenderingServer functions available, as these use [MultiMeshInstance2D] and [MultiSEMesh] under the hood (see [code]multimesh_*[/code] methods).
 			</description>
 		</method>
 		<method name="particles_emit">

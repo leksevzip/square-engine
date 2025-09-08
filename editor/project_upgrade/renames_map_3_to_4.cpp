@@ -168,7 +168,7 @@ const char *RenamesMap3To4::gdscript_function_renames[][2] = {
 	// { "get_dependencies", "_get_dependencies" }, // ResourceFormatLoader -- Breaks ResourceLoader.
 	// { "get_extents", "get_size" }, // BoxShape, RectangleShape -- Breaks Decal, VoxelGI, GPUParticlesCollisionBox, GPUParticlesCollisionSDF, GPUParticlesCollisionHeightField, GPUParticlesAttractorBox, GPUParticlesAttractorVectorField, FogVolume
 	// { "get_h_offset", "get_drag_horizontal_offset" }, // Camera2D -- Breaks PathFollow, Camera.
-	// { "get_mode", "get_file_mode" }, // FileDialog -- Breaks Panel, Shader, CSGPolygon, TileMap.
+	// { "get_mode", "get_file_mode" }, // FileDialog -- Breaks Panel, Shader, SEOPolygon, TileMap.
 	// { "get_motion", "get_travel" }, // PhysicsTestMotionResult2D -- Breaks ParallaxLayer.
 	// { "get_name", "get_tracker_name" }, // XRPositionalTracker -- Breaks OS, Node
 	// { "get_network_connected_peers", "get_peers" }, // MultiplayerAPI -- Breaks SceneTree.
@@ -201,7 +201,7 @@ const char *RenamesMap3To4::gdscript_function_renames[][2] = {
 	// { "set_flag", "set_particle_flag"}, // ParticleProcessMaterial -- Breaks Window, HingeJoint3D.
 	// { "set_h_offset", "set_drag_horizontal_offset" }, // Camera2D -- Breaks SECamera, PathFollow3D, PathFollow2D.
 	// { "set_margin", "set_offset" }, // Control -- Breaks Shape3D, AtlasTexture.
-	// { "set_mode", "set_mode_file_mode" }, // FileDialog -- Breaks Panel, Shader, CSGPolygon, TileMap.
+	// { "set_mode", "set_mode_file_mode" }, // FileDialog -- Breaks Panel, Shader, SEOPolygon, TileMap.
 	// { "set_normal", "surface_set_normal"}, // ImmediateGeometry -- Breaks SurfaceTool, WorldMarginShape2D.
 	// { "set_offset", "set_progress" }, // PathFollow2D, PathFollow3D -- Too common.
 	// { "set_process_mode", "set_process_callback" }, // AnimationTree -- Breaks Node, Tween, Sky.
@@ -290,8 +290,8 @@ const char *RenamesMap3To4::gdscript_function_renames[][2] = {
 	{ "get_closest_point_to_segment_2d", "get_closest_point_to_segment" }, // Geometry2D
 	{ "get_closest_point_to_segment_uncapped_2d", "get_closest_point_to_segment_uncapped" }, // Geometry2D
 	{ "get_closest_points_between_segments_2d", "get_closest_point_to_segment" }, // Geometry2D
-	{ "get_collision_layer_bit", "get_collision_layer_value" }, // CSGShape3D, and a lot of others like GridMap.
-	{ "get_collision_mask_bit", "get_collision_mask_value" }, // CSGShape3D, and a lot of others like GridMap.
+	{ "get_collision_layer_bit", "get_collision_layer_value" }, // SEOShape3D, and a lot of others like GridMap.
+	{ "get_collision_mask_bit", "get_collision_mask_value" }, // SEOShape3D, and a lot of others like GridMap.
 	{ "get_color_types", "get_color_type_list" }, // Theme
 	{ "get_command", "is_command_or_control_pressed" }, // InputEventWithModifiers
 	{ "get_constant_types", "get_constant_type_list" }, // Theme
@@ -381,8 +381,8 @@ const char *RenamesMap3To4::gdscript_function_renames[][2] = {
 	{ "get_spatial_node", "get_node_3d" }, // EditorNode3DGizmo
 	{ "get_speed", "get_velocity" }, // InputEventMouseMotion
 	{ "get_stylebox_types", "get_stylebox_type_list" }, // Theme
-	{ "get_surface_material", "get_surface_override_material" }, // MeshInstance3D -- Breaks ImporterMesh.
-	{ "get_surface_material_count", "get_surface_override_material_count" }, // MeshInstance3D
+	{ "get_surface_material", "get_surface_override_material" }, // SEMesh -- Breaks ImporterMesh.
+	{ "get_surface_material_count", "get_surface_override_material_count" }, // SEMesh
 	{ "get_tab_disabled", "is_tab_disabled" }, // Tab
 	{ "get_tab_hidden", "is_tab_hidden" }, // Tab
 	{ "get_target_location", "get_target_position" }, // NavigationAgent2D, NavigationAgent3D
@@ -432,7 +432,7 @@ const char *RenamesMap3To4::gdscript_function_renames[][2] = {
 	{ "is_follow_smoothing_enabled", "is_position_smoothing_enabled" }, // Camera2D
 	{ "is_h_drag_enabled", "is_drag_horizontal_enabled" }, // Camera2D
 	{ "is_handle_highlighted", "_is_handle_highlighted" }, // EditorNode3DGizmo, EditorNode3DGizmoPlugin
-	{ "is_inverting_faces", "get_flip_faces" }, // CSGPrimitive3D
+	{ "is_inverting_faces", "get_flip_faces" }, // SEOPrimitive3D
 	{ "is_network_master", "is_multiplayer_authority" }, // Node
 	{ "is_network_server", "is_server" }, // Multiplayer API
 	{ "is_normalmap", "is_normal_map" }, // NoiseTexture
@@ -501,8 +501,8 @@ const char *RenamesMap3To4::gdscript_function_renames[][2] = {
 	{ "set_audio_bus", "set_audio_bus_name" }, // Area3D
 	{ "set_autowrap", "set_autowrap_mode" }, // Label -- Breaks AcceptDialog.
 	{ "set_cast_to", "set_target_position" }, // RayCast2D, RayCast3D
-	{ "set_collision_layer_bit", "set_collision_layer_value" }, // CSGShape3D, and a lot of others like GridMap.
-	{ "set_collision_mask_bit", "set_collision_mask_value" }, // CSGShape3D, and a lot of others like GridMap.
+	{ "set_collision_layer_bit", "set_collision_layer_value" }, // SEOShape3D, and a lot of others like GridMap.
+	{ "set_collision_mask_bit", "set_collision_mask_value" }, // SEOShape3D, and a lot of others like GridMap.
 	{ "set_column_min_width", "set_column_custom_minimum_width" }, // Tree
 	{ "set_command", "set_meta_pressed" }, // InputEventWithModifiers
 	{ "set_control", "set_ctrl_pressed" }, // InputEventWithModifiers
@@ -530,7 +530,7 @@ const char *RenamesMap3To4::gdscript_function_renames[][2] = {
 	{ "set_icon_align", "set_icon_alignment" }, // Button
 	{ "set_interior_ambient", "set_ambient_color" }, // ReflectionProbe
 	{ "set_interior_ambient_energy", "set_ambient_color_energy" }, // ReflectionProbe
-	{ "set_invert_faces", "set_flip_faces" }, // CSGPrimitive3D
+	{ "set_invert_faces", "set_flip_faces" }, // SEOPrimitive3D
 	{ "set_is_initialized", "_is_initialized" }, // XRInterface
 	{ "set_is_primary", "set_primary" }, // XRInterface
 	{ "set_item_navmesh", "set_item_navigation_mesh" }, // MeshLibrary
@@ -564,7 +564,7 @@ const char *RenamesMap3To4::gdscript_function_renames[][2] = {
 	{ "set_spatial_node", "set_node_3d" }, // EditorNode3DGizmo
 	{ "set_speed", "set_velocity" }, // InputEventMouseMotion
 	{ "set_ssao_edge_sharpness", "set_ssao_sharpness" }, // Environment
-	{ "set_surface_material", "set_surface_override_material" }, // MeshInstance3D -- Breaks ImporterMesh.
+	{ "set_surface_material", "set_surface_override_material" }, // SEMesh -- Breaks ImporterMesh.
 	{ "set_tab_align", "set_tab_alignment" }, // TabContainer
 	{ "set_tangent", "surface_set_tangent" }, // ImmediateGeometry -- Breaks SurfaceTool.
 	{ "set_target_location", "set_target_position" }, // NavigationAgent2D, NavigationAgent3D
@@ -713,8 +713,8 @@ const char *RenamesMap3To4::csharp_function_renames[][2] = {
 	{ "GetClosestPointToSegment2d", "GetClosestPointToSegment" }, // Geometry2D
 	{ "GetClosestPointToSegmentUncapped2d", "GetClosestPointToSegmentUncapped" }, // Geometry2D
 	{ "GetClosestPointsBetweenSegments2d", "GetClosestPointToSegment" }, // Geometry2D
-	{ "GetCollisionLayerBit", "GetCollisionLayerValue" }, // CSGShape3D, and a lot of others like GridMap.
-	{ "GetCollisionMaskBit", "GetCollisionMaskValue" }, // CSGShape3D, and a lot of others like GridMap.
+	{ "GetCollisionLayerBit", "GetCollisionLayerValue" }, // SEOShape3D, and a lot of others like GridMap.
+	{ "GetCollisionMaskBit", "GetCollisionMaskValue" }, // SEOShape3D, and a lot of others like GridMap.
 	{ "GetColorTypes", "GetColorTypeList" }, // Theme
 	{ "GetCommand", "IsCommandPressed" }, // InputEventWithModifiers
 	{ "GetConstantTypes", "GetConstantTypeList" }, // Theme
@@ -800,8 +800,8 @@ const char *RenamesMap3To4::csharp_function_renames[][2] = {
 	{ "GetSpatialNode", "GetNode3d" }, // EditorNode3DGizmo
 	{ "GetSpeed", "GetVelocity" }, // InputEventMouseMotion
 	{ "GetStyleboxTypes", "GetStyleboxTypeList" }, // Theme
-	{ "GetSurfaceMaterial", "GetSurfaceOverrideMaterial" }, // MeshInstance3D -- Breaks ImporterMesh.
-	{ "GetSurfaceMaterialCount", "GetSurfaceOverrideMaterialCount" }, // MeshInstance3D
+	{ "GetSurfaceMaterial", "GetSurfaceOverrideMaterial" }, // SEMesh -- Breaks ImporterMesh.
+	{ "GetSurfaceMaterialCount", "GetSurfaceOverrideMaterialCount" }, // SEMesh
 	{ "GetTabDisabled", "IsTabDisabled" }, // Tab
 	{ "GetTabHidden", "IsTabHidden" }, // Tab
 	{ "GetTargetLocation", "GetTargetPosition" }, // NavigationAgent2D, NavigationAgent3D
@@ -915,8 +915,8 @@ const char *RenamesMap3To4::csharp_function_renames[][2] = {
 	{ "SetAudioBus", "SetAudioBusName" }, // Area3D
 	{ "SetAutowrap", "SetAutowrapMode" }, // Label -- Breaks AcceptDialog.
 	{ "SetCastTo", "SetTargetPosition" }, // RayCast2D, RayCast3D
-	{ "SetCollisionLayerBit", "SetCollisionLayerValue" }, // CSGShape3D, and a lot of others like GridMap.
-	{ "SetCollisionMaskBit", "SetCollisionMaskValue" }, // CSGShape3D, and a lot of others like GridMap.
+	{ "SetCollisionLayerBit", "SetCollisionLayerValue" }, // SEOShape3D, and a lot of others like GridMap.
+	{ "SetCollisionMaskBit", "SetCollisionMaskValue" }, // SEOShape3D, and a lot of others like GridMap.
 	{ "SetColumnMinWidth", "SetColumnCustomMinimumWidth" }, // Tree
 	{ "SetCommand", "SetCommandPressed" }, // InputEventWithModifiers
 	{ "SetControl", "SetCtrlPressed" }, // InputEventWithModifiers
@@ -974,7 +974,7 @@ const char *RenamesMap3To4::csharp_function_renames[][2] = {
 	{ "SetSpatialNode", "SetNode3d" }, // EditorNode3DGizmo
 	{ "SetSpeed", "SetVelocity" }, // InputEventMouseMotion
 	{ "SetSsaoEdgeSharpness", "SetSsaoSharpness" }, // Environment
-	{ "SetSurfaceMaterial", "SetSurfaceOverrideMaterial" }, // MeshInstance3D -- Breaks ImporterMesh.
+	{ "SetSurfaceMaterial", "SetSurfaceOverrideMaterial" }, // SEMesh -- Breaks ImporterMesh.
 	{ "SetTabAlign", "SetTabAlignment" }, // TabContainer
 	{ "SetTangent", "SurfaceSetTangent" }, // ImmediateGeometry -- Breaks SurfaceTool.
 	{ "SetTargetLocation", "SetTargetPosition" }, // NavigationAgent2D, NavigationAgent3D
@@ -1486,15 +1486,15 @@ const char *RenamesMap3To4::class_renames[][2] = {
 	{ "BoneAttachment", "BoneAttachment3D" },
 	{ "BoxShape", "BoxShape3D" },
 	{ "CPUParticles", "CPUParticles3D" },
-	{ "CSGBox", "CSGBox3D" },
-	{ "CSGCombiner", "CSGCombiner3D" },
-	{ "CSGCylinder", "CSGCylinder3D" },
-	{ "CSGMesh", "CSGMesh3D" },
-	{ "CSGPolygon", "CSGPolygon3D" },
-	{ "CSGPrimitive", "CSGPrimitive3D" },
-	{ "CSGShape", "CSGShape3D" },
-	{ "CSGSphere", "CSGSphere3D" },
-	{ "CSGTorus", "CSGTorus3D" },
+	{ "SEOBox", "SEOBox3D" },
+	{ "SEOCombiner", "SEOCombiner3D" },
+	{ "SEOCylinder", "SEOCylinder3D" },
+	{ "SEOMesh", "SEOMesh3D" },
+	{ "SEOPolygon", "SEOPolygon3D" },
+	{ "SEOPrimitive", "SEOPrimitive3D" },
+	{ "SEOShape", "SEOShape3D" },
+	{ "SEOSphere", "SEOSphere3D" },
+	{ "SEOTorus", "SEOTorus3D" },
 	{ "CapsuleShape", "CapsuleShape3D" },
 	{ "ClippedCamera", "SECamera" },
 	{ "CollisionObject", "CollisionObject3D" },
@@ -1538,8 +1538,8 @@ const char *RenamesMap3To4::class_renames[][2] = {
 	{ "LineShape2D", "WorldBoundaryShape2D" },
 	{ "Listener", "AudioListener3D" },
 	{ "Listener2D", "AudioListener2D" },
-	{ "MeshInstance", "MeshInstance3D" },
-	{ "MultiMeshInstance", "MultiMeshInstance3D" },
+	{ "MeshInstance", "SEMesh" },
+	{ "MultiMeshInstance", "MultiSEMesh" },
 	{ "MultiplayerPeerGDNative", "MultiplayerPeerExtension" },
 	{ "Navigation2DServer", "NavigationServer2D" },
 	{ "NavigationAgent", "NavigationAgent3D" },

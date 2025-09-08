@@ -45,7 +45,7 @@
 			<return type="Object" />
 			<description>
 				Returns the first object that the ray intersects, or [code]null[/code] if no object is intersecting the ray (i.e. [method is_colliding] returns [code]false[/code]).
-				[b]Note:[/b] This object is not guaranteed to be a [CollisionObject3D]. For example, if the ray intersects a [CSGShape3D] or a [GridMap], the method will return a [CSGShape3D] or [GridMap] instance.
+				[b]Note:[/b] This object is not guaranteed to be a [CollisionObject3D]. For example, if the ray intersects a [SEOShape3D] or a [GridMap], the method will return a [SEOShape3D] or [GridMap] instance.
 			</description>
 		</method>
 		<method name="get_collider_rid" qualifiers="const">

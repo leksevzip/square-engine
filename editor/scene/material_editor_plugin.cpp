@@ -38,7 +38,7 @@
 #include "editor/themes/editor_scale.h"
 #include "scene/3d/se_camera.h"
 #include "scene/3d/light_3d.h"
-#include "scene/3d/mesh_instance_3d.h"
+#include "scene/3d/se_mesh.h"
 #include "scene/gui/box_container.h"
 #include "scene/gui/button.h"
 #include "scene/gui/color_rect.h"
@@ -279,13 +279,13 @@ MaterialEditor::MaterialEditor() {
 	rotation = memnew(Node3D);
 	viewport->add_child(rotation);
 
-	sphere_instance = memnew(MeshInstance3D);
+	sphere_instance = memnew(SEMesh);
 	rotation->add_child(sphere_instance);
 
-	box_instance = memnew(MeshInstance3D);
+	box_instance = memnew(SEMesh);
 	rotation->add_child(box_instance);
 
-	quad_instance = memnew(MeshInstance3D);
+	quad_instance = memnew(SEMesh);
 	rotation->add_child(quad_instance);
 
 	sphere_instance->set_transform(Transform3D() * 0.375);

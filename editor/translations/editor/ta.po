@@ -1517,7 +1517,7 @@ msgstr "அனிமேசன் படி மாற்றவும்"
 msgid "Rearrange Tracks"
 msgstr "தடங்களை மறுசீரமைக்கவும்"
 
-msgid "Blend Shape tracks only apply to MeshInstance3D nodes."
+msgid "Blend Shape tracks only apply to SEMesh nodes."
 msgstr "கலப்பு வடிவ தடங்கள் Meshinstance3d முனைகளுக்கு மட்டுமே பொருந்தும்."
 
 msgid "Position/Rotation/Scale 3D tracks only apply to 3D-based nodes."
@@ -1556,7 +1556,7 @@ msgstr "ட்ராக் பாதை தவறானது, எனவே ஒ�
 msgid "Track is not of type Node3D, can't insert key"
 msgstr "ட்ராக் வகை Node3D இல் இல்லை, விசையை செருக முடியாது"
 
-msgid "Track is not of type MeshInstance3D, can't insert key"
+msgid "Track is not of type SEMesh, can't insert key"
 msgstr "ட்ராக் வகை மெசின்ச்டன்ச் 3 டி அல்ல, விசையை செருக முடியாது"
 
 msgid "Track path is invalid, so can't add a method key."
@@ -10546,9 +10546,9 @@ msgstr ""
 "திருத்தி, UV2 ஐச் சேர் சரிபார்க்கவும்."
 
 msgid ""
-"To enable lightmapping support on a CSG mesh, select the root CSG node and "
-"choose CSG > Bake Mesh Instance at the top of the 3D editor viewport.\n"
-"Select the generated MeshInstance3D node and choose Mesh > Unwrap UV2 for "
+"To enable lightmapping support on a SEO mesh, select the root SEO node and "
+"choose SEO > Bake Mesh Instance at the top of the 3D editor viewport.\n"
+"Select the generated SEMesh node and choose Mesh > Unwrap UV2 for "
 "Lightmap/AO at the top of the 3D editor viewport."
 msgstr ""
 "சி.எச்.சி கண்ணி மீது லைட்மாப்பிங் ஆதரவை இயக்க, ரூட் சி.எச்.சி முனையைத் தேர்ந்தெடுத்து, 3 "
@@ -10693,7 +10693,7 @@ msgstr "மெச் அடுக்கு %d இல் புற ஊதா இ�
 msgid "Create Navigation Mesh"
 msgstr "வழிசெலுத்தல் கண்ணி உருவாக்கவும்"
 
-msgid "MeshInstance3D lacks a Mesh."
+msgid "SEMesh lacks a Mesh."
 msgstr "Meshinstance3d க்கு ஒரு கண்ணி இல்லை."
 
 msgid "Mesh has no surface to create outlines from."
@@ -10879,7 +10879,7 @@ msgstr "எந்த கண்ணி மூலமும் குறிப்ப
 msgid "Mesh source is invalid (invalid path)."
 msgstr "மெச் மூலமானது தவறானது (தவறான பாதை)."
 
-msgid "Mesh source is invalid (not a MeshInstance3D)."
+msgid "Mesh source is invalid (not a SEMesh)."
 msgstr "மெச் மூலமானது தவறானது (மெசின்ச்டன்ச் 3 டி அல்ல)."
 
 msgid "Mesh source is invalid (contains no Mesh resource)."
@@ -11873,7 +11873,7 @@ msgstr ""
 
 msgid ""
 "No meshes to bake.\n"
-"Make sure there is at least one MeshInstance3D node in the scene whose visual "
+"Make sure there is at least one SEMesh node in the scene whose visual "
 "layers are part of the OccluderInstance3D's Bake Mask property."
 msgstr ""
 "சுட மெச்கள் இல்லை. \n"
@@ -17198,47 +17198,47 @@ msgid "Unified"
 msgstr "ஒன்றுபட்ட"
 
 msgid ""
-"The CSGShape3D has an empty shape.\n"
-"CSGShape3D empty shapes typically occur because the mesh is not manifold.\n"
+"The SEOShape3D has an empty shape.\n"
+"SEOShape3D empty shapes typically occur because the mesh is not manifold.\n"
 "A manifold mesh forms a solid object without gaps, holes, or loose edges.\n"
 "Each edge must be a member of exactly two faces."
 msgstr ""
-"CSGSHAPE3D ஒரு வெற்று வடிவத்தைக் கொண்டுள்ளது. \n"
-"Csgshape3d வெற்று வடிவங்கள் பொதுவாக நிகழ்கின்றன, ஏனெனில் கண்ணி பன்மடங்கு அல்ல. \n"
+"SEOSHAPE3D ஒரு வெற்று வடிவத்தைக் கொண்டுள்ளது. \n"
+"SEOshape3d வெற்று வடிவங்கள் பொதுவாக நிகழ்கின்றன, ஏனெனில் கண்ணி பன்மடங்கு அல்ல. \n"
 "ஒரு பன்மடங்கு கண்ணி இடைவெளிகள், துளைகள் அல்லது தளர்வான விளிம்புகள் இல்லாமல் ஒரு திடமான "
 "பொருளை உருவாக்குகிறது. \n"
 "ஒவ்வொரு விளிம்பும் சரியாக இரண்டு முகங்களில் உறுப்பினராக இருக்க வேண்டும்."
 
-msgid "CSG operation returned an empty array."
+msgid "SEO operation returned an empty array."
 msgstr "சி.எச்.சி செயல்பாடு ஒரு வெற்று வரிசையைத் திருப்பியது."
 
 msgid ""
 "Can not add a baked mesh as sibling for the scene root.\n"
-"Move the CSG root node below a parent node."
+"Move the SEO root node below a parent node."
 msgstr ""
 "காட்சி வேருக்கு உடன்பிறப்பாக வேகவைத்த கண்ணி சேர்க்க முடியாது. \n"
-"பெற்றோர் முனைக்கு கீழே CSG ரூட் முனையை நகர்த்தவும்."
+"பெற்றோர் முனைக்கு கீழே SEO ரூட் முனையை நகர்த்தவும்."
 
-msgid "CSG operation returned an empty mesh."
+msgid "SEO operation returned an empty mesh."
 msgstr "சி.எச்.சி செயல்பாடு ஒரு வெற்று கண்ணி திரும்பியது."
 
-msgid "Create baked CSGShape3D Mesh Instance"
-msgstr "வேகவைத்த csgshape3d மெச் உதாரணத்தை உருவாக்கவும்"
+msgid "Create baked SEOShape3D Mesh Instance"
+msgstr "வேகவைத்த SEOshape3d மெச் உதாரணத்தை உருவாக்கவும்"
 
 msgid ""
 "Can not add a baked collision shape as sibling for the scene root.\n"
-"Move the CSG root node below a parent node."
+"Move the SEO root node below a parent node."
 msgstr ""
 "காட்சி வேருக்கு உடன்பிறப்பாக சுட்ட மோதல் வடிவத்தை சேர்க்க முடியாது. \n"
-"பெற்றோர் முனைக்கு கீழே CSG ரூட் முனையை நகர்த்தவும்."
+"பெற்றோர் முனைக்கு கீழே SEO ரூட் முனையை நகர்த்தவும்."
 
-msgid "CSG operation returned an empty shape."
+msgid "SEO operation returned an empty shape."
 msgstr "சி.எச்.சி செயல்பாடு வெற்று வடிவத்தை அளித்தது."
 
-msgid "Create baked CSGShape3D Collision Shape"
-msgstr "வேகவைத்த csgshape3d மோதல் வடிவத்தை உருவாக்கவும்"
+msgid "Create baked SEOShape3D Collision Shape"
+msgstr "வேகவைத்த SEOshape3d மோதல் வடிவத்தை உருவாக்கவும்"
 
-msgid "CSG"
+msgid "SEO"
 msgstr "சி.எச்.சி."
 
 msgid "Bake Mesh Instance"
@@ -17247,13 +17247,13 @@ msgstr "கண்ணி நிகழ்வு சுட்டுக்கொள�
 msgid "Bake Collision Shape"
 msgstr "மோதல் வடிவத்தை சுட்டுக்கொள்ளுங்கள்"
 
-msgid "Change CSG Box Size"
-msgstr "CSG பெட்டி அளவை மாற்றவும்"
+msgid "Change SEO Box Size"
+msgstr "SEO பெட்டி அளவை மாற்றவும்"
 
-msgid "Change CSG Cylinder Radius"
+msgid "Change SEO Cylinder Radius"
 msgstr "சி.எச்.சி சிலிண்டர் ஆரம் மாற்றவும்"
 
-msgid "Change CSG Cylinder Height"
+msgid "Change SEO Cylinder Height"
 msgstr "சி.எச்.சி சிலிண்டர் உயரத்தை மாற்றவும்"
 
 msgid "Change Torus Inner Radius"

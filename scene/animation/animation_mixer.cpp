@@ -43,7 +43,7 @@
 
 #ifndef _3D_DISABLED
 #include "scene/3d/audio_stream_player_3d.h"
-#include "scene/3d/mesh_instance_3d.h"
+#include "scene/3d/se_mesh.h"
 #include "scene/3d/node_3d.h"
 #include "scene/3d/skeleton_3d.h"
 #endif // _3D_DISABLED
@@ -825,10 +825,10 @@ bool AnimationMixer::_update_caches() {
 							ERR_PRINT(mixer_name + ": '" + String(E) + "', blend shape track does not contain a blend shape subname:  '" + String(path) + "'.");
 							continue;
 						}
-						MeshInstance3D *mesh_3d = Object::cast_to<MeshInstance3D>(child);
+						SEMesh *mesh_3d = Object::cast_to<SEMesh>(child);
 
 						if (!mesh_3d) {
-							ERR_PRINT(mixer_name + ": '" + String(E) + "', blend shape track does not point to MeshInstance3D:  '" + String(path) + "'.");
+							ERR_PRINT(mixer_name + ": '" + String(E) + "', blend shape track does not point to SEMesh:  '" + String(path) + "'.");
 							continue;
 						}
 
@@ -1898,7 +1898,7 @@ void AnimationMixer::_blend_apply() {
 #ifndef _3D_DISABLED
 				TrackCacheBlendShape *t = static_cast<TrackCacheBlendShape *>(track);
 
-				MeshInstance3D *t_mesh_3d = ObjectDB::get_instance<MeshInstance3D>(t->object_id);
+				SEMesh *t_mesh_3d = ObjectDB::get_instance<SEMesh>(t->object_id);
 				if (t_mesh_3d) {
 					t_mesh_3d->set_blend_shape_value(t->shape_index, t->value);
 				}
@@ -2160,7 +2160,7 @@ void AnimationMixer::_build_backup_track_cache() {
 			case Animation::TYPE_BLEND_SHAPE: {
 #ifndef _3D_DISABLED
 				TrackCacheBlendShape *t = static_cast<TrackCacheBlendShape *>(track);
-				MeshInstance3D *t_mesh_3d = ObjectDB::get_instance<MeshInstance3D>(t->object_id);
+				SEMesh *t_mesh_3d = ObjectDB::get_instance<SEMesh>(t->object_id);
 				if (t_mesh_3d) {
 					t->value = t_mesh_3d->get_blend_shape_value(t->shape_index);
 				}

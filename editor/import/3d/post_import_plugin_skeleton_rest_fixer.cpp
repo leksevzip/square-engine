@@ -31,7 +31,7 @@
 #include "post_import_plugin_skeleton_rest_fixer.h"
 
 #include "scene/3d/bone_attachment_3d.h"
-#include "scene/3d/importer_mesh_instance_3d.h"
+#include "scene/3d/importer_se_mesh.h"
 #include "scene/3d/retarget_modifier_3d.h"
 #include "scene/3d/skeleton_3d.h"
 #include "scene/animation/animation_player.h"
@@ -876,9 +876,9 @@ void PostImportPluginSkeletonRestFixer::internal_process(InternalImportCategory 
 			// Fix skin.
 			{
 				HashSet<Ref<Skin>> mutated_skins;
-				TypedArray<Node> nodes = p_base_scene->find_children("*", "ImporterMeshInstance3D");
+				TypedArray<Node> nodes = p_base_scene->find_children("*", "ImporterSEMesh");
 				while (nodes.size()) {
-					ImporterMeshInstance3D *mi = Object::cast_to<ImporterMeshInstance3D>(nodes.pop_back());
+					ImporterSEMesh *mi = Object::cast_to<ImporterSEMesh>(nodes.pop_back());
 					ERR_CONTINUE(!mi);
 
 					Ref<Skin> skin = mi->get_skin();

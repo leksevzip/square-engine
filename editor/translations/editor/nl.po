@@ -1315,8 +1315,8 @@ msgstr "Animatiestap wijzigen"
 msgid "Rearrange Tracks"
 msgstr "Sporen herordenen"
 
-msgid "Blend Shape tracks only apply to MeshInstance3D nodes."
-msgstr "Mengvorm-sporen zijn enkel van toepassing op MeshInstance3D-knopen."
+msgid "Blend Shape tracks only apply to SEMesh nodes."
+msgstr "Mengvorm-sporen zijn enkel van toepassing op SEMesh-knopen."
 
 msgid "Position/Rotation/Scale 3D tracks only apply to 3D-based nodes."
 msgstr ""
@@ -1355,8 +1355,8 @@ msgstr "Sleutel kan niet toegevoegd worden omdat spoorpad ongeldig is."
 msgid "Track is not of type Node3D, can't insert key"
 msgstr "Sleutel kan niet ingevoegd worden omdat spoor niet van type Node3D is"
 
-msgid "Track is not of type MeshInstance3D, can't insert key"
-msgstr "Track is niet van het type MeshInstance3D, kan geen sleutel invoeren"
+msgid "Track is not of type SEMesh, can't insert key"
+msgstr "Track is niet van het type SEMesh, kan geen sleutel invoeren"
 
 msgid "Track path is invalid, so can't add a method key."
 msgstr "Methodesleutel kan niet toegevoegd worden omdat spoorpad ongeldig is."

@@ -2724,8 +2724,8 @@ msgstr "Esqueleto"
 msgid "Selected Bone"
 msgstr "Hueso Seleccionado"
 
-msgid "CSG"
-msgstr "CSG"
+msgid "SEO"
+msgstr "SEO"
 
 msgid "GridMap Grid"
 msgstr "Cuadrícula GridMap"

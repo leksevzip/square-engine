@@ -2814,8 +2814,8 @@ msgstr "Скелет"
 msgid "Selected Bone"
 msgstr "Выбранная кость"
 
-msgid "CSG"
-msgstr "CSG"
+msgid "SEO"
+msgstr "SEO"
 
 msgid "GridMap Grid"
 msgstr "Сетка GridMap"

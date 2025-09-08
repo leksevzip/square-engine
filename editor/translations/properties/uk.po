@@ -2648,8 +2648,8 @@ msgstr "Каркас"
 msgid "Selected Bone"
 msgstr "Вибрана кістка"
 
-msgid "CSG"
-msgstr "CSG"
+msgid "SEO"
+msgstr "SEO"
 
 msgid "GridMap Grid"
 msgstr "Сітка GridMap"

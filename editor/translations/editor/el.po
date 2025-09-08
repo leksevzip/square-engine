@@ -1192,8 +1192,8 @@ msgstr "Αλλαγή βήματος κίνησης"
 msgid "Rearrange Tracks"
 msgstr "Αναδιάταξη Κομματιών"
 
-msgid "Blend Shape tracks only apply to MeshInstance3D nodes."
-msgstr "Τα σχήματα ανάμειξης εφαρμόζονται μόνο σε κόμβους MeshInstance3D."
+msgid "Blend Shape tracks only apply to SEMesh nodes."
+msgstr "Τα σχήματα ανάμειξης εφαρμόζονται μόνο σε κόμβους SEMesh."
 
 msgid "Position/Rotation/Scale 3D tracks only apply to 3D-based nodes."
 msgstr "Κομμάτια μετασχηματισμών 3Δ εφαρμόζονται μόνο σε κόμβους 3Δ."
@@ -1231,8 +1231,8 @@ msgstr "Αδύνατη η προσθήκη κλειδιού, λόγω άκυρη
 msgid "Track is not of type Node3D, can't insert key"
 msgstr "Αδύνατη η προσθήκη κλειδιού, το κομμάτι δεν είναι τύπου Node3D"
 
-msgid "Track is not of type MeshInstance3D, can't insert key"
-msgstr "Αδύνατη η προσθήκη κλειδιού, το κομμάτι δεν είναι τύπου MeshInstance3D"
+msgid "Track is not of type SEMesh, can't insert key"
+msgstr "Αδύνατη η προσθήκη κλειδιού, το κομμάτι δεν είναι τύπου SEMesh"
 
 msgid "Track path is invalid, so can't add a method key."
 msgstr "Αδύνατη η προσθήκη κλειδιού μεθόδου, λόγω άκυρης διαδρομής κομματιού."

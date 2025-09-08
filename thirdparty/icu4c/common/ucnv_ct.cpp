@@ -588,7 +588,7 @@ _CompoundText_GetUnicodeSet(const UConverter *cnv,
     int32_t i;
 
     for (i = 1; i < NUM_OF_CONVERTERS; i++) {
-        ucnv_MBCSGetUnicodeSetForUnicode(myConverterData->myConverterArray[i], sa, which, pErrorCode);
+        ucnv_MBSEOetUnicodeSetForUnicode(myConverterData->myConverterArray[i], sa, which, pErrorCode);
     }
     sa->add(sa->set, 0x0000);
     sa->add(sa->set, 0x0009);

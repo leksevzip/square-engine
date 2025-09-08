@@ -39,7 +39,7 @@
 #include "editor/scene/3d/skeleton_3d_editor_plugin.h"
 #include "editor/settings/editor_settings.h"
 #include "editor/themes/editor_scale.h"
-#include "scene/3d/importer_mesh_instance_3d.h"
+#include "scene/3d/importer_se_mesh.h"
 #include "scene/animation/animation_player.h"
 #include "scene/gui/subviewport_container.h"
 #include "scene/resources/3d/importer_mesh.h"
@@ -396,10 +396,10 @@ void SceneImportSettingsDialog::_fill_scene(Node *p_node, TreeItem *p_parent_ite
 		p_node->set_meta("import_id", import_id);
 	}
 
-	ImporterMeshInstance3D *src_mesh_node = Object::cast_to<ImporterMeshInstance3D>(p_node);
+	ImporterSEMesh *src_mesh_node = Object::cast_to<ImporterSEMesh>(p_node);
 
 	if (src_mesh_node) {
-		MeshInstance3D *mesh_node = memnew(MeshInstance3D);
+		SEMesh *mesh_node = memnew(SEMesh);
 		mesh_node->set_name(src_mesh_node->get_name());
 		mesh_node->set_transform(src_mesh_node->get_transform());
 		mesh_node->set_skin(src_mesh_node->get_skin());
@@ -491,14 +491,14 @@ void SceneImportSettingsDialog::_fill_scene(Node *p_node, TreeItem *p_parent_ite
 	for (int i = 0; i < p_node->get_child_count(); i++) {
 		_fill_scene(p_node->get_child(i), item);
 	}
-	MeshInstance3D *mesh_node = Object::cast_to<MeshInstance3D>(p_node);
+	SEMesh *mesh_node = Object::cast_to<SEMesh>(p_node);
 	if (mesh_node && mesh_node->get_mesh().is_valid()) {
 		if (!editing_animation) {
 			_fill_mesh(scene_tree, mesh_node->get_mesh(), item);
 		}
 
 		// Add the collider view.
-		MeshInstance3D *collider_view = memnew(MeshInstance3D);
+		SEMesh *collider_view = memnew(SEMesh);
 		collider_view->set_name("collider_view");
 		collider_view->set_visible(false);
 		mesh_node->add_child(collider_view, true);
@@ -581,8 +581,8 @@ void SceneImportSettingsDialog::_update_view_gizmos() {
 		return;
 	}
 	for (const KeyValue<String, NodeData> &e : node_map) {
-		// Skip import nodes that aren't MeshInstance3D.
-		const MeshInstance3D *mesh_node = Object::cast_to<MeshInstance3D>(e.value.node);
+		// Skip import nodes that aren't SEMesh.
+		const SEMesh *mesh_node = Object::cast_to<SEMesh>(e.value.node);
 		if (mesh_node == nullptr || mesh_node->get_mesh().is_null()) {
 			continue;
 		}
@@ -593,12 +593,12 @@ void SceneImportSettingsDialog::_update_view_gizmos() {
 			show_collider_view = e.value.settings[SNAME("generate/physics")];
 		}
 
-		// Get the collider_view MeshInstance3D.
-		TypedArray<Node> descendants = mesh_node->find_children("collider_view", "MeshInstance3D");
+		// Get the collider_view SEMesh.
+		TypedArray<Node> descendants = mesh_node->find_children("collider_view", "SEMesh");
 		CRASH_COND_MSG(descendants.is_empty(), "This is unreachable, since the collider view is always created even when the collision is not used! If this is triggered there is a bug on the function `_fill_scene`.");
-		MeshInstance3D *collider_view = Object::cast_to<MeshInstance3D>(descendants[0].operator Object *());
+		SEMesh *collider_view = Object::cast_to<SEMesh>(descendants[0].operator Object *());
 
-		// Regenerate the physics collider for this MeshInstance3D if either:
+		// Regenerate the physics collider for this SEMesh if either:
 		// - A regeneration is requested for the selected import node.
 		// - The collider is being made visible.
 		if ((generate_collider && e.key == selected_id) || (show_collider_view && !collider_view->is_visible())) {
@@ -611,7 +611,7 @@ void SceneImportSettingsDialog::_update_view_gizmos() {
 			Ref<Mesh> mesh_3d_mesh = mesh_node->get_mesh();
 			Ref<ArrayMesh> array_mesh_3d_mesh = mesh_3d_mesh;
 			if (array_mesh_3d_mesh.is_valid()) {
-				// For the MeshInstance3D nodes, we need to convert the ArrayMesh to an ImporterMesh specially.
+				// For the SEMesh nodes, we need to convert the ArrayMesh to an ImporterMesh specially.
 				mesh->set_name(array_mesh_3d_mesh->get_name());
 				for (int32_t blend_i = 0; blend_i < array_mesh_3d_mesh->get_blend_shape_count(); blend_i++) {
 					mesh->add_blend_shape(array_mesh_3d_mesh->get_blend_shape_name(blend_i));
@@ -627,7 +627,7 @@ void SceneImportSettingsDialog::_update_view_gizmos() {
 				}
 				mesh->set_blend_shape_mode(array_mesh_3d_mesh->get_blend_shape_mode());
 			} else if (mesh_3d_mesh.is_valid()) {
-				// For the MeshInstance3D nodes, we need to convert the Mesh to an ImporterMesh specially.
+				// For the SEMesh nodes, we need to convert the Mesh to an ImporterMesh specially.
 				mesh->set_name(mesh_3d_mesh->get_name());
 				for (int32_t surface_i = 0; surface_i < mesh_3d_mesh->get_surface_count(); surface_i++) {
 					mesh->add_surface(mesh_3d_mesh->surface_get_primitive_type(surface_i),
@@ -872,7 +872,7 @@ void SceneImportSettingsDialog::_select(Tree *p_from, const String &p_type, cons
 		mesh_tree->deselect_all();
 		NodeData &nd = node_map[p_id];
 
-		MeshInstance3D *mi = Object::cast_to<MeshInstance3D>(nd.node);
+		SEMesh *mi = Object::cast_to<SEMesh>(nd.node);
 		if (mi) {
 			Ref<Mesh> base_mesh = mi->get_mesh();
 			if (base_mesh.is_valid()) {
@@ -1917,7 +1917,7 @@ SceneImportSettingsDialog::SceneImportSettingsDialog() {
 		st->commit(selection_mesh);
 		selection_mesh->surface_set_material(0, selection_mat);
 
-		node_selected = memnew(MeshInstance3D);
+		node_selected = memnew(SEMesh);
 		node_selected->set_mesh(selection_mesh);
 		node_selected->set_cast_shadows_setting(GeometryInstance3D::SHADOW_CASTING_SETTING_OFF);
 		base_viewport->add_child(node_selected);
@@ -1925,7 +1925,7 @@ SceneImportSettingsDialog::SceneImportSettingsDialog() {
 	}
 
 	{
-		mesh_preview = memnew(MeshInstance3D);
+		mesh_preview = memnew(SEMesh);
 		base_viewport->add_child(mesh_preview);
 		mesh_preview->hide();
 
@@ -1940,7 +1940,7 @@ SceneImportSettingsDialog::SceneImportSettingsDialog() {
 	}
 
 	{
-		bones_mesh_preview = memnew(MeshInstance3D);
+		bones_mesh_preview = memnew(SEMesh);
 		bones_mesh_preview->set_cast_shadows_setting(GeometryInstance3D::SHADOW_CASTING_SETTING_OFF);
 		bones_mesh_preview->set_skeleton_path(NodePath());
 		base_viewport->add_child(bones_mesh_preview);

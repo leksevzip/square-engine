@@ -141,7 +141,7 @@ partial class ImporterMesh
 }
 
 
-partial class MeshInstance3D
+partial class SEMesh
 {
     /// <inheritdoc cref="CreateMultipleConvexCollisions(MeshConvexDecompositionSettings)"/>
     [EditorBrowsable(EditorBrowsableState.Never)]

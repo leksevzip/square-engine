@@ -48,10 +48,10 @@
 #include "scene/2d/node_2d.h"
 #include "scene/3d/bone_attachment_3d.h"
 #include "scene/3d/se_camera.h"
-#include "scene/3d/importer_mesh_instance_3d.h"
+#include "scene/3d/importer_se_mesh.h"
 #include "scene/3d/light_3d.h"
-#include "scene/3d/mesh_instance_3d.h"
-#include "scene/3d/multimesh_instance_3d.h"
+#include "scene/3d/se_mesh.h"
+#include "scene/3d/multise_mesh.h"
 #include "scene/animation/animation_player.h"
 #include "scene/resources/3d/skin.h"
 #include "scene/resources/image_texture.h"
@@ -62,10 +62,10 @@
 #include "editor/file_system/editor_file_system.h"
 #endif
 
-#include "modules/modules_enabled.gen.h" // For csg, gridmap.
+#include "modules/modules_enabled.gen.h" // For SEO, gridmap.
 
-#ifdef MODULE_CSG_ENABLED
-#include "modules/csg/csg_shape.h"
+#ifdef MODULE_SEO_ENABLED
+#include "modules/SEO/SEO_shape.h"
 #endif
 #ifdef MODULE_GRIDMAP_ENABLED
 #include "modules/gridmap/grid_map.h"
@@ -5838,11 +5838,11 @@ BoneAttachment3D *GLTFDocument::_generate_bone_attachment_compat_4pt4(Ref<GLTFSt
 	return bone_attachment;
 }
 
-GLTFMeshIndex GLTFDocument::_convert_mesh_to_gltf(Ref<GLTFState> p_state, MeshInstance3D *p_mesh_instance) {
+GLTFMeshIndex GLTFDocument::_convert_mesh_to_gltf(Ref<GLTFState> p_state, SEMesh *p_mesh_instance) {
 	ERR_FAIL_NULL_V(p_mesh_instance, -1);
-	ERR_FAIL_COND_V_MSG(p_mesh_instance->get_mesh().is_null(), -1, "glTF: Tried to export a MeshInstance3D node named " + p_mesh_instance->get_name() + ", but it has no mesh. This node will be exported without a mesh.");
+	ERR_FAIL_COND_V_MSG(p_mesh_instance->get_mesh().is_null(), -1, "glTF: Tried to export a SEMesh node named " + p_mesh_instance->get_name() + ", but it has no mesh. This node will be exported without a mesh.");
 	Ref<Mesh> mesh_resource = p_mesh_instance->get_mesh();
-	ERR_FAIL_COND_V_MSG(mesh_resource->get_surface_count() == 0, -1, "glTF: Tried to export a MeshInstance3D node named " + p_mesh_instance->get_name() + ", but its mesh has no surfaces. This node will be exported without a mesh.");
+	ERR_FAIL_COND_V_MSG(mesh_resource->get_surface_count() == 0, -1, "glTF: Tried to export a SEMesh node named " + p_mesh_instance->get_name() + ", but its mesh has no surfaces. This node will be exported without a mesh.");
 	TypedArray<Material> instance_materials;
 	for (int32_t surface_i = 0; surface_i < mesh_resource->get_surface_count(); surface_i++) {
 		Ref<Material> mat = p_mesh_instance->get_active_material(surface_i);
@@ -5866,12 +5866,12 @@ GLTFMeshIndex GLTFDocument::_convert_mesh_to_gltf(Ref<GLTFState> p_state, MeshIn
 	return mesh_i;
 }
 
-ImporterMeshInstance3D *GLTFDocument::_generate_mesh_instance(Ref<GLTFState> p_state, const GLTFNodeIndex p_node_index) {
+ImporterSEMesh *GLTFDocument::_generate_mesh_instance(Ref<GLTFState> p_state, const GLTFNodeIndex p_node_index) {
 	Ref<GLTFNode> gltf_node = p_state->nodes[p_node_index];
 
 	ERR_FAIL_INDEX_V(gltf_node->mesh, p_state->meshes.size(), nullptr);
 
-	ImporterMeshInstance3D *mi = memnew(ImporterMeshInstance3D);
+	ImporterSEMesh *mi = memnew(ImporterSEMesh);
 	print_verbose("glTF: Creating mesh for: " + gltf_node->get_name());
 
 	p_state->scene_mesh_instances.insert(p_node_index, mi);
@@ -5965,8 +5965,8 @@ void GLTFDocument::_convert_scene_node(Ref<GLTFState> p_state, Node *p_current, 
 		Node3D *spatial = Object::cast_to<Node3D>(p_current);
 		_convert_spatial(p_state, spatial, gltf_node);
 	}
-	if (Object::cast_to<MeshInstance3D>(p_current)) {
-		MeshInstance3D *mi = Object::cast_to<MeshInstance3D>(p_current);
+	if (Object::cast_to<SEMesh>(p_current)) {
+		SEMesh *mi = Object::cast_to<SEMesh>(p_current);
 		_convert_mesh_instance_to_gltf(mi, p_state, gltf_node);
 	} else if (Object::cast_to<BoneAttachment3D>(p_current)) {
 		BoneAttachment3D *bone = Object::cast_to<BoneAttachment3D>(p_current);
@@ -5977,16 +5977,16 @@ void GLTFDocument::_convert_scene_node(Ref<GLTFState> p_state, Node *p_current, 
 		_convert_skeleton_to_gltf(skel, p_state, p_gltf_parent, p_gltf_root, gltf_node);
 		// We ignore the Godot Engine node that is the skeleton.
 		return;
-	} else if (Object::cast_to<MultiMeshInstance3D>(p_current)) {
-		MultiMeshInstance3D *multi = Object::cast_to<MultiMeshInstance3D>(p_current);
+	} else if (Object::cast_to<MultiSEMesh>(p_current)) {
+		MultiSEMesh *multi = Object::cast_to<MultiSEMesh>(p_current);
 		_convert_multi_mesh_instance_to_gltf(multi, p_gltf_parent, p_gltf_root, gltf_node, p_state);
-#ifdef MODULE_CSG_ENABLED
-	} else if (Object::cast_to<CSGShape3D>(p_current)) {
-		CSGShape3D *shape = Object::cast_to<CSGShape3D>(p_current);
+#ifdef MODULE_SEO_ENABLED
+	} else if (Object::cast_to<SEOShape3D>(p_current)) {
+		SEOShape3D *shape = Object::cast_to<SEOShape3D>(p_current);
 		if (shape->get_parent() && shape->is_root_shape()) {
-			_convert_csg_shape_to_gltf(shape, p_gltf_parent, gltf_node, p_state);
+			_convert_SEO_shape_to_gltf(shape, p_gltf_parent, gltf_node, p_state);
 		}
-#endif // MODULE_CSG_ENABLED
+#endif // MODULE_SEO_ENABLED
 #ifdef MODULE_GRIDMAP_ENABLED
 	} else if (Object::cast_to<GridMap>(p_current)) {
 		GridMap *gridmap = Object::cast_to<GridMap>(p_current);
@@ -6026,13 +6026,13 @@ void GLTFDocument::_convert_scene_node(Ref<GLTFState> p_state, Node *p_current, 
 	}
 }
 
-void GLTFDocument::_convert_csg_shape_to_gltf(CSGShape3D *p_current, GLTFNodeIndex p_gltf_parent, Ref<GLTFNode> p_gltf_node, Ref<GLTFState> p_state) {
-#ifndef MODULE_CSG_ENABLED
-	ERR_FAIL_MSG("csg module is disabled.");
+void GLTFDocument::_convert_SEO_shape_to_gltf(SEOShape3D *p_current, GLTFNodeIndex p_gltf_parent, Ref<GLTFNode> p_gltf_node, Ref<GLTFState> p_state) {
+#ifndef MODULE_SEO_ENABLED
+	ERR_FAIL_MSG("SEO module is disabled.");
 #else
-	CSGShape3D *csg = p_current;
-	csg->update_shape();
-	Array meshes = csg->get_meshes();
+	SEOShape3D *SEO = p_current;
+	SEO->update_shape();
+	Array meshes = SEO->get_meshes();
 	if (meshes.size() != 2) {
 		return;
 	}
@@ -6040,18 +6040,18 @@ void GLTFDocument::_convert_csg_shape_to_gltf(CSGShape3D *p_current, GLTFNodeInd
 	Ref<ImporterMesh> mesh;
 	mesh.instantiate();
 	{
-		Ref<ArrayMesh> csg_mesh = csg->get_meshes()[1];
-		for (int32_t surface_i = 0; surface_i < csg_mesh->get_surface_count(); surface_i++) {
-			Array array = csg_mesh->surface_get_arrays(surface_i);
+		Ref<ArrayMesh> SEO_mesh = SEO->get_meshes()[1];
+		for (int32_t surface_i = 0; surface_i < SEO_mesh->get_surface_count(); surface_i++) {
+			Array array = SEO_mesh->surface_get_arrays(surface_i);
 
 			Ref<Material> mat;
 
-			Ref<Material> mat_override = csg->get_material_override();
+			Ref<Material> mat_override = SEO->get_material_override();
 			if (mat_override.is_valid()) {
 				mat = mat_override;
 			}
 
-			Ref<Material> mat_surface_override = csg_mesh->surface_get_material(surface_i);
+			Ref<Material> mat_surface_override = SEO_mesh->surface_get_material(surface_i);
 			if (mat_surface_override.is_valid() && mat.is_null()) {
 				mat = mat_surface_override;
 			}
@@ -6064,23 +6064,23 @@ void GLTFDocument::_convert_csg_shape_to_gltf(CSGShape3D *p_current, GLTFNodeInd
 				mat.instantiate();
 			}
 
-			mesh->add_surface(csg_mesh->surface_get_primitive_type(surface_i),
-					array, csg_mesh->surface_get_blend_shape_arrays(surface_i), csg_mesh->surface_get_lods(surface_i), mat,
-					mat_name, csg_mesh->surface_get_format(surface_i));
+			mesh->add_surface(SEO_mesh->surface_get_primitive_type(surface_i),
+					array, SEO_mesh->surface_get_blend_shape_arrays(surface_i), SEO_mesh->surface_get_lods(surface_i), mat,
+					mat_name, SEO_mesh->surface_get_format(surface_i));
 		}
 	}
 
 	Ref<GLTFMesh> gltf_mesh;
 	gltf_mesh.instantiate();
 	gltf_mesh->set_mesh(mesh);
-	gltf_mesh->set_original_name(csg->get_name());
+	gltf_mesh->set_original_name(SEO->get_name());
 	GLTFMeshIndex mesh_i = p_state->meshes.size();
 	p_state->meshes.push_back(gltf_mesh);
 	p_gltf_node->mesh = mesh_i;
-	p_gltf_node->transform = csg->get_transform();
-	p_gltf_node->set_original_name(csg->get_name());
-	p_gltf_node->set_name(_gen_unique_name(p_state, csg->get_name()));
-#endif // MODULE_CSG_ENABLED
+	p_gltf_node->transform = SEO->get_transform();
+	p_gltf_node->set_original_name(SEO->get_name());
+	p_gltf_node->set_name(_gen_unique_name(p_state, SEO->get_name()));
+#endif // MODULE_SEO_ENABLED
 }
 
 void GLTFDocument::_convert_camera_to_gltf(SECamera *camera, Ref<GLTFState> p_state, Ref<GLTFNode> p_gltf_node) {
@@ -6134,7 +6134,7 @@ void GLTFDocument::_convert_grid_map_to_gltf(GridMap *p_grid_map, GLTFNodeIndex 
 }
 
 void GLTFDocument::_convert_multi_mesh_instance_to_gltf(
-		MultiMeshInstance3D *p_multi_mesh_instance,
+		MultiSEMesh *p_multi_mesh_instance,
 		GLTFNodeIndex p_parent_node_index,
 		GLTFNodeIndex p_root_node_index,
 		Ref<GLTFNode> p_gltf_node, Ref<GLTFState> p_state) {
@@ -6291,7 +6291,7 @@ void GLTFDocument::_convert_bone_attachment_to_gltf(BoneAttachment3D *p_bone_att
 	}
 }
 
-void GLTFDocument::_convert_mesh_instance_to_gltf(MeshInstance3D *p_scene_parent, Ref<GLTFState> p_state, Ref<GLTFNode> p_gltf_node) {
+void GLTFDocument::_convert_mesh_instance_to_gltf(SEMesh *p_scene_parent, Ref<GLTFState> p_state, Ref<GLTFNode> p_gltf_node) {
 	GLTFMeshIndex gltf_mesh_index = _convert_mesh_to_gltf(p_state, p_scene_parent);
 	if (gltf_mesh_index != -1) {
 		p_gltf_node->mesh = gltf_mesh_index;
@@ -6452,7 +6452,7 @@ void GLTFDocument::_generate_skeleton_bone_node(Ref<GLTFState> p_state, const GL
 void GLTFDocument::_attach_node_to_skeleton(Ref<GLTFState> p_state, const GLTFNodeIndex p_node_index, Node3D *p_current_node, Skeleton3D *p_godot_skeleton, Node *p_scene_root, GLTFNodeIndex p_bone_node_index) {
 	ERR_FAIL_NULL(p_godot_skeleton->get_parent());
 	Ref<GLTFNode> gltf_node = p_state->nodes[p_node_index];
-	if (Object::cast_to<ImporterMeshInstance3D>(p_current_node) && gltf_node->skin >= 0) {
+	if (Object::cast_to<ImporterSEMesh>(p_current_node) && gltf_node->skin >= 0) {
 		// Skinned meshes should be attached directly to the skeleton without a BoneAttachment3D.
 		ERR_FAIL_COND_MSG(p_current_node->get_child_count() > 0, "Skinned mesh nodes passed to this function should not have children (a placeholder should be inserted by `_generate_scene_node`).");
 		p_godot_skeleton->add_child(p_current_node, true);
@@ -6888,7 +6888,7 @@ Ref<GLTFObjectModelProperty> GLTFDocument::import_object_model_property(Ref<GLTF
 				ret->append_path_to_property(node_path, "blend_shapes/morph_" + weight_index_string);
 				ret->set_types(Variant::FLOAT, GLTFObjectModelProperty::GLTF_OBJECT_MODEL_TYPE_FLOAT);
 			}
-			// Else, Godot's MeshInstance3D does not expose the blend shape weights as one property.
+			// Else, Godot's SEMesh does not expose the blend shape weights as one property.
 			// But that's fine, we handle this case in _parse_animation_pointer instead.
 		}
 	} else if (split[0] == "cameras") {
@@ -7189,7 +7189,7 @@ Ref<GLTFObjectModelProperty> GLTFDocument::export_object_model_property(Ref<GLTF
 			} else {
 				split_json_pointer.clear();
 			}
-		} else if (Object::cast_to<MeshInstance3D>(target_object) && target_prop.begins_with("blend_shapes/morph_")) {
+		} else if (Object::cast_to<SEMesh>(target_object) && target_prop.begins_with("blend_shapes/morph_")) {
 			const String &weight_index_string = target_prop.trim_prefix("blend_shapes/morph_");
 			split_json_pointer.append("nodes");
 			split_json_pointer.append(itos(p_gltf_node_index));
@@ -7284,7 +7284,7 @@ void GLTFDocument::_import_animation(Ref<GLTFState> p_state, AnimationPlayer *p_
 		HashMap<GLTFNodeIndex, Node *>::Iterator node_element = p_state->scene_nodes.find(node_index);
 		ERR_CONTINUE_MSG(!node_element, vformat("Unable to find node %d for animation.", node_index));
 		node_path = scene_root->get_path_to(node_element->value);
-		HashMap<GLTFNodeIndex, ImporterMeshInstance3D *>::Iterator mesh_instance_element = p_state->scene_mesh_instances.find(node_index);
+		HashMap<GLTFNodeIndex, ImporterSEMesh *>::Iterator mesh_instance_element = p_state->scene_mesh_instances.find(node_index);
 		if (mesh_instance_element) {
 			mesh_instance_node_path = scene_root->get_path_to(mesh_instance_element->value);
 		} else {
@@ -7593,7 +7593,7 @@ void GLTFDocument::_convert_mesh_instances(Ref<GLTFState> p_state) {
 		if (!mi_element) {
 			continue;
 		}
-		MeshInstance3D *mi = Object::cast_to<MeshInstance3D>(mi_element->value);
+		SEMesh *mi = Object::cast_to<SEMesh>(mi_element->value);
 		if (!mi) {
 			continue;
 		}
@@ -7712,15 +7712,15 @@ void GLTFDocument::_process_mesh_instances(Ref<GLTFState> p_state, Node *p_scene
 		if (node->skin >= 0 && node->mesh >= 0) {
 			const GLTFSkinIndex skin_i = node->skin;
 
-			ImporterMeshInstance3D *mi = nullptr;
-			HashMap<GLTFNodeIndex, ImporterMeshInstance3D *>::Iterator mi_element = p_state->scene_mesh_instances.find(node_i);
+			ImporterSEMesh *mi = nullptr;
+			HashMap<GLTFNodeIndex, ImporterSEMesh *>::Iterator mi_element = p_state->scene_mesh_instances.find(node_i);
 			if (mi_element) {
 				mi = mi_element->value;
 			} else {
 				HashMap<GLTFNodeIndex, Node *>::Iterator si_element = p_state->scene_nodes.find(node_i);
 				ERR_CONTINUE_MSG(!si_element, vformat("Unable to find node %d", node_i));
-				mi = Object::cast_to<ImporterMeshInstance3D>(si_element->value);
-				ERR_CONTINUE_MSG(mi == nullptr, vformat("Unable to cast node %d of type %s to ImporterMeshInstance3D", node_i, si_element->value->get_class_name()));
+				mi = Object::cast_to<ImporterSEMesh>(si_element->value);
+				ERR_CONTINUE_MSG(mi == nullptr, vformat("Unable to cast node %d of type %s to ImporterSEMesh", node_i, si_element->value->get_class_name()));
 			}
 			ERR_CONTINUE_MSG(mi->get_child_count() > 0, "The glTF importer must generate skinned mesh instances as leaf nodes without any children to allow them to be repositioned in the tree without affecting other nodes.");
 
@@ -8198,8 +8198,8 @@ void GLTFDocument::_convert_animation(Ref<GLTFState> p_state, AnimationPlayer *p
 		const GLTFAnimation::Interpolation gltf_interpolation = GLTFAnimation::godot_to_gltf_interpolation(animation, track_index);
 		// First, check if it's a Blend Shape track.
 		if (animation->track_get_type(track_index) == Animation::TYPE_BLEND_SHAPE) {
-			const MeshInstance3D *mesh_instance = Object::cast_to<MeshInstance3D>(animated_node);
-			ERR_CONTINUE_MSG(!mesh_instance, "glTF: Animation had a Blend Shape track, but the node wasn't a MeshInstance3D. Ignoring this track.");
+			const SEMesh *mesh_instance = Object::cast_to<SEMesh>(animated_node);
+			ERR_CONTINUE_MSG(!mesh_instance, "glTF: Animation had a Blend Shape track, but the node wasn't a SEMesh. Ignoring this track.");
 			Ref<Mesh> mesh = mesh_instance->get_mesh();
 			ERR_CONTINUE(mesh.is_null());
 			int32_t mesh_index = -1;
@@ -8875,9 +8875,9 @@ Node *GLTFDocument::generate_scene(Ref<GLTFState> p_state, float p_bake_fps, boo
 			ERR_CONTINUE(err != OK);
 		}
 	}
-	ImporterMeshInstance3D *root_importer_mesh = Object::cast_to<ImporterMeshInstance3D>(root);
+	ImporterSEMesh *root_importer_mesh = Object::cast_to<ImporterSEMesh>(root);
 	if (unlikely(root_importer_mesh)) {
-		root = GLTFDocumentExtensionConvertImporterMesh::convert_importer_mesh_instance_3d(root_importer_mesh);
+		root = GLTFDocumentExtensionConvertImporterMesh::convert_importer_se_mesh(root_importer_mesh);
 		memdelete(root_importer_mesh);
 	}
 	for (Ref<GLTFDocumentExtension> ext : document_extensions) {

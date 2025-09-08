@@ -8408,7 +8408,7 @@ FORCE_INLINE __m128d _mm_round_pd(__m128d a, int rounding)
 // Round the packed single-precision (32-bit) floating-point elements in a using
 // the rounding parameter, and store the results as packed single-precision
 // floating-point elements in dst.
-// software.intel.com/sites/landingpage/IntrinsicsGuide/#text=_mm_round_ps
+// software.intel.com/sites/landingpage/IntrinsiSEOuide/#text=_mm_round_ps
 FORCE_INLINE __m128 _mm_round_ps(__m128 a, int rounding)
 {
 #if defined(__aarch64__) || defined(__ARM_FEATURE_DIRECTED_ROUNDING)

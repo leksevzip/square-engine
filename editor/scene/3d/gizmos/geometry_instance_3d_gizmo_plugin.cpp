@@ -38,7 +38,7 @@ bool GeometryInstance3DGizmoPlugin::has_gizmo(Node3D *p_spatial) {
 }
 
 String GeometryInstance3DGizmoPlugin::get_gizmo_name() const {
-	return "MeshInstance3DCustomAABB";
+	return "SEMeshCustomAABB";
 }
 
 int GeometryInstance3DGizmoPlugin::get_priority() const {

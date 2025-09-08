@@ -521,10 +521,10 @@ void TaperedCylinderShape::CollideSoftBodyVertices(Mat44Arg inCenterOfMassTransf
 		}
 }
 
-class TaperedCylinderShape::TCSGetTrianglesContext
+class TaperedCylinderShape::TSEOetTrianglesContext
 {
 public:
-	explicit	TCSGetTrianglesContext(Mat44Arg inTransform) : mTransform(inTransform) { }
+	explicit	TSEOetTrianglesContext(Mat44Arg inTransform) : mTransform(inTransform) { }
 
 	Mat44		mTransform;
 	uint		mProcessed = 0; // Which elements we processed, bit 0 = top, bit 1 = bottom, bit 2 = side
@@ -532,14 +532,14 @@ public:
 
 void TaperedCylinderShape::GetTrianglesStart(GetTrianglesContext &ioContext, const AABox &inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale) const
 {
-	static_assert(sizeof(TCSGetTrianglesContext) <= sizeof(GetTrianglesContext), "GetTrianglesContext too small");
-	JPH_ASSERT(IsAligned(&ioContext, alignof(TCSGetTrianglesContext)));
+	static_assert(sizeof(TSEOetTrianglesContext) <= sizeof(GetTrianglesContext), "GetTrianglesContext too small");
+	JPH_ASSERT(IsAligned(&ioContext, alignof(TSEOetTrianglesContext)));
 
 	// Make sure the scale is not inside out
 	Vec3 scale = ScaleHelpers::IsInsideOut(inScale)? Vec3(-1, 1, 1) * inScale : inScale;
 
 	// Mark top and bottom processed if their radius is too small
-	TCSGetTrianglesContext *context = new (&ioContext) TCSGetTrianglesContext(Mat44::sRotationTranslation(inRotation, inPositionCOM) * Mat44::sScale(scale));
+	TSEOetTrianglesContext *context = new (&ioContext) TSEOetTrianglesContext(Mat44::sRotationTranslation(inRotation, inPositionCOM) * Mat44::sScale(scale));
 	constexpr float cMinRadius = 1.0e-3f;
 	if (mTopRadius < cMinRadius)
 		context->mProcessed |= 0b001;
@@ -554,7 +554,7 @@ int TaperedCylinderShape::GetTrianglesNext(GetTrianglesContext &ioContext, int i
 	static_assert(cGetTrianglesMinTrianglesRequested >= 2 * cNumVertices);
 	JPH_ASSERT(inMaxTrianglesRequested >= cGetTrianglesMinTrianglesRequested);
 
-	TCSGetTrianglesContext &context = (TCSGetTrianglesContext &)ioContext;
+	TSEOetTrianglesContext &context = (TSEOetTrianglesContext &)ioContext;
 
 	int total_num_triangles = 0;
 

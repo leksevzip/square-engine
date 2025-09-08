@@ -38,7 +38,7 @@
 #include "editor/scene/3d/node_3d_editor_plugin.h"
 #include "editor/settings/editor_settings.h"
 #include "main/main.h"
-#include "scene/3d/mesh_instance_3d.h"
+#include "scene/3d/se_mesh.h"
 #include "scene/3d/navigation/navigation_region_3d.h"
 #include "scene/3d/physics/static_body_3d.h"
 #include "scene/gui/menu_button.h"
@@ -74,7 +74,7 @@ void MeshLibraryEditor::_import_scene(Node *p_scene, Ref<MeshLibrary> p_library,
 		p_library->clear();
 	}
 
-	HashMap<int, MeshInstance3D *> mesh_instances;
+	HashMap<int, SEMesh *> mesh_instances;
 
 	for (int i = 0; i < p_scene->get_child_count(); i++) {
 		_import_scene_parse_node(p_library, mesh_instances, p_scene->get_child(i), p_merge, p_apply_xforms);
@@ -119,8 +119,8 @@ void MeshLibraryEditor::_import_scene_cbk(const String &p_str) {
 	menu->get_popup()->set_item_disabled(menu->get_popup()->get_item_index(MENU_OPTION_UPDATE_FROM_SCENE), false);
 }
 
-void MeshLibraryEditor::_import_scene_parse_node(Ref<MeshLibrary> p_library, HashMap<int, MeshInstance3D *> &p_mesh_instances, Node *p_node, bool p_merge, bool p_apply_xforms) {
-	MeshInstance3D *mesh_instance_node = Object::cast_to<MeshInstance3D>(p_node);
+void MeshLibraryEditor::_import_scene_parse_node(Ref<MeshLibrary> p_library, HashMap<int, SEMesh *> &p_mesh_instances, Node *p_node, bool p_merge, bool p_apply_xforms) {
+	SEMesh *mesh_instance_node = Object::cast_to<SEMesh>(p_node);
 
 	if (!mesh_instance_node) {
 		// No MeshInstance so search deeper ...
@@ -141,7 +141,7 @@ void MeshLibraryEditor::_import_scene_parse_node(Ref<MeshLibrary> p_library, Has
 		p_library->create_item(item_id);
 		p_library->set_item_name(item_id, mesh_instance_node->get_name());
 	} else if (!p_merge) {
-		WARN_PRINT(vformat("MeshLibrary export found a MeshInstance3D with a duplicated name '%s' in the exported scene that overrides a previously parsed MeshInstance3D item with the same name.", mesh_instance_node->get_name()));
+		WARN_PRINT(vformat("MeshLibrary export found a SEMesh with a duplicated name '%s' in the exported scene that overrides a previously parsed SEMesh item with the same name.", mesh_instance_node->get_name()));
 	}
 	p_mesh_instances[item_id] = mesh_instance_node;
 

@@ -30,8 +30,8 @@
 
 #include "gltf_document_extension_convert_importer_mesh.h"
 
-#include "scene/3d/importer_mesh_instance_3d.h"
-#include "scene/3d/mesh_instance_3d.h"
+#include "scene/3d/importer_se_mesh.h"
+#include "scene/3d/se_mesh.h"
 #include "scene/resources/3d/importer_mesh.h"
 
 void GLTFDocumentExtensionConvertImporterMesh::_copy_meta(Object *p_src_object, Object *p_dst_object) {
@@ -43,25 +43,25 @@ void GLTFDocumentExtensionConvertImporterMesh::_copy_meta(Object *p_src_object, 
 	}
 }
 
-MeshInstance3D *GLTFDocumentExtensionConvertImporterMesh::convert_importer_mesh_instance_3d(ImporterMeshInstance3D *p_importer_mesh_instance_3d) {
+SEMesh *GLTFDocumentExtensionConvertImporterMesh::convert_importer_se_mesh(ImporterSEMesh *p_importer_se_mesh) {
 	// Convert the node itself first.
-	MeshInstance3D *mesh_instance_node_3d = memnew(MeshInstance3D);
-	ERR_FAIL_NULL_V(p_importer_mesh_instance_3d, mesh_instance_node_3d);
-	mesh_instance_node_3d->set_name(p_importer_mesh_instance_3d->get_name());
-	mesh_instance_node_3d->set_transform(p_importer_mesh_instance_3d->get_transform());
-	mesh_instance_node_3d->set_skin(p_importer_mesh_instance_3d->get_skin());
-	mesh_instance_node_3d->set_skeleton_path(p_importer_mesh_instance_3d->get_skeleton_path());
-	mesh_instance_node_3d->set_visible(p_importer_mesh_instance_3d->is_visible());
-	p_importer_mesh_instance_3d->replace_by(mesh_instance_node_3d);
-	_copy_meta(p_importer_mesh_instance_3d, mesh_instance_node_3d);
+	SEMesh *mesh_instance_node_3d = memnew(SEMesh);
+	ERR_FAIL_NULL_V(p_importer_se_mesh, mesh_instance_node_3d);
+	mesh_instance_node_3d->set_name(p_importer_se_mesh->get_name());
+	mesh_instance_node_3d->set_transform(p_importer_se_mesh->get_transform());
+	mesh_instance_node_3d->set_skin(p_importer_se_mesh->get_skin());
+	mesh_instance_node_3d->set_skeleton_path(p_importer_se_mesh->get_skeleton_path());
+	mesh_instance_node_3d->set_visible(p_importer_se_mesh->is_visible());
+	p_importer_se_mesh->replace_by(mesh_instance_node_3d);
+	_copy_meta(p_importer_se_mesh, mesh_instance_node_3d);
 	// Convert the mesh data in the mesh resource.
-	Ref<ImporterMesh> importer_mesh = p_importer_mesh_instance_3d->get_mesh();
+	Ref<ImporterMesh> importer_mesh = p_importer_se_mesh->get_mesh();
 	if (importer_mesh.is_valid()) {
 		Ref<ArrayMesh> array_mesh = importer_mesh->get_mesh();
 		mesh_instance_node_3d->set_mesh(array_mesh);
 		_copy_meta(importer_mesh.ptr(), array_mesh.ptr());
 	} else {
-		WARN_PRINT("glTF: ImporterMeshInstance3D does not have a valid mesh. This should not happen. Continuing anyway.");
+		WARN_PRINT("glTF: ImporterSEMesh does not have a valid mesh. This should not happen. Continuing anyway.");
 	}
 	return mesh_instance_node_3d;
 }
@@ -75,10 +75,10 @@ Error GLTFDocumentExtensionConvertImporterMesh::import_post(Ref<GLTFState> p_sta
 	while (!queue.is_empty()) {
 		List<Node *>::Element *E = queue.front();
 		Node *node = E->get();
-		ImporterMeshInstance3D *importer_mesh_3d = Object::cast_to<ImporterMeshInstance3D>(node);
+		ImporterSEMesh *importer_mesh_3d = Object::cast_to<ImporterSEMesh>(node);
 		if (importer_mesh_3d) {
 			delete_queue.push_back(importer_mesh_3d);
-			node = convert_importer_mesh_instance_3d(importer_mesh_3d);
+			node = convert_importer_se_mesh(importer_mesh_3d);
 		}
 		int child_count = node->get_child_count();
 		for (int i = 0; i < child_count; i++) {

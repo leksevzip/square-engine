@@ -17,7 +17,7 @@
 		<method name="make_convex_from_siblings">
 			<return type="void" />
 			<description>
-				Sets the collision shape's shape to the addition of all its convexed [MeshInstance3D] siblings geometry.
+				Sets the collision shape's shape to the addition of all its convexed [SEMesh] siblings geometry.
 			</description>
 		</method>
 		<method name="resource_changed" deprecated="Use [signal Resource.changed] instead.">

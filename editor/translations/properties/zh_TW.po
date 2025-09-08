@@ -2659,8 +2659,8 @@ msgstr "骨架"
 msgid "Selected Bone"
 msgstr "選中骨骼"
 
-msgid "CSG"
-msgstr "CSG"
+msgid "SEO"
+msgstr "SEO"
 
 msgid "GridMap Grid"
 msgstr "網格地圖網格"

@@ -36,7 +36,7 @@
 #include "scene/3d/node_3d.h"
 
 class JavaObject;
-class MeshInstance3D;
+class SEMesh;
 class Mesh;
 class OpenXRAPI;
 class OpenXRCompositionLayerExtension;
@@ -88,7 +88,7 @@ private:
 	bool use_android_surface = false;
 	Size2i android_surface_size = Size2i(1024, 1024);
 	bool enable_hole_punch = false;
-	MeshInstance3D *fallback = nullptr;
+	SEMesh *fallback = nullptr;
 	bool should_update_fallback_mesh = false;
 	bool openxr_session_running = false;
 	bool registered = false;

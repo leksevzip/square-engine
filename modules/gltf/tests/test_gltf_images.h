@@ -40,8 +40,8 @@
 
 namespace TestGltf {
 Ref<Texture2D> _check_texture(Node *p_node) {
-	MeshInstance3D *mesh_instance_3d = Object::cast_to<MeshInstance3D>(p_node->find_child("mesh_instance_3d", true, true));
-	Ref<StandardMaterial3D> material = mesh_instance_3d->get_active_material(0);
+	SEMesh *se_mesh = Object::cast_to<SEMesh>(p_node->find_child("se_mesh", true, true));
+	Ref<StandardMaterial3D> material = se_mesh->get_active_material(0);
 	Ref<Texture2D> texture = material->get_texture(StandardMaterial3D::TextureParam::TEXTURE_ALBEDO);
 
 	CHECK_MESSAGE(texture->get_size().x == 2, "Texture width not correct.");
@@ -83,9 +83,9 @@ TEST_CASE("[SceneTree][Node] Export GLTF with external texture and import") {
 	original_meshdata->set_name("planemesh");
 	original_meshdata->surface_set_material(0, original_material);
 
-	MeshInstance3D *original_mesh_instance = memnew(MeshInstance3D);
+	SEMesh *original_mesh_instance = memnew(SEMesh);
 	original_mesh_instance->set_mesh(original_meshdata);
-	original_mesh_instance->set_name("mesh_instance_3d");
+	original_mesh_instance->set_name("se_mesh");
 
 	Node3D *original = memnew(Node3D);
 	SceneTree::get_singleton()->get_root()->add_child(original);

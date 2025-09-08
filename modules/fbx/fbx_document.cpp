@@ -39,7 +39,7 @@
 #include "core/math/color.h"
 #include "scene/3d/bone_attachment_3d.h"
 #include "scene/3d/se_camera.h"
-#include "scene/3d/importer_mesh_instance_3d.h"
+#include "scene/3d/importer_se_mesh.h"
 #include "scene/3d/light_3d.h"
 #include "scene/resources/image_texture.h"
 #include "scene/resources/material.h"
@@ -1483,12 +1483,12 @@ BoneAttachment3D *FBXDocument::_generate_bone_attachment(Ref<FBXState> p_state, 
 	return bone_attachment;
 }
 
-ImporterMeshInstance3D *FBXDocument::_generate_mesh_instance(Ref<FBXState> p_state, const GLTFNodeIndex p_node_index) {
+ImporterSEMesh *FBXDocument::_generate_mesh_instance(Ref<FBXState> p_state, const GLTFNodeIndex p_node_index) {
 	Ref<GLTFNode> fbx_node = p_state->nodes[p_node_index];
 
 	ERR_FAIL_INDEX_V(fbx_node->mesh, p_state->meshes.size(), nullptr);
 
-	ImporterMeshInstance3D *mi = memnew(ImporterMeshInstance3D);
+	ImporterSEMesh *mi = memnew(ImporterSEMesh);
 	print_verbose("FBX: Creating mesh for: " + fbx_node->get_name());
 
 	p_state->scene_mesh_instances.insert(p_node_index, mi);
@@ -1920,7 +1920,7 @@ void FBXDocument::_import_animation(Ref<FBXState> p_state, AnimationPlayer *p_an
 		HashMap<GLTFNodeIndex, Node *>::Iterator node_element = p_state->scene_nodes.find(node_index);
 		ERR_CONTINUE_MSG(!node_element, vformat("Unable to find node %d for animation.", node_index));
 		NodePath node_path = root->get_path_to(node_element->value);
-		HashMap<GLTFNodeIndex, ImporterMeshInstance3D *>::Iterator mesh_instance_element = p_state->scene_mesh_instances.find(node_index);
+		HashMap<GLTFNodeIndex, ImporterSEMesh *>::Iterator mesh_instance_element = p_state->scene_mesh_instances.find(node_index);
 		if (mesh_instance_element) {
 			mesh_instance_node_path = root->get_path_to(mesh_instance_element->value);
 		} else {
@@ -1986,13 +1986,13 @@ void FBXDocument::_process_mesh_instances(Ref<FBXState> p_state, Node *p_scene_r
 
 		const GLTFSkinIndex skin_i = node->skin;
 
-		ImporterMeshInstance3D *mi = nullptr;
-		HashMap<GLTFNodeIndex, ImporterMeshInstance3D *>::Iterator mi_element = p_state->scene_mesh_instances.find(node_i);
+		ImporterSEMesh *mi = nullptr;
+		HashMap<GLTFNodeIndex, ImporterSEMesh *>::Iterator mi_element = p_state->scene_mesh_instances.find(node_i);
 		if (!mi_element) {
 			HashMap<GLTFNodeIndex, Node *>::Iterator si_element = p_state->scene_nodes.find(node_i);
 			ERR_CONTINUE_MSG(!si_element, vformat("Unable to find node %d", node_i));
-			mi = Object::cast_to<ImporterMeshInstance3D>(si_element->value);
-			ERR_CONTINUE_MSG(mi == nullptr, vformat("Unable to cast node %d of type %s to ImporterMeshInstance3D", node_i, si_element->value->get_class_name()));
+			mi = Object::cast_to<ImporterSEMesh>(si_element->value);
+			ERR_CONTINUE_MSG(mi == nullptr, vformat("Unable to cast node %d of type %s to ImporterSEMesh", node_i, si_element->value->get_class_name()));
 		} else {
 			mi = mi_element->value;
 		}

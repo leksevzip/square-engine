@@ -2115,8 +2115,8 @@ msgstr "Kerangka"
 msgid "Selected Bone"
 msgstr "Tulang yang Dipilih"
 
-msgid "CSG"
-msgstr "CSG"
+msgid "SEO"
+msgstr "SEO"
 
 msgid "Gizmo Settings"
 msgstr "Pengaturan Gizmo"

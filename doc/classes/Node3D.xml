@@ -224,7 +224,7 @@
 			<param index="0" name="enable" type="bool" />
 			<description>
 				If [code]true[/code], the node will receive [constant NOTIFICATION_LOCAL_TRANSFORM_CHANGED] whenever [member transform] changes.
-				[b]Note:[/b] Some 3D nodes such as [CSGShape3D] or [CollisionShape3D] automatically enable this to function correctly.
+				[b]Note:[/b] Some 3D nodes such as [SEOShape3D] or [CollisionShape3D] automatically enable this to function correctly.
 			</description>
 		</method>
 		<method name="set_notify_transform" keywords="set_notify_global_transform">
@@ -387,7 +387,7 @@
 		</constant>
 		<constant name="NOTIFICATION_LOCAL_TRANSFORM_CHANGED" value="44">
 			Notification received when this node's [member transform] changes, if [method is_local_transform_notification_enabled] is [code]true[/code]. This is not received when a parent [Node3D]'s [member transform] changes. See also [method set_notify_local_transform].
-			[b]Note:[/b] Some 3D nodes such as [CSGShape3D] or [CollisionShape3D] automatically enable this to function correctly.
+			[b]Note:[/b] Some 3D nodes such as [SEOShape3D] or [CollisionShape3D] automatically enable this to function correctly.
 		</constant>
 		<constant name="ROTATION_EDIT_MODE_EULER" value="0" enum="RotationEditMode">
 			The rotation is edited using a [Vector3] in [url=https://en.wikipedia.org/wiki/Euler_angles]Euler angles[/url].

@@ -1396,8 +1396,8 @@ msgstr "वोक्सेल जीआई"
 msgid "Skeleton"
 msgstr "कंकाल"
 
-msgid "CSG"
-msgstr "CSG"
+msgid "SEO"
+msgstr "SEO"
 
 msgid "GridMap Grid"
 msgstr "ग्रिडमैप ग्रिड"

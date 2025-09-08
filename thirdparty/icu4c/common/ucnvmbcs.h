@@ -480,7 +480,7 @@ typedef struct {
 #define UCNV_MBCS_HEADER_INITIALIZER { { 0 },  0, 0, 0, 0, 0, 0, 0,  0,  0 }
 
 /*
- * This is a simple version of _MBCSGetNextUChar() that is used
+ * This is a simple version of _MBSEOetNextUChar() that is used
  * by other converter implementations.
  * It only returns an "assigned" result if it consumes the entire input.
  * It does not use state from the converter, nor error codes.
@@ -564,7 +564,7 @@ ucnv_MBCSSingleFromUChar32(UConverterSharedData *sharedData,
  * we cheat a little about the type, returning the old types if appropriate.
  */
 U_CFUNC UConverterType
-ucnv_MBCSGetType(const UConverter* converter);
+ucnv_MBSEOetType(const UConverter* converter);
 
 U_CFUNC void 
 ucnv_MBCSFromUnicodeWithOffsets(UConverterFromUnicodeArgs *pArgs,
@@ -582,19 +582,19 @@ ucnv_MBCSToUnicodeWithOffsets(UConverterToUnicodeArgs *pArgs,
  * Does not empty the set first.
  */
 U_CFUNC void
-ucnv_MBCSGetUnicodeSetForUnicode(const UConverterSharedData *sharedData,
+ucnv_MBSEOetUnicodeSetForUnicode(const UConverterSharedData *sharedData,
                                  const USetAdder *sa,
                                  UConverterUnicodeSet which,
                                  UErrorCode *pErrorCode);
 
 /*
- * Same as ucnv_MBCSGetUnicodeSetForUnicode() but
+ * Same as ucnv_MBSEOetUnicodeSetForUnicode() but
  * the set can be filtered by encoding scheme.
  * Used by stateful converters which share regular conversion tables
  * but only use a subset of their mappings.
  */
 U_CFUNC void
-ucnv_MBCSGetFilteredUnicodeSetForUnicode(const UConverterSharedData *sharedData,
+ucnv_MBSEOetFilteredUnicodeSetForUnicode(const UConverterSharedData *sharedData,
                                          const USetAdder *sa,
                                          UConverterUnicodeSet which,
                                          UConverterSetFilter filter,

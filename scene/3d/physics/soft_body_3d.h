@@ -30,7 +30,7 @@
 
 #pragma once
 
-#include "scene/3d/mesh_instance_3d.h"
+#include "scene/3d/se_mesh.h"
 #include "servers/physics_server_3d.h"
 
 class PhysicsBody3D;
@@ -63,8 +63,8 @@ public:
 	void set_aabb(const AABB &p_aabb) override;
 };
 
-class SoftBody3D : public MeshInstance3D {
-	GDCLASS(SoftBody3D, MeshInstance3D);
+class SoftBody3D : public SEMesh {
+	GDCLASS(SoftBody3D, SEMesh);
 
 public:
 	enum DisableMode {
@@ -99,7 +99,7 @@ private:
 	bool pinned_points_cache_dirty = true;
 
 	Ref<ArrayMesh> debug_mesh_cache;
-	class MeshInstance3D *debug_mesh = nullptr;
+	class SEMesh *debug_mesh = nullptr;
 
 	bool capture_input_on_drag = false;
 	bool ray_pickable = true;

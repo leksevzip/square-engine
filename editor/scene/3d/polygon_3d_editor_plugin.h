@@ -31,7 +31,7 @@
 #pragma once
 
 #include "editor/plugins/editor_plugin.h"
-#include "scene/3d/mesh_instance_3d.h"
+#include "scene/3d/se_mesh.h"
 #include "scene/3d/physics/collision_polygon_3d.h"
 #include "scene/gui/box_container.h"
 #include "scene/resources/immediate_mesh.h"
@@ -60,8 +60,8 @@ class Polygon3DEditor : public HBoxContainer {
 	Node3D *node = nullptr;
 	Ref<Resource> node_resource;
 	Ref<ImmediateMesh> imesh;
-	MeshInstance3D *imgeom = nullptr;
-	MeshInstance3D *pointsm = nullptr;
+	SEMesh *imgeom = nullptr;
+	SEMesh *pointsm = nullptr;
 	Ref<ArrayMesh> m;
 
 	MenuButton *options = nullptr;

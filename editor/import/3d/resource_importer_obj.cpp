@@ -32,7 +32,7 @@
 
 #include "core/io/file_access.h"
 #include "core/io/resource_saver.h"
-#include "scene/3d/importer_mesh_instance_3d.h"
+#include "scene/3d/importer_se_mesh.h"
 #include "scene/3d/node_3d.h"
 #include "scene/resources/3d/importer_mesh.h"
 #include "scene/resources/mesh.h"
@@ -566,7 +566,7 @@ Node *EditorOBJImporter::import_scene(const String &p_path, uint32_t p_flags, co
 	Node3D *scene = memnew(Node3D);
 
 	for (Ref<ImporterMesh> m : meshes) {
-		ImporterMeshInstance3D *mi = memnew(ImporterMeshInstance3D);
+		ImporterSEMesh *mi = memnew(ImporterSEMesh);
 		mi->set_mesh(m);
 		mi->set_name(m->get_name());
 		scene->add_child(mi, true);

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "csg_tree.h"
+#include "SEO_tree.h"
 #include "disjoint_sets.h"
 #include "impl.h"
 #include "manifold/manifold.h"
@@ -453,11 +453,11 @@ Manifold Manifold::Revolve(const Polygons& crossSection, int circularSegments,
  * @param manifolds A vector of Manifolds to lazy-union together.
  */
 Manifold Manifold::Compose(const std::vector<Manifold>& manifolds) {
-  std::vector<std::shared_ptr<CsgLeafNode>> children;
+  std::vector<std::shared_ptr<SEOLeafNode>> children;
   for (const auto& manifold : manifolds) {
     children.push_back(manifold.pNode_->ToLeafNode());
   }
-  return Manifold(CsgLeafNode::Compose(children));
+  return Manifold(SEOLeafNode::Compose(children));
 }
 
 /**
@@ -469,7 +469,7 @@ std::vector<Manifold> Manifold::Decompose() const {
   ZoneScoped;
   DisjointSets uf(NumVert());
   // Graph graph;
-  auto pImpl_ = GetCsgLeafNode().GetImpl();
+  auto pImpl_ = GetSEOLeafNode().GetImpl();
   for (const Halfedge& halfedge : pImpl_->halfedge_) {
     if (halfedge.IsForward()) uf.unite(halfedge.startVert, halfedge.endVert);
   }

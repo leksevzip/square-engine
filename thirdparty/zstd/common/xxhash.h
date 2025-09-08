@@ -4849,7 +4849,7 @@ XXH_FORCE_INLINE void XXH_writeLE64(void* dst, xxh_u64 v64)
 }
 
 /* Several intrinsic functions below are supposed to accept __int64 as argument,
- * as documented in https://software.intel.com/sites/landingpage/IntrinsicsGuide/ .
+ * as documented in https://software.intel.com/sites/landingpage/IntrinsiSEOuide/ .
  * However, several environments do not define __int64 type,
  * requiring a workaround.
  */

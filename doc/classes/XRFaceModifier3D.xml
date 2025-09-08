@@ -16,7 +16,7 @@
 			The [XRFaceTracker] path.
 		</member>
 		<member name="target" type="NodePath" setter="set_target" getter="get_target" default="NodePath(&quot;&quot;)">
-			The [NodePath] of the face [MeshInstance3D].
+			The [NodePath] of the face [SEMesh].
 		</member>
 	</members>
 </class>

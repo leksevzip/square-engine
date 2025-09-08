@@ -1374,8 +1374,8 @@ msgstr "Athraigh Céim Beochana"
 msgid "Rearrange Tracks"
 msgstr "Rianta Athchóirithe"
 
-msgid "Blend Shape tracks only apply to MeshInstance3D nodes."
-msgstr "Ní bhaineann rianta Cruth Cumaisc ach le nóid MeshInstance3D."
+msgid "Blend Shape tracks only apply to SEMesh nodes."
+msgstr "Ní bhaineann rianta Cruth Cumaisc ach le nóid SEMesh."
 
 msgid "Position/Rotation/Scale 3D tracks only apply to 3D-based nodes."
 msgstr ""
@@ -1413,8 +1413,8 @@ msgstr "Tá cosán an amhráin neamhbhailí, mar sin ní féidir eochair a chur 
 msgid "Track is not of type Node3D, can't insert key"
 msgstr "Níl an rian de chineál Node3D, ní féidir eochair a chur isteach"
 
-msgid "Track is not of type MeshInstance3D, can't insert key"
-msgstr "Níl an rian de chineál MeshInstance3D, ní féidir eochair a chur isteach"
+msgid "Track is not of type SEMesh, can't insert key"
+msgstr "Níl an rian de chineál SEMesh, ní féidir eochair a chur isteach"
 
 msgid "Track path is invalid, so can't add a method key."
 msgstr ""
@@ -9173,8 +9173,8 @@ msgstr "Níl aon UV i sraith %d ag an mogalra."
 msgid "Create Navigation Mesh"
 msgstr "Cruthaigh mogalra nascleanúna"
 
-msgid "MeshInstance3D lacks a Mesh."
-msgstr "Níl Mogalra in easnamh ar MeshInstance3D."
+msgid "SEMesh lacks a Mesh."
+msgstr "Níl Mogalra in easnamh ar SEMesh."
 
 msgid "Mesh has no surface to create outlines from."
 msgstr "Níl aon dromchla ag mogalra chun imlíne a chruthú as."
@@ -9334,8 +9334,8 @@ msgstr ""
 msgid "Mesh source is invalid (invalid path)."
 msgstr "Tá foinse an mhogaill neamhbhailí (cosán neamhbhailí)."
 
-msgid "Mesh source is invalid (not a MeshInstance3D)."
-msgstr "Tá foinse mogalra neamhbhailí (ní MeshInstance3D)."
+msgid "Mesh source is invalid (not a SEMesh)."
+msgstr "Tá foinse mogalra neamhbhailí (ní SEMesh)."
 
 msgid "Mesh source is invalid (contains no Mesh resource)."
 msgstr "Tá foinse mogalra neamhbhailí (níl aon acmhainn Mogalra ann)."
@@ -10133,11 +10133,11 @@ msgstr ""
 
 msgid ""
 "No meshes to bake.\n"
-"Make sure there is at least one MeshInstance3D node in the scene whose visual "
+"Make sure there is at least one SEMesh node in the scene whose visual "
 "layers are part of the OccluderInstance3D's Bake Mask property."
 msgstr ""
 "Níl mogaill le bácáil.\n"
-"Déan cinnte go bhfuil nód MeshInstance3D amháin ar a laghad sa radharc a "
+"Déan cinnte go bhfuil nód SEMesh amháin ar a laghad sa radharc a "
 "bhfuil a sraitheanna amhairc mar chuid de mhaoin Masc Bake OccluderInstance3D."
 
 msgid "Could not save the new occluder at the specified path:"

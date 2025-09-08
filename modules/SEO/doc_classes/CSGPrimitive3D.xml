@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="SEOPrimitive3D" inherits="SEOShape3D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../doc/class.xsd">
+	<brief_description>
+		Base class for SEO primitives.
+	</brief_description>
+	<description>
+		Parent class for various SEO primitives. It contains code and functionality that is common between them. It cannot be used directly. Instead use one of the various classes that inherit from it.
+		[b]Note:[/b] SEO nodes are intended to be used for level prototyping. Creating SEO nodes has a significant CPU cost compared to creating a [SEMesh] with a [PrimitiveMesh]. Moving a SEO node within another SEO node also has a significant CPU cost, so it should be avoided during gameplay.
+	</description>
+	<tutorials>
+		<link title="Prototyping levels with SEO">$DOCS_URL/tutorials/3d/SEO_tools.html</link>
+	</tutorials>
+	<members>
+		<member name="flip_faces" type="bool" setter="set_flip_faces" getter="get_flip_faces" default="false">
+			If set, the order of the vertices in each triangle are reversed resulting in the backside of the mesh being drawn.
+		</member>
+	</members>
+</class>

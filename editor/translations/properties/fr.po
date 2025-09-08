@@ -2707,7 +2707,7 @@ msgstr "Squelette"
 msgid "Selected Bone"
 msgstr "Os sélectionné"
 
-msgid "CSG"
+msgid "SEO"
 msgstr "GCS"
 
 msgid "GridMap Grid"

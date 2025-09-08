@@ -117,7 +117,7 @@ private:
 	class					TaperedCylinder;
 
 	// Class for GetTrianglesTart
-	class					TCSGetTrianglesContext;
+	class					TSEOetTrianglesContext;
 
 	// Scale the cylinder
 	JPH_INLINE void			GetScaled(Vec3Arg inScale, float &outTop, float &outBottom, float &outTopRadius, float &outBottomRadius, float &outConvexRadius) const;

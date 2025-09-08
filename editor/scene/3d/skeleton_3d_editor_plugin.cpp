@@ -40,7 +40,7 @@
 #include "editor/scene/3d/node_3d_editor_plugin.h"
 #include "editor/settings/editor_settings.h"
 #include "editor/themes/editor_scale.h"
-#include "scene/3d/mesh_instance_3d.h"
+#include "scene/3d/se_mesh.h"
 #include "scene/3d/physics/collision_shape_3d.h"
 #include "scene/3d/physics/physical_bone_3d.h"
 #include "scene/3d/physics/physical_bone_simulator_3d.h"
@@ -1222,7 +1222,7 @@ void fragment() {
 	handle_material->set_shader_parameter("point_size", handle->get_width());
 	handle_material->set_shader_parameter("texture_albedo", handle);
 
-	handles_mesh_instance = memnew(MeshInstance3D);
+	handles_mesh_instance = memnew(SEMesh);
 	handles_mesh_instance->set_cast_shadows_setting(GeometryInstance3D::SHADOW_CASTING_SETTING_OFF);
 	handles_mesh.instantiate();
 	handles_mesh_instance->set_mesh(handles_mesh);

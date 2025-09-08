@@ -2456,8 +2456,8 @@ msgstr "Kostra"
 msgid "Selected Bone"
 msgstr "Vybraná kost"
 
-msgid "CSG"
-msgstr "CSG (konstruktivní geometrie těles)"
+msgid "SEO"
+msgstr "SEO (konstruktivní geometrie těles)"
 
 msgid "GridMap Grid"
 msgstr "Mřížka mřižkové mapy"

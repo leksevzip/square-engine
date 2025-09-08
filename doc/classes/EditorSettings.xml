@@ -440,8 +440,8 @@
 		<member name="editors/3d_gizmos/gizmo_colors/camera" type="Color" setter="" getter="">
 			The 3D editor gizmo color for [SECamera]s.
 		</member>
-		<member name="editors/3d_gizmos/gizmo_colors/csg" type="Color" setter="" getter="">
-			The 3D editor gizmo color for CSG nodes (such as [CSGShape3D] or [CSGBox3D]).
+		<member name="editors/3d_gizmos/gizmo_colors/SEO" type="Color" setter="" getter="">
+			The 3D editor gizmo color for SEO nodes (such as [SEOShape3D] or [SEOBox3D]).
 		</member>
 		<member name="editors/3d_gizmos/gizmo_colors/decal" type="Color" setter="" getter="">
 			The 3D editor gizmo color for [Decal] nodes.

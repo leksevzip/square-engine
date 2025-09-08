@@ -43,7 +43,7 @@
 #include "structures/gltf_texture.h"
 #include "structures/gltf_texture_sampler.h"
 
-#include "scene/3d/importer_mesh_instance_3d.h"
+#include "scene/3d/importer_se_mesh.h"
 #include "scene/animation/animation_player.h"
 
 class GLTFState : public Resource {
@@ -103,7 +103,7 @@ protected:
 	Vector<Ref<GLTFSkeleton>> skeletons;
 	Vector<Ref<GLTFAnimation>> animations;
 	HashMap<GLTFNodeIndex, Node *> scene_nodes;
-	HashMap<GLTFNodeIndex, ImporterMeshInstance3D *> scene_mesh_instances;
+	HashMap<GLTFNodeIndex, ImporterSEMesh *> scene_mesh_instances;
 	HashMap<String, Ref<GLTFObjectModelProperty>> object_model_properties;
 
 	HashMap<ObjectID, GLTFSkeletonIndex> skeleton3d_to_gltf_skeleton;

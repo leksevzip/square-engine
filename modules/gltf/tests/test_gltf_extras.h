@@ -37,7 +37,7 @@
 
 #include "core/os/os.h"
 #include "editor/import/3d/resource_importer_scene.h"
-#include "scene/3d/mesh_instance_3d.h"
+#include "scene/3d/se_mesh.h"
 #include "scene/3d/skeleton_3d.h"
 #include "scene/main/window.h"
 #include "scene/resources/3d/primitive_meshes.h"
@@ -67,11 +67,11 @@ TEST_CASE("[SceneTree][Node] GLTF test mesh and material meta export and import"
 	original_meshdata->set_meta("extras", meshdata_dict);
 	original_meshdata->surface_set_material(0, original_material);
 
-	MeshInstance3D *original_mesh_instance = memnew(MeshInstance3D);
+	SEMesh *original_mesh_instance = memnew(SEMesh);
 	original_mesh_instance->set_mesh(original_meshdata);
-	original_mesh_instance->set_name("mesh_instance_3d");
+	original_mesh_instance->set_name("se_mesh");
 	Dictionary mesh_instance_dict;
-	mesh_instance_dict["node_type"] = "mesh_instance_3d";
+	mesh_instance_dict["node_type"] = "se_mesh";
 	original_mesh_instance->set_meta("extras", mesh_instance_dict);
 
 	Node3D *original = memnew(Node3D);
@@ -96,11 +96,11 @@ TEST_CASE("[SceneTree][Node] GLTF test mesh and material meta export and import"
 	CHECK_FALSE(loaded->has_meta("meta_not_nested_under_extras"));
 	CHECK_FALSE(Dictionary(loaded->get_meta("extras")).has("meta_not_nested_under_extras"));
 
-	MeshInstance3D *mesh_instance_3d = Object::cast_to<MeshInstance3D>(loaded->find_child("mesh_instance_3d", false, true));
-	CHECK(mesh_instance_3d->get_name() == "mesh_instance_3d");
-	CHECK(Dictionary(mesh_instance_3d->get_meta("extras"))["node_type"] == "mesh_instance_3d");
+	SEMesh *se_mesh = Object::cast_to<SEMesh>(loaded->find_child("se_mesh", false, true));
+	CHECK(se_mesh->get_name() == "se_mesh");
+	CHECK(Dictionary(se_mesh->get_meta("extras"))["node_type"] == "se_mesh");
 
-	Ref<Mesh> mesh = mesh_instance_3d->get_mesh();
+	Ref<Mesh> mesh = se_mesh->get_mesh();
 	CHECK(Dictionary(mesh->get_meta("extras"))["node_type"] == "planemesh");
 
 	Ref<Material> material = mesh->surface_get_material(0);
@@ -138,9 +138,9 @@ TEST_CASE("[SceneTree][Node] GLTF test skeleton and bone export and import") {
 	Ref<PlaneMesh> meshdata = memnew(PlaneMesh);
 	meshdata->set_name("planemesh");
 
-	MeshInstance3D *mesh = memnew(MeshInstance3D);
+	SEMesh *mesh = memnew(SEMesh);
 	mesh->set_mesh(meshdata);
-	mesh->set_name("mesh_instance_3d");
+	mesh->set_name("se_mesh");
 
 	Node3D *original = memnew(Node3D);
 	SceneTree::get_singleton()->get_root()->add_child(original);

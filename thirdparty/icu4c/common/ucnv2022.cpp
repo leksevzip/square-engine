@@ -3707,12 +3707,12 @@ _ISO_2022_GetUnicodeSet(const UConverter *cnv,
         break;
     }
 
-#if 0  /* Replaced by ucnv_MBCSGetFilteredUnicodeSetForUnicode() until we implement ucnv_getUnicodeSet() with reverse fallbacks. */
+#if 0  /* Replaced by ucnv_MBSEOetFilteredUnicodeSetForUnicode() until we implement ucnv_getUnicodeSet() with reverse fallbacks. */
             if( (cnvData->locale[0]=='c' || cnvData->locale[0]=='z') &&
                 cnvData->version==0 && i==CNS_11643
             ) {
                 /* special handling for non-EXT ISO-2022-CN: add only code points for CNS planes 1 and 2 */
-                ucnv_MBCSGetUnicodeSetForBytes(
+                ucnv_MBSEOetUnicodeSetForBytes(
                         cnvData->myConverterArray[i],
                         sa, UCNV_ROUNDTRIP_SET,
                         0, 0x81, 0x82,
@@ -3750,7 +3750,7 @@ _ISO_2022_GetUnicodeSet(const UConverter *cnv,
             } else {
                 filter=UCNV_SET_FILTER_NONE;
             }
-            ucnv_MBCSGetFilteredUnicodeSetForUnicode(cnvData->myConverterArray[i], sa, which, filter, pErrorCode);
+            ucnv_MBSEOetFilteredUnicodeSetForUnicode(cnvData->myConverterArray[i], sa, which, filter, pErrorCode);
         }
     }
 

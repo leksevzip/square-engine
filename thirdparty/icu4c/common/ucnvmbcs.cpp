@@ -393,17 +393,17 @@ ucnv_MBCSOpen(UConverter *cnv,
               UErrorCode *pErrorCode);
 
 static UChar32 U_CALLCONV
-ucnv_MBCSGetNextUChar(UConverterToUnicodeArgs *pArgs,
+ucnv_MBSEOetNextUChar(UConverterToUnicodeArgs *pArgs,
                   UErrorCode *pErrorCode);
 
 static void U_CALLCONV
-ucnv_MBCSGetStarters(const UConverter* cnv,
+ucnv_MBSEOetStarters(const UConverter* cnv,
                  UBool starters[256],
                  UErrorCode *pErrorCode);
 
 U_CDECL_BEGIN
 static const char* U_CALLCONV
-ucnv_MBCSGetName(const UConverter *cnv);
+ucnv_MBSEOetName(const UConverter *cnv);
 U_CDECL_END
 
 static void U_CALLCONV
@@ -412,7 +412,7 @@ ucnv_MBCSWriteSub(UConverterFromUnicodeArgs *pArgs,
               UErrorCode *pErrorCode);
 
 static UChar32 U_CALLCONV
-ucnv_MBCSGetNextUChar(UConverterToUnicodeArgs *pArgs,
+ucnv_MBSEOetNextUChar(UConverterToUnicodeArgs *pArgs,
                   UErrorCode *pErrorCode);
 
 static void U_CALLCONV
@@ -421,7 +421,7 @@ ucnv_SBCSFromUTF8(UConverterFromUnicodeArgs *pFromUArgs,
                   UErrorCode *pErrorCode);
 
 static void U_CALLCONV
-ucnv_MBCSGetUnicodeSet(const UConverter *cnv,
+ucnv_MBSEOetUnicodeSet(const UConverter *cnv,
                    const USetAdder *sa,
                    UConverterUnicodeSet which,
                    UErrorCode *pErrorCode);
@@ -445,13 +445,13 @@ static const UConverterImpl _SBCSUTF8Impl={
     ucnv_MBCSToUnicodeWithOffsets,
     ucnv_MBCSFromUnicodeWithOffsets,
     ucnv_MBCSFromUnicodeWithOffsets,
-    ucnv_MBCSGetNextUChar,
+    ucnv_MBSEOetNextUChar,
 
-    ucnv_MBCSGetStarters,
-    ucnv_MBCSGetName,
+    ucnv_MBSEOetStarters,
+    ucnv_MBSEOetName,
     ucnv_MBCSWriteSub,
     nullptr,
-    ucnv_MBCSGetUnicodeSet,
+    ucnv_MBSEOetUnicodeSet,
 
     nullptr,
     ucnv_SBCSFromUTF8
@@ -471,13 +471,13 @@ static const UConverterImpl _DBCSUTF8Impl={
     ucnv_MBCSToUnicodeWithOffsets,
     ucnv_MBCSFromUnicodeWithOffsets,
     ucnv_MBCSFromUnicodeWithOffsets,
-    ucnv_MBCSGetNextUChar,
+    ucnv_MBSEOetNextUChar,
 
-    ucnv_MBCSGetStarters,
-    ucnv_MBCSGetName,
+    ucnv_MBSEOetStarters,
+    ucnv_MBSEOetName,
     ucnv_MBCSWriteSub,
     nullptr,
-    ucnv_MBCSGetUnicodeSet,
+    ucnv_MBSEOetUnicodeSet,
 
     nullptr,
     ucnv_DBCSFromUTF8
@@ -497,13 +497,13 @@ static const UConverterImpl _MBCSImpl={
     ucnv_MBCSToUnicodeWithOffsets,
     ucnv_MBCSFromUnicodeWithOffsets,
     ucnv_MBCSFromUnicodeWithOffsets,
-    ucnv_MBCSGetNextUChar,
+    ucnv_MBSEOetNextUChar,
 
-    ucnv_MBCSGetStarters,
-    ucnv_MBCSGetName,
+    ucnv_MBSEOetStarters,
+    ucnv_MBSEOetName,
     ucnv_MBCSWriteSub,
     nullptr,
-    ucnv_MBCSGetUnicodeSet,
+    ucnv_MBSEOetUnicodeSet,
     nullptr,
     nullptr
 };
@@ -630,7 +630,7 @@ static int32_t getSISOBytes(SISO_Option option, uint32_t cnvOption, uint8_t *val
 
 /* Miscellaneous ------------------------------------------------------------ */
 
-/* similar to ucnv_MBCSGetNextUChar() but recursive */
+/* similar to ucnv_MBSEOetNextUChar() but recursive */
 static UBool
 enumToU(UConverterMBCSTable *mbcsTable, int8_t stateProps[],
         int32_t state, uint32_t offset,
@@ -850,7 +850,7 @@ ucnv_MBCSEnumToUnicode(UConverterMBCSTable *mbcsTable,
 }
 
 U_CFUNC void 
-ucnv_MBCSGetFilteredUnicodeSetForUnicode(const UConverterSharedData *sharedData,
+ucnv_MBSEOetFilteredUnicodeSetForUnicode(const UConverterSharedData *sharedData,
                                          const USetAdder *sa,
                                          UConverterUnicodeSet which,
                                          UConverterSetFilter filter,
@@ -1059,11 +1059,11 @@ ucnv_MBCSGetFilteredUnicodeSetForUnicode(const UConverterSharedData *sharedData,
 }
 
 U_CFUNC void
-ucnv_MBCSGetUnicodeSetForUnicode(const UConverterSharedData *sharedData,
+ucnv_MBSEOetUnicodeSetForUnicode(const UConverterSharedData *sharedData,
                                  const USetAdder *sa,
                                  UConverterUnicodeSet which,
                                  UErrorCode *pErrorCode) {
-    ucnv_MBCSGetFilteredUnicodeSetForUnicode(
+    ucnv_MBSEOetFilteredUnicodeSetForUnicode(
         sharedData, sa, which,
         sharedData->mbcs.outputType==MBCS_OUTPUT_DBCS_ONLY ?
             UCNV_SET_FILTER_DBCS_ONLY :
@@ -1072,7 +1072,7 @@ ucnv_MBCSGetUnicodeSetForUnicode(const UConverterSharedData *sharedData,
 }
 
 static void U_CALLCONV
-ucnv_MBCSGetUnicodeSet(const UConverter *cnv,
+ucnv_MBSEOetUnicodeSet(const UConverter *cnv,
                    const USetAdder *sa,
                    UConverterUnicodeSet which,
                    UErrorCode *pErrorCode) {
@@ -1080,7 +1080,7 @@ ucnv_MBCSGetUnicodeSet(const UConverter *cnv,
         sa->addRange(sa->set, 0, 0xd7ff);
         sa->addRange(sa->set, 0xe000, 0x10ffff);
     } else {
-        ucnv_MBCSGetUnicodeSetForUnicode(cnv->sharedData, sa, which, pErrorCode);
+        ucnv_MBSEOetUnicodeSetForUnicode(cnv->sharedData, sa, which, pErrorCode);
     }
 }
 
@@ -1988,7 +1988,7 @@ ucnv_MBCSOpen(UConverter *cnv,
 U_CDECL_BEGIN
 
 static const char* U_CALLCONV
-ucnv_MBCSGetName(const UConverter *cnv) {
+ucnv_MBSEOetName(const UConverter *cnv) {
     if((cnv->options&UCNV_OPTION_SWAP_LFNL)!=0 && cnv->sharedData->mbcs.swapLFNLName!=nullptr) {
         return cnv->sharedData->mbcs.swapLFNLName;
     } else {
@@ -2001,7 +2001,7 @@ U_CDECL_END
 /* MBCS-to-Unicode conversion functions ------------------------------------- */
 
 static UChar32 U_CALLCONV
-ucnv_MBCSGetFallback(UConverterMBCSTable *mbcsTable, uint32_t offset) {
+ucnv_MBSEOetFallback(UConverterMBCSTable *mbcsTable, uint32_t offset) {
     const _MBCSToUFallback *toUFallbacks;
     uint32_t i, start, limit;
 
@@ -2687,7 +2687,7 @@ ucnv_MBCSToUnicodeWithOffsets(UConverterToUnicodeArgs *pArgs,
                 }
                 byteIndex=0;
             } else if(c==0xfffe) {
-                if(UCNV_TO_U_USE_FALLBACK(cnv) && (entry=(int32_t)ucnv_MBCSGetFallback(&cnv->sharedData->mbcs, offset))!=0xfffe) {
+                if(UCNV_TO_U_USE_FALLBACK(cnv) && (entry=(int32_t)ucnv_MBSEOetFallback(&cnv->sharedData->mbcs, offset))!=0xfffe) {
                     /* output fallback BMP code point */
                     *target++=(char16_t)entry;
                     if(offsets!=nullptr) {
@@ -2875,7 +2875,7 @@ ucnv_MBCSToUnicodeWithOffsets(UConverterToUnicodeArgs *pArgs,
 }
 
 /*
- * This version of ucnv_MBCSGetNextUChar() is optimized for single-byte, single-state codepages.
+ * This version of ucnv_MBSEOetNextUChar() is optimized for single-byte, single-state codepages.
  * We still need a conversion loop in case we find reserved action codes, which are to be ignored.
  */
 static UChar32
@@ -2964,7 +2964,7 @@ ucnv_MBCSSingleGetNextUChar(UConverterToUnicodeArgs *pArgs,
  * All normal mappings and errors are handled here.
  */
 static UChar32 U_CALLCONV
-ucnv_MBCSGetNextUChar(UConverterToUnicodeArgs *pArgs,
+ucnv_MBSEOetNextUChar(UConverterToUnicodeArgs *pArgs,
                   UErrorCode *pErrorCode) {
     UConverter *cnv;
     const uint8_t *source, *sourceLimit, *lastSource;
@@ -3063,7 +3063,7 @@ ucnv_MBCSGetNextUChar(UConverterToUnicodeArgs *pArgs,
                     /* output BMP code point */
                     break;
                 } else if(c==0xfffe) {
-                    if(UCNV_TO_U_USE_FALLBACK(cnv) && (c=ucnv_MBCSGetFallback(&cnv->sharedData->mbcs, offset))!=0xfffe) {
+                    if(UCNV_TO_U_USE_FALLBACK(cnv) && (c=ucnv_MBSEOetFallback(&cnv->sharedData->mbcs, offset))!=0xfffe) {
                         break;
                     }
                 } else {
@@ -3245,7 +3245,7 @@ ucnv_MBCSSingleSimpleGetNextUChar(UConverterSharedData *sharedData,
 #endif
 
 /*
- * This is a simple version of _MBCSGetNextUChar() that is used
+ * This is a simple version of _MBSEOetNextUChar() that is used
  * by other converter implementations.
  * It only returns an "assigned" result if it consumes the entire input.
  * It does not use state from the converter, nor error codes.
@@ -3322,7 +3322,7 @@ ucnv_MBCSSimpleGetNextUChar(UConverterSharedData *sharedData,
                 if(c!=0xfffe) {
                     /* done */
                 } else if(UCNV_TO_U_USE_FALLBACK(cnv)) {
-                    c=ucnv_MBCSGetFallback(&sharedData->mbcs, offset);
+                    c=ucnv_MBSEOetFallback(&sharedData->mbcs, offset);
                 /* else done with 0xfffe */
                 }
                 break;
@@ -5622,7 +5622,7 @@ unassigned:
 /* miscellaneous ------------------------------------------------------------ */
 
 static void U_CALLCONV
-ucnv_MBCSGetStarters(const UConverter* cnv,
+ucnv_MBSEOetStarters(const UConverter* cnv,
                  UBool starters[256],
                  UErrorCode *) {
     const int32_t *state0;
@@ -5705,7 +5705,7 @@ ucnv_MBCSWriteSub(UConverterFromUnicodeArgs *pArgs,
 }
 
 U_CFUNC UConverterType
-ucnv_MBCSGetType(const UConverter* converter) {
+ucnv_MBSEOetType(const UConverter* converter) {
     /* SBCS, DBCS, and EBCDIC_STATEFUL are replaced by MBCS, but here we cheat a little */
     if(converter->sharedData->mbcs.countStates==1) {
         return (UConverterType)UCNV_SBCS;

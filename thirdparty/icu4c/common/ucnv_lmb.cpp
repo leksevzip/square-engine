@@ -296,12 +296,12 @@ ambiguous mappings: */
 /* The table & some code to use it: */
 
 
-static const struct _UniLMBCSGrpMap  
+static const struct _UniLMBSEOrpMap  
 {
    const char16_t uniStartRange;
    const char16_t uniEndRange;
    const ulmbcs_byte_t  GrpType;
-} UniLMBCSGrpMap[]
+} UniLMBSEOrpMap[]
 =
 {
 
@@ -447,7 +447,7 @@ static const struct _UniLMBCSGrpMap
 static ulmbcs_byte_t 
 FindLMBCSUniRange(char16_t uniChar)
 {
-   const struct _UniLMBCSGrpMap * pTable = UniLMBCSGrpMap;
+   const struct _UniLMBSEOrpMap * pTable = UniLMBSEOrpMap;
 
    while (uniChar > pTable->uniEndRange) 
    {
@@ -483,11 +483,11 @@ do the lookup: */
   search to go quickly.
  *************************************************/
 
-static const struct _LocaleLMBCSGrpMap
+static const struct _LocaleLMBSEOrpMap
 {
    const char    *LocaleID;
    const ulmbcs_byte_t OptGroup;
-} LocaleLMBCSGrpMap[] =
+} LocaleLMBSEOrpMap[] =
 {
     {"ar", ULMBCS_GRP_AR},
     {"be", ULMBCS_GRP_RU},
@@ -537,7 +537,7 @@ static const struct _LocaleLMBCSGrpMap
 static ulmbcs_byte_t 
 FindLMBCSLocale(const char *LocaleID)
 {
-   const struct _LocaleLMBCSGrpMap *pTable = LocaleLMBCSGrpMap;
+   const struct _LocaleLMBSEOrpMap *pTable = LocaleLMBSEOrpMap;
 
    if ((!LocaleID) || (!*LocaleID)) 
    {
@@ -726,14 +726,14 @@ _LMBCSSafeClone(const UConverter *cnv,
 }
 
 /*
- * There used to be a _LMBCSGetUnicodeSet() function here (up to svn revision 20117)
+ * There used to be a _LMBSEOetUnicodeSet() function here (up to svn revision 20117)
  * which added all code points except for U+F6xx
  * because those cannot be represented in the Unicode group.
  * However, it turns out that windows-950 has roundtrips for all of U+F6xx
  * which means that LMBCS can convert all Unicode code points after all.
  * We now simply use ucnv_getCompleteUnicodeSet().
  *
- * This may need to be looked at again as Lotus uses _LMBCSGetUnicodeSet(). (091216)
+ * This may need to be looked at again as Lotus uses _LMBSEOetUnicodeSet(). (091216)
  */
 
 /* 
@@ -1118,7 +1118,7 @@ GetUniFromLMBCSUni(char const ** ppLMBCSin)  /* Called with LMBCS-style Unicode 
 /* Return the Unicode representation for the current LMBCS character */
 
 static UChar32  U_CALLCONV
-_LMBCSGetNextUCharWorker(UConverterToUnicodeArgs*   args,
+_LMBSEOetNextUCharWorker(UConverterToUnicodeArgs*   args,
                          UErrorCode*   err)
 {
     UChar32 uniChar = 0;    /* an output UNICODE char */
@@ -1292,7 +1292,7 @@ _LMBCSToUnicodeWithOffsets(UConverterToUnicodeArgs*    args,
         args->source = errSource = LMBCS;
         args->sourceLimit = LMBCS+size_old+size_new;
         savebytes = (int8_t)(size_old+size_new);
-        uniChar = (char16_t) _LMBCSGetNextUCharWorker(args, err);
+        uniChar = (char16_t) _LMBSEOetNextUCharWorker(args, err);
         args->source = saveSource + ((args->source - LMBCS) - size_old);
         args->sourceLimit = saveSourceLimit;
 
@@ -1314,7 +1314,7 @@ _LMBCSToUnicodeWithOffsets(UConverterToUnicodeArgs*    args,
       else
       {
          errSource = saveSource;
-         uniChar = (char16_t) _LMBCSGetNextUCharWorker(args, err);
+         uniChar = (char16_t) _LMBSEOetNextUCharWorker(args, err);
          savebytes = (int8_t)(args->source - saveSource);
       }
       if (U_SUCCESS(*err))

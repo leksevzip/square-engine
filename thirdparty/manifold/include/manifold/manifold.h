@@ -31,8 +31,8 @@ namespace manifold {
  */
 ExecutionParams& ManifoldParams();
 
-class CsgNode;
-class CsgLeafNode;
+class SEONode;
+class SEOLeafNode;
 
 /** @addtogroup Core
  *  @brief The central classes of the library
@@ -491,12 +491,12 @@ class Manifold {
   struct Impl;
 
  private:
-  Manifold(std::shared_ptr<CsgNode> pNode_);
+  Manifold(std::shared_ptr<SEONode> pNode_);
   Manifold(std::shared_ptr<Impl> pImpl_);
   static Manifold Invalid();
-  mutable std::shared_ptr<CsgNode> pNode_;
+  mutable std::shared_ptr<SEONode> pNode_;
 
-  CsgLeafNode& GetCsgLeafNode() const;
+  SEOLeafNode& GetSEOLeafNode() const;
 };
 /** @} */
 

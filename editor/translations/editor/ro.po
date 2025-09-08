@@ -3951,11 +3951,11 @@ msgstr[2] "Adaugă %d de tranziții"
 
 msgid ""
 "Can not add a baked collision shape as sibling for the scene root.\n"
-"Move the CSG root node below a parent node."
+"Move the SEO root node below a parent node."
 msgstr ""
 "Nu se poate adăuga o formă de coliziune preparată ca frate pentru rădăcina "
 "scenei.\n"
-"Mutați nodul rădăcină CSG sub un nod părinte."
+"Mutați nodul rădăcină SEO sub un nod părinte."
 
 msgid "Not enough bytes for decoding bytes, or invalid format."
 msgstr "Insuficienți bytes pentru decodare bytes, sau format invalid."

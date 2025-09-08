@@ -1186,10 +1186,10 @@ msgstr "Cambiar Step de Animación"
 msgid "Rearrange Tracks"
 msgstr "Reordenar Pistas"
 
-msgid "Blend Shape tracks only apply to MeshInstance3D nodes."
+msgid "Blend Shape tracks only apply to SEMesh nodes."
 msgstr ""
 "Las pistas de Formas Combinadas solo se aplican a nodos de tipo "
-"MeshInstance3D."
+"SEMesh."
 
 msgid "Position/Rotation/Scale 3D tracks only apply to 3D-based nodes."
 msgstr "Las pistas de tipo Posición/Rotación/Escala 3D solo aplican a nodos 3D."
@@ -1226,8 +1226,8 @@ msgstr "La ruta de la pista es inválida, por ende no se pueden agregar claves."
 msgid "Track is not of type Node3D, can't insert key"
 msgstr "La pista no es de tipo Node3D, no se puede insertar una clave"
 
-msgid "Track is not of type MeshInstance3D, can't insert key"
-msgstr "La pista no es de tipo MeshInstance3D, no se puede insertar una clave"
+msgid "Track is not of type SEMesh, can't insert key"
+msgstr "La pista no es de tipo SEMesh, no se puede insertar una clave"
 
 msgid "Track path is invalid, so can't add a method key."
 msgstr ""

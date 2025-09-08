@@ -33,7 +33,7 @@
 #include "core/config/project_settings.h"
 #include "editor/import/3d/collada.h"
 #include "scene/3d/se_camera.h"
-#include "scene/3d/importer_mesh_instance_3d.h"
+#include "scene/3d/importer_se_mesh.h"
 #include "scene/3d/light_3d.h"
 #include "scene/3d/node_3d.h"
 #include "scene/3d/path_3d.h"
@@ -289,8 +289,8 @@ Error ColladaImport::_create_scene(Collada::Node *p_node, Node3D *p_parent) {
 				node = memnew(Path3D);
 			} else {
 				//mesh since nothing else
-				node = memnew(ImporterMeshInstance3D);
-				//Object::cast_to<ImporterMeshInstance3D>(node)->set_flag(GeometryInstance3D::FLAG_USE_BAKED_LIGHT, true);
+				node = memnew(ImporterSEMesh);
+				//Object::cast_to<ImporterSEMesh>(node)->set_flag(GeometryInstance3D::FLAG_USE_BAKED_LIGHT, true);
 			}
 		} break;
 		case Collada::Node::TYPE_SKELETON: {
@@ -1145,10 +1145,10 @@ Error ColladaImport::_create_resources(Collada::Node *p_node, bool p_use_compres
 			}
 		}
 
-		if (Object::cast_to<ImporterMeshInstance3D>(node)) {
+		if (Object::cast_to<ImporterSEMesh>(node)) {
 			Collada::NodeGeometry *ng2 = static_cast<Collada::NodeGeometry *>(p_node);
 
-			ImporterMeshInstance3D *mi = Object::cast_to<ImporterMeshInstance3D>(node);
+			ImporterSEMesh *mi = Object::cast_to<ImporterSEMesh>(node);
 
 			ERR_FAIL_NULL_V(mi, ERR_BUG);
 

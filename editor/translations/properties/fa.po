@@ -1625,7 +1625,7 @@ msgstr "اسکلت"
 msgid "Selected Bone"
 msgstr "استخوان برگزیده"
 
-msgid "CSG"
+msgid "SEO"
 msgstr "سی.اس.جی"
 
 msgid "Bone Shape"

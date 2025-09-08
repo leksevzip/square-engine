@@ -4445,7 +4445,7 @@ SLJIT_API_FUNC_ATTRIBUTE sljit_s32 sljit_emit_atomic_store(struct sljit_compiler
 		break;
 	case SLJIT_MOV:
 	case SLJIT_MOV_P:
-		ins = 0xeb0000000030 /* csg */ | R36A(tmp_r) | R32A(gpr(src_reg)) | R28A(mem_r);
+		ins = 0xeb0000000030 /* SEO */ | R36A(tmp_r) | R32A(gpr(src_reg)) | R28A(mem_r);
 		break;
 	default:
 		return SLJIT_ERR_UNSUPPORTED;

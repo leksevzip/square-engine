@@ -19,7 +19,7 @@
 
   For multiple connected round linear curve segments this construction
   yield a proper shape when viewed from the outside. Using the
-  following CSG we can also handle the interior in most common cases:
+  following SEO we can also handle the interior in most common cases:
 
      round_linear_curve(pl,rl,p0,r0,p1,r1,pr,rr) =
        cone_sphere(p0,r0,p1,r1) - cone(pl,rl,p0,r0) - cone(p1,r1,pr,rr)
@@ -579,7 +579,7 @@ namespace embree
           cone.intersectBeginSphere (isBeginPoint, t_sph0_lower, t_sph0_upper);
         }
         
-        /* CSG union of cone and end sphere */
+        /* SEO union of cone and end sphere */
         vfloat<M> t_sph_lower = min(t_sph0_lower, t_sph1_lower);
         vfloat<M> t_cone_sphere_lower = min(t_cone_lower, t_sph_lower);
 #if !defined (EMBREE_BACKFACE_CULLING_CURVES)

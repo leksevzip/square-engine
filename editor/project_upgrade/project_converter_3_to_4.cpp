@@ -885,8 +885,8 @@ bool ProjectConverter3To4::test_conversion(RegExContainer &reg_container) {
 	valid = valid && test_conversion_gdscript_builtin("\tmtx.lock()", "\tmtx.lock()", &ProjectConverter3To4::rename_gdscript_functions, "custom rename", reg_container, false);
 	valid = valid && test_conversion_gdscript_builtin("\tmutex.unlock()", "\tmutex.unlock()", &ProjectConverter3To4::rename_gdscript_functions, "custom rename", reg_container, false);
 
-	valid = valid && test_conversion_with_regex("extends CSGBox", "extends CSGBox3D", &ProjectConverter3To4::rename_classes, "classes", reg_container);
-	valid = valid && test_conversion_with_regex("CSGBox", "CSGBox3D", &ProjectConverter3To4::rename_classes, "classes", reg_container);
+	valid = valid && test_conversion_with_regex("extends SEOBox", "extends SEOBox3D", &ProjectConverter3To4::rename_classes, "classes", reg_container);
+	valid = valid && test_conversion_with_regex("SEOBox", "SEOBox3D", &ProjectConverter3To4::rename_classes, "classes", reg_container);
 	valid = valid && test_conversion_with_regex("Spatial", "Node3D", &ProjectConverter3To4::rename_classes, "classes", reg_container);
 	valid = valid && test_conversion_with_regex("Spatial.tscn", "Spatial.tscn", &ProjectConverter3To4::rename_classes, "classes", reg_container);
 	valid = valid && test_conversion_with_regex("Spatial.gd", "Spatial.gd", &ProjectConverter3To4::rename_classes, "classes", reg_container);

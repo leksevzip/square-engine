@@ -31,7 +31,7 @@
 #include "post_import_plugin_skeleton_renamer.h"
 
 #include "scene/3d/bone_attachment_3d.h"
-#include "scene/3d/importer_mesh_instance_3d.h"
+#include "scene/3d/importer_se_mesh.h"
 #include "scene/3d/skeleton_3d.h"
 #include "scene/animation/animation_player.h"
 #include "scene/resources/bone_map.h"
@@ -65,9 +65,9 @@ void PostImportPluginSkeletonRenamer::_internal_process(InternalImportCategory p
 
 	// Rename bones in Skin.
 	{
-		TypedArray<Node> nodes = p_base_scene->find_children("*", "ImporterMeshInstance3D");
+		TypedArray<Node> nodes = p_base_scene->find_children("*", "ImporterSEMesh");
 		while (nodes.size()) {
-			ImporterMeshInstance3D *mi = Object::cast_to<ImporterMeshInstance3D>(nodes.pop_back());
+			ImporterSEMesh *mi = Object::cast_to<ImporterSEMesh>(nodes.pop_back());
 			Ref<Skin> skin = mi->get_skin();
 			if (skin.is_valid()) {
 				Node *node = mi->get_node(mi->get_skeleton_path());

@@ -1070,7 +1070,7 @@ ucnv_extGetUnicodeSet(const UConverterSharedData *sharedData,
 
     /*
      * the trie enumeration is almost the same as
-     * in MBCSGetUnicodeSet() for MBCS_OUTPUT_1
+     * in MBSEOetUnicodeSet() for MBCS_OUTPUT_1
      */
     for(st1=0; st1<stage1Length; ++st1) {
         st2=stage12[st1];

@@ -1051,10 +1051,10 @@ msgstr "Промяна на стъпката на анимацията"
 msgid "Rearrange Tracks"
 msgstr "Пренареждане на пътечките"
 
-msgid "Blend Shape tracks only apply to MeshInstance3D nodes."
+msgid "Blend Shape tracks only apply to SEMesh nodes."
 msgstr ""
 "Пътечките за форма на смесване могат да работят само с обекти от тип "
-"MeshInstance3D."
+"SEMesh."
 
 msgid "Add Track"
 msgstr "Добавяне на пътечка"
@@ -3270,8 +3270,8 @@ msgstr "Няма полигонна мрежа за дебъгване."
 msgid "Create Navigation Mesh"
 msgstr "Създаване на навигационна полигонна мрежа"
 
-msgid "MeshInstance3D lacks a Mesh."
-msgstr "В MeshInstance3D няма полигонна мрежа."
+msgid "SEMesh lacks a Mesh."
+msgstr "В SEMesh няма полигонна мрежа."
 
 msgid "Mesh has no surface to create outlines from."
 msgstr "Полигонната мрежа няма повърхност, от която да се създадат контури."

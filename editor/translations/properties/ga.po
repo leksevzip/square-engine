@@ -2612,8 +2612,8 @@ msgstr "Cnámharlach"
 msgid "Selected Bone"
 msgstr "Cnámh Roghnaithe"
 
-msgid "CSG"
-msgstr "CSGName"
+msgid "SEO"
+msgstr "SEOName"
 
 msgid "GridMap Grid"
 msgstr "Eangach GreilleLéarscáil"

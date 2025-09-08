@@ -145,7 +145,7 @@ const GLTFTestCase glTF_test_cases[] = {
 void register_gltf_extension() {
 	GLTFDocument::unregister_all_gltf_document_extensions();
 
-	// Ensures meshes become a MeshInstance3D and not an ImporterMeshInstance3D.
+	// Ensures meshes become a SEMesh and not an ImporterSEMesh.
 	Ref<GLTFDocumentExtensionConvertImporterMesh> extension_GLTFDocumentExtensionConvertImporterMesh;
 	extension_GLTFDocumentExtensionConvertImporterMesh.instantiate();
 	GLTFDocument::register_gltf_document_extension(extension_GLTFDocumentExtensionConvertImporterMesh);
@@ -204,7 +204,7 @@ TEST_CASE("[SceneTree][GLTFDocument] Load cube.gltf") {
 	CHECK(node->is_class("Node3D"));
 	CHECK(node->get_name() == "cube");
 
-	CHECK(node->get_child(0)->is_class("MeshInstance3D"));
+	CHECK(node->get_child(0)->is_class("SEMesh"));
 	CHECK(node->get_child(0)->get_name() == "Cube");
 
 	CHECK(node->get_child(1)->is_class("AnimationPlayer"));
@@ -232,7 +232,7 @@ TEST_CASE("[SceneTree][GLTFDocument] Load suzanne.glb") {
 	CHECK(node->is_class("Node3D"));
 	CHECK(node->get_name() == "suzanne");
 
-	CHECK(node->get_child(0)->is_class("MeshInstance3D"));
+	CHECK(node->get_child(0)->is_class("SEMesh"));
 	CHECK(node->get_child(0)->get_name() == "Suzanne");
 
 	CHECK(node->get_child(1)->is_class("SECamera"));

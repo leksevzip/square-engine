@@ -17,7 +17,7 @@
 #include <numeric>
 
 #include "boolean3.h"
-#include "csg_tree.h"
+#include "SEO_tree.h"
 #include "impl.h"
 #include "parallel.h"
 #include "shared.h"
@@ -204,17 +204,17 @@ namespace manifold {
  * Construct an empty Manifold.
  *
  */
-Manifold::Manifold() : pNode_{std::make_shared<CsgLeafNode>()} {}
+Manifold::Manifold() : pNode_{std::make_shared<SEOLeafNode>()} {}
 Manifold::~Manifold() = default;
 Manifold::Manifold(Manifold&&) noexcept = default;
 Manifold& Manifold::operator=(Manifold&&) noexcept = default;
 
 Manifold::Manifold(const Manifold& other) : pNode_(other.pNode_) {}
 
-Manifold::Manifold(std::shared_ptr<CsgNode> pNode) : pNode_(pNode) {}
+Manifold::Manifold(std::shared_ptr<SEONode> pNode) : pNode_(pNode) {}
 
 Manifold::Manifold(std::shared_ptr<Impl> pImpl_)
-    : pNode_(std::make_shared<CsgLeafNode>(pImpl_)) {}
+    : pNode_(std::make_shared<SEOLeafNode>(pImpl_)) {}
 
 Manifold Manifold::Invalid() {
   auto pImpl_ = std::make_shared<Impl>();
@@ -229,11 +229,11 @@ Manifold& Manifold::operator=(const Manifold& other) {
   return *this;
 }
 
-CsgLeafNode& Manifold::GetCsgLeafNode() const {
-  if (pNode_->GetNodeType() != CsgNodeType::Leaf) {
+SEOLeafNode& Manifold::GetSEOLeafNode() const {
+  if (pNode_->GetNodeType() != SEONodeType::Leaf) {
     pNode_ = pNode_->ToLeafNode();
   }
-  return *std::static_pointer_cast<CsgLeafNode>(pNode_);
+  return *std::static_pointer_cast<SEOLeafNode>(pNode_);
 }
 
 /**
@@ -250,7 +250,7 @@ CsgLeafNode& Manifold::GetCsgLeafNode() const {
  * @param meshGL The input MeshGL.
  */
 Manifold::Manifold(const MeshGL& meshGL)
-    : pNode_(std::make_shared<CsgLeafNode>(std::make_shared<Impl>(meshGL))) {}
+    : pNode_(std::make_shared<SEOLeafNode>(std::make_shared<Impl>(meshGL))) {}
 
 /**
  * Convert a MeshGL into a Manifold, retaining its properties and merging only
@@ -266,7 +266,7 @@ Manifold::Manifold(const MeshGL& meshGL)
  * @param meshGL64 The input MeshGL64.
  */
 Manifold::Manifold(const MeshGL64& meshGL64)
-    : pNode_(std::make_shared<CsgLeafNode>(std::make_shared<Impl>(meshGL64))) {}
+    : pNode_(std::make_shared<SEOLeafNode>(std::make_shared<Impl>(meshGL64))) {}
 
 /**
  * The most complete output of this library, returning a MeshGL that is designed
@@ -283,7 +283,7 @@ Manifold::Manifold(const MeshGL64& meshGL64)
  * normals.
  */
 MeshGL Manifold::GetMeshGL(int normalIdx) const {
-  const Impl& impl = *GetCsgLeafNode().GetImpl();
+  const Impl& impl = *GetSEOLeafNode().GetImpl();
   return GetMeshGLImpl<float, uint32_t>(impl, normalIdx);
 }
 
@@ -302,14 +302,14 @@ MeshGL Manifold::GetMeshGL(int normalIdx) const {
  * normals.
  */
 MeshGL64 Manifold::GetMeshGL64(int normalIdx) const {
-  const Impl& impl = *GetCsgLeafNode().GetImpl();
+  const Impl& impl = *GetSEOLeafNode().GetImpl();
   return GetMeshGLImpl<double, uint64_t>(impl, normalIdx);
 }
 
 /**
  * Does the Manifold have any triangles?
  */
-bool Manifold::IsEmpty() const { return GetCsgLeafNode().GetImpl()->IsEmpty(); }
+bool Manifold::IsEmpty() const { return GetSEOLeafNode().GetImpl()->IsEmpty(); }
 /**
  * Returns the reason for an input Mesh producing an empty Manifold. This Status
  * will carry on through operations like NaN propogation, ensuring an errored
@@ -317,29 +317,29 @@ bool Manifold::IsEmpty() const { return GetCsgLeafNode().GetImpl()->IsEmpty(); }
  * NoError, for instance the intersection of non-overlapping meshes.
  */
 Manifold::Error Manifold::Status() const {
-  return GetCsgLeafNode().GetImpl()->status_;
+  return GetSEOLeafNode().GetImpl()->status_;
 }
 /**
  * The number of vertices in the Manifold.
  */
 size_t Manifold::NumVert() const {
-  return GetCsgLeafNode().GetImpl()->NumVert();
+  return GetSEOLeafNode().GetImpl()->NumVert();
 }
 /**
  * The number of edges in the Manifold.
  */
 size_t Manifold::NumEdge() const {
-  return GetCsgLeafNode().GetImpl()->NumEdge();
+  return GetSEOLeafNode().GetImpl()->NumEdge();
 }
 /**
  * The number of triangles in the Manifold.
  */
-size_t Manifold::NumTri() const { return GetCsgLeafNode().GetImpl()->NumTri(); }
+size_t Manifold::NumTri() const { return GetSEOLeafNode().GetImpl()->NumTri(); }
 /**
  * The number of properties per vertex in the Manifold.
  */
 size_t Manifold::NumProp() const {
-  return GetCsgLeafNode().GetImpl()->NumProp();
+  return GetSEOLeafNode().GetImpl()->NumProp();
 }
 /**
  * The number of property vertices in the Manifold. This will always be >=
@@ -347,13 +347,13 @@ size_t Manifold::NumProp() const {
  * properties on different neighboring triangles.
  */
 size_t Manifold::NumPropVert() const {
-  return GetCsgLeafNode().GetImpl()->NumPropVert();
+  return GetSEOLeafNode().GetImpl()->NumPropVert();
 }
 
 /**
  * Returns the axis-aligned bounding box of all the Manifold's vertices.
  */
-Box Manifold::BoundingBox() const { return GetCsgLeafNode().GetImpl()->bBox_; }
+Box Manifold::BoundingBox() const { return GetSEOLeafNode().GetImpl()->bBox_; }
 
 /**
  * Returns the epsilon value of this Manifold's vertices, which tracks the
@@ -362,7 +362,7 @@ Box Manifold::BoundingBox() const { return GetCsgLeafNode().GetImpl()->bBox_; }
  * [&epsilon;-valid](https://github.com/elalish/manifold/wiki/Manifold-Library#definition-of-%CE%B5-valid).
  */
 double Manifold::GetEpsilon() const {
-  return GetCsgLeafNode().GetImpl()->epsilon_;
+  return GetSEOLeafNode().GetImpl()->epsilon_;
 }
 
 /**
@@ -371,7 +371,7 @@ double Manifold::GetEpsilon() const {
  * be collapsed.
  */
 double Manifold::GetTolerance() const {
-  return GetCsgLeafNode().GetImpl()->tolerance_;
+  return GetSEOLeafNode().GetImpl()->tolerance_;
 }
 
 /**
@@ -379,7 +379,7 @@ double Manifold::GetTolerance() const {
  * This performs mesh simplification when the tolerance value is increased.
  */
 Manifold Manifold::SetTolerance(double tolerance) const {
-  auto impl = std::make_shared<Impl>(*GetCsgLeafNode().GetImpl());
+  auto impl = std::make_shared<Impl>(*GetSEOLeafNode().GetImpl());
   if (tolerance > impl->tolerance_) {
     impl->tolerance_ = tolerance;
     impl->MarkCoplanar();
@@ -401,7 +401,7 @@ Manifold Manifold::SetTolerance(double tolerance) const {
  * have moved by less than tolerance.
  */
 Manifold Manifold::Simplify(double tolerance) const {
-  auto impl = std::make_shared<Impl>(*GetCsgLeafNode().GetImpl());
+  auto impl = std::make_shared<Impl>(*GetSEOLeafNode().GetImpl());
   const double oldTolerance = impl->tolerance_;
   if (tolerance == 0) tolerance = oldTolerance;
   if (tolerance > oldTolerance) {
@@ -428,14 +428,14 @@ int Manifold::Genus() const {
  * Returns the surface area of the manifold.
  */
 double Manifold::SurfaceArea() const {
-  return GetCsgLeafNode().GetImpl()->GetProperty(Impl::Property::SurfaceArea);
+  return GetSEOLeafNode().GetImpl()->GetProperty(Impl::Property::SurfaceArea);
 }
 
 /**
  * Returns the volume of the manifold.
  */
 double Manifold::Volume() const {
-  return GetCsgLeafNode().GetImpl()->GetProperty(Impl::Property::Volume);
+  return GetSEOLeafNode().GetImpl()->GetProperty(Impl::Property::Volume);
 }
 
 /**
@@ -444,7 +444,7 @@ double Manifold::Volume() const {
  * returns -1.
  */
 int Manifold::OriginalID() const {
-  return GetCsgLeafNode().GetImpl()->meshRelation_.originalID;
+  return GetSEOLeafNode().GetImpl()->meshRelation_.originalID;
 }
 
 /**
@@ -455,17 +455,17 @@ int Manifold::OriginalID() const {
  * Simplify().
  */
 Manifold Manifold::AsOriginal() const {
-  auto oldImpl = GetCsgLeafNode().GetImpl();
+  auto oldImpl = GetSEOLeafNode().GetImpl();
   if (oldImpl->status_ != Error::NoError) {
     auto newImpl = std::make_shared<Impl>();
     newImpl->status_ = oldImpl->status_;
-    return Manifold(std::make_shared<CsgLeafNode>(newImpl));
+    return Manifold(std::make_shared<SEOLeafNode>(newImpl));
   }
   auto newImpl = std::make_shared<Impl>(*oldImpl);
   newImpl->InitializeOriginal();
   newImpl->MarkCoplanar();
   newImpl->InitializeOriginal(true);
-  return Manifold(std::make_shared<CsgLeafNode>(newImpl));
+  return Manifold(std::make_shared<SEOLeafNode>(newImpl));
 }
 
 /**
@@ -483,7 +483,7 @@ uint32_t Manifold::ReserveIDs(uint32_t n) {
  * match their normal vectors within Precision().
  */
 bool Manifold::MatchesTriNormals() const {
-  return GetCsgLeafNode().GetImpl()->MatchesTriNormals();
+  return GetSEOLeafNode().GetImpl()->MatchesTriNormals();
 }
 
 /**
@@ -492,7 +492,7 @@ bool Manifold::MatchesTriNormals() const {
  * without changing the mesh by too much.
  */
 size_t Manifold::NumDegenerateTris() const {
-  return GetCsgLeafNode().GetImpl()->NumDegenerateTris();
+  return GetSEOLeafNode().GetImpl()->NumDegenerateTris();
 }
 
 /**
@@ -568,15 +568,15 @@ Manifold Manifold::Mirror(vec3 normal) const {
  * @param warpFunc A function that modifies a given vertex position.
  */
 Manifold Manifold::Warp(std::function<void(vec3&)> warpFunc) const {
-  auto oldImpl = GetCsgLeafNode().GetImpl();
+  auto oldImpl = GetSEOLeafNode().GetImpl();
   if (oldImpl->status_ != Error::NoError) {
     auto pImpl = std::make_shared<Impl>();
     pImpl->status_ = oldImpl->status_;
-    return Manifold(std::make_shared<CsgLeafNode>(pImpl));
+    return Manifold(std::make_shared<SEOLeafNode>(pImpl));
   }
   auto pImpl = std::make_shared<Impl>(*oldImpl);
   pImpl->Warp(warpFunc);
-  return Manifold(std::make_shared<CsgLeafNode>(pImpl));
+  return Manifold(std::make_shared<SEOLeafNode>(pImpl));
 }
 
 /**
@@ -588,15 +588,15 @@ Manifold Manifold::Warp(std::function<void(vec3&)> warpFunc) const {
  */
 Manifold Manifold::WarpBatch(
     std::function<void(VecView<vec3>)> warpFunc) const {
-  auto oldImpl = GetCsgLeafNode().GetImpl();
+  auto oldImpl = GetSEOLeafNode().GetImpl();
   if (oldImpl->status_ != Error::NoError) {
     auto pImpl = std::make_shared<Impl>();
     pImpl->status_ = oldImpl->status_;
-    return Manifold(std::make_shared<CsgLeafNode>(pImpl));
+    return Manifold(std::make_shared<SEOLeafNode>(pImpl));
   }
   auto pImpl = std::make_shared<Impl>(*oldImpl);
   pImpl->WarpBatch(warpFunc);
-  return Manifold(std::make_shared<CsgLeafNode>(pImpl));
+  return Manifold(std::make_shared<SEOLeafNode>(pImpl));
 }
 
 /**
@@ -615,7 +615,7 @@ Manifold Manifold::SetProperties(
     int numProp,
     std::function<void(double* newProp, vec3 position, const double* oldProp)>
         propFunc) const {
-  auto pImpl = std::make_shared<Impl>(*GetCsgLeafNode().GetImpl());
+  auto pImpl = std::make_shared<Impl>(*GetSEOLeafNode().GetImpl());
   const int oldNumProp = NumProp();
   const Vec<double> oldProperties = pImpl->properties_;
 
@@ -644,7 +644,7 @@ Manifold Manifold::SetProperties(
   }
 
   pImpl->numProp_ = numProp;
-  return Manifold(std::make_shared<CsgLeafNode>(pImpl));
+  return Manifold(std::make_shared<SEOLeafNode>(pImpl));
 }
 
 /**
@@ -664,9 +664,9 @@ Manifold Manifold::SetProperties(
  * will be automatically expanded to include the channel index specified.
  */
 Manifold Manifold::CalculateCurvature(int gaussianIdx, int meanIdx) const {
-  auto pImpl = std::make_shared<Impl>(*GetCsgLeafNode().GetImpl());
+  auto pImpl = std::make_shared<Impl>(*GetSEOLeafNode().GetImpl());
   pImpl->CalculateCurvature(gaussianIdx, meanIdx);
-  return Manifold(std::make_shared<CsgLeafNode>(pImpl));
+  return Manifold(std::make_shared<SEOLeafNode>(pImpl));
 }
 
 /**
@@ -685,9 +685,9 @@ Manifold Manifold::CalculateCurvature(int gaussianIdx, int meanIdx) const {
  * but in this case it would be better not to calculate normals at all.
  */
 Manifold Manifold::CalculateNormals(int normalIdx, double minSharpAngle) const {
-  auto pImpl = std::make_shared<Impl>(*GetCsgLeafNode().GetImpl());
+  auto pImpl = std::make_shared<Impl>(*GetSEOLeafNode().GetImpl());
   pImpl->SetNormals(normalIdx, minSharpAngle);
-  return Manifold(std::make_shared<CsgLeafNode>(pImpl));
+  return Manifold(std::make_shared<SEOLeafNode>(pImpl));
 }
 
 /**
@@ -702,11 +702,11 @@ Manifold Manifold::CalculateNormals(int normalIdx, double minSharpAngle) const {
  * agree will result in a sharp edge.
  */
 Manifold Manifold::SmoothByNormals(int normalIdx) const {
-  auto pImpl = std::make_shared<Impl>(*GetCsgLeafNode().GetImpl());
+  auto pImpl = std::make_shared<Impl>(*GetSEOLeafNode().GetImpl());
   if (!IsEmpty()) {
     pImpl->CreateTangents(normalIdx);
   }
-  return Manifold(std::make_shared<CsgLeafNode>(pImpl));
+  return Manifold(std::make_shared<SEOLeafNode>(pImpl));
 }
 
 /**
@@ -728,7 +728,7 @@ Manifold Manifold::SmoothByNormals(int normalIdx) const {
  * 180 - all edges will be smooth.
  */
 Manifold Manifold::SmoothOut(double minSharpAngle, double minSmoothness) const {
-  auto pImpl = std::make_shared<Impl>(*GetCsgLeafNode().GetImpl());
+  auto pImpl = std::make_shared<Impl>(*GetSEOLeafNode().GetImpl());
   if (!IsEmpty()) {
     if (minSmoothness == 0) {
       const int numProp = pImpl->numProp_;
@@ -744,7 +744,7 @@ Manifold Manifold::SmoothOut(double minSharpAngle, double minSmoothness) const {
       pImpl->CreateTangents(pImpl->SharpenEdges(minSharpAngle, minSmoothness));
     }
   }
-  return Manifold(std::make_shared<CsgLeafNode>(pImpl));
+  return Manifold(std::make_shared<SEOLeafNode>(pImpl));
 }
 
 /**
@@ -759,11 +759,11 @@ Manifold Manifold::SmoothOut(double minSharpAngle, double minSmoothness) const {
  * @param n The number of pieces to split every edge into. Must be > 1.
  */
 Manifold Manifold::Refine(int n) const {
-  auto pImpl = std::make_shared<Impl>(*GetCsgLeafNode().GetImpl());
+  auto pImpl = std::make_shared<Impl>(*GetSEOLeafNode().GetImpl());
   if (n > 1) {
     pImpl->Refine([n](vec3, vec4, vec4) { return n - 1; });
   }
-  return Manifold(std::make_shared<CsgLeafNode>(pImpl));
+  return Manifold(std::make_shared<SEOLeafNode>(pImpl));
 }
 
 /**
@@ -778,11 +778,11 @@ Manifold Manifold::Refine(int n) const {
  */
 Manifold Manifold::RefineToLength(double length) const {
   length = std::abs(length);
-  auto pImpl = std::make_shared<Impl>(*GetCsgLeafNode().GetImpl());
+  auto pImpl = std::make_shared<Impl>(*GetSEOLeafNode().GetImpl());
   pImpl->Refine([length](vec3 edge, vec4, vec4) {
     return static_cast<int>(la::length(edge) / length);
   });
-  return Manifold(std::make_shared<CsgLeafNode>(pImpl));
+  return Manifold(std::make_shared<SEOLeafNode>(pImpl));
 }
 
 /**
@@ -799,7 +799,7 @@ Manifold Manifold::RefineToLength(double length) const {
  */
 Manifold Manifold::RefineToTolerance(double tolerance) const {
   tolerance = std::abs(tolerance);
-  auto pImpl = std::make_shared<Impl>(*GetCsgLeafNode().GetImpl());
+  auto pImpl = std::make_shared<Impl>(*GetSEOLeafNode().GetImpl());
   if (!pImpl->halfedgeTangent_.empty()) {
     pImpl->Refine(
         [tolerance](vec3 edge, vec4 tangentStart, vec4 tangentEnd) {
@@ -817,7 +817,7 @@ Manifold Manifold::RefineToTolerance(double tolerance) const {
         },
         true);
   }
-  return Manifold(std::make_shared<CsgLeafNode>(pImpl));
+  return Manifold(std::make_shared<SEOLeafNode>(pImpl));
 }
 
 /**
@@ -848,10 +848,10 @@ Manifold Manifold::BatchBoolean(const std::vector<Manifold>& manifolds,
     return Manifold();
   else if (manifolds.size() == 1)
     return manifolds[0];
-  std::vector<std::shared_ptr<CsgNode>> children;
+  std::vector<std::shared_ptr<SEONode>> children;
   children.reserve(manifolds.size());
   for (const auto& m : manifolds) children.push_back(m.pNode_);
-  return Manifold(std::make_shared<CsgOpNode>(children, op));
+  return Manifold(std::make_shared<SEOOpNode>(children, op));
 }
 
 /**
@@ -907,13 +907,13 @@ Manifold& Manifold::operator^=(const Manifold& Q) {
  * @param cutter
  */
 std::pair<Manifold, Manifold> Manifold::Split(const Manifold& cutter) const {
-  auto impl1 = GetCsgLeafNode().GetImpl();
-  auto impl2 = cutter.GetCsgLeafNode().GetImpl();
+  auto impl1 = GetSEOLeafNode().GetImpl();
+  auto impl2 = cutter.GetSEOLeafNode().GetImpl();
 
   Boolean3 boolean(*impl1, *impl2, OpType::Subtract);
-  auto result1 = std::make_shared<CsgLeafNode>(
+  auto result1 = std::make_shared<SEOLeafNode>(
       std::make_unique<Impl>(boolean.Result(OpType::Intersect)));
-  auto result2 = std::make_shared<CsgLeafNode>(
+  auto result2 = std::make_shared<SEOLeafNode>(
       std::make_unique<Impl>(boolean.Result(OpType::Subtract)));
   return std::make_pair(Manifold(result1), Manifold(result2));
 }
@@ -952,7 +952,7 @@ Manifold Manifold::TrimByPlane(vec3 normal, double originOffset) const {
  * the top of the bounding box will return empty.
  */
 Polygons Manifold::Slice(double height) const {
-  return GetCsgLeafNode().GetImpl()->Slice(height);
+  return GetSEOLeafNode().GetImpl()->Slice(height);
 }
 
 /**
@@ -962,7 +962,7 @@ Polygons Manifold::Slice(double height) const {
  * a sensible result before using them.
  */
 Polygons Manifold::Project() const {
-  return GetCsgLeafNode().GetImpl()->Project();
+  return GetSEOLeafNode().GetImpl()->Project();
 }
 
 ExecutionParams& ManifoldParams() { return manifoldParams; }
@@ -977,7 +977,7 @@ ExecutionParams& ManifoldParams() { return manifoldParams; }
 Manifold Manifold::Hull(const std::vector<vec3>& pts) {
   std::shared_ptr<Impl> impl = std::make_shared<Impl>();
   impl->Hull(Vec<vec3>(pts));
-  return Manifold(std::make_shared<CsgLeafNode>(impl));
+  return Manifold(std::make_shared<SEOLeafNode>(impl));
 }
 
 /**
@@ -985,8 +985,8 @@ Manifold Manifold::Hull(const std::vector<vec3>& pts) {
  */
 Manifold Manifold::Hull() const {
   std::shared_ptr<Impl> impl = std::make_shared<Impl>();
-  impl->Hull(GetCsgLeafNode().GetImpl()->vertPos_);
-  return Manifold(std::make_shared<CsgLeafNode>(impl));
+  impl->Hull(GetSEOLeafNode().GetImpl()->vertPos_);
+  return Manifold(std::make_shared<SEOLeafNode>(impl));
 }
 
 /**
@@ -1009,7 +1009,7 @@ double Manifold::MinGap(const Manifold& other, double searchLength) const {
   auto intersect = *this ^ other;
   if (!intersect.IsEmpty()) return 0.0;
 
-  return GetCsgLeafNode().GetImpl()->MinGap(*other.GetCsgLeafNode().GetImpl(),
+  return GetSEOLeafNode().GetImpl()->MinGap(*other.GetSEOLeafNode().GetImpl(),
                                             searchLength);
 }
 }  // namespace manifold

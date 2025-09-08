@@ -38,8 +38,8 @@
 #include "editor/editor_node.h"
 #include "editor/import/3d/scene_import_settings.h"
 #include "editor/settings/editor_settings.h"
-#include "scene/3d/importer_mesh_instance_3d.h"
-#include "scene/3d/mesh_instance_3d.h"
+#include "scene/3d/importer_se_mesh.h"
+#include "scene/3d/se_mesh.h"
 #include "scene/3d/navigation/navigation_region_3d.h"
 #include "scene/3d/occluder_instance_3d.h"
 #include "scene/3d/physics/area_3d.h"
@@ -608,13 +608,13 @@ void _populate_scalable_nodes_collection(Node *p_node, ScalableNodeCollection &p
 	Node3D *node_3d = Object::cast_to<Node3D>(p_node);
 	if (node_3d) {
 		p_collection.node_3ds.insert(node_3d);
-		ImporterMeshInstance3D *mesh_instance_3d = Object::cast_to<ImporterMeshInstance3D>(p_node);
-		if (mesh_instance_3d) {
-			Ref<ImporterMesh> mesh = mesh_instance_3d->get_mesh();
+		ImporterSEMesh *se_mesh = Object::cast_to<ImporterSEMesh>(p_node);
+		if (se_mesh) {
+			Ref<ImporterMesh> mesh = se_mesh->get_mesh();
 			if (mesh.is_valid()) {
 				p_collection.importer_meshes.insert(mesh);
 			}
-			Ref<Skin> skin = mesh_instance_3d->get_skin();
+			Ref<Skin> skin = se_mesh->get_skin();
 			if (skin.is_valid()) {
 				p_collection.skins.insert(skin);
 			}
@@ -674,8 +674,8 @@ Node *ResourceImporterScene::_pre_fix_node(Node *p_node, Node *p_root, HashMap<R
 		return nullptr;
 	}
 
-	if (Object::cast_to<ImporterMeshInstance3D>(p_node)) {
-		ImporterMeshInstance3D *mi = Object::cast_to<ImporterMeshInstance3D>(p_node);
+	if (Object::cast_to<ImporterSEMesh>(p_node)) {
+		ImporterSEMesh *mi = Object::cast_to<ImporterSEMesh>(p_node);
 
 		Ref<ImporterMesh> m = mi->get_mesh();
 
@@ -790,7 +790,7 @@ Node *ResourceImporterScene::_pre_fix_node(Node *p_node, Node *p_root, HashMap<R
 			ERR_FAIL_V_MSG(nullptr, vformat("Skipped node `%s` because its name is empty after removing the suffix.", name));
 		}
 
-		ImporterMeshInstance3D *mi = Object::cast_to<ImporterMeshInstance3D>(p_node);
+		ImporterSEMesh *mi = Object::cast_to<ImporterSEMesh>(p_node);
 		if (mi) {
 			Ref<ImporterMesh> mesh = mi->get_mesh();
 
@@ -852,12 +852,12 @@ Node *ResourceImporterScene::_pre_fix_node(Node *p_node, Node *p_root, HashMap<R
 			colshape->set_owner(sb->get_owner());
 		}
 
-	} else if (_teststr(name, "rigid") && Object::cast_to<ImporterMeshInstance3D>(p_node)) {
+	} else if (_teststr(name, "rigid") && Object::cast_to<ImporterSEMesh>(p_node)) {
 		if (isroot) {
 			return p_node;
 		}
 
-		ImporterMeshInstance3D *mi = Object::cast_to<ImporterMeshInstance3D>(p_node);
+		ImporterSEMesh *mi = Object::cast_to<ImporterSEMesh>(p_node);
 		Ref<ImporterMesh> mesh = mi->get_mesh();
 
 		if (mesh.is_valid()) {
@@ -881,8 +881,8 @@ Node *ResourceImporterScene::_pre_fix_node(Node *p_node, Node *p_root, HashMap<R
 			_add_shapes(rigid_body, shapes);
 		}
 
-	} else if ((_teststr(name, "col") || (_teststr(name, "convcol"))) && Object::cast_to<ImporterMeshInstance3D>(p_node)) {
-		ImporterMeshInstance3D *mi = Object::cast_to<ImporterMeshInstance3D>(p_node);
+	} else if ((_teststr(name, "col") || (_teststr(name, "convcol"))) && Object::cast_to<ImporterSEMesh>(p_node)) {
+		ImporterSEMesh *mi = Object::cast_to<ImporterSEMesh>(p_node);
 
 		Ref<ImporterMesh> mesh = mi->get_mesh();
 
@@ -920,12 +920,12 @@ Node *ResourceImporterScene::_pre_fix_node(Node *p_node, Node *p_root, HashMap<R
 			}
 		}
 
-	} else if (_teststr(name, "navmesh") && Object::cast_to<ImporterMeshInstance3D>(p_node)) {
+	} else if (_teststr(name, "navmesh") && Object::cast_to<ImporterSEMesh>(p_node)) {
 		if (isroot) {
 			return p_node;
 		}
 
-		ImporterMeshInstance3D *mi = Object::cast_to<ImporterMeshInstance3D>(p_node);
+		ImporterSEMesh *mi = Object::cast_to<ImporterSEMesh>(p_node);
 
 		Ref<ImporterMesh> mesh = mi->get_mesh();
 		ERR_FAIL_COND_V(mesh.is_null(), nullptr);
@@ -944,7 +944,7 @@ Node *ResourceImporterScene::_pre_fix_node(Node *p_node, Node *p_root, HashMap<R
 		if (isroot) {
 			return p_node;
 		}
-		ImporterMeshInstance3D *mi = Object::cast_to<ImporterMeshInstance3D>(p_node);
+		ImporterSEMesh *mi = Object::cast_to<ImporterSEMesh>(p_node);
 		if (mi) {
 			Ref<ImporterMesh> mesh = mi->get_mesh();
 
@@ -1006,10 +1006,10 @@ Node *ResourceImporterScene::_pre_fix_node(Node *p_node, Node *p_root, HashMap<R
 		s->set_transform(Transform3D());
 
 		p_node = bv;
-	} else if (Object::cast_to<ImporterMeshInstance3D>(p_node)) {
+	} else if (Object::cast_to<ImporterSEMesh>(p_node)) {
 		//last attempt, maybe collision inside the mesh data
 
-		ImporterMeshInstance3D *mi = Object::cast_to<ImporterMeshInstance3D>(p_node);
+		ImporterSEMesh *mi = Object::cast_to<ImporterSEMesh>(p_node);
 
 		Ref<ImporterMesh> mesh = mi->get_mesh();
 		if (mesh.is_valid()) {
@@ -1463,7 +1463,7 @@ Node *ResourceImporterScene::_post_fix_node(Node *p_node, Node *p_root, HashMap<
 		node_settings = node_settings.duplicate(true);
 		//fill node settings for this node with default values
 		List<ImportOption> iopts;
-		if (Object::cast_to<ImporterMeshInstance3D>(p_node)) {
+		if (Object::cast_to<ImporterSEMesh>(p_node)) {
 			get_internal_import_options(INTERNAL_IMPORT_CATEGORY_MESH_3D_NODE, &iopts);
 		} else if (Object::cast_to<AnimationPlayer>(p_node)) {
 			get_internal_import_options(INTERNAL_IMPORT_CATEGORY_ANIMATION_NODE, &iopts);
@@ -1489,7 +1489,7 @@ Node *ResourceImporterScene::_post_fix_node(Node *p_node, Node *p_root, HashMap<
 		}
 	}
 
-	if (Object::cast_to<ImporterMeshInstance3D>(p_node)) {
+	if (Object::cast_to<ImporterSEMesh>(p_node)) {
 		ObjectID node_id = p_node->get_instance_id();
 		for (int i = 0; i < post_importer_plugins.size(); i++) {
 			post_importer_plugins.write[i]->internal_process(EditorScenePostImportPlugin::INTERNAL_IMPORT_CATEGORY_MESH_3D_NODE, p_root, p_node, Ref<Resource>(), node_settings);
@@ -1577,8 +1577,8 @@ Node *ResourceImporterScene::_post_fix_node(Node *p_node, Node *p_root, HashMap<
 		}
 	}
 
-	if (Object::cast_to<ImporterMeshInstance3D>(p_node)) {
-		ImporterMeshInstance3D *mi = Object::cast_to<ImporterMeshInstance3D>(p_node);
+	if (Object::cast_to<ImporterSEMesh>(p_node)) {
+		ImporterSEMesh *mi = Object::cast_to<ImporterSEMesh>(p_node);
 
 		Ref<ImporterMesh> m = mi->get_mesh();
 
@@ -1770,8 +1770,8 @@ Node *ResourceImporterScene::_post_fix_node(Node *p_node, Node *p_root, HashMap<
 	}
 
 	//navmesh (node may have changed type above)
-	if (Object::cast_to<ImporterMeshInstance3D>(p_node)) {
-		ImporterMeshInstance3D *mi = Object::cast_to<ImporterMeshInstance3D>(p_node);
+	if (Object::cast_to<ImporterSEMesh>(p_node)) {
+		ImporterSEMesh *mi = Object::cast_to<ImporterSEMesh>(p_node);
 
 		Ref<ImporterMesh> m = mi->get_mesh();
 
@@ -1801,8 +1801,8 @@ Node *ResourceImporterScene::_post_fix_node(Node *p_node, Node *p_root, HashMap<
 		}
 	}
 
-	if (Object::cast_to<ImporterMeshInstance3D>(p_node)) {
-		ImporterMeshInstance3D *mi = Object::cast_to<ImporterMeshInstance3D>(p_node);
+	if (Object::cast_to<ImporterSEMesh>(p_node)) {
+		ImporterSEMesh *mi = Object::cast_to<ImporterSEMesh>(p_node);
 
 		Ref<ImporterMesh> m = mi->get_mesh();
 
@@ -1828,8 +1828,8 @@ Node *ResourceImporterScene::_post_fix_node(Node *p_node, Node *p_root, HashMap<
 		}
 	}
 
-	if (Object::cast_to<ImporterMeshInstance3D>(p_node)) {
-		ImporterMeshInstance3D *mi = Object::cast_to<ImporterMeshInstance3D>(p_node);
+	if (Object::cast_to<ImporterSEMesh>(p_node)) {
+		ImporterSEMesh *mi = Object::cast_to<ImporterSEMesh>(p_node);
 
 		if (node_settings.has("mesh_instance/layers")) {
 			mi->set_layer_mask(node_settings["mesh_instance/layers"]);
@@ -2564,7 +2564,7 @@ void ResourceImporterScene::_replace_owner(Node *p_node, Node *p_scene, Node *p_
 	}
 }
 
-Array ResourceImporterScene::_get_skinned_pose_transforms(ImporterMeshInstance3D *p_src_mesh_node) {
+Array ResourceImporterScene::_get_skinned_pose_transforms(ImporterSEMesh *p_src_mesh_node) {
 	Array skin_pose_transform_array;
 
 	const Ref<Skin> skin = p_src_mesh_node->get_skin();
@@ -2598,10 +2598,10 @@ Array ResourceImporterScene::_get_skinned_pose_transforms(ImporterMeshInstance3D
 }
 
 Node *ResourceImporterScene::_generate_meshes(Node *p_node, const Dictionary &p_mesh_data, bool p_generate_lods, bool p_create_shadow_meshes, LightBakeMode p_light_bake_mode, float p_lightmap_texel_size, const Vector<uint8_t> &p_src_lightmap_cache, Vector<Vector<uint8_t>> &r_lightmap_caches) {
-	ImporterMeshInstance3D *src_mesh_node = Object::cast_to<ImporterMeshInstance3D>(p_node);
+	ImporterSEMesh *src_mesh_node = Object::cast_to<ImporterSEMesh>(p_node);
 	if (src_mesh_node) {
 		//is mesh
-		MeshInstance3D *mesh_node = memnew(MeshInstance3D);
+		SEMesh *mesh_node = memnew(SEMesh);
 		mesh_node->set_name(src_mesh_node->get_name());
 		mesh_node->set_transform(src_mesh_node->get_transform());
 		mesh_node->set_skin(src_mesh_node->get_skin());
@@ -2881,7 +2881,7 @@ void ResourceImporterScene::_optimize_track_usage(AnimationPlayer *p_player, Ani
 				Node *n = parent->get_node(path);
 
 				if (j == TRACK_CHANNEL_BLEND_SHAPE) {
-					MeshInstance3D *mi = Object::cast_to<MeshInstance3D>(n);
+					SEMesh *mi = Object::cast_to<SEMesh>(n);
 					if (mi && path.get_subname_count() > 0) {
 						StringName bs = path.get_subname(0);
 						bool valid;
@@ -3449,20 +3449,20 @@ Node *EditorSceneFormatImporterESCN::import_scene(const String &p_path, uint32_t
 	Ref<PackedScene> ps = ResourceFormatLoaderText::singleton->load(p_path, p_path, &error);
 	ERR_FAIL_COND_V_MSG(ps.is_null(), nullptr, "Cannot load scene as text resource from path '" + p_path + "'.");
 	Node *scene = ps->instantiate();
-	TypedArray<Node> nodes = scene->find_children("*", "MeshInstance3D");
+	TypedArray<Node> nodes = scene->find_children("*", "SEMesh");
 	for (int32_t node_i = 0; node_i < nodes.size(); node_i++) {
-		MeshInstance3D *mesh_3d = cast_to<MeshInstance3D>(nodes[node_i]);
+		SEMesh *mesh_3d = cast_to<SEMesh>(nodes[node_i]);
 		Ref<ImporterMesh> mesh;
 		mesh.instantiate();
 		// Ignore the aabb, it will be recomputed.
-		ImporterMeshInstance3D *importer_mesh_3d = memnew(ImporterMeshInstance3D);
+		ImporterSEMesh *importer_mesh_3d = memnew(ImporterSEMesh);
 		importer_mesh_3d->set_name(mesh_3d->get_name());
 		importer_mesh_3d->set_transform(mesh_3d->get_relative_transform(mesh_3d->get_parent()));
 		importer_mesh_3d->set_skin(mesh_3d->get_skin());
 		importer_mesh_3d->set_skeleton_path(mesh_3d->get_skeleton_path());
 		Ref<ArrayMesh> array_mesh_3d_mesh = mesh_3d->get_mesh();
 		if (array_mesh_3d_mesh.is_valid()) {
-			// For the MeshInstance3D nodes, we need to convert the ArrayMesh to an ImporterMesh specially.
+			// For the SEMesh nodes, we need to convert the ArrayMesh to an ImporterMesh specially.
 			mesh->set_name(array_mesh_3d_mesh->get_name());
 			for (int32_t blend_i = 0; blend_i < array_mesh_3d_mesh->get_blend_shape_count(); blend_i++) {
 				mesh->add_blend_shape(array_mesh_3d_mesh->get_blend_shape_name(blend_i));
@@ -3483,7 +3483,7 @@ Node *EditorSceneFormatImporterESCN::import_scene(const String &p_path, uint32_t
 		}
 		Ref<Mesh> mesh_3d_mesh = mesh_3d->get_mesh();
 		if (mesh_3d_mesh.is_valid()) {
-			// For the MeshInstance3D nodes, we need to convert the Mesh to an ImporterMesh specially.
+			// For the SEMesh nodes, we need to convert the Mesh to an ImporterMesh specially.
 			mesh->set_name(mesh_3d_mesh->get_name());
 			for (int32_t surface_i = 0; surface_i < mesh_3d_mesh->get_surface_count(); surface_i++) {
 				mesh->add_surface(mesh_3d_mesh->surface_get_primitive_type(surface_i),

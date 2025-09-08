@@ -855,7 +855,7 @@ msgstr "שנה מרווח הנפשה"
 msgid "Rearrange Tracks"
 msgstr "סדר רצועות מחדש"
 
-msgid "Blend Shape tracks only apply to MeshInstance3D nodes."
+msgid "Blend Shape tracks only apply to SEMesh nodes."
 msgstr "רצועות שינוי־צורה חלות רק על מפרקים מבוססי־מרחב."
 
 msgid "Add Track"

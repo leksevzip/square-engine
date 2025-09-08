@@ -35,7 +35,7 @@
 #include "core/math/delaunay_3d.h"
 #include "core/object/object.h"
 #include "scene/3d/lightmap_probe.h"
-#include "scene/3d/mesh_instance_3d.h"
+#include "scene/3d/se_mesh.h"
 #include "scene/resources/camera_attributes.h"
 #include "scene/resources/environment.h"
 #include "scene/resources/image_texture.h"
@@ -371,7 +371,7 @@ LightmapGIData::~LightmapGIData() {
 ///////////////////////////
 
 void LightmapGI::_find_meshes_and_lights(Node *p_at_node, Vector<MeshesFound> &meshes, Vector<LightsFound> &lights, Vector<Vector3> &probes) {
-	MeshInstance3D *mi = Object::cast_to<MeshInstance3D>(p_at_node);
+	SEMesh *mi = Object::cast_to<SEMesh>(p_at_node);
 	if (mi && mi->get_gi_mode() == GeometryInstance3D::GI_MODE_STATIC && mi->is_visible_in_tree()) {
 		Ref<Mesh> mesh = mi->get_mesh();
 		if (mesh.is_valid()) {

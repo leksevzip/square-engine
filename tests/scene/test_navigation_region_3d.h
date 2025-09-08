@@ -30,7 +30,7 @@
 
 #pragma once
 
-#include "scene/3d/mesh_instance_3d.h"
+#include "scene/3d/se_mesh.h"
 #include "scene/3d/navigation/navigation_region_3d.h"
 #include "scene/main/window.h"
 #include "scene/resources/3d/primitive_meshes.h"
@@ -55,7 +55,7 @@ TEST_SUITE("[Navigation3D]") {
 		node_3d->add_child(navigation_region);
 		Ref<PlaneMesh> plane_mesh = memnew(PlaneMesh);
 		plane_mesh->set_size(Size2(10.0, 10.0));
-		MeshInstance3D *mesh_instance = memnew(MeshInstance3D);
+		SEMesh *mesh_instance = memnew(SEMesh);
 		mesh_instance->set_mesh(plane_mesh);
 		navigation_region->add_child(mesh_instance);
 

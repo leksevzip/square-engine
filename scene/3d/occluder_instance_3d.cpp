@@ -34,8 +34,8 @@
 #include "core/io/marshalls.h"
 #include "core/math/geometry_2d.h"
 #include "core/math/triangulate.h"
-#include "scene/3d/importer_mesh_instance_3d.h"
-#include "scene/3d/mesh_instance_3d.h"
+#include "scene/3d/importer_se_mesh.h"
+#include "scene/3d/se_mesh.h"
 #include "scene/resources/3d/importer_mesh.h"
 #include "scene/resources/surface_tool.h"
 
@@ -564,7 +564,7 @@ void OccluderInstance3D::_bake_surface(const Transform3D &p_transform, Array p_s
 }
 
 void OccluderInstance3D::_bake_node(Node *p_node, PackedVector3Array &r_vertices, PackedInt32Array &r_indices) {
-	MeshInstance3D *mi = Object::cast_to<MeshInstance3D>(p_node);
+	SEMesh *mi = Object::cast_to<SEMesh>(p_node);
 	if (mi && mi->is_visible_in_tree()) {
 		Ref<Mesh> mesh = mi->get_mesh();
 		bool valid = true;
@@ -605,7 +605,7 @@ void OccluderInstance3D::bake_single_node(const Node3D *p_node, float p_simplifi
 
 	Transform3D xform = p_node->is_inside_tree() ? p_node->get_global_transform() : p_node->get_transform();
 
-	const MeshInstance3D *mi = Object::cast_to<MeshInstance3D>(p_node);
+	const SEMesh *mi = Object::cast_to<SEMesh>(p_node);
 	if (mi) {
 		Ref<Mesh> mesh = mi->get_mesh();
 		bool valid = true;
@@ -625,7 +625,7 @@ void OccluderInstance3D::bake_single_node(const Node3D *p_node, float p_simplifi
 		}
 	}
 
-	const ImporterMeshInstance3D *imi = Object::cast_to<ImporterMeshInstance3D>(p_node);
+	const ImporterSEMesh *imi = Object::cast_to<ImporterSEMesh>(p_node);
 	if (imi) {
 		Ref<ImporterMesh> mesh = imi->get_mesh();
 		bool valid = true;

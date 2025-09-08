@@ -353,7 +353,7 @@ def generate_scu_files(max_includes_per_scu):
     process_folder(["modules/godot_physics_3d"])
     process_folder(["modules/godot_physics_3d/joints"])
 
-    process_folder(["modules/csg"])
+    process_folder(["modules/SEO"])
     process_folder(["modules/gdscript"])
     process_folder(["modules/gdscript/editor"])
     process_folder(["modules/gdscript/language_server"])

@@ -569,7 +569,7 @@ _HZ_GetUnicodeSet(const UConverter *cnv,
     sa->addRange(sa->set, 0, 0x7f);
 
     /* add all of the code points that the sub-converter handles */
-    ucnv_MBCSGetFilteredUnicodeSetForUnicode(
+    ucnv_MBSEOetFilteredUnicodeSetForUnicode(
         ((UConverterDataHZ*)cnv->extraInfo)->gbConverter->sharedData,
         sa, which, UCNV_SET_FILTER_HZ,
         pErrorCode);

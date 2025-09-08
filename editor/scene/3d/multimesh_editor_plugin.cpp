@@ -34,7 +34,7 @@
 #include "editor/editor_string_names.h"
 #include "editor/scene/3d/node_3d_editor_plugin.h"
 #include "editor/scene/scene_tree_editor.h"
-#include "scene/3d/mesh_instance_3d.h"
+#include "scene/3d/se_mesh.h"
 #include "scene/gui/box_container.h"
 #include "scene/gui/menu_button.h"
 #include "scene/gui/option_button.h"
@@ -77,10 +77,10 @@ void MultiMeshEditor::_populate() {
 			return;
 		}
 
-		MeshInstance3D *ms_instance = Object::cast_to<MeshInstance3D>(ms_node);
+		SEMesh *ms_instance = Object::cast_to<SEMesh>(ms_node);
 
 		if (!ms_instance) {
-			err_dialog->set_text(TTR("Mesh source is invalid (not a MeshInstance3D)."));
+			err_dialog->set_text(TTR("Mesh source is invalid (not a SEMesh)."));
 			err_dialog->popup_centered();
 			return;
 		}
@@ -108,7 +108,7 @@ void MultiMeshEditor::_populate() {
 		return;
 	}
 
-	MeshInstance3D *ss_instance = Object::cast_to<MeshInstance3D>(ss_node);
+	SEMesh *ss_instance = Object::cast_to<SEMesh>(ss_node);
 
 	if (!ss_instance || ss_instance->get_mesh().is_null()) {
 		err_dialog->set_text(TTR("Surface source is invalid (no geometry)."));
@@ -249,7 +249,7 @@ void MultiMeshEditor::_menu_option(int p_option) {
 	}
 }
 
-void MultiMeshEditor::edit(MultiMeshInstance3D *p_multimesh) {
+void MultiMeshEditor::edit(MultiSEMesh *p_multimesh) {
 	node = p_multimesh;
 }
 
@@ -272,7 +272,7 @@ MultiMeshEditor::MultiMeshEditor() {
 	Node3DEditor::get_singleton()->add_control_to_menu_panel(options);
 
 	options->set_text("MultiMesh");
-	options->set_button_icon(EditorNode::get_singleton()->get_editor_theme()->get_icon(SNAME("MultiMeshInstance3D"), EditorStringName(EditorIcons)));
+	options->set_button_icon(EditorNode::get_singleton()->get_editor_theme()->get_icon(SNAME("MultiSEMesh"), EditorStringName(EditorIcons)));
 	options->set_flat(false);
 	options->set_theme_type_variation("FlatMenuButton");
 
@@ -364,7 +364,7 @@ MultiMeshEditor::MultiMeshEditor() {
 	populate_dialog->get_ok_button()->connect(SceneStringName(pressed), callable_mp(this, &MultiMeshEditor::_populate));
 	std = memnew(SceneTreeDialog);
 	Vector<StringName> valid_types;
-	valid_types.push_back("MeshInstance3D");
+	valid_types.push_back("SEMesh");
 	std->set_valid_types(valid_types);
 	populate_dialog->add_child(std);
 	std->connect("selected", callable_mp(this, &MultiMeshEditor::_browsed));
@@ -376,11 +376,11 @@ MultiMeshEditor::MultiMeshEditor() {
 }
 
 void MultiMeshEditorPlugin::edit(Object *p_object) {
-	multimesh_editor->edit(Object::cast_to<MultiMeshInstance3D>(p_object));
+	multimesh_editor->edit(Object::cast_to<MultiSEMesh>(p_object));
 }
 
 bool MultiMeshEditorPlugin::handles(Object *p_object) const {
-	return p_object->is_class("MultiMeshInstance3D");
+	return p_object->is_class("MultiSEMesh");
 }
 
 void MultiMeshEditorPlugin::make_visible(bool p_visible) {

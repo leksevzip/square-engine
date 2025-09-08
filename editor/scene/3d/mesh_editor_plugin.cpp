@@ -131,7 +131,7 @@ MeshEditor::MeshEditor() {
 
 	rotation = memnew(Node3D);
 	viewport->add_child(rotation);
-	mesh_instance = memnew(MeshInstance3D);
+	mesh_instance = memnew(SEMesh);
 	rotation->add_child(mesh_instance);
 
 	set_custom_minimum_size(Size2(1, 150) * EDSCALE);

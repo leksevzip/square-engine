@@ -500,7 +500,7 @@ ucnv_setSubstString(UConverter *cnv,
     if (cnv->sharedData->impl->writeSub == nullptr
 #if !UCONFIG_NO_LEGACY_CONVERSION
         || (cnv->sharedData->staticData->conversionType == UCNV_MBCS &&
-         ucnv_MBCSGetType(cnv) != UCNV_EBCDIC_STATEFUL)
+         ucnv_MBSEOetType(cnv) != UCNV_EBCDIC_STATEFUL)
 #endif
     ) {
         /* The converter is not stateful. Store the charset bytes as a fixed string. */
@@ -2612,7 +2612,7 @@ ucnv_getType(const UConverter* converter)
     int8_t type = converter->sharedData->staticData->conversionType;
 #if !UCONFIG_NO_LEGACY_CONVERSION
     if(type == UCNV_MBCS) {
-        return ucnv_MBCSGetType(converter);
+        return ucnv_MBSEOetType(converter);
     }
 #endif
     return (UConverterType)type;

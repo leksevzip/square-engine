@@ -2666,8 +2666,8 @@ msgstr "스켈레톤"
 msgid "Selected Bone"
 msgstr "선택된 본"
 
-msgid "CSG"
-msgstr "CSG"
+msgid "SEO"
+msgstr "SEO"
 
 msgid "GridMap Grid"
 msgstr "그리드맵 격자"

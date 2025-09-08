@@ -20,7 +20,7 @@
 #include <map>
 #include <optional>
 
-#include "csg_tree.h"
+#include "SEO_tree.h"
 #include "disjoint_sets.h"
 #include "hashtable.h"
 #include "manifold/optional_assert.h"
@@ -874,7 +874,7 @@ Manifold Manifold::ReadOBJ(std::istream& stream) {
  */
 bool Manifold::WriteOBJ(std::ostream& stream) const {
   if (!stream.good()) return false;
-  stream << *this->GetCsgLeafNode().GetImpl();
+  stream << *this->GetSEOLeafNode().GetImpl();
   return true;
 }
 #endif

@@ -312,10 +312,10 @@ void ConvexShape::sCastConvexVsConvex(const ShapeCast &inShapeCast, const ShapeC
 	}
 }
 
-class ConvexShape::CSGetTrianglesContext
+class ConvexShape::SEOetTrianglesContext
 {
 public:
-				CSGetTrianglesContext(const ConvexShape *inShape, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale) :
+				SEOetTrianglesContext(const ConvexShape *inShape, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale) :
 		mLocalToWorld(Mat44::sRotationTranslation(inRotation, inPositionCOM) * Mat44::sScale(inScale)),
 		mIsInsideOut(ScaleHelpers::IsInsideOut(inScale))
 	{
@@ -331,17 +331,17 @@ public:
 
 void ConvexShape::GetTrianglesStart(GetTrianglesContext &ioContext, const AABox &inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale) const
 {
-	static_assert(sizeof(CSGetTrianglesContext) <= sizeof(GetTrianglesContext), "GetTrianglesContext too small");
-	JPH_ASSERT(IsAligned(&ioContext, alignof(CSGetTrianglesContext)));
+	static_assert(sizeof(SEOetTrianglesContext) <= sizeof(GetTrianglesContext), "GetTrianglesContext too small");
+	JPH_ASSERT(IsAligned(&ioContext, alignof(SEOetTrianglesContext)));
 
-	new (&ioContext) CSGetTrianglesContext(this, inPositionCOM, inRotation, inScale);
+	new (&ioContext) SEOetTrianglesContext(this, inPositionCOM, inRotation, inScale);
 }
 
 int ConvexShape::GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const PhysicsMaterial **outMaterials) const
 {
 	JPH_ASSERT(inMaxTrianglesRequested >= cGetTrianglesMinTrianglesRequested);
 
-	CSGetTrianglesContext &context = (CSGetTrianglesContext &)ioContext;
+	SEOetTrianglesContext &context = (SEOetTrianglesContext &)ioContext;
 
 	int total_num_vertices = min(inMaxTrianglesRequested * 3, int(sUnitSphereTriangles.size() - context.mCurrentVertex));
 

@@ -2418,8 +2418,8 @@ msgstr "スケルトン"
 msgid "Selected Bone"
 msgstr "選択中のボーン"
 
-msgid "CSG"
-msgstr "CSG"
+msgid "SEO"
+msgstr "SEO"
 
 msgid "Spring Bone Joint"
 msgstr "スプリングボーンのジョイント"

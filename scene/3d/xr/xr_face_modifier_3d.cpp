@@ -499,7 +499,7 @@ void XRFaceModifier3D::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("set_target", "target"), &XRFaceModifier3D::set_target);
 	ClassDB::bind_method(D_METHOD("get_target"), &XRFaceModifier3D::get_target);
-	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "target", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "MeshInstance3D"), "set_target", "get_target");
+	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "target", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "SEMesh"), "set_target", "get_target");
 }
 
 void XRFaceModifier3D::set_face_tracker(const StringName &p_tracker_name) {
@@ -522,7 +522,7 @@ NodePath XRFaceModifier3D::get_target() const {
 	return target;
 }
 
-MeshInstance3D *XRFaceModifier3D::get_mesh_instance() const {
+SEMesh *XRFaceModifier3D::get_mesh_instance() const {
 	if (!has_node(target)) {
 		return nullptr;
 	}
@@ -532,7 +532,7 @@ MeshInstance3D *XRFaceModifier3D::get_mesh_instance() const {
 		return nullptr;
 	}
 
-	return Object::cast_to<MeshInstance3D>(node);
+	return Object::cast_to<SEMesh>(node);
 }
 
 void XRFaceModifier3D::_get_blend_data() {
@@ -549,8 +549,8 @@ void XRFaceModifier3D::_get_blend_data() {
 
 	blend_mapping.clear();
 
-	// Get the target MeshInstance3D.
-	const MeshInstance3D *mesh_instance = get_mesh_instance();
+	// Get the target SEMesh.
+	const SEMesh *mesh_instance = get_mesh_instance();
 	if (!mesh_instance) {
 		return;
 	}
@@ -582,7 +582,7 @@ void XRFaceModifier3D::_update_face_blends() const {
 	}
 
 	// Get the face mesh.
-	MeshInstance3D *mesh_instance = get_mesh_instance();
+	SEMesh *mesh_instance = get_mesh_instance();
 	if (!mesh_instance) {
 		return;
 	}
