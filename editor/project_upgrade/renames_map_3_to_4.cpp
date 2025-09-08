@@ -375,7 +375,7 @@ const char *RenamesMap3To4::gdscript_function_renames[][2] = {
 	{ "get_shader_param", "get_shader_parameter" }, // ShaderMaterial
 	{ "get_shift", "is_shift_pressed" }, // InputEventWithModifiers
 	{ "get_size_override", "get_size_2d_override" }, // SubViewport
-	{ "get_slide_count", "get_slide_collision_count" }, // CharacterBody2D, CharacterBody3D
+	{ "get_slide_count", "get_slide_collision_count" }, // CharacterBody2D, SECharacter
 	{ "get_slips_on_slope", "get_slide_on_slope" }, // SeparationRayShape2D, SeparationRayShape3D
 	{ "get_space_override_mode", "get_gravity_space_override_mode" }, // Area2D
 	{ "get_spatial_node", "get_node_3d" }, // EditorNode3DGizmo
@@ -1529,7 +1529,7 @@ const char *RenamesMap3To4::class_renames[][2] = {
 	{ "InterpolatedCamera3D", "SECamera" },
 	{ "JSONParseResult", "JSON" },
 	{ "Joint", "Joint3D" },
-	{ "KinematicBody", "CharacterBody3D" },
+	{ "KinematicBody", "SECharacter" },
 	{ "KinematicBody2D", "CharacterBody2D" },
 	{ "KinematicCollision", "KinematicCollision3D" },
 	{ "LargeTexture", "ImageTexture" },

@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  character_body_3d.h                                                   */
+/*  se_character.h                                                   */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -33,8 +33,8 @@
 #include "scene/3d/physics/kinematic_collision_3d.h"
 #include "scene/3d/physics/physics_body_3d.h"
 
-class CharacterBody3D : public PhysicsBody3D {
-	GDCLASS(CharacterBody3D, PhysicsBody3D);
+class SECharacter : public PhysicsBody3D {
+	GDCLASS(SECharacter, PhysicsBody3D);
 
 public:
 	enum MotionMode {
@@ -111,7 +111,7 @@ public:
 	void set_platform_on_leave(PlatformOnLeave p_on_leave_velocity);
 	PlatformOnLeave get_platform_on_leave() const;
 
-	CharacterBody3D();
+	SECharacter();
 
 private:
 	real_t margin = 0.001;
@@ -182,5 +182,5 @@ protected:
 	void _validate_property(PropertyInfo &p_property) const;
 };
 
-VARIANT_ENUM_CAST(CharacterBody3D::MotionMode);
-VARIANT_ENUM_CAST(CharacterBody3D::PlatformOnLeave);
+VARIANT_ENUM_CAST(SECharacter::MotionMode);
+VARIANT_ENUM_CAST(SECharacter::PlatformOnLeave);

@@ -32,7 +32,7 @@
 
 #include "scene/3d/physics/animatable_body_3d.h"
 #include "scene/3d/physics/se_area.h"
-#include "scene/3d/physics/character_body_3d.h"
+#include "scene/3d/physics/se_character.h"
 #include "scene/3d/physics/se_body.h"
 #include "scene/3d/physics/vehicle_body_3d.h"
 
@@ -182,7 +182,7 @@ Ref<GLTFPhysicsBody> GLTFPhysicsBody::from_node(const CollisionObject3D *p_body_
 	Ref<GLTFPhysicsBody> physics_body;
 	physics_body.instantiate();
 	ERR_FAIL_NULL_V_MSG(p_body_node, physics_body, "Tried to create a GLTFPhysicsBody from a CollisionObject3D node, but the given node was null.");
-	if (cast_to<CharacterBody3D>(p_body_node)) {
+	if (cast_to<SECharacter>(p_body_node)) {
 		physics_body->body_type = PhysicsBodyType::CHARACTER;
 	} else if (cast_to<AnimatableBody3D>(p_body_node)) {
 		physics_body->body_type = PhysicsBodyType::ANIMATABLE;
@@ -209,7 +209,7 @@ Ref<GLTFPhysicsBody> GLTFPhysicsBody::from_node(const CollisionObject3D *p_body_
 CollisionObject3D *GLTFPhysicsBody::to_node() const {
 	switch (body_type) {
 		case PhysicsBodyType::CHARACTER: {
-			CharacterBody3D *body = memnew(CharacterBody3D);
+			SECharacter *body = memnew(SECharacter);
 			return body;
 		}
 		case PhysicsBodyType::ANIMATABLE: {

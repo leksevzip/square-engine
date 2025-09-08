@@ -318,7 +318,7 @@
 #ifndef PHYSICS_3D_DISABLED
 #include "scene/3d/physics/animatable_body_3d.h"
 #include "scene/3d/physics/se_area.h"
-#include "scene/3d/physics/character_body_3d.h"
+#include "scene/3d/physics/se_character.h"
 #include "scene/3d/physics/collision_polygon_3d.h"
 #include "scene/3d/physics/se_collision.h"
 #include "scene/3d/physics/joints/cone_twist_joint_3d.h"
@@ -670,7 +670,7 @@ void register_scene_types() {
 	GDREGISTER_CLASS(AnimatableBody3D);
 	GDREGISTER_CLASS(SEPhysicsBody);
 	GDREGISTER_CLASS(KinematicCollision3D);
-	GDREGISTER_CLASS(CharacterBody3D);
+	GDREGISTER_CLASS(SECharacter);
 	GDREGISTER_CLASS(SpringArm3D);
 
 	GDREGISTER_CLASS(PhysicalBoneSimulator3D);
@@ -1284,7 +1284,7 @@ void register_scene_types() {
 	ClassDB::add_compatibility_class("HeightMapShape", "HeightMapShape3D");
 	ClassDB::add_compatibility_class("HingeJoint", "HingeJoint3D");
 	ClassDB::add_compatibility_class("Joint", "Joint3D");
-	ClassDB::add_compatibility_class("KinematicBody", "CharacterBody3D");
+	ClassDB::add_compatibility_class("KinematicBody", "SECharacter");
 	ClassDB::add_compatibility_class("KinematicBody2D", "CharacterBody2D");
 	ClassDB::add_compatibility_class("KinematicCollision", "KinematicCollision3D");
 	ClassDB::add_compatibility_class("PhysicsBody", "PhysicsBody3D");

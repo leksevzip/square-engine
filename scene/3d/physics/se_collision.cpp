@@ -31,7 +31,7 @@
 #include "se_collision.h"
 
 #include "scene/3d/se_mesh.h"
-#include "scene/3d/physics/character_body_3d.h"
+#include "scene/3d/physics/se_character.h"
 #include "scene/3d/physics/vehicle_body_3d.h"
 #include "scene/resources/3d/concave_polygon_shape_3d.h"
 #include "scene/resources/3d/convex_polygon_shape_3d.h"
@@ -124,7 +124,7 @@ PackedStringArray SECollision::get_configuration_warnings() const {
 
 	CollisionObject3D *col_object = Object::cast_to<CollisionObject3D>(get_parent());
 	if (col_object == nullptr) {
-		warnings.push_back(RTR("SECollision only serves to provide a collision shape to a CollisionObject3D derived node.\nPlease only use it as a child of SEArea, SEBody, SEPhysicsBody, CharacterBody3D, etc. to give them a shape."));
+		warnings.push_back(RTR("SECollision only serves to provide a collision shape to a CollisionObject3D derived node.\nPlease only use it as a child of SEArea, SEBody, SEPhysicsBody, SECharacter, etc. to give them a shape."));
 	}
 
 	if (shape.is_null()) {
@@ -144,9 +144,9 @@ PackedStringArray SECollision::get_configuration_warnings() const {
 		}
 	}
 
-	if (shape.is_valid() && Object::cast_to<CharacterBody3D>(col_object)) {
+	if (shape.is_valid() && Object::cast_to<SECharacter>(col_object)) {
 		if (Object::cast_to<ConcavePolygonShape3D>(*shape)) {
-			warnings.push_back(RTR("When used for collision, ConcavePolygonShape3D is intended to work with static CollisionObject3D nodes like SEBody.\nIt will likely not behave well for CharacterBody3Ds."));
+			warnings.push_back(RTR("When used for collision, ConcavePolygonShape3D is intended to work with static CollisionObject3D nodes like SEBody.\nIt will likely not behave well for SECharacters."));
 		}
 	}
 
