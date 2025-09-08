@@ -262,6 +262,7 @@
 #include "scene/resources/3d/primitive_meshes.h"
 #include "scene/resources/3d/sky_material.h"
 #include "scene/resources/3d/world_3d.h"
+#include "scene/3d/active.h"
 #ifndef NAVIGATION_3D_DISABLED
 #include "scene/3d/navigation/navigation_agent_3d.h"
 #include "scene/3d/navigation/navigation_link_3d.h"
@@ -1193,6 +1194,7 @@ void register_scene_types() {
 	ClassDB::add_compatibility_class("ARVRPositionalTracker", "XRPositionalTracker");
 	ClassDB::add_compatibility_class("ARVRServer", "XRServer");
 	ClassDB::add_compatibility_class("AStar", "AStar3D");
+	ClassDB::register_class<Active>();
 	ClassDB::add_compatibility_class("BoneAttachment", "BoneAttachment3D");
 	ClassDB::add_compatibility_class("Camera", "SECamera");
 	ClassDB::add_compatibility_class("ClippedCamera", "ClippedCamera3D");
