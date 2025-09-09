@@ -1194,7 +1194,7 @@ void register_scene_types() {
 	ClassDB::add_compatibility_class("ARVRPositionalTracker", "XRPositionalTracker");
 	ClassDB::add_compatibility_class("ARVRServer", "XRServer");
 	ClassDB::add_compatibility_class("AStar", "AStar3D");
-	ClassDB::register_class<Active>();
+	ClassDB::register_class<Active>(); // add Active node
 	ClassDB::add_compatibility_class("BoneAttachment", "BoneAttachment3D");
 	ClassDB::add_compatibility_class("Camera", "SECamera");
 	ClassDB::add_compatibility_class("ClippedCamera", "ClippedCamera3D");
